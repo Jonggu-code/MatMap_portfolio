@@ -4,9 +4,24 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
-        <!-- 여기는 별칭 정하는곳  boardMapper 에 resultType="BoardDto" 임  -->
-<!--        <typeAlias alias="BoardDto" type="com.bitstudy.app.domain.Ex02_BoardDto"/>-->
 
+        <!-- 회원 관련 Dto -->
+        <typeAlias alias="MemberDto" type="com.matjongchan.app.domain.MemberDto"/>
+        <typeAlias alias="MemberReviewsDto" type="com.matjongchan.app.domain.MemberReviewsDto"/>
+
+        <!-- 게시판 관련 Dto -->
+        <typeAlias alias="ReviewDto" type="com.matjongchan.app.domain.ReviewDto"/>
+        <typeAlias alias="BoardDto" type="com.matjongchan.app.domain.BoardDto"/>
+
+        <!-- 찜 기능 관련 Dto -->
+        <typeAlias alias="FavoriteDto" type="com.matjongchan.app.domain.FavoriteDto"/>
+
+        <!-- 식당 관련 Dto -->
+        <typeAlias alias="RestaurantDto" type="com.matjongchan.app.domain.RestaurantDto"/>
+        <typeAlias alias="RestaurantMenuDto" type="com.matjongchan.app.domain.RestaurantMenuDto"/>
+        <typeAlias alias="RestaurantTagsDto" type="com.matjongchan.app.domain.RestaurantTagsDto"/>
+        <typeAlias alias="TagDto" type="com.matjongchan.app.domain.TagDto"/>
+        <typeAlias alias="MenuDto" type="com.matjongchan.app.domain.MenuDto"/>
 
     </typeAliases>
 </configuration>
