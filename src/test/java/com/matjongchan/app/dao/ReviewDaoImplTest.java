@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -32,15 +34,27 @@ public class ReviewDaoImplTest {
     @Test
     public void insert() {
         reviewDao.deleteAll();
+        ReviewDto reviewDto = new ReviewDto();
 
-        ReviewDto reviewDto = new ReviewDto("새 제목", "새 내용", "asdf");
+        reviewDto = new ReviewDto("asdf","title1", "content1", 5,3,5, 4,1,1);
+
         assertTrue(reviewDao.insert(reviewDto) == 1); // 한명 넣었으니깐 1 오면 된거임
         assertTrue(reviewDao.count()==1); // 비우고 1명 넣은거니까 1 와야함
 
-        reviewDto = new ReviewDto("새 제목2", "새 내용2", "qwer");
+        reviewDto = new ReviewDto("qwer","title2", "content2", 5,3,5, 4, 2,2);
         assertTrue(reviewDao.insert(reviewDto) == 1);// 한명 넣었으니깐 1 오면 된거임
         assertTrue(reviewDao.count()==2); // 저 위에서 한명 넣고, 방금 또 넣었으니까 2 와야함
     }
 
+    @Test
+    public void selectAll() {
+        reviewDao.deleteAll();
+        insert();
+
+        List<ReviewDto> list = reviewDao.selectAll();
+        assertTrue(list.size() == 2);
+
+        assertTrue(list.size() > 0);
+    }
 
 }

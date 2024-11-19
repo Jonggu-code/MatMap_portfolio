@@ -15,7 +15,7 @@ public class ReviewDaoImpl implements ReviewDao {
 
     @Autowired
     private SqlSession session;
-    private static String namespace="com.matjongchan.app.dao.BoardMapper.";
+    private static String namespace="com.matjongchan.app.dao.reviewMapper.";
 
     public int count() {
         return session.selectOne(namespace+"count");
