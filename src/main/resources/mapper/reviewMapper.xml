@@ -14,14 +14,11 @@
     </delete>
 
     <delete id="delete" parameterType="map">
-        delete from review where fk_member_id=#{fk_member_id} and id=#{id}
+        delete from review where reviewer=#{reviewer} and id=#{id}
     </delete>
 
     <insert id="insert" parameterType="BoardDto">
-        insert into review
-        (title,content,taste_score,kind_score,clean_score,create_at,fk_member_id,fk_restaurant_id,fk_image_id)
-        values
-        (#{title}, #{content}, #{taste_score}, #{kind_score}, #{clean_score}, #{create_at}, #{fk_member_id}, #{fk_restaurant_id}, #{fk_image_id})
+        insert into review values (null, #{reviewer}, #{title}, #{content}, #{taste_score}, #{clean_score}, #{kind_score}, #{create_at}, #{fk_restaurant_id}, #{fk_image_id})
     </insert>
 
 
@@ -48,21 +45,6 @@
         where id=#{id} and fk_member_id=#{fk_member_id}
     </update>
 
-
-    <!--    검색 (boardList 에서 넘어옴)-->
-    <select id="searchPage" parameterType="SearchCondition" resultType="BoardDto">
-
-        select * from board
-        where
-        <choose>
-            <when test="option=='T'">title like concat('%',#{keyword},'%')</when>
-            <when test="option=='W'">writer like  concat('%',#{keyword},'%')</when>
-            <otherwise>(title like  concat('%',#{keyword},'%')) or (content like  concat('%',#{keyword},'%'))</otherwise>
-        </choose>
-
-        order by reg_date desc , bno desc
-        limit #{offset} , #{pageSize}
-    </select>
 
 
 
