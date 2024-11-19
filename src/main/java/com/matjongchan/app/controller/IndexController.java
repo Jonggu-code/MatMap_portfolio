@@ -10,4 +10,5 @@ public class IndexController {
     private String a;
     private String b = "안녕";
     private String test;
+    private int s = 12343;
 }
