@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Date;
+
 @Getter //모든 필드에 getter 메서드추가.
 @Setter //모든 필드에 setter 메서드추가.
 @AllArgsConstructor //모든 필드를 포함하는 생성자를 추가.
