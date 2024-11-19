@@ -15,12 +15,12 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberDto {
     private Integer id; // 회원번호
     private String user_id; // 회원 아이디
-    private String password; //비밀번호
+    private String password; //비밀번호 - 업데이트 가능
     private String name;    // 회원 이름
-    private String address; //주소
-    private String email;   // 이메일 주소
-    private String introduce;   // 자기소개
-    private String phone_number;    //회원 전화번호
+    private String address; //주소 - 업데이트 가능
+    private String email;   // 이메일 주소 - 업데이트 가능
+    private String introduce;   // 자기소개 - 업데이트 가능
+    private String phone_number;    //회원 전화번호 - 업데이트 가능
     private String create_at;   //회원가입날짜
     private Integer review_id;
 
