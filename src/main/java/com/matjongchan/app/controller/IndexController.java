@@ -8,5 +8,6 @@ import org.springframework.stereotype.Controller;
 public class IndexController {
 
     private String a;
+    private String b = "안녕";
 
 }
