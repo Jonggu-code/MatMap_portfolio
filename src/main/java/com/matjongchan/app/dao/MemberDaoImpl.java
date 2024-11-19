@@ -12,7 +12,7 @@ public class MemberDaoImpl implements MemberDao {
     @Autowired
     private SqlSession session;
 
-    private static String namespace = "com.matjongchan.app.dao.BoardMapper.";
+    private static String namespace = "com.matjongchan.app.dao.MemberMapper.";
 
     @Override
     public int count(){
@@ -21,6 +21,7 @@ public class MemberDaoImpl implements MemberDao {
 
     @Override
     public int deleteAll(){
+        System.out.println("여기ddd");
         return session.delete(namespace + "deleteAll");
     }
 

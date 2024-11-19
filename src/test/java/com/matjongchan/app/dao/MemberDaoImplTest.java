@@ -19,11 +19,13 @@ public class MemberDaoImplTest {
 
     @Autowired
     MemberDao memberDao;
+
     @Test
     public void count() {
         memberDao.deleteAll();
         MemberDto memberDto = new MemberDto(null, "user1", "pass1", "User1", "Address1", "user1@example.com", "Intro1", "12345", "now()", 123);
         int count = memberDao.insert(memberDto);
+//        System.out.println("aa: " + memberDao.insert(memberDto));
         assertTrue(count == 1);
     }
 
