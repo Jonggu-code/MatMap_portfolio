@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/schema/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.matjongchan.app.dao.BoardMapper">
+
+    <select id="count" resultType="int">
+        SELECT count(*) FROM review
+    </select>
+
+    <delete id="deleteAll">
+        truncate review
+    </delete>
+
+    <delete id="delete" parameterType="map">
+        delete from review where reviewer=#{reviewer} and id=#{id}
+    </delete>
+
+    <insert id="insert" parameterType="BoardDto">
+        insert into review values (null, #{reviewer}, #{title}, #{content}, #{taste_score}, #{clean_score}, #{kind_score}, #{create_at}, #{fk_restaurant_id}, #{fk_image_id})
+    </insert>
+
+
+    <!--    전체 게시글 불러오기 (최근 등록 순으로)-->
+    <select id="selectAll" resultType="ReviewDto">
+        select * from review
+        order by id desc
+    </select>
+
+    <!-- 게시글 한개 불러오기-->
+    <select id="select" parameterType="int" resultType="ReviewDto">
+        SELECT * from board where id = #{id}
+    </select>
+
+
+    <!--   수정: 글 정보(제목, 내용) 수정시 글 번호 체크, 글쓴이와 시도하는 사용자가 같은지도 필수로 확인 해야함-->
+    <update id="update" parameterType="ReviewDto">
+        update review set
+        title=#{title},
+        content=#{content},
+        taste_score=#{taste_score},
+        clean_score=#{clean_score},
+        kind_score=#{kind_score},
+        where id=#{id} and fk_member_id=#{fk_member_id}
+    </update>
+
+
+
+
+
+
+</mapper>
+
+
+
+
+
+
+
+
