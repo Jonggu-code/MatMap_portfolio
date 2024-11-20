@@ -9,7 +9,7 @@ public interface MemberDao {
     int deleteAll();
     int insert(MemberDto dto);
     List<MemberDto> selectAll();
-    MemberDto select(Integer id);
-    int delete(Integer id);
+    MemberDto select(String user_id);
+    int delete(String user_id);
     int update(MemberDto dto);
 }

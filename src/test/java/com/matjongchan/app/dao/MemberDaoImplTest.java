@@ -60,7 +60,7 @@ public class MemberDaoImplTest {
         MemberDto member2 = new MemberDto(null, "user3", "pass3", "User3", "Address3", "user3@example.com", "Intro3", "남", 25, "010-3333-3333","now()",123);
         memberDao.insert(member2);
 
-        assertTrue(memberDao.select(1).getId() == 1);
+        assertTrue(memberDao.select("user3").getAge() == 25);
     }
 
     @Test
@@ -68,7 +68,7 @@ public class MemberDaoImplTest {
         memberDao.deleteAll();
         MemberDto member1 = new MemberDto(null, "user5", "pass5", "User5", "Address5", "user5@example.com", "Intro5", "여", 35, "010-5555-5555","now()",123);
         memberDao.insert(member1);
-        int delete = memberDao.delete(1);
+        int delete = memberDao.delete("user5");
         assertTrue(delete == 1);
 
     }
