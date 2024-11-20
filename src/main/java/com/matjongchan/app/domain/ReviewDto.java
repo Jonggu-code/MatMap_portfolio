@@ -14,13 +14,13 @@ public class ReviewDto {
     private String reviewer;
     private String title;
     private String content;
-    private Integer taste_score;
-    private Integer clean_score;
-    private Integer kind_score;
-    private Integer total_score;
+    private double taste_score;
+    private double clean_score;
+    private double kind_score;
+    private double total_score;
     private String create_at;
-    private Integer Fk_restaurant_id;
-    private Integer Fk_image_id;
+    private Integer fk_restaurant_id;
+    private Integer fk_image_id;
 
     public Integer getId() {
         return id;
@@ -38,19 +38,19 @@ public class ReviewDto {
         return content;
     }
 
-    public Integer getTaste_score() {
+    public double getTaste_score() {
         return taste_score;
     }
 
-    public Integer getClean_score() {
+    public double getClean_score() {
         return clean_score;
     }
 
-    public Integer getKind_score() {
+    public double getKind_score() {
         return kind_score;
     }
 
-    public Integer getTotal_score() {
+    public double getTotal_score() {
         return total_score;
     }
 
@@ -59,15 +59,15 @@ public class ReviewDto {
     }
 
 
-    public Integer getFk_restaurant_id() {
-        return Fk_restaurant_id;
+    public Integer getfk_restaurant_id() {
+        return fk_restaurant_id;
     }
 
-    public Integer getFk_image_id() {
-        return Fk_image_id;
+    public Integer getfk_image_id() {
+        return fk_image_id;
     }
 
-    public ReviewDto(String reviewer, String title, String content, Integer taste_score, Integer clean_score, Integer kind_score, Integer total_score, Integer fk_restaurant_id, Integer fk_image_id) {
+    public ReviewDto(String reviewer, String title, String content, double taste_score, double clean_score, double kind_score, double total_score, Integer fk_restaurant_id, Integer fk_image_id) {
         this.reviewer = reviewer;
         this.title = title;
         this.content = content;
@@ -75,7 +75,7 @@ public class ReviewDto {
         this.clean_score = clean_score;
         this.kind_score = kind_score;
         this.total_score = total_score;
-        Fk_restaurant_id = fk_restaurant_id;
-        Fk_image_id = fk_image_id;
+        this.fk_restaurant_id = fk_restaurant_id;
+        this.fk_image_id = fk_image_id;
     }
 }
