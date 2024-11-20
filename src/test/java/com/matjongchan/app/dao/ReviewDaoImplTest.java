@@ -98,6 +98,7 @@ public class ReviewDaoImplTest {
 
         assertTrue(list.size() > 0);
     }
+
     @Test
     public void selectR() {
         reviewDao.deleteAll();
@@ -136,5 +137,52 @@ public class ReviewDaoImplTest {
         reviewDto.setTitle("new Title");
         assertTrue(reviewDao.update(reviewDto) == 1);
 
+    }
+
+    /**
+     * FK_RESTAURANT_ID 를 통한 목록조회
+     */
+    @Test
+    public void selectByFkId(){
+        reviewDao.deleteAll();
+        notDeleteAndInsertALot();
+        notDeleteAndInsertALot();
+        notDeleteAndInsertALot();
+
+        List<ReviewDto> reviewDtos = reviewDao.selectR(3);
+        assertTrue(reviewDtos.size() == 90);
+    }
+
+    /**
+     * PK 값을 통한 목록조회
+     */
+    @Test
+    public void selectById(){
+        reviewDao.deleteAll();
+        notDeleteAndInsertALot();
+        notDeleteAndInsertALot();
+        notDeleteAndInsertALot();
+
+        List<ReviewDto> reviewDtos = reviewDao.selectAll();
+        assertTrue(reviewDtos.size() == 270);
+    }
+
+    /**
+     * review 값 여러개 넣기 (90개)
+     */
+    public void notDeleteAndInsertALot(){
+        ReviewDto reviewDto;
+        for (int i = 1; i <= 30; i++) {
+            reviewDto = new ReviewDto("asdf","title"+i, "content"+i, 5,3.2,5, 4.4f,1);
+            reviewDao.insert(reviewDto);
+        }
+        for (int i = 1; i <= 30; i++) {
+            reviewDto = new ReviewDto("asdf","title"+(i+30), "content"+i, 5,3.2,5, 4.4f,2);
+            reviewDao.insert(reviewDto);
+        }
+        for (int i = 1; i <= 30; i++) {
+            reviewDto = new ReviewDto("asdf","title"+(i+60), "content"+i, 5,3.2,5, 4.4f,3);
+            reviewDao.insert(reviewDto);
+        }
     }
 }
