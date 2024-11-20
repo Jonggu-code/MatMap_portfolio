@@ -8,16 +8,21 @@ public interface ReviewDao {
 
     int count();
 
+    int countR(int fk_restaurant_id);
+
     int deleteAll();
 
     int insert(ReviewDto dto);
 
     List<ReviewDto> selectAll();
 
+    List<ReviewDto> selectR(int fk_restaurant_id);
+
+
     ReviewDto select(Integer bno);
 
     int update(ReviewDto dto);
 
-    int delete(int bno, String writer);
+    int delete(int id, String writer);
 
 }

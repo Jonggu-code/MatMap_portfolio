@@ -9,6 +9,10 @@
         SELECT count(*) FROM review
     </select>
 
+    <select id="countR" parameterType="int" resultType="int">
+        select count(*) from review where fk_restaurant_id = #{fk_restaurant_id}
+    </select>
+
     <delete id="deleteAll">
         truncate review
     </delete>
@@ -17,9 +21,9 @@
         delete from review where reviewer=#{reviewer} and id=#{id}
     </delete>
 
-    <insert id="insert" parameterType="BoardDto">
+    <insert id="insert" parameterType="ReviewDto">
         insert into review
-            (id, reviwer, title, content, taste_score, clean_score, kind_score, total_score, create_at, fk_restaurant_id, fk_image_id)
+            (id, reviewer, title, content, taste_score, clean_score, kind_score, total_score, create_at, fk_restaurant_id, fk_image_id)
         values
             (#{id}, #{reviewer}, #{title}, #{content}, #{taste_score}, #{clean_score}, #{kind_score}, #{total_score}, now(), #{fk_restaurant_id}, #{fk_image_id})
     </insert>
@@ -29,10 +33,16 @@
         select * from review
         order by id desc
     </select>
+    <!--    해당 식당 게시글 불러오기 (최근 등록 순으로)-->
+    <select id="selectR" parameterType="int" resultType="ReviewDto">
+        select * from review
+        where fk_restaurant_id = #{fk_restaurant_id}
+        order by id desc
+    </select>
 
     <!-- 게시글 한개 불러오기-->
     <select id="select" parameterType="int" resultType="ReviewDto">
-        SELECT * from board where id = #{id}
+        SELECT * from review where id = #{id}
     </select>
 
 
@@ -44,7 +54,9 @@
         taste_score=#{taste_score},
         clean_score=#{clean_score},
         kind_score=#{kind_score},
-        where id=#{id} and fk_member_id=#{fk_member_id}
+        total_score=#{total_score},
+        fk_image_id=#{fk_image_id}
+        where id=#{id} and reviewer=#{reviewer}
     </update>
 
 
