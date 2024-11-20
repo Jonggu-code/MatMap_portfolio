@@ -25,9 +25,9 @@ public class MemberDto {
     private Integer age;        //나이
     private String phone_number;    //회원 전화번호 - 업데이트 가능
     private String create_at;   //회원가입날짜
-    private Integer review_id;
+    private Integer fk_image_id;
 
-    // create_at, review_id 제외한 생성자
+    // create_at, fk_image_id 제외한 생성자
     public MemberDto(Integer id, String user_id, String password, String name, String address, String email, String introduce,String gender,Integer age, String phone_number) {
         this.id = id;
         this.user_id = user_id;
@@ -57,7 +57,7 @@ public class MemberDto {
                 ", age=" + age +
                 ", phone_number='" + phone_number + '\'' +
                 ", create_at='" + create_at + '\'' +
-                ", review_id=" + review_id +
+                ", fk_image_id=" + fk_image_id +
                 '}';
     }
 }
