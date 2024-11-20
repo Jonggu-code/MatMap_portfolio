@@ -19,7 +19,7 @@
 
     <insert id="insert" parameterType="BoardDto">
         insert into review
-            (id, reviewer, title, content, taste_score, clean_score, kind_score, total_score, create_at, fk_restaurant_id, fk_image_id)
+            (id, reviwer, title, content, taste_score, clean_score, kind_score, total_score, create_at, fk_restaurant_id, fk_image_id)
         values
             (#{id}, #{reviewer}, #{title}, #{content}, #{taste_score}, #{clean_score}, #{kind_score}, #{total_score}, now(), #{fk_restaurant_id}, #{fk_image_id})
     </insert>

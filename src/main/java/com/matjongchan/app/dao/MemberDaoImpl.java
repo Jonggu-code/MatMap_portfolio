@@ -47,7 +47,7 @@ public class MemberDaoImpl implements MemberDao {
 
     @Override
     public int update(MemberDto dto){
-        return session.update(namespace = "update", dto);
+        return session.update(namespace + "updateMember", dto);
     }
 
 }

@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/schema/mybatis-3-mapper.dtd">
 
-
 <mapper namespace="com.matjongchan.app.dao.MemberMapper">
 
 <!-- 0) count  -->
@@ -10,13 +9,13 @@
         SELECT count(*) FROM member
     </select>
 
-<!-- 1) deleteAll-->SS
+<!-- 1) deleteAll-->
     <delete id="deleteAll">
         truncate member
     </delete>
 <!-- 2) insert   -->
     <insert id="insert" parameterType="MemberDto">
-        insert into member values(null, #{user_id}, #{password}, #{name}, #{address}, #{email}, #{introduce}, #{phone_number}, now(), #{review_id})
+        insert into member values(null, #{user_id}, #{password}, #{name}, #{address}, #{email}, #{introduce}, #{gender}, #{age}, #{phone_number}, now(), #{review_id})
     </insert>
 <!-- 3) selectAll -->
     <select id="selectAll" resultType="MemberDto">
@@ -32,7 +31,7 @@
         delete from member where id = #{id}
     </delete>
 <!-- 5) update - id로 회원 정보 수정  -->
-    <update id="update" parameterType="MemberDto">
+    <update id="updateMember" parameterType="MemberDto">
         update member set
             password = #{password},
             address = #{address},
