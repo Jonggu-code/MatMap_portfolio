@@ -20,7 +20,6 @@ public class ReviewDto {
     private double total_score;
     private String create_at;
     private Integer fk_restaurant_id;
-    private Integer fk_image_id;
 
     public Integer getId() {
         return id;
@@ -58,16 +57,13 @@ public class ReviewDto {
         return create_at;
     }
 
-
     public Integer getfk_restaurant_id() {
         return fk_restaurant_id;
     }
 
-    public Integer getfk_image_id() {
-        return fk_image_id;
-    }
 
-    public ReviewDto(String reviewer, String title, String content, double taste_score, double clean_score, double kind_score, double total_score, Integer fk_restaurant_id, Integer fk_image_id) {
+    public ReviewDto(String reviewer, String title, String content, double taste_score, double clean_score,
+                     double kind_score, double total_score, Integer fk_restaurant_id) {
         this.reviewer = reviewer;
         this.title = title;
         this.content = content;
@@ -76,6 +72,5 @@ public class ReviewDto {
         this.kind_score = kind_score;
         this.total_score = total_score;
         this.fk_restaurant_id = fk_restaurant_id;
-        this.fk_image_id = fk_image_id;
     }
 }

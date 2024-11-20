@@ -23,9 +23,9 @@
 
     <insert id="insert" parameterType="ReviewDto">
         insert into review
-            (id, reviewer, title, content, taste_score, clean_score, kind_score, total_score, create_at, fk_restaurant_id, fk_image_id)
+            (id, reviewer, title, content, taste_score, clean_score, kind_score, total_score, create_at, fk_restaurant_id)
         values
-            (#{id}, #{reviewer}, #{title}, #{content}, #{taste_score}, #{clean_score}, #{kind_score}, #{total_score}, now(), #{fk_restaurant_id}, #{fk_image_id})
+            (#{id}, #{reviewer}, #{title}, #{content}, #{taste_score}, #{clean_score}, #{kind_score}, #{total_score}, now(), #{fk_restaurant_id})
     </insert>
 
     <!--    전체 게시글 불러오기 (최근 등록 순으로)-->
@@ -54,8 +54,7 @@
         taste_score=#{taste_score},
         clean_score=#{clean_score},
         kind_score=#{kind_score},
-        total_score=#{total_score},
-        fk_image_id=#{fk_image_id}
+        total_score=#{total_score}
         where id=#{id} and reviewer=#{reviewer}
     </update>
 
