@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public class MemberDaoImpl implements MemberDao {
+
     @Autowired
     private SqlSession session;
 

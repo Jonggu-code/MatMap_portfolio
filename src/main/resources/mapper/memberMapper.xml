@@ -4,12 +4,14 @@
 
 <mapper namespace="com.matjongchan.app.dao.MemberMapper">
 
+
     <!-- 0) count  -->
     <select id="count" resultType="int">
         SELECT count(*) FROM member
     </select>
 
     <!-- 1) deleteAll-->
+
     <delete id="deleteAll">
         truncate member
     </delete>
@@ -40,8 +42,6 @@
         phone_number = #{phone_number}
         where id = #{id}
     </update>
-
-
 </mapper>
 
 
