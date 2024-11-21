@@ -58,12 +58,13 @@ public class ReviewDto {
     }
 
     public Integer getfk_restaurant_id() {
+
         return fk_restaurant_id;
     }
 
 
-    public ReviewDto(String reviewer, String title, String content, double taste_score, double clean_score,
-                     double kind_score, double total_score, Integer fk_restaurant_id) {
+
+    public ReviewDto(String reviewer, String title, String content, double taste_score, double clean_score, double kind_score, double total_score, Integer fk_restaurant_id) {
         this.reviewer = reviewer;
         this.title = title;
         this.content = content;
