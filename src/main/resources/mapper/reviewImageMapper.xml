@@ -3,18 +3,19 @@
         "http://mybatis.org/schema/mybatis-3-mapper.dtd">
 
 
-<mapper namespace="com.matjongchan.app.dao.reviewMapper">
+<mapper namespace="com.matjongchan.app.dao.reviewImageMapper">
 
     <select id="count" resultType="int">
-        SELECT count(*) FROM review
+        SELECT count(*) FROM other_image
     </select>
 
     <select id="countR" parameterType="int" resultType="int">
-        select count(*) from review where fk_restaurant_id = #{fk_restaurant_id}
+        select count(*) from other_image where fk_review_id = #{fk_review_id}
     </select>
 
+
     <delete id="deleteAll">
-        truncate review
+        truncate other_image
     </delete>
 
     <delete id="delete" parameterType="map">
@@ -23,9 +24,9 @@
 
     <insert id="insert" parameterType="ReviewDto">
         insert into review
-            (id, reviewer, title, content, taste_score, clean_score, kind_score, total_score, create_at, fk_restaurant_id)
+        (id, reviewer, title, content, taste_score, clean_score, kind_score, total_score, create_at, fk_restaurant_id)
         values
-            (#{id}, #{reviewer}, #{title}, #{content}, #{taste_score}, #{clean_score}, #{kind_score}, #{total_score}, now(), #{fk_restaurant_id})
+        (#{id}, #{reviewer}, #{title}, #{content}, #{taste_score}, #{clean_score}, #{kind_score}, #{total_score}, now(), #{fk_restaurant_id})
     </insert>
 
     <!--    전체 게시글 불러오기 (최근 등록 순으로)-->
@@ -63,12 +64,5 @@
 
 
 
+
 </mapper>
-
-
-
-
-
-
-
-

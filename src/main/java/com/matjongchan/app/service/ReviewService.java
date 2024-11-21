@@ -9,7 +9,6 @@ public interface ReviewService {
 
     int getCountR(int fk_restaurant_id);
 
-    // 쓰기
     int write(ReviewDto dto);
 
     List<ReviewDto> getListAll();

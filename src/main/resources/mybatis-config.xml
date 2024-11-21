@@ -11,6 +11,7 @@
 
         <!-- 게시판 관련 Dto -->
         <typeAlias alias="ReviewDto" type="com.matjongchan.app.domain.ReviewDto"/>
+        <typeAlias alias="ReviewImageDto" type="com.matjongchan.app.domain.ReviewImageDto"/>
         <typeAlias alias="BoardDto" type="com.matjongchan.app.domain.BoardDto"/>
 
         <!-- 찜 기능 관련 Dto -->

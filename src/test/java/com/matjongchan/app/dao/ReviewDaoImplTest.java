@@ -19,28 +19,28 @@ public class ReviewDaoImplTest {
     @Autowired
     ReviewDao reviewDao;
 
-    @Test
+    @Test // 전체 리뷰 count 테스트
     public void count() {
         // Test1
         reviewDao.deleteAll(); // 싹 다 비우고
         assertTrue(reviewDao.count()==0); // 0개 남았는지 체크
     }
 
-    @Test
+    @Test // 특정 음식점 리뷰 count 테스트
     public void countR() {
         reviewDao.deleteAll();
         insertALot();
         assertTrue(reviewDao.countR(1)==30);
     }
 
-    @Test
+    @Test // 전체 삭제 테스트
     public void deleteAll() {
         reviewDao.deleteAll();
         assertTrue(reviewDao.count()==0);
     }
 
 
-    @Test
+    @Test // 하나 삭제 테스트
     public void delete() {
         reviewDao.deleteAll();
         insert();
@@ -50,45 +50,45 @@ public class ReviewDaoImplTest {
 
     }
 
-    @Test
+    @Test // 하나 삽입 테스트
     public void insert() {
         reviewDao.deleteAll();
         ReviewDto reviewDto = new ReviewDto();
 
 
-        reviewDto = new ReviewDto("asdf","title1", "content1", 5,3.2,5, 4.4f,1,1);
+        reviewDto = new ReviewDto("asdf","title1", "content1", 5,3.2,5, 4.4f,1);
 
         assertTrue(reviewDao.insert(reviewDto) == 1); // 한명 넣었으니깐 1 오면 된거임
         assertTrue(reviewDao.count()==1); // 비우고 1명 넣은거니까 1 와야함
 
-        reviewDto = new ReviewDto("qwer","title2", "content2", 5,3,5, 4.6, 2,2);
+        reviewDto = new ReviewDto("qwer","title2", "content2", 5,3,5, 4.6, 2);
         assertTrue(reviewDao.insert(reviewDto) == 1);// 한명 넣었으니깐 1 오면 된거임
         assertTrue(reviewDao.count()==2); // 저 위에서 한명 넣고, 방금 또 넣었으니까 2 와야함
     }
 
-    @Test
+    @Test // 90개 삽입 테스트
     public void insertALot(){
 
         reviewDao.deleteAll();
         ReviewDto reviewDto;
         for (int i = 1; i <= 30; i++) {
-            reviewDto = new ReviewDto("asdf","title"+i, "content"+i, 5,3.2,5, 4.4f,1,1);
+            reviewDto = new ReviewDto("asdf","title"+i, "content"+i, 5,3.2,5, 4.4f,1);
             reviewDao.insert(reviewDto);
         }
         for (int i = 1; i <= 30; i++) {
-            reviewDto = new ReviewDto("asdf","title"+(i+30), "content"+i, 5,3.2,5, 4.4f,2,1);
+            reviewDto = new ReviewDto("asdf","title"+(i+30), "content"+i, 5,3.2,5, 4.4f,2);
             reviewDao.insert(reviewDto);
         }
         for (int i = 1; i <= 30; i++) {
-            reviewDto = new ReviewDto("asdf","title"+(i+60), "content"+i, 5,3.2,5, 4.4f,3,1);
+            reviewDto = new ReviewDto("asdf","title"+(i+60), "content"+i, 5,3.2,5, 4.4f,3);
             reviewDao.insert(reviewDto);
         }
-        assertTrue(reviewDao.count()==90); // 비우고 1명 넣은거니까 1 와야함
+        assertTrue(reviewDao.count()==90);
     }
 
 
 
-    @Test
+    @Test // 전체 리뷰 select 테스트
     public void selectAll() {
         reviewDao.deleteAll();
         insert();
@@ -98,7 +98,7 @@ public class ReviewDaoImplTest {
 
         assertTrue(list.size() > 0);
     }
-    @Test
+    @Test // 특정 음식점 리뷰 select 테스트
     public void selectR() {
         reviewDao.deleteAll();
         insertALot();
@@ -109,11 +109,11 @@ public class ReviewDaoImplTest {
         assertTrue(list.size() > 0);
     }
 
-    @Test
+    @Test // 리뷰 하나 select 테스트
     public void select() {
         reviewDao.deleteAll();
 
-        ReviewDto reviewDto = new ReviewDto("asdf","title1", "content1", 5,3,5, 4,1,1);
+        ReviewDto reviewDto = new ReviewDto("asdf","title1", "content1", 5,3,5, 4,1);
 
         reviewDao.insert(reviewDto);
 
@@ -123,12 +123,12 @@ public class ReviewDaoImplTest {
         assertTrue(Objects.equals(reviewDto2.getId(), id));
     }
 
-    @Test
+    @Test // 리뷰 업데이트 테스트
     public void update() {
         reviewDao.deleteAll();
         insert();
 
-        ReviewDto reviewDto = new ReviewDto("asdf","title1", "content1", 5,3,5, 4,1,1);
+        ReviewDto reviewDto = new ReviewDto("asdf","title1", "content1", 5,3,5, 4,1);
         reviewDao.insert(reviewDto);
 
         Integer id = reviewDao.selectAll().get(0).getId();
