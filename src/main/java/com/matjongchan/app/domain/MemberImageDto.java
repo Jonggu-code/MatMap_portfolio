@@ -11,17 +11,19 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor //모든 필드를 포함하는 생성자를 추가.
 @NoArgsConstructor // 매개변수가 없는 기본 생성자를 추가.
 @Slf4j
-public class FavoriteDto {
-    private Integer id;                 // 즐겨찾기 ID
-    private int fk_member_id;         // 회원 ID (fk_member_id)
-    private int fk_restaurant_id;     // 식당 ID (fk_restaurant_id)
+public class MemberImageDto {
+    private Integer id;                 // 이미지 ID
+    private String name;            // 이미지 이름
+    private String img_url;          // 이미지 URL
+    private int order;              // 이미지 순서
 
     @Override
     public String toString() {
-        return "FavoriteDto{" +
+        return "MemberImageDto{" +
                 "id=" + id +
-                ", fk_member_id=" + fk_member_id +
-                ", fk_restaurant_id=" + fk_restaurant_id +
+                ", name='" + name + '\'' +
+                ", img_url='" + img_url + '\'' +
+                ", order=" + order +
                 '}';
     }
 }
