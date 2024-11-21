@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public class MemberDaoImpl implements MemberDao {
+
     @Autowired
     private SqlSession session;
 
@@ -36,13 +37,13 @@ public class MemberDaoImpl implements MemberDao {
     }
 
     @Override
-    public MemberDto select(Integer id){
-        return session.selectOne(namespace + "select", id);
+    public MemberDto select(String user_id){
+        return session.selectOne(namespace + "select", user_id);
     }
 
     @Override
-    public int delete(Integer id){
-        return session.delete(namespace + "delete", id);
+    public int delete(String user_id){
+        return session.delete(namespace + "delete", user_id);
     }
 
     @Override
