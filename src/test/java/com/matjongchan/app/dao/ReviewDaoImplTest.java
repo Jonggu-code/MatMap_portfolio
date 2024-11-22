@@ -55,7 +55,6 @@ public class ReviewDaoImplTest {
         reviewDao.deleteAll();
         ReviewDto reviewDto = new ReviewDto();
 
-
         reviewDto = new ReviewDto("asdf","title1", "content1", 5,3.2,5, 4.4f,1);
 
         assertTrue(reviewDao.insert(reviewDto) == 1); // 한명 넣었으니깐 1 오면 된거임

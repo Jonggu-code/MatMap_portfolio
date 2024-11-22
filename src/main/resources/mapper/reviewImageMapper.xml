@@ -18,46 +18,14 @@
         truncate other_image
     </delete>
 
-    <delete id="delete" parameterType="map">
-        delete from review where reviewer=#{reviewer} and id=#{id}
-    </delete>
 
     <insert id="insert" parameterType="ReviewDto">
-        insert into review
-        (id, reviewer, title, content, taste_score, clean_score, kind_score, total_score, create_at, fk_restaurant_id)
+        insert into other_image
+        (id, name, img_url, order_number, fk_review_id, fk_restaurant_id)
         values
-        (#{id}, #{reviewer}, #{title}, #{content}, #{taste_score}, #{clean_score}, #{kind_score}, #{total_score}, now(), #{fk_restaurant_id})
+        (#{id}, #{name}, #{img_url}, #{order_number}, #{fk_review_id}, #{fk_restaurant_id})
     </insert>
 
-    <!--    전체 게시글 불러오기 (최근 등록 순으로)-->
-    <select id="selectAll" resultType="ReviewDto">
-        select * from review
-        order by id desc
-    </select>
-    <!--    해당 식당 게시글 불러오기 (최근 등록 순으로)-->
-    <select id="selectR" parameterType="int" resultType="ReviewDto">
-        select * from review
-        where fk_restaurant_id = #{fk_restaurant_id}
-        order by id desc
-    </select>
-
-    <!-- 게시글 한개 불러오기-->
-    <select id="select" parameterType="int" resultType="ReviewDto">
-        SELECT * from review where id = #{id}
-    </select>
-
-
-    <!--   수정: 글 정보(제목, 내용) 수정시 글 번호 체크, 글쓴이와 시도하는 사용자가 같은지도 필수로 확인 해야함-->
-    <update id="update" parameterType="ReviewDto">
-        update review set
-        title=#{title},
-        content=#{content},
-        taste_score=#{taste_score},
-        clean_score=#{clean_score},
-        kind_score=#{kind_score},
-        total_score=#{total_score}
-        where id=#{id} and reviewer=#{reviewer}
-    </update>
 
 
 
