@@ -1,9 +1,9 @@
 package com.matjongchan.app.dao;
 
+import com.matjongchan.app.domain.FavoriteDto;
 import com.matjongchan.app.domain.MemberDto;
 import com.matjongchan.app.domain.MemberImageDto;
 import com.matjongchan.app.domain.ReviewDto;
-import com.matjongchan.app.domain.FavoriteDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -19,18 +19,17 @@ public class MemberDaoImpl2 implements MemberDao2 {
 
     @Override
     public int count() {
-        return session.selectOne(namespace + "count2");
+        return session.selectOne(namespace + "count");
     }
 
     @Override
     public int deleteAll() {
-        System.out.println("99999");
-        return session.delete(namespace + "deleteAll2");
+        return session.delete(namespace + "deleteAll");
     }
 
     @Override
     public int insert(MemberDto dto) {
-        return session.insert(namespace + "insert2", dto);
+        return session.insert(namespace + "insert", dto);
     }
 
     @Override
@@ -39,8 +38,12 @@ public class MemberDaoImpl2 implements MemberDao2 {
     }
 
     @Override
-    public MemberDto select(String user_id) {
-        // select 메서드는 user_id를 파라미터로 받아서 해당 회원 정보를 조회
+    public MemberDto select(String user_id){
+        return session.selectOne(namespace + "select", user_id);
+    }
+
+    @Override
+    public MemberImageDto selectMemberWithImage(String user_id) {
         return session.selectOne(namespace + "selectMemberWithImage", user_id);
     }
 
@@ -51,54 +54,54 @@ public class MemberDaoImpl2 implements MemberDao2 {
 
     @Override
     public int update(MemberDto dto) {
-        return session.update(namespace + "updateMember", dto);
+        return session.update(namespace + "update", dto);
     }
 
-    // 1) 프로필 이미지 추가
+    @Override
+    public int deleteAllImage(){
+        return session.delete(namespace + "deleteAllImage");
+    }
     @Override
     public int insertMemberImage(MemberImageDto dto) {
         return session.insert(namespace + "insertMemberImage", dto);
     }
 
-    // 2) 프로필 이미지 조회
     @Override
-    public MemberImageDto selectMemberImage(int id) {
+    public MemberImageDto selectMemberImage(Integer id) {
         return session.selectOne(namespace + "selectMemberImage", id);
     }
 
-    // 3) 프로필 이미지 수정
+    @Override
+    public int deleteMemberImage(Integer id) {
+        return session.delete(namespace + "deleteMemberImage", id);
+    }
+
+    @Override
+    public List<MemberImageDto> selectAllImage(){
+        return session.selectList(namespace + "selectAllImage");
+    }
     @Override
     public int updateMemberImage(MemberImageDto dto) {
         return session.update(namespace + "updateMemberImage", dto);
     }
 
-    // 4) 프로필 이미지 삭제
-    @Override
-    public int deleteMemberImage(int id) {
-        return session.delete(namespace + "deleteMemberImage", id);
-    }
-
     @Override
     public List<ReviewDto> selectMemberReviews(String user_id) {
-        // 특정 회원의 리뷰 조회는 user_id를 기준으로 조회
         return session.selectList(namespace + "selectMemberReviews", user_id);
     }
 
     @Override
     public int deleteMemberReview(String user_id) {
-        // 특정 회원의 리뷰 삭제는 user_id를 기준으로 삭제
         return session.delete(namespace + "deleteMemberReview", user_id);
     }
 
     @Override
     public List<FavoriteDto> selectFavorites(String user_id) {
-        // 특정 회원의 즐겨찾기 조회는 user_id를 기준으로 조회
         return session.selectList(namespace + "selectFavorites", user_id);
     }
 
     @Override
     public int deleteFavorite(String user_id) {
-        // 특정 회원의 즐겨찾기 삭제는 user_id를 기준으로 삭제
         return session.delete(namespace + "deleteFavorite", user_id);
     }
 }

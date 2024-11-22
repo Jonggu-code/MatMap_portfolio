@@ -5,8 +5,6 @@
 <mapper namespace="com.matjongchan.app.dao.memberMapper2">
 
 
-
-
 <!-- 회원 기본 작업 -->
     <!-- 0) 회원 수 조회 -->
     <select id="count" resultType="int">
@@ -14,7 +12,7 @@
     </select>
 
     <!-- 1) 회원 전체 삭제 -->
-    <delete id="deleteAll2">
+    <delete id="deleteAll">
         TRUNCATE member
     </delete>
 
@@ -30,17 +28,27 @@
         ORDER BY create_at DESC, id DESC
     </select>
 
-    <!-- 3-1) 특정 회원 정보 조회 (user_id 기준) -->
-    <select id="selectMemberWithImage" parameterType="String" resultType="MemberDto">
-        SELECT m.*,
-        mi.name AS image_name,
-        mi.img_url AS image_url,
-        mi.order AS image_order
-        FROM member m
-        LEFT JOIN member_image mi
+    <!-- 3 -1) member 테이블의 회원 정보 select -->
+    <select id="select" parameterType="String" resultType="MemberDto">
+        select * from member where user_id = #{user_id}
+    </select>
+
+    <!-- 3 -2) 이미지 정보 포함한 회원 정보 -->
+    <select id="selectMemberWithImage" parameterType="String" resultType="MemberImageDto">
+        SELECT
+        mi.id,              -- 이미지 ID
+        mi.name,          -- 이미지 이름
+        mi.img_url,        -- 이미지 URL
+        mi.order_number -- 이미지 순서
+
+        FROM member_image AS mi
+        LEFT JOIN member AS m
+
         ON m.fk_image_id = mi.id
         WHERE m.user_id = #{user_id}
     </select>
+
+
 
     <!-- 4) 회원 삭제 (user_id 기준) -->
     <delete id="delete" parameterType="String">
@@ -48,48 +56,59 @@
     </delete>
 
     <!-- 5) 회원 정보 수정 (user_id 기준) -->
-    <update id="updateMember" parameterType="MemberDto">
-        UPDATE member
-        SET password = #{password},
+    <update id="update" parameterType="MemberDto">
+        update member set
+        password = #{password},
         address = #{address},
         email = #{email},
         introduce = #{introduce},
         phone_number = #{phone_number}
-        WHERE user_id = #{user_id}
+        where user_id = #{user_id}
     </update>
 
     <!-- 프로필 이미지 관리 -->
+    <delete id="deleteAllImage">
+        TRUNCATE member_image
+    </delete>
+
     <!-- 6) 프로필 이미지 추가 -->
     <insert id="insertMemberImage" parameterType="MemberImageDto">
-        INSERT INTO member_image (name, img_url, order)
-        VALUES (#{name}, #{imgUrl}, #{order})
+        INSERT INTO member_image (name, img_url, order_number)
+        VALUES (#{name}, #{img_url}, #{order_number})
     </insert>
 
+    <!-- 3) 전체 회원 프로필 이미지 조회 -->
+    <select id="selectAllImage" resultType="MemberImageDto">
+        SELECT * FROM member_image
+        ORDER BY id DESC
+    </select>
+
     <!-- 7) 프로필 이미지 조회 -->
-    <select id="selectMemberImage" parameterType="String" resultType="MemberImageDto">
-        SELECT * FROM member_image WHERE user_id = #{user_id}
+    <select id="selectMemberImage" parameterType="Integer" resultType="MemberImageDto">
+        SELECT * FROM member_image WHERE id = #{id}
     </select>
 
     <!-- 8) 프로필 이미지 삭제 -->
-    <delete id="deleteMemberImage" parameterType="String">
-        DELETE FROM member_image WHERE user_id = #{user_id}
+    <delete id="deleteMemberImage" parameterType="Integer">
+        DELETE FROM member_image WHERE id = #{id}
     </delete>
 
     <!-- 9) 프로필 이미지 수정 -->
     <update id="updateMemberImage" parameterType="MemberImageDto">
         UPDATE member_image
         SET name = #{name},
-        img_url = #{imgUrl},
-        `order` = #{order}
-        WHERE user_id = #{user_id}
+        img_url = #{img_url},
+        order_number = #{order_number}
+        WHERE id = #{id}
     </update>
 
     <!-- 회원 리뷰 작업 -->
     <!-- 10) 특정 회원의 리뷰 조회 (user_id 기준) -->
     <select id="selectMemberReviews" parameterType="String" resultType="ReviewDto">
         SELECT r.*
-        FROM member_review mr
-        JOIN review r ON mr.fk_review_id = r.id
+        FROM member_reviews AS mr
+        LEFT JOIN review AS r
+        ON mr.fk_review_id = r.id
         WHERE mr.fk_member_id = (
         SELECT id FROM member WHERE user_id = #{user_id}
         )
@@ -97,20 +116,21 @@
 
     <!-- 11) 특정 회원의 리뷰 삭제 (user_id 기준) -->
     <delete id="deleteMemberReview" parameterType="String">
-        DELETE FROM review WHERE id IN (
-        SELECT fk_review_id
-        FROM member_review
-        WHERE fk_member_id = (
-        SELECT id FROM member WHERE user_id = #{user_id}
-        )
-        )
+        DELETE FROM review
+        USING review
+        INNER JOIN member_reviews
+        ON review.id = member_reviews.fk_review_id
+        INNER JOIN member
+        ON member_reviews.fk_member_id = member.id
+        WHERE member.user_id = #{user_id};
     </delete>
+
 
     <!-- 즐겨찾기 작업 -->
     <!-- 12) 특정 회원의 즐겨찾기 조회 (user_id 기준) -->
     <select id="selectFavorites" parameterType="String" resultType="FavoriteDto">
         SELECT f.*
-        FROM favorite f
+        FROM favorite AS f
         WHERE f.fk_member_id = (
         SELECT id FROM member WHERE user_id = #{user_id}
         )
