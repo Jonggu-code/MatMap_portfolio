@@ -51,7 +51,7 @@
         update review set
         title=#{title},
         content=#{content},
-        taste_score=#{taste_score},
+        taste _score=#{taste_score},
         clean_score=#{clean_score},
         kind_score=#{kind_score},
         total_score=#{total_score}

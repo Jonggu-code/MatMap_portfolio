@@ -1,7 +1,7 @@
 package com.matjongchan.app.dao;
 
 import com.matjongchan.app.domain.ReviewDto;
-import lombok.RequiredArgsConstructor;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,18 +19,18 @@ public class ReviewImageDaoImplTest {
     ReviewDao reviewDao;
 
 
-    @Test // 전체 리뷰 count 테스트
+    @Test // 전체 이미지 count 테스트
     public void count() {
         // Test1
         reviewImageDao.deleteAll(); // 싹 다 비우고
         assertTrue(reviewImageDao.count()==0); // 0개 남았는지 체크
     }
 
-    @Test // 특정 음식점 리뷰 count 테스트
+    @Test // 특정 리뷰의 사진 개수 count 테스트
     public void countR() {
         reviewImageDao.deleteAll();
-//        insertALot();
-        assertTrue(reviewImageDao.countR(1)==0);
+        insert();
+        assertTrue(reviewImageDao.countR(1)==2);
     }
 
     @Test // 전체 삭제 테스트
@@ -41,19 +41,22 @@ public class ReviewImageDaoImplTest {
 
     @Test // 하나 삽입 테스트
     public void insert() {
-        reviewDao.deleteAll();
-        ReviewDto reviewDto = new ReviewDto();
+        reviewImageDao.deleteAll();
+        ReviewImageDto reviewImageDto;
 
+        // die Miete
 
-        reviewDto = new ReviewDto("asdf","title1", "content1", 5,3.2,5, 4.4f,1);
+        // 이사 관련 단어
 
-        assertTrue(reviewDao.insert(reviewDto) == 1); // 한명 넣었으니깐 1 오면 된거임
-        assertTrue(reviewDao.count()==1); // 비우고 1명 넣은거니까 1 와야함
+        // 이사 -> 세입자
 
-        reviewDto = new ReviewDto("qwer","title2", "content2", 5,3,5, 4.6, 2);
-        assertTrue(reviewDao.insert(reviewDto) == 1);// 한명 넣었으니깐 1 오면 된거임
-        assertTrue(reviewDao.count()==2); // 저 위에서 한명 넣고, 방금 또 넣었으니까 2 와야함
+        
+
+        for(int i = 1; i<3; i++){
+            reviewImageDto = new ReviewImageDto(null,"사진","pp/"+i, i,1,2);
+            reviewImageDao.insert(reviewImageDto);
+        }
+
+        assertTrue(reviewImageDao.count()==2);
     }
-
-
 }
