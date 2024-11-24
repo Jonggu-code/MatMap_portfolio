@@ -1,7 +1,7 @@
 package com.matjongchan.app.dao;
 
 import com.matjongchan.app.domain.ReviewDto;
-import com.matjongchan.app.domain.ReviewImageDto;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +15,9 @@ import static org.junit.Assert.*;
 public class ReviewImageDaoImplTest {
     @Autowired
     ReviewImageDao reviewImageDao;
+    @Autowired
+    ReviewDao reviewDao;
+
 
     @Test // 전체 이미지 count 테스트
     public void count() {

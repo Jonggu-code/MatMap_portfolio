@@ -1,6 +1,12 @@
 package com.matjongchan.app.controller;
 
-import com.matjongchan.app.dao.MemberDao;
+
+
+/* 1. 로그인 컨트롤러
+ *  2. 회원가입 컨트롤러
+ * */
+
+
 import com.matjongchan.app.domain.MemberDto;
 import com.matjongchan.app.domain.MemberLoginDto;
 import com.matjongchan.app.service.MemberService;
@@ -10,14 +16,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.servlet.http.*;
-import java.io.UnsupportedEncodingException;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.net.URLEncoder;
-
-/* 1. 로그인 컨트롤러
- *  2. 회원가입 컨트롤러
- * */
-
 
 @Controller
 public class MemberController {
