@@ -1,6 +1,6 @@
 package com.matjongchan.app.dao;
 
-import com.matjongchan.app.domain.ReviewDto;
+import com.matjongchan.app.domain.entity.ReviewDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

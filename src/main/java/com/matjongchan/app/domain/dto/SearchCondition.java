@@ -1,4 +1,4 @@
-package com.matjongchan.app.domain;
+package com.matjongchan.app.domain.dto;
 
 import lombok.*;
 import org.springframework.web.util.UriComponentsBuilder;

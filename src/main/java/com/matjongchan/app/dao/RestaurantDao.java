@@ -1,20 +1,20 @@
 package com.matjongchan.app.dao;
 
-import com.matjongchan.app.domain.RestaurantDto;
-import com.matjongchan.app.domain.SearchCondition;
+import com.matjongchan.app.domain.entity.RestaurantDto;
+import com.matjongchan.app.domain.dto.SearchCondition;
 
 import java.util.List;
 
 public interface RestaurantDao {
     /**
-     * Index 번호로 조회
+     * Index 번호로 식당 단일 조회
      * @param id
      * @return
      */
     RestaurantDto getRestaurantById(int id);
 
     /**
-     * 가게이름으로 조회
+     * 가게이름으로 식당 단일 조회
      * @param name
      * @return RestaurantDto
      */

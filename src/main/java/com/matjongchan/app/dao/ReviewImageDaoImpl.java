@@ -1,7 +1,6 @@
 package com.matjongchan.app.dao;
 
-import com.matjongchan.app.domain.ReviewDto;
-import com.matjongchan.app.domain.ReviewImageDto;
+import com.matjongchan.app.domain.entity.OtherImageDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -17,7 +16,7 @@ public class ReviewImageDaoImpl implements ReviewImageDao {
     public int countR(int fk_review_id){
         return session.selectOne(namespace+"countR",fk_review_id);
     };
-    public int insert(ReviewImageDto dto) {
+    public int insert(OtherImageDto dto) {
         return session.insert(namespace+"insert", dto);
     }
 

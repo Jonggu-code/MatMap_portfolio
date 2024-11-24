@@ -1,7 +1,7 @@
 package com.matjongchan.app.dao;
 
-import com.matjongchan.app.domain.RestaurantDto;
-import com.matjongchan.app.domain.SearchCondition;
+import com.matjongchan.app.domain.entity.RestaurantDto;
+import com.matjongchan.app.domain.dto.SearchCondition;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;

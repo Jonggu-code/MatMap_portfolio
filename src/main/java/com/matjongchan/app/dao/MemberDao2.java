@@ -1,10 +1,10 @@
 package com.matjongchan.app.dao;
 
 
-import com.matjongchan.app.domain.FavoriteDto;
-import com.matjongchan.app.domain.MemberDto;
-import com.matjongchan.app.domain.MemberImageDto;
-import com.matjongchan.app.domain.ReviewDto;
+import com.matjongchan.app.domain.entity.FavoriteDto;
+import com.matjongchan.app.domain.entity.MemberDto;
+import com.matjongchan.app.domain.entity.MemberImageDto;
+import com.matjongchan.app.domain.entity.ReviewDto;
 
 import java.util.List;
 

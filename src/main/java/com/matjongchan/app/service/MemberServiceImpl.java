@@ -1,7 +1,7 @@
 package com.matjongchan.app.service;
 
 import com.matjongchan.app.dao.MemberDao;
-import com.matjongchan.app.domain.MemberDto;
+import com.matjongchan.app.domain.entity.MemberDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

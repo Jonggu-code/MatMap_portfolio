@@ -7,8 +7,8 @@ package com.matjongchan.app.controller;
  * */
 
 
-import com.matjongchan.app.domain.MemberDto;
-import com.matjongchan.app.domain.MemberLoginDto;
+import com.matjongchan.app.domain.entity.MemberDto;
+import com.matjongchan.app.domain.dto.MemberLoginDto;
 import com.matjongchan.app.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

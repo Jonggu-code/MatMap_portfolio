@@ -1,8 +1,7 @@
 
 package com.matjongchan.app.service;
 import com.matjongchan.app.dao.ReviewDao;
-import com.matjongchan.app.domain.ReviewDto;
-import org.checkerframework.checker.units.qual.A;
+import com.matjongchan.app.domain.entity.ReviewDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

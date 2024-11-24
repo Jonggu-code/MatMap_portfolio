@@ -1,6 +1,6 @@
 package com.matjongchan.app.dao;
 
-import com.matjongchan.app.domain.ReviewImageDto;
+import com.matjongchan.app.domain.entity.OtherImageDto;
 
 public interface ReviewImageDao {
     int count();
@@ -9,5 +9,5 @@ public interface ReviewImageDao {
 
     int deleteAll();
 
-    int insert(ReviewImageDto dto);
+    int insert(OtherImageDto dto);
 }

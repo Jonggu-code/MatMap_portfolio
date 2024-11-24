@@ -1,4 +1,4 @@
-package com.matjongchan.app.domain;
+package com.matjongchan.app.domain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
