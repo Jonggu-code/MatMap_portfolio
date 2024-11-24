@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/schema/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.matjongchan.app.dao.memberMapper2">
+
+
+<!-- 회원 기본 작업 -->
+    <!-- 0) 회원 수 조회 -->
+    <select id="count" resultType="int">
+        SELECT count(*) FROM member
+    </select>
+
+    <!-- 1) 회원 전체 삭제 -->
+    <delete id="deleteAll">
+        TRUNCATE member
+    </delete>
+
+    <!-- 2) 회원 추가 -->
+    <insert id="insert" parameterType="MemberDto">
+        INSERT INTO member
+        VALUES (null, #{user_id}, #{password}, #{name}, #{address}, #{email}, #{introduce}, #{gender}, #{age}, #{phone_number}, now(), #{fk_image_id})
+    </insert>
+
+    <!-- 3) 전체 회원 정보 조회 -->
+    <select id="selectAll" resultType="MemberDto">
+        SELECT * FROM member
+        ORDER BY create_at DESC, id DESC
+    </select>
+
+    <!-- 3 -1) member 테이블의 회원 정보 select -->
+    <select id="select" parameterType="String" resultType="MemberDto">
+        select * from member where user_id = #{user_id}
+    </select>
+
+    <!-- 3 -2) 이미지 정보 포함한 회원 정보 -->
+    <select id="selectMemberWithImage" parameterType="String" resultType="MemberImageDto">
+        SELECT
+        mi.id,              -- 이미지 ID
+        mi.name,          -- 이미지 이름
+        mi.img_url,        -- 이미지 URL
+        mi.order_number -- 이미지 순서
+
+        FROM member_image AS mi
+        LEFT JOIN member AS m
+
+        ON m.fk_image_id = mi.id
+        WHERE m.user_id = #{user_id}
+    </select>
+
+
+
+    <!-- 4) 회원 삭제 (user_id 기준) -->
+    <delete id="delete" parameterType="String">
+        DELETE FROM member WHERE user_id = #{user_id}
+    </delete>
+
+    <!-- 5) 회원 정보 수정 (user_id 기준) -->
+    <update id="update" parameterType="MemberDto">
+        update member set
+        password = #{password},
+        address = #{address},
+        email = #{email},
+        introduce = #{introduce},
+        phone_number = #{phone_number}
+        where user_id = #{user_id}
+    </update>
+
+    <!-- 프로필 이미지 관리 -->
+    <delete id="deleteAllImage">
+        TRUNCATE member_image
+    </delete>
+
+    <!-- 6) 프로필 이미지 추가 -->
+    <insert id="insertMemberImage" parameterType="MemberImageDto">
+        INSERT INTO member_image (name, img_url, order_number)
+        VALUES (#{name}, #{img_url}, #{order_number})
+    </insert>
+
+    <!-- 3) 전체 회원 프로필 이미지 조회 -->
+    <select id="selectAllImage" resultType="MemberImageDto">
+        SELECT * FROM member_image
+        ORDER BY id DESC
+    </select>
+
+    <!-- 7) 프로필 이미지 조회 -->
+    <select id="selectMemberImage" parameterType="Integer" resultType="MemberImageDto">
+        SELECT * FROM member_image WHERE id = #{id}
+    </select>
+
+    <!-- 8) 프로필 이미지 삭제 -->
+    <delete id="deleteMemberImage" parameterType="Integer">
+        DELETE FROM member_image WHERE id = #{id}
+    </delete>
+
+    <!-- 9) 프로필 이미지 수정 -->
+    <update id="updateMemberImage" parameterType="MemberImageDto">
+        UPDATE member_image
+        SET name = #{name},
+        img_url = #{img_url},
+        order_number = #{order_number}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 회원 리뷰 작업 -->
+    <!-- 10) 특정 회원의 리뷰 조회 (user_id 기준) -->
+    <select id="selectMemberReviews" parameterType="String" resultType="ReviewDto">
+        SELECT r.*
+        FROM member_reviews AS mr
+        LEFT JOIN review AS r
+        ON mr.fk_review_id = r.id
+        WHERE mr.fk_member_id = (
+        SELECT id FROM member WHERE user_id = #{user_id}
+        )
+    </select>
+
+    <!-- 11) 특정 회원의 리뷰 삭제 (user_id 기준) -->
+    <delete id="deleteMemberReview" parameterType="String">
+        DELETE FROM review
+        USING review
+        INNER JOIN member_reviews
+        ON review.id = member_reviews.fk_review_id
+        INNER JOIN member
+        ON member_reviews.fk_member_id = member.id
+        WHERE member.user_id = #{user_id};
+    </delete>
+
+
+    <!-- 즐겨찾기 작업 -->
+    <!-- 12) 특정 회원의 즐겨찾기 조회 (user_id 기준) -->
+    <select id="selectFavorites" parameterType="String" resultType="FavoriteDto">
+        SELECT f.*
+        FROM favorite AS f
+        WHERE f.fk_member_id = (
+        SELECT id FROM member WHERE user_id = #{user_id}
+        )
+    </select>
+
+    <!-- 13) 특정 회원의 즐겨찾기 삭제 (user_id 기준) -->
+    <delete id="deleteFavorite" parameterType="String">
+        DELETE FROM favorite
+        WHERE fk_member_id = (
+        SELECT id FROM member WHERE user_id = #{user_id}
+        )
+    </delete>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

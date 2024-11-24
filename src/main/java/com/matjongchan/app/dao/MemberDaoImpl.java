@@ -13,7 +13,7 @@ public class MemberDaoImpl implements MemberDao {
     @Autowired
     private SqlSession session;
 
-    private static String namespace = "com.matjongchan.app.dao.MemberMapper.";
+    private String namespace = "com.matjongchan.app.dao.MemberMapper.";
 
     @Override
     public int count(){

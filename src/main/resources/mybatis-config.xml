@@ -8,6 +8,7 @@
         <!-- 회원 관련 Dto -->
         <typeAlias alias="MemberDto" type="com.matjongchan.app.domain.MemberDto"/>
         <typeAlias alias="MemberReviewsDto" type="com.matjongchan.app.domain.MemberReviewsDto"/>
+        <typeAlias alias="MemberImageDto" type="com.matjongchan.app.domain.MemberImageDto"/>
 
         <!-- 게시판 관련 Dto -->
         <typeAlias alias="ReviewDto" type="com.matjongchan.app.domain.ReviewDto"/>
