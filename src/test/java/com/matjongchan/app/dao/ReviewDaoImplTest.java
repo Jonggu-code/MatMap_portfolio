@@ -18,6 +18,8 @@ public class ReviewDaoImplTest {
 
     @Autowired
     ReviewDao reviewDao;
+    @Autowired
+    private MemberDaoImpl2 memberDaoImpl2;
 
     @Test // 전체 리뷰 count 테스트
     public void count() {
@@ -71,15 +73,15 @@ public class ReviewDaoImplTest {
         reviewDao.deleteAll();
         ReviewDto reviewDto;
         for (int i = 1; i <= 30; i++) {
-            reviewDto = new ReviewDto("asdf","title"+i, "content"+i, 5,3.2,5, 4.4f,1);
+            reviewDto = new ReviewDto("강주헌","title"+i, "content"+i, 5,3.2,5, 4.4f,1);
             reviewDao.insert(reviewDto);
         }
         for (int i = 1; i <= 30; i++) {
-            reviewDto = new ReviewDto("asdf","title"+(i+30), "content"+i, 5,3.2,5, 4.4f,2);
+            reviewDto = new ReviewDto("카리나","title"+(i+30), "content"+i, 5,3.2,5, 4.4f,2);
             reviewDao.insert(reviewDto);
         }
         for (int i = 1; i <= 30; i++) {
-            reviewDto = new ReviewDto("asdf","title"+(i+60), "content"+i, 5,3.2,5, 4.4f,3);
+            reviewDto = new ReviewDto("정우성","title"+(i+60), "content"+i, 5,3.2,5, 4.4f,3);
             reviewDao.insert(reviewDto);
         }
         assertTrue(reviewDao.count()==90);
@@ -109,6 +111,18 @@ public class ReviewDaoImplTest {
 
         assertTrue(list.size() > 0);
     }
+
+    @Test
+    public void selectM() {
+        reviewDao.deleteAll();
+        insertALot();
+
+        List<ReviewDto> list = reviewDao.selectM( memberDaoImpl2.select("카리나").getUser_id());
+        assertTrue(list.size() == 30);
+
+        assertTrue(list.size() > 0);
+    }
+
 
     @Test // 리뷰 하나 select 테스트
     public void select() {
@@ -152,6 +166,7 @@ public class ReviewDaoImplTest {
         List<ReviewDto> reviewDtos = reviewDao.selectR(3);
         assertTrue(reviewDtos.size() == 90);
     }
+
 
     /**
      * PK 값을 통한 목록조회

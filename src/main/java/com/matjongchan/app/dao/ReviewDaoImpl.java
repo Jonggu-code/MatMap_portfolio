@@ -1,5 +1,6 @@
 package com.matjongchan.app.dao;
 
+import com.matjongchan.app.domain.entity.MemberDto;
 import com.matjongchan.app.domain.entity.ReviewDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class ReviewDaoImpl implements ReviewDao {
         return session.selectOne(namespace + "countR", fk_restaurant_id);
     }
 
+    public List<ReviewDto> select(MemberDto memberDto) {
+        return session.selectOne(namespace + "selectM", memberDto);
+    }
 
     public int deleteAll() {
         return session.delete(namespace+"deleteAll");
@@ -38,6 +42,10 @@ public class ReviewDaoImpl implements ReviewDao {
     }
     public List<ReviewDto> selectR(int fk_restaurant_id) {
         return session.selectList(namespace+"selectR",fk_restaurant_id);
+    }
+    @Override
+    public List<ReviewDto> selectM(String reviewer) {
+        return session.selectList(namespace+"selectM", reviewer);
     }
 
     public ReviewDto select(Integer id) {

@@ -22,12 +22,12 @@ public class ReviewController {
         HttpSession session = request.getSession();
 
         // 로그인 했는지 확인
-        if(!loginChk(session)) {
-            // 로그인 안 했다면..
-            String toURL = "reviewWrite";
-            return "redirect:/login?toUrl="+toURL;
-        }
-        return "reviewList";
+//        if(!loginChk(session)) {
+//            // 로그인 안 했다면..
+//            String toURL = "reviewWrite";
+//            return "redirect:/login?toUrl="+toURL;
+//        }
+        return "reviewWrite";
     }
 
     @PostMapping("/reviewWrite") // 리뷰 작성 메서드

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ReviewImageDaoImpl implements ReviewImageDao {
+public class OtherImageDaoImpl implements OtherImageDao {
     @Autowired
     private SqlSession session;
     private static String namespace="com.matjongchan.app.dao.reviewImageMapper.";

@@ -1,5 +1,6 @@
 package com.matjongchan.app.dao;
 
+import com.matjongchan.app.domain.entity.MemberDto;
 import com.matjongchan.app.domain.entity.ReviewDto;
 
 import java.util.List;
@@ -17,6 +18,9 @@ public interface ReviewDao {
     List<ReviewDto> selectAll();
 
     List<ReviewDto> selectR(int fk_restaurant_id);
+
+    List<ReviewDto> selectM(String reviewer);
+
 
 
     ReviewDto select(Integer bno);
