@@ -1,10 +1,8 @@
 package com.matjongchan.app.dao;
 
 
-import com.matjongchan.app.domain.entity.FavoriteDto;
-import com.matjongchan.app.domain.entity.MemberDto;
-import com.matjongchan.app.domain.entity.MemberImageDto;
-import com.matjongchan.app.domain.entity.ReviewDto;
+import com.matjongchan.app.domain.dto.FavoriteWithRestaurantDto;
+import com.matjongchan.app.domain.entity.*;
 
 import java.util.List;
 
@@ -36,7 +34,15 @@ public interface MemberDao2 {
 
     List<ReviewDto> selectMemberReviews(String user_id); // user_id 기준으로 리뷰 조회
     int deleteMemberReview(String user_id);  // user_id 기준으로 리뷰 삭제
-    List<FavoriteDto> selectFavorites(String user_id);  // user_id 기준으로 즐겨찾기 조회
+
+    int countMemberReview();
+    int deleteAllMemberReview();
+    int insertMemberReview(MemberReviewsDto dto);
+    List<MemberReviewsDto> selectAllMemberReview();
+    MemberReviewsDto selectMemberReview(Integer id);
+
+
+    List<FavoriteWithRestaurantDto> selectFavorites(String user_id);  // user_id 기준으로 즐겨찾기 조회
     int deleteFavorite(String user_id);  // user_id 기준으로 즐겨찾기 삭제
 }
 
