@@ -2,11 +2,15 @@ package com.matjongchan.app.dao;
 
 import com.matjongchan.app.domain.entity.MemberDto;
 import com.matjongchan.app.domain.entity.MemberImageDto;
+import com.matjongchan.app.domain.entity.MemberReviewsDto;
+import com.matjongchan.app.domain.entity.ReviewDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -16,6 +20,9 @@ public class MemberDaoImpl22Test {
 
     @Autowired
     MemberDao2 memberDao;
+    @Autowired
+    ReviewDao reviewDao;
+
     @Test
     public void count() {
         memberDao.deleteAll();
@@ -72,6 +79,7 @@ public class MemberDaoImpl22Test {
     @Test
     public void selectMemberWithImage() {
         memberDao.deleteAll();
+        memberDao.deleteAllImage();
 
         // 회원 데이터 삽입
         MemberDto member = new MemberDto(null, "user1", "pass1", "User1", "Address1", "user1@example.com", "Intro1", "남", 13, "010-1111-1111", "now()", 1);
@@ -102,7 +110,7 @@ public class MemberDaoImpl22Test {
     @Test
     public void update() {
         memberDao.deleteAll();
-        MemberDto member1 = new MemberDto(null, "user0", "pass0", "User0", "Address0", "user0@example.com", "Intro0", "남", 55, "010-6666-6666","now()",123);
+        MemberDto member1 = new MemberDto(null, "user0", "pass0", "User0", "Address0", "user0@example.com", "Intro0", "남", 55, "010-5555-5555","now()",123);
         memberDao.insert(member1);
 
         Integer id = memberDao.selectAll().get(0).getId();
@@ -161,20 +169,95 @@ public class MemberDaoImpl22Test {
 
     }
 
+//    10) 특정 회원의 리뷰 조회 (user_id 기준)
     @Test
     public void selectMemberReviews() {
+        // 회원추가
+        memberDao.deleteAll();
+        reviewDao.deleteAll();
+        memberDao.deleteAllMemberReview();
+
+
+        MemberDto member1 = new MemberDto(null, "user2", "pass2", "User2", "Address2", "user2@example.com", "Intro2", "여", 19, "010-2222-2222","now()",123);
+        memberDao.insert(member1);
+        String userId = memberDao.selectAll().get(0).getUser_id();
+
+        // 리뷰 추가
+        ReviewDto review1 = new ReviewDto(null, userId, "title1", "content1", 3.4,4.5,5.0, (3.4 + 4.5 + 5.0) / 3, null, 123);
+//        ReviewDto review2 = new ReviewDto(null, userId, "title2", "content2", 4.5,3.5,3.0, (4.5 + 3.5 + 3.0) / 3, null, 125);
+
+        reviewDao.insert(review1);
+//        reviewDao.insert(review2);
+
+        Integer fk_memberId = memberDao.selectAll().get(0).getId();
+        Integer fk_reviewId = reviewDao.selectAll().get(0).getId();
+
+        // member_review 테이블 관련 추가
+        MemberReviewsDto mrdto = new MemberReviewsDto(null,fk_memberId,fk_reviewId);
+        memberDao.insertMemberReview(mrdto);
+
+
+        List<ReviewDto> reviews = memberDao.selectMemberReviews(userId);
+        assertTrue(reviews.size() == 1);
 
     }
 
     @Test
     public void deleteMemberReview() {
+        // 회원, 리뷰, 관계 테이블 초기화
+        memberDao.deleteAll();
+        reviewDao.deleteAll();
+        memberDao.deleteAllMemberReview();
+
+        // 회원 추가
+        MemberDto member1 = new MemberDto(null, "user2", "pass2", "User2", "Address2", "user2@example.com", "Intro2", "여", 19, "010-2222-2222","now()",123);
+        memberDao.insert(member1);
+        String userId = memberDao.selectAll().get(0).getUser_id();
+
+        // 리뷰 추가
+        ReviewDto review1 = new ReviewDto(null, userId, "title1", "content1", 3.4,4.5,5.0, (3.4 + 4.5 + 5.0) / 3, null, 123);
+        reviewDao.insert(review1);
+
+        ReviewDto review2 = new ReviewDto(null, userId, "title2", "content2", 4.5,3.5,3.0, (4.5 + 3.5 + 3.0) / 3, null, 125);
+        reviewDao.insert(review2);
+
+
+        Integer fk_memberId = memberDao.selectAll().get(0).getId();
+        Integer fk_reviewId = reviewDao.selectAll().get(0).getId();
+
+        // member_review 테이블 관련 추가
+        MemberReviewsDto mrdto = new MemberReviewsDto(null,fk_memberId,fk_reviewId);
+        memberDao.insertMemberReview(mrdto);
+
+        // 리뷰 삭제 실행
+        int rowsDeleted = memberDao.deleteMemberReview(userId);
+
+        // 삭제 확인
+        assertTrue(rowsDeleted == 1);
+
+
     }
 
-    @Test
-    public void selectFavorites() {
-    }
+// 회원의 즐겨찾기 조회 관련 TDD는 restaurantMapper 완성되고 하기
 
-    @Test
-    public void deleteFavorite() {
-    }
+
+//    @Test
+//    public void selectFavorites() {
+//        // 회원, 리뷰, 관계 테이블 초기화
+//        memberDao.deleteAll();
+//        reviewDao.deleteAll();
+//        memberDao.deleteAllMemberReview();
+//
+//        // 회원 추가
+//        MemberDto member1 = new MemberDto(null, "user2", "pass2", "User2", "Address2", "user2@example.com", "Intro2", "여", 19, "010-2222-2222","now()",123);
+//        memberDao.insert(member1);
+//        String userId = memberDao.selectAll().get(0).getUser_id();
+//
+//        // 레스토랑 추가
+//
+//    }
+//
+//    @Test
+//    public void deleteFavorite() {
+//    }
 }
