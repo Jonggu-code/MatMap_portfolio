@@ -12,8 +12,118 @@
         SELECT * FROM restaurant WHERE name = #{name}
     </select>
 
+    <select id="selectById" parameterType="int" resultType="RestaurantDto">
+        SELECT * FROM restaurant WHERE id = #{id}
+    </select>
 
+    <!--  주어진 검색조건으로 검색  -->
+    <select id="totalSearch" parameterType="SearchCondition" resultType="RestaurantDto">
+        SELECT * FROM restaurant as r
+        WHERE true
+        <if test="c_address != null">
+            and r.c_address = #{c_address}
+        </if>
+        <if test="category != null">
+            and r.fk_category = #{category}
+        </if>
+        order by
+        <choose>
+            <when test="option == 'R'">
+                r.total_review_count desc
+            </when>
+            <otherwise>
+                r.total_score_count desc
+            </otherwise>
+        </choose>
+        limit #{offset} , #{page_size}
+    </select>
 
+    <!--  현재 지도가운데에 가까운 식당 조회  -->
+    <select id="nearSearch" parameterType="SearchCondition" resultType="RestaurantDto">
+        SELECT * FROM restaurant as r
+        WHERE true
+        <if test="c_address != null">
+            and r.c_address = #{c_address}
+        </if>
+        <if test="category != null">
+            and r.fk_category = #{category}
+        </if>
+        and r.loc_x > #{loc_nw_x}
+        and r.loc_y > #{loc_nw_y}
+        and #{loc_se_x} > r.loc_x
+        and #{loc_se_y} > r.loc_y
+        order by
+        <choose>
+            <when test="option == 'R'">
+                r.total_review_count desc
+            </when>
+            <otherwise>
+                r.total_score_count desc
+            </otherwise>
+        </choose>
+        limit #{offset} , 20
+    </select>
+
+    <!--  검색창을 이용한 통합검색  -->
+    <select id="realTotalSearch" parameterType="SearchCondition" resultType="RestaurantDto">
+        SELECT * FROM restaurant as r
+            WHERE r.search_tag LIKE concat('%',#{keyword},'%')
+                ORDER BY r.total_score_count DESC
+                limit #{offset} , #{page_size}
+    </select>
+
+    <delete id="truncateAll">
+        truncate table restaurant;
+    </delete>
+
+    <insert id="insertRestaurant" parameterType="RestaurantDto">
+        INSERT INTO restaurant
+            values(null, #{name}, #{c_address}, #{d_address}, #{number}, #{reservation}, #{memo}, #{total_score_count},
+                    #{total_review_count}, #{loc_x}, #{loc_y}, #{search_tag}, #{fk_category})
+    </insert>
+
+    <update id="updateRestaurant" parameterType="RestaurantDto">
+        UPDATE restaurant as r set
+            r.name = #{name},
+            r.c_address = #{c_address},
+            r.d_address = #{d_address},
+            r.number = #{number},
+            r.reservation = #{reservation},
+            r.memo = #{memo},
+            r.total_score_count = #{total_score_count},
+            r.total_review_count = #{total_review_count},
+            r.loc_x = #{loc_x},
+            r.loc_y = #{loc_y},
+            r.search_tag = #{search_tag},
+            r.fk_category = #{fk_category}
+        WHERE r.id = #{id}
+    </update>
+
+    <!--  리뷰작성시 total_score_count 와 total_review_count 갱신  -->
+    <update id="updateTotalCount" parameterType="TotalCount">
+        UPDATE restaurant as r set
+            r.total_score_count = #{total_score_count},
+            r.total_review_count = #{total_review_count}
+        WHERE r.id = #{restaurant_id}
+    </update>
+
+    <!--  식당 총 평균 점수, 식당 총 후기 개수  -->
+    <select id="getTotalCount" parameterType="TotalCount" resultType="TotalCount">
+        SELECT r.id AS restaurant_id, COUNT(rv.id) AS total_review_count, AVG(rv.total_score) AS total_score_count
+            FROM restaurant AS r
+                LEFT JOIN review AS rv
+                ON rv.fk_restaurant_id = #{restaurant_id}
+                    WHERE r.id = rv.fk_restaurant_id
+                        GROUP BY r.id;
+    </select>
+
+    <delete id="deleteRestaurant" parameterType="int">
+        DELETE FROM restaurant as r WHERE r.id = #{id}
+    </delete>
+
+    <select id="getRestaurantAll" resultType="RestaurantDto">
+        SELECT * FROM restaurant;
+    </select>
 
 </mapper>
 
