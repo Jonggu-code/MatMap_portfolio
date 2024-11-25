@@ -23,6 +23,8 @@
         <typeAlias alias="MenuDto" type="com.matjongchan.app.domain.entity.MenuDto"/>
         <typeAlias alias="CategoryDto" type="com.matjongchan.app.domain.entity.CategoryDto"/>
         <typeAlias alias="BusinessHoursDto" type="com.matjongchan.app.domain.entity.BusinessHoursDto"/>
+        <typeAlias alias="SearchCondition" type="com.matjongchan.app.domain.dto.SearchCondition"/>
+        <typeAlias alias="TotalCount" type="com.matjongchan.app.domain.dto.TotalCount"/>
 
         <!-- 아직 구현계획 X -->
         <typeAlias alias="BoardDto" type="com.matjongchan.app.domain.entity.BoardDto"/>

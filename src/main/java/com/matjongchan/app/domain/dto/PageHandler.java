@@ -13,7 +13,6 @@ public class PageHandler {
     private int itemsPerPage;     // 한 페이지에 표시할 리뷰 개수 (3개)
     private int currentPage;      // 현재 페이지
 
-
     public PageHandler(int totalItems,  int currentPage) {
         this.totalItems = totalItems;
         this.itemsPerPage = 3;

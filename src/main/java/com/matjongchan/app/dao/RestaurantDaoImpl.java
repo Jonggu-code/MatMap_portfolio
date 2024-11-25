@@ -1,5 +1,6 @@
 package com.matjongchan.app.dao;
 
+import com.matjongchan.app.domain.dto.TotalCount;
 import com.matjongchan.app.domain.entity.RestaurantDto;
 import com.matjongchan.app.domain.dto.SearchCondition;
 import lombok.RequiredArgsConstructor;
@@ -13,20 +14,70 @@ public class RestaurantDaoImpl implements RestaurantDao {
 
     private final SqlSession session;
 
-    private static String namespace = "com.matjongchan.app.dao.RestaurantMapper.";
+    private final String namespace = "com.matjongchan.app.dao.restaurantMapper.";
+
+    @Override
+    public int getRestaurantCount() {
+        return session.selectOne(namespace + "count");
+    }
 
     @Override
     public RestaurantDto getRestaurantById(int id) {
-        return null;
+        return session.selectOne(namespace + "selectById", id);
     }
 
     @Override
     public RestaurantDto getRestaurantByName(String name) {
-        return null;
+        return session.selectOne(namespace + "selectByName", name);
     }
 
     @Override
-    public List<RestaurantDto> searchRestaurantsBySearchCondition(SearchCondition searchCondition) {
-        return List.of();
+    public List<RestaurantDto> totalSearch(SearchCondition searchCondition) {
+        return session.selectList(namespace + "totalSearch", searchCondition);
+    }
+
+    @Override
+    public List<RestaurantDto> nearSearch(SearchCondition searchCondition) {
+        return session.selectList(namespace + "nearSearch", searchCondition);
+    }
+
+    @Override
+    public List<RestaurantDto> realTotalSearch(SearchCondition searchCondition) {
+        return session.selectList(namespace + "realTotalSearch", searchCondition);
+    }
+
+    @Override
+    public int truncateAll() {
+        return session.delete(namespace + "truncateAll");
+    }
+
+    @Override
+    public int insertRestaurant(RestaurantDto restaurantDto) {
+        return session.insert(namespace + "insertRestaurant", restaurantDto);
+    }
+
+    @Override
+    public int updateRestaurant(RestaurantDto restaurantDto) {
+        return session.update(namespace + "updateRestaurant", restaurantDto);
+    }
+
+    @Override
+    public int deleteRestaurant(int id) {
+        return session.delete(namespace + "deleteRestaurant", id);
+    }
+
+    @Override
+    public TotalCount getTotalCount(TotalCount totalCount) {
+        return session.selectOne(namespace + "getTotalCount", totalCount);
+    }
+
+    @Override
+    public int updateTotalCount(TotalCount totalCount) {
+        return session.update(namespace + "updateTotalCount", totalCount);
+    }
+
+    @Override
+    public List<RestaurantDto> getRestaurantAll() {
+        return session.selectList(namespace + "getRestaurantAll");
     }
 }
