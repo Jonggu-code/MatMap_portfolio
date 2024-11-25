@@ -2,7 +2,7 @@ package com.matjongchan.app.dao;
 
 import com.matjongchan.app.domain.entity.OtherImageDto;
 
-public interface ReviewImageDao {
+public interface OtherImageDao {
     int count();
 
     int countR(int fk_review_id);

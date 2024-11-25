@@ -33,11 +33,21 @@
         select * from review
         order by id desc
     </select>
+
     <!--    해당 식당 게시글 불러오기 (최근 등록 순으로)-->
     <select id="selectR" parameterType="int" resultType="ReviewDto">
         select * from review
         where fk_restaurant_id = #{fk_restaurant_id}
         order by id desc
+    </select>
+
+    <!--    해당 유저의 게시글 불러오기 (최근 등록 순으로)-->
+    <select id="selectM" parameterType="String" resultType="ReviewDto">
+        SELECT * FROM review AS r
+        LEFT JOIN member AS m
+        ON m.user_id = r.reviewer
+        WHERE r.reviewer = #{reviewer}
+        order by r.id desc
     </select>
 
     <!-- 게시글 한개 불러오기-->
@@ -57,6 +67,8 @@
         total_score=#{total_score}
         where id=#{id} and reviewer=#{reviewer}
     </update>
+
+
 
 
 </mapper>

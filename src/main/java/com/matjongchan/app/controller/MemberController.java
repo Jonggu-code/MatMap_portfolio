@@ -37,6 +37,7 @@ public class MemberController {
     }
     @GetMapping("/login")
     public String loginForm(){
+        System.out.println("sadfasfadfsd");
         return "loginForm"; //loginForm jsp 파일로 연결
     }
 
