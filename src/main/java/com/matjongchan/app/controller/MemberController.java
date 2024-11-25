@@ -74,7 +74,7 @@ public class MemberController {
         // 정보가 없으면, 비회원이기에 false
 
         // 아이디 확인
-        MemberDto member = memberService.chooseOne(user_id);
+        MemberDto member = memberService.getMember(user_id);
         if(member == null) return false;
         // 비밀번호 확인
         return member.getPassword().equals(user_pw);
@@ -135,7 +135,7 @@ public class MemberController {
         // 아이디 중복 검사 통과한 경우,
         if(isValid(user_id)){
             // DB에 저장
-            if(memberService.write(memberDto) == 1){
+            if(memberService.addMember(memberDto) == 1){
                 return "redirect:/main";
             }
             else{
@@ -160,8 +160,6 @@ public class MemberController {
             m.addAttribute("u_pnumer", memberDto.getPhone_number());
 
             return "redirect:/join?msg=" + msg;
-
-
 
 
 
@@ -204,7 +202,7 @@ public class MemberController {
 
      */
     private boolean isValid(String id){
-        MemberDto member = memberService.chooseOne(id);
+        MemberDto member = memberService.getMember(id);
 
         if(member != null) return false;
         return true;
