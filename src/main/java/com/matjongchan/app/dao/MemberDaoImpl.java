@@ -1,6 +1,6 @@
 package com.matjongchan.app.dao;
 
-import com.matjongchan.app.domain.MemberDto;
+import com.matjongchan.app.domain.entity.MemberDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

@@ -1,7 +1,6 @@
 package com.matjongchan.app.dao;
 
-import com.matjongchan.app.domain.ReviewDto;
-import com.mysql.cj.Session;
+import com.matjongchan.app.domain.entity.ReviewDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

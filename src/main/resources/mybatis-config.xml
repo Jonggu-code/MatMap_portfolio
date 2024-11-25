@@ -6,24 +6,25 @@
     <typeAliases>
 
         <!-- 회원 관련 Dto -->
-        <typeAlias alias="MemberDto" type="com.matjongchan.app.domain.MemberDto"/>
-        <typeAlias alias="MemberReviewsDto" type="com.matjongchan.app.domain.MemberReviewsDto"/>
-        <typeAlias alias="MemberImageDto" type="com.matjongchan.app.domain.MemberImageDto"/>
+        <typeAlias alias="MemberDto" type="com.matjongchan.app.domain.entity.MemberDto"/>
+        <typeAlias alias="MemberReviewsDto" type="com.matjongchan.app.domain.entity.MemberReviewsDto"/>
+        <typeAlias alias="MemberImageDto" type="com.matjongchan.app.domain.entity.MemberImageDto"/>
 
         <!-- 게시판 관련 Dto -->
-        <typeAlias alias="ReviewDto" type="com.matjongchan.app.domain.ReviewDto"/>
-        <typeAlias alias="ReviewImageDto" type="com.matjongchan.app.domain.ReviewImageDto"/>
-        <typeAlias alias="BoardDto" type="com.matjongchan.app.domain.BoardDto"/>
+        <typeAlias alias="ReviewDto" type="com.matjongchan.app.domain.entity.ReviewDto"/>
+        <typeAlias alias="OtherImageDto" type="com.matjongchan.app.domain.entity.OtherImageDto"/>
+        <typeAlias alias="ReviewMenuDto" type="com.matjongchan.app.domain.entity.ReviewMenuDto"/>
 
         <!-- 찜 기능 관련 Dto -->
-        <typeAlias alias="FavoriteDto" type="com.matjongchan.app.domain.FavoriteDto"/>
+        <typeAlias alias="FavoriteDto" type="com.matjongchan.app.domain.entity.FavoriteDto"/>
 
         <!-- 식당 관련 Dto -->
-        <typeAlias alias="RestaurantDto" type="com.matjongchan.app.domain.RestaurantDto"/>
-        <typeAlias alias="RestaurantMenuDto" type="com.matjongchan.app.domain.RestaurantMenuDto"/>
-        <typeAlias alias="RestaurantTagsDto" type="com.matjongchan.app.domain.RestaurantTagsDto"/>
-        <typeAlias alias="TagDto" type="com.matjongchan.app.domain.TagDto"/>
-        <typeAlias alias="MenuDto" type="com.matjongchan.app.domain.MenuDto"/>
+        <typeAlias alias="RestaurantDto" type="com.matjongchan.app.domain.entity.RestaurantDto"/>
+        <typeAlias alias="MenuDto" type="com.matjongchan.app.domain.entity.MenuDto"/>
+        <typeAlias alias="CategoryDto" type="com.matjongchan.app.domain.entity.CategoryDto"/>
+        <typeAlias alias="BusinessHoursDto" type="com.matjongchan.app.domain.entity.BusinessHoursDto"/>
 
+        <!-- 아직 구현계획 X -->
+        <typeAlias alias="BoardDto" type="com.matjongchan.app.domain.entity.BoardDto"/>
     </typeAliases>
 </configuration>

@@ -1,4 +1,4 @@
-package com.matjongchan.app.domain;
+package com.matjongchan.app.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,18 +11,17 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor //모든 필드를 포함하는 생성자를 추가.
 @NoArgsConstructor // 매개변수가 없는 기본 생성자를 추가.
 @Slf4j
-public class FavoriteDto {
-    private Integer id;                 // 즐겨찾기 ID
-    private int fk_member_id;         // 회원 ID (fk_member_id)
-    private int fk_restaurant_id;     // 식당 ID (fk_restaurant_id)
+public class MemberLoginDto {
+    private String user_id;
+    private String password;
+    private boolean remember_id;
 
     @Override
     public String toString() {
-        return "FavoriteDto{" +
-                "id=" + id +
-                ", fk_member_id=" + fk_member_id +
-                ", fk_restaurant_id=" + fk_restaurant_id +
+        return "MemberLoginDto{" +
+                "user_id='" + user_id + '\'' +
+                ", password='" + password + '\'' +
+                ", remember_id=" + remember_id +
                 '}';
     }
 }
-

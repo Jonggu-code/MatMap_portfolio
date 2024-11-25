@@ -1,6 +1,6 @@
 package com.matjongchan.app.dao;
 
-import com.matjongchan.app.domain.ReviewDto;
+import com.matjongchan.app.domain.entity.ReviewDto;
 
 import java.util.List;
 

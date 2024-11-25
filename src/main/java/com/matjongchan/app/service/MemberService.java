@@ -1,6 +1,6 @@
 package com.matjongchan.app.service;
 
-import com.matjongchan.app.domain.MemberDto;
+import com.matjongchan.app.domain.entity.MemberDto;
 
 import java.util.List;
 

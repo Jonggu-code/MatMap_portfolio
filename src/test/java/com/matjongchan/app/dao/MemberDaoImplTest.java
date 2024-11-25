@@ -1,6 +1,6 @@
 package com.matjongchan.app.dao;
 
-import com.matjongchan.app.domain.MemberDto;
+import com.matjongchan.app.domain.entity.MemberDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

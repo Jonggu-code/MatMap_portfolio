@@ -1,6 +1,6 @@
 package com.matjongchan.app.dao;
 
-import com.matjongchan.app.domain.ReviewDto;
+import com.matjongchan.app.domain.entity.OtherImageDto;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,7 +42,7 @@ public class ReviewImageDaoImplTest {
     @Test // 하나 삽입 테스트
     public void insert() {
         reviewImageDao.deleteAll();
-        ReviewImageDto reviewImageDto;
+        OtherImageDto otherImageDto;
 
         // die Miete
 
@@ -53,8 +53,8 @@ public class ReviewImageDaoImplTest {
         
 
         for(int i = 1; i<3; i++){
-            reviewImageDto = new ReviewImageDto(null,"사진","pp/"+i, i,1,2);
-            reviewImageDao.insert(reviewImageDto);
+            otherImageDto = new OtherImageDto(null,"사진","pp/"+i, i,1,2);
+            reviewImageDao.insert(otherImageDto);
         }
 
         assertTrue(reviewImageDao.count()==2);
