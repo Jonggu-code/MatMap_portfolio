@@ -16,6 +16,8 @@
         <typeAlias alias="ReviewDto" type="com.matjongchan.app.domain.entity.ReviewDto"/>
         <typeAlias alias="OtherImageDto" type="com.matjongchan.app.domain.entity.OtherImageDto"/>
         <typeAlias alias="ReviewMenuDto" type="com.matjongchan.app.domain.entity.ReviewMenuDto"/>
+        <typeAlias alias="ReviewDetailSearchCondition" type="com.matjongchan.app.domain.dto.ReviewDetailSearchCondition"/>
+        <typeAlias alias="ReviewDetail" type="com.matjongchan.app.domain.dto.ReviewDetail"/>
 
         <!-- 찜 기능 관련 Dto -->
         <typeAlias alias="FavoriteDto" type="com.matjongchan.app.domain.entity.FavoriteDto"/>

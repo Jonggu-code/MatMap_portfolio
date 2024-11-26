@@ -40,6 +40,18 @@
         where fk_restaurant_id = #{fk_restaurant_id}
         order by id desc
     </select>
+    <!--  식당 상세페이지에서 리뷰 3개 가져오기.  -->
+    <select id="getRestaurantReview3" parameterType="ReviewDetailSearchCondition" resultType="ReviewDetail">
+        SELECT * FROM review AS re
+            INNER JOIN restaurant AS r
+                ON re.fk_restaurant_id = r.id
+            INNER JOIN member_reviews AS mr
+                ON mr.fk_review_id = re.id
+            INNER JOIN member AS m
+                ON m.id = mr.fk_member_id
+        ORDER BY id DESC
+        LIMIT #{offset} , #{page_size}
+    </select>
 
     <!--    해당 유저의 게시글 불러오기 (최근 등록 순으로)-->
     <select id="selectM" parameterType="String" resultType="ReviewDto">

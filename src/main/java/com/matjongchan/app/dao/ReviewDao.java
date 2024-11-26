@@ -1,6 +1,7 @@
 package com.matjongchan.app.dao;
 
-import com.matjongchan.app.domain.entity.MemberDto;
+import com.matjongchan.app.domain.dto.ReviewDetail;
+import com.matjongchan.app.domain.dto.ReviewDetailSearchCondition;
 import com.matjongchan.app.domain.entity.ReviewDto;
 
 import java.util.List;
@@ -29,4 +30,5 @@ public interface ReviewDao {
 
     int delete(int id, String writer);
 
+    List<ReviewDetail> getReviewDetail(ReviewDetailSearchCondition reviewDetailSearchCondition);
 }

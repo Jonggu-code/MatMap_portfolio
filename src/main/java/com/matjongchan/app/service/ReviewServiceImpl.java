@@ -2,10 +2,12 @@
 package com.matjongchan.app.service;
 import com.matjongchan.app.dao.ReviewDao;
 import com.matjongchan.app.domain.dto.ReviewDetail;
+import com.matjongchan.app.domain.dto.ReviewDetailSearchCondition;
 import com.matjongchan.app.domain.entity.ReviewDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -40,13 +42,19 @@ public class ReviewServiceImpl implements ReviewService{
     // 리뷰 삭제 메서드
     public int remove(Integer id, String reviewer){return reviewDao.delete(id, reviewer);}
 
+
+    //식당 상세페이지에서 리뷰조회시 사용할 메서드
     @Override
-    public List<ReviewDetail> getReviewDetail(Integer review_id) {
+    public List<ReviewDetail> getReviewDetail(ReviewDetailSearchCondition reviewDetailSearchCondition) {
 
-        return null;
+        List<ReviewDetail> review_dto_list = reviewDao.getReviewDetail(reviewDetailSearchCondition);
 
+
+
+        return List.of();
     }
 
-    ;
+
+
 
 }
