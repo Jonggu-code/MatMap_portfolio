@@ -2,10 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/schema/mybatis-3-mapper.dtd">
 
-
-<mapper namespace="com.matjongchan.app.dao.reviewMapper">
-
-
+<mapper namespace="com.matjongchan.app.dao.reviewMenuMapper">
+    <!-- 해당 리뷰에 해당하는 이미지 테이블 정보 전부 가져오기.-->
+    <select id="selectReviewImage" parameterType="int" resultType="OtherImageDto">
+        SELECT  oi.name as name,
+                oi.img_url as url,
+                oi.order_number as order_number,
+                oi.fk_review_id as fk_review_id
+        FROM other_image as oi
+            INNER JOIN review as re
+                on oi.fk_review_id = re.id
+            WHERE oi.fk_review_id = #{id}
+            ORDER BY oi.order_number
+    </select>
 
 
 

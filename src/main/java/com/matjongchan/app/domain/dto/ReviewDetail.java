@@ -1,10 +1,13 @@
 package com.matjongchan.app.domain.dto;
 
 
+import com.matjongchan.app.domain.entity.OtherImageDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,10 +27,12 @@ public class ReviewDetail {
     private String create_at;
     private String gender;
     private Integer age;
-    private String image_url_list;    //해당 리뷰에 관련된 이미지 리스트
+    private List<OtherImageDto> image;    //해당 리뷰에 관련된 이미지 리스트
+    private Integer fk_restaurant_id;
 
     @Builder
-    public ReviewDetail(Integer id, String reviewer, String title, String content, Double taste_score, Double clean_score, Double kind_score, Double total_score, String create_at, String gender, Integer age, String image_url_list) {
+
+    public ReviewDetail(Integer id, String reviewer, String title, String content, Double taste_score, Double clean_score, Double kind_score, Double total_score, String create_at, String gender, Integer age, List<OtherImageDto> image, Integer fk_restaurant_id) {
         this.id = id;
         this.reviewer = reviewer;
         this.title = title;
@@ -39,6 +44,7 @@ public class ReviewDetail {
         this.create_at = create_at;
         this.gender = gender;
         this.age = age;
-        this.image_url_list = image_url_list;
+        this.image = image;
+        this.fk_restaurant_id = fk_restaurant_id;
     }
 }

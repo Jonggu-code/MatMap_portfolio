@@ -1,5 +1,6 @@
 package com.matjongchan.app.dao;
 
+import com.matjongchan.app.domain.entity.OtherImageDto;
 import com.matjongchan.app.domain.entity.ReviewDto;
 
 import java.util.List;
@@ -18,12 +19,12 @@ public interface ReviewMenuDao {
 
     List<ReviewDto> selectM(String reviewer);
 
-
-
     ReviewDto select(Integer bno);
 
     int update(ReviewDto dto);
 
     int delete(int id, String writer);
+
+    List<OtherImageDto> getReviewImages(int review_id);
 
 }

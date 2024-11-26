@@ -40,18 +40,6 @@
         where fk_restaurant_id = #{fk_restaurant_id}
         order by id desc
     </select>
-    <!--  식당 상세페이지에서 리뷰 3개 가져오기.  -->
-    <select id="getRestaurantReview3" parameterType="ReviewDetailSearchCondition" resultType="ReviewDetail">
-        SELECT * FROM review AS re
-            INNER JOIN restaurant AS r
-                ON re.fk_restaurant_id = r.id
-            INNER JOIN member_reviews AS mr
-                ON mr.fk_review_id = re.id
-            INNER JOIN member AS m
-                ON m.id = mr.fk_member_id
-        ORDER BY id DESC
-        LIMIT #{offset} , #{page_size}
-    </select>
 
     <!--    해당 유저의 게시글 불러오기 (최근 등록 순으로)-->
     <select id="selectM" parameterType="String" resultType="ReviewDto">
@@ -67,7 +55,6 @@
         SELECT * from review where id = #{id}
     </select>
 
-
     <!--   수정: 글 정보(제목, 내용) 수정시 글 번호 체크, 글쓴이와 시도하는 사용자가 같은지도 필수로 확인 해야함-->
     <update id="update" parameterType="ReviewDto">
         update review set
@@ -80,7 +67,25 @@
         where id=#{id} and reviewer=#{reviewer}
     </update>
 
-
+    <!--  식당 상세페이지에서 리뷰 3개 가져오기.  -->
+    <select id="getRestaurantReview3" parameterType="ReviewDetailSearchCondition" resultType="ReviewDetail">
+        SELECT  re.id as id,
+            re.reviewer as reviewer,
+            re.title as title,
+            re.content as content,
+            re.taste_score as taste_score,
+            re.clean_score as clean_score,
+            re.kind_score as kind_score,
+            re.total_score as total_score,
+            re.create_at as create_at
+            re.fk_restaurant_id as fk_restaurant_id
+        FROM review AS re
+            INNER JOIN restaurant AS r
+                ON re.fk_restaurant_id = r.id
+        WHERE r.id = #{restaurant_id}
+            ORDER BY re.id DESC
+            LIMIT #{offset} , #{page_size}
+    </select>
 
 
 </mapper>

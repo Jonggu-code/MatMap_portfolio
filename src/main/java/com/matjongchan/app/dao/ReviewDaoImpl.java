@@ -69,8 +69,8 @@ public class ReviewDaoImpl implements ReviewDao {
     }
 
     @Override
-    public List<ReviewDetail> getReviewDetail(ReviewDetailSearchCondition reviewDetailSearchCondition) {
-        return session.selectList(namespace+"getRestaurantReview3", reviewDetailSearchCondition);
+    public List<ReviewDetail> getRestaurantReview3(ReviewDetailSearchCondition condition) {
+        return session.selectList(namespace+"getRestaurantReview3", condition);
     }
 
 }
