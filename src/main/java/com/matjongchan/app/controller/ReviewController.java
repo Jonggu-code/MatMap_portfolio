@@ -1,23 +1,29 @@
 package com.matjongchan.app.controller;
 
+import com.matjongchan.app.domain.entity.RestaurantDto;
 import com.matjongchan.app.domain.entity.ReviewDto;
 import com.matjongchan.app.service.ReviewService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
+@Slf4j
 @Controller
 public class ReviewController {
     @Autowired
     ReviewService reviewService;
 
-    @GetMapping("/reviewWrite") // 리뷰 작성 메서드
-    public String reviewWrite(HttpServletRequest request, Model m) {
+    @GetMapping("/reviewWrite") // 리뷰 작성 첫 페이지 메서드 보여주기
+    public String reviewWrite(HttpServletRequest request, RestaurantDto restaurantDto, Model m) {
+        m.addAttribute("restaurantDto", restaurantDto);
+        log.info(".//.////////////////////////////");
         // 세션 정보 저장
         HttpSession session = request.getSession();
 
@@ -30,11 +36,19 @@ public class ReviewController {
         return "reviewWrite";
     }
 
-    @PostMapping("/reviewWrite") // 리뷰 작성 메서드
-    public String reviewWriteSubmit(HttpSession session, ReviewDto reviewDto) {
+    @PostMapping("/showReviewWrite2")
+    public String showReviewWrite2(ReviewDto reviewDto, Model model) {
+        model.addAttribute("reviewDto", reviewDto);
 
+        return "reviewWrite2";
+    }
+
+    @PostMapping("/reviewWrite2") // 리뷰 작성 두 번째 페이지 메서드
+    public String reviewWriteSubmit(HttpSession session, ReviewDto reviewDto) {
         try {
-            String reviewer = (String)session.getAttribute("id");
+            log.info(reviewDto.getContent());
+//            String reviewer = (String)session.getAttribute("id");
+            String reviewer = "김철수";
             reviewDto.setReviewer(reviewer);
 
             int rowCount = reviewService.write(reviewDto);
@@ -46,7 +60,7 @@ public class ReviewController {
             e.printStackTrace();
             return "글쓰기 실패";
         }
-        return "redirect:/reviewWrite";
+        return "";
     }
 
     @PostMapping("/modify") // 게시글 수정 메서드
