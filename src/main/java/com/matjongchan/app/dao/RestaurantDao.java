@@ -15,7 +15,7 @@ public interface RestaurantDao {
      * @return
      */
     RestaurantDto getRestaurantById(int id);
-
+    
     /**
      * 가게이름으로 식당 단일 조회
      * @param name

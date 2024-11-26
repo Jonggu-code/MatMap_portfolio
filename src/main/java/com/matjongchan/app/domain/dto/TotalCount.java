@@ -12,6 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 /**
  * 식당 전체 리뷰수와 총 평점을 변경에 사용하는 객체
+ * 상세 페이지에서 사용
  */
 public class TotalCount {
 

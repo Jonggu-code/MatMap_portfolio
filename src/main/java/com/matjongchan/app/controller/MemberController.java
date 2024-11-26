@@ -161,8 +161,6 @@ public class MemberController {
 
             return "redirect:/join?msg=" + msg;
 
-
-
         }
     }
 
