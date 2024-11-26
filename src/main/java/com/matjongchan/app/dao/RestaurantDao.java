@@ -1,18 +1,21 @@
 package com.matjongchan.app.dao;
 
+import com.matjongchan.app.domain.dto.TotalCount;
 import com.matjongchan.app.domain.entity.RestaurantDto;
 import com.matjongchan.app.domain.dto.SearchCondition;
 
 import java.util.List;
 
 public interface RestaurantDao {
+    
+    int getRestaurantCount();
     /**
      * Index 번호로 식당 단일 조회
      * @param id
      * @return
      */
     RestaurantDto getRestaurantById(int id);
-
+    
     /**
      * 가게이름으로 식당 단일 조회
      * @param name
@@ -20,18 +23,73 @@ public interface RestaurantDao {
      */
     RestaurantDto getRestaurantByName(String name);
 
+
     /**
-     * 제공되는 형식으로 페이지네이션 조회를 위한 메서드
-     * SearchCondition 에서는
-     * category (식당 종류)
-     * option (총평점순 or 리뷰많은순)
-     * c_address (**시 )
-     * d_address (상세주소)
-     * current_page (연결된 페이지)
-     * offset (몇개 페이지 가져올지)
+     * 주어진 조건으로 검색기능
      * @param searchCondition
      * @return
      */
-    List<RestaurantDto> searchRestaurantsBySearchCondition(SearchCondition searchCondition);
+    List<RestaurantDto> totalSearch(SearchCondition searchCondition);
 
+    /**
+     * 현재 지도 화면 기준 20개 식당 조회
+     * @param searchCondition
+     * @return
+     */
+    List<RestaurantDto> nearSearch(SearchCondition searchCondition);
+
+    /**
+     * 검색창으로 검색어를 입력하여 조회. 조회는 c_address, d_address, name, category를 합친 키워드안에 있을경우를 조회함. 성능안좋음..
+     * @param searchCondition
+     * @return
+     */
+    List<RestaurantDto> realTotalSearch(SearchCondition searchCondition);
+
+    /**
+     * 식당 테이블 초기화
+     * @return
+     */
+    int truncateAll();
+
+    /**
+     * 식당 추가
+     * @param restaurantDto
+     * @return
+     */
+    int insertRestaurant(RestaurantDto restaurantDto);
+
+    /**
+     * 식당 정보 수정
+     * @param restaurantDto
+     * @return
+     */
+    int updateRestaurant(RestaurantDto restaurantDto);
+
+    /**
+     * 식당 PK로 해당 식당 삭제
+     * @param id
+     * @return
+     */
+    int deleteRestaurant(int id);
+
+    /**
+     * 리뷰작성완료시 동작할 메서드.
+     * 리뷰테이블을 조회하여 해당 식당의 평균 총 평점 , 총 리뷰 갯수를 TotalCount에 담아 반환.
+     * 단, 매개변수인 TotalCount에는 반드시 restaurant_id, review_id가 있어야만함.
+     * @param totalCount
+     * @return
+     */
+    TotalCount getTotalCount(TotalCount totalCount);
+
+    /**
+     * 리뷰작성완료시 동작할 메서드
+     * 최근 작성된 리뷰가 반영된 식당의 평균 총 평점 , 총 리뷰 갯수를 식당 테이블에 반영한다.
+     * 단, 매개변수인 TotalCount에는 반드시 restaurant_id, review_id,
+     * total_count_score, total_review_count 가 있어야만한다.
+     * @param totalCount
+     * @return
+     */
+    int updateTotalCount(TotalCount totalCount);
+
+    List<RestaurantDto> getRestaurantAll();
 }

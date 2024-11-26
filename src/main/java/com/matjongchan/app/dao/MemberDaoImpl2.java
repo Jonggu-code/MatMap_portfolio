@@ -1,9 +1,7 @@
 package com.matjongchan.app.dao;
 
-import com.matjongchan.app.domain.entity.FavoriteDto;
-import com.matjongchan.app.domain.entity.MemberDto;
-import com.matjongchan.app.domain.entity.MemberImageDto;
-import com.matjongchan.app.domain.entity.ReviewDto;
+import com.matjongchan.app.domain.dto.FavoriteWithRestaurantDto;
+import com.matjongchan.app.domain.entity.*;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -95,8 +93,39 @@ public class MemberDaoImpl2 implements MemberDao2 {
         return session.delete(namespace + "deleteMemberReview", user_id);
     }
 
+
+
     @Override
-    public List<FavoriteDto> selectFavorites(String user_id) {
+    public int countMemberReview(){
+        return session.selectOne(namespace + "countMemberReview");
+    }
+
+    @Override
+    public int deleteAllMemberReview(){
+        return session.delete(namespace + "deleteAllMemberReview");
+    }
+
+    @Override
+    public int insertMemberReview(MemberReviewsDto dto){
+        return session.insert(namespace + "insertMemberReview", dto);
+    }
+
+    @Override
+    public List<MemberReviewsDto> selectAllMemberReview(){
+        return session.selectOne(namespace + "selectAllMemberReview");
+    }
+
+    @Override
+    public MemberReviewsDto selectMemberReview(Integer id){
+        return session.selectOne(namespace + "selectMemberReview", id);
+    }
+
+
+
+
+
+    @Override
+    public  List<FavoriteWithRestaurantDto> selectFavorites(String user_id) {
         return session.selectList(namespace + "selectFavorites", user_id);
     }
 

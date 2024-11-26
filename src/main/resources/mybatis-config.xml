@@ -9,6 +9,8 @@
         <typeAlias alias="MemberDto" type="com.matjongchan.app.domain.entity.MemberDto"/>
         <typeAlias alias="MemberReviewsDto" type="com.matjongchan.app.domain.entity.MemberReviewsDto"/>
         <typeAlias alias="MemberImageDto" type="com.matjongchan.app.domain.entity.MemberImageDto"/>
+        <typeAlias alias="MemberLoginDto" type="com.matjongchan.app.domain.dto.MemberLoginDto"/>
+        <typeAlias alias="SearchCondition" type="com.matjongchan.app.domain.dto.SearchCondition"/>
 
         <!-- 게시판 관련 Dto -->
         <typeAlias alias="ReviewDto" type="com.matjongchan.app.domain.entity.ReviewDto"/>
@@ -17,12 +19,15 @@
 
         <!-- 찜 기능 관련 Dto -->
         <typeAlias alias="FavoriteDto" type="com.matjongchan.app.domain.entity.FavoriteDto"/>
+        <typeAlias alias="FavoriteWithRestaurantDto" type="com.matjongchan.app.domain.dto.FavoriteWithRestaurantDto"/>
 
         <!-- 식당 관련 Dto -->
         <typeAlias alias="RestaurantDto" type="com.matjongchan.app.domain.entity.RestaurantDto"/>
         <typeAlias alias="MenuDto" type="com.matjongchan.app.domain.entity.MenuDto"/>
         <typeAlias alias="CategoryDto" type="com.matjongchan.app.domain.entity.CategoryDto"/>
         <typeAlias alias="BusinessHoursDto" type="com.matjongchan.app.domain.entity.BusinessHoursDto"/>
+        <typeAlias alias="SearchCondition" type="com.matjongchan.app.domain.dto.SearchCondition"/>
+        <typeAlias alias="TotalCount" type="com.matjongchan.app.domain.dto.TotalCount"/>
 
         <!-- 아직 구현계획 X -->
         <typeAlias alias="BoardDto" type="com.matjongchan.app.domain.entity.BoardDto"/>

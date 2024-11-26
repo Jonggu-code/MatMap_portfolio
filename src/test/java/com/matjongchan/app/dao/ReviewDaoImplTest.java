@@ -116,11 +116,10 @@ public class ReviewDaoImplTest {
     public void selectM() {
         reviewDao.deleteAll();
         insertALot();
-
-        List<ReviewDto> list = reviewDao.selectM( memberDaoImpl2.select("카리나").getUser_id());
+        List<ReviewDto> list = reviewDao.selectM("카리나");
+//        List<ReviewDto> list = reviewDao.selectM( memberDaoImpl2.select("카리나").getUser_id());
         assertTrue(list.size() == 30);
 
-        assertTrue(list.size() > 0);
     }
 
 

@@ -5,7 +5,7 @@
 <mapper namespace="com.matjongchan.app.dao.memberMapper2">
 
 
-<!-- 회원 기본 작업 -->
+<!--1. member table 관련:  회원 기본 작업 -->
     <!-- 0) 회원 수 조회 -->
     <select id="count" resultType="int">
         SELECT count(*) FROM member
@@ -66,6 +66,7 @@
         where user_id = #{user_id}
     </update>
 
+<!--2. member image table 관련 -->
     <!-- 프로필 이미지 관리 -->
     <delete id="deleteAllImage">
         TRUNCATE member_image
@@ -102,7 +103,7 @@
         WHERE id = #{id}
     </update>
 
-    <!-- 회원 리뷰 작업 -->
+<!--3. member_reviews, review table 관련 -->
     <!-- 10) 특정 회원의 리뷰 조회 (user_id 기준) -->
     <select id="selectMemberReviews" parameterType="String" resultType="ReviewDto">
         SELECT r.*
@@ -125,57 +126,61 @@
         WHERE member.user_id = #{user_id};
     </delete>
 
+<!--4. member_reviews table 관련 -->
+
+    <!-- 0) member_reviews row 수 조회 -->
+    <select id="countMemberReview" resultType="int">
+        SELECT count(*) FROM member_reviews
+    </select>
+
+    <!-- 1) member_reviews 전체 삭제 -->
+    <delete id="deleteAllMemberReview">
+        TRUNCATE member_reviews
+    </delete>
+
+    <!-- 2) member_reviews row 추가 -->
+    <insert id="insertMemberReview" parameterType="MemberReviewsDto">
+        INSERT INTO member_reviews
+        VALUES (null, #{fk_member_id}, #{fk_review_id})
+    </insert>
+
+    <!-- 3) member_reviews 전체 선택 -->
+    <select id="selectAllMemberReview" resultType="MemberReviewsDto">
+        SELECT * FROM member_reviews
+        ORDER BY id DESC
+    </select>
+
+    <!-- 3 -1) member_reviews 선택 -->
+    <select id="selectMemberReview" parameterType="Integer" resultType="MemberReviewsDto">
+        select * from member_reviews where id = #{id}
+    </select>
+
+
 
     <!-- 즐겨찾기 작업 -->
     <!-- 12) 특정 회원의 즐겨찾기 조회 (user_id 기준) -->
-    <select id="selectFavorites" parameterType="String" resultType="FavoriteDto">
-        SELECT f.*
+    <select id="selectFavorites" parameterType="String" resultType="FavoriteWithRestaurantDto">
+        SELECT f.id,
+        f.fk_member_id,
+        f.fk_restaurant_id,
+        r.name,
+        r.address
         FROM favorite AS f
-        WHERE f.fk_member_id = (
-        SELECT id FROM member WHERE user_id = #{user_id}
-        )
+        INNER JOIN member AS m ON f.fk_member_id = m.id
+        INNER JOIN restaurant AS r ON f.fk_restaurant_id = r.id
+        WHERE m.user_id = #{user_id}
     </select>
+
+
+
 
     <!-- 13) 특정 회원의 즐겨찾기 삭제 (user_id 기준) -->
     <delete id="deleteFavorite" parameterType="String">
-        DELETE FROM favorite
-        WHERE fk_member_id = (
-        SELECT id FROM member WHERE user_id = #{user_id}
-        )
+        DELETE f
+        FROM favorite AS f
+        INNER JOIN member AS m ON f.fk_member_id = m.id
+        WHERE m.user_id = #{user_id}
     </delete>
 
+
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
