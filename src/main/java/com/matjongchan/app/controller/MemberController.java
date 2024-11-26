@@ -10,18 +10,22 @@ package com.matjongchan.app.controller;
 import com.matjongchan.app.domain.entity.MemberDto;
 import com.matjongchan.app.domain.dto.MemberLoginDto;
 import com.matjongchan.app.service.MemberService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-
+@Slf4j
 @Controller
 public class MemberController {
     @Autowired
@@ -92,13 +96,14 @@ public class MemberController {
     }
 
     @PostMapping("/join")
-    public String register(MemberDto memberDto, Model m) throws Exception {
+    public String register(MemberDto memberDto, Model m, @RequestParam(value = "profile_image", required = false) MultipartFile mf){
+        log.info("11111111");
         String user_id = memberDto.getUser_id();
         String password = memberDto.getPassword();
         String email = memberDto.getEmail();
         String phone_number = memberDto.getPhone_number();
         String gender = memberDto.getGender();
-
+    log.info(memberDto.toString());
         // 유효성 검사
         /*
         유효성 검사 조건 (introduce 뺴고 not null)
@@ -108,28 +113,30 @@ public class MemberController {
         4. gender: 남/ 여
 
         */
-        if(user_id == null || user_id.isEmpty() || user_id.matches(".*[^a-zA-Z0-9].*")){
-            String msg = URLEncoder.encode("아이디는 필수 입력 항목이고, 특수문자를 포함할 수 없습니다.", "UTF-8");
-            return "redirect:/join?msg=" +msg;
-        }
+//        if(user_id == null || user_id.isEmpty() || !user_id.matches("[a-zA-Z0-9]+")) {
+//            String msg = URLEncoder.encode("아이디는 필수 입력 항목이고, 특수문자를 포함할 수 없습니다.", "UTF-8");
+//            return "redirect:/join?msg=" + msg;
+//        }
+//
+//
+//        if(password == null || password.isEmpty()){
+//            String msg = URLEncoder.encode("비밀번호는 필수 입력 항목입니다.", "UTF-8");
+//            return "redirect:/join?msg=" +msg;
+//        }
+//        if(email == null || email.isEmpty() || !email.contains("@")){
+//            String msg = URLEncoder.encode("유효하지 않은 이메일 형식입니다.", "UTF-8");
+//            return "redirect:/join?msg=" +msg;
+//        }
+//        if(phone_number == null || phone_number.isEmpty() || !phone_number.matches("\\d{3}-\\d{4}-\\d{4}")){
+//            String msg = URLEncoder.encode("전화번호는 000-0000-0000 형식이어야 합니다.", "UTF-8");
+//            return "redirect:/join?msg=" +msg;
+//        }
+//
+//        if(gender == null || gender.isEmpty() || (!gender.equals("M") && !gender.equals("F"))){
+//            String msg = URLEncoder.encode("성별은 'M' 또는 'F'만 가능합니다.", "UTF-8");
+//            return "redirect:/join?msg=" + msg;
+//        }
 
-        if(password == null || password.isEmpty()){
-            String msg = URLEncoder.encode("비밀번호는 필수 입력 항목입니다.", "UTF-8");
-            return "redirect:/join?msg=" +msg;
-        }
-        if(email == null || email.isEmpty() || !email.contains("@")){
-            String msg = URLEncoder.encode("유효하지 않은 이메일 형식입니다.", "UTF-8");
-            return "redirect:/join?msg=" +msg;
-        }
-        if(phone_number == null || phone_number.isEmpty() || !phone_number.matches("\\d{3}-\\d{4}-\\d{4}")){
-            String msg = URLEncoder.encode("전화번호는 000-0000-0000 형식이어야 합니다.", "UTF-8");
-            return "redirect:/join?msg=" +msg;
-        }
-    // gender 부분을 select, option으로 받으면 equals 부분은 빼야할듯
-        if(gender == null || gender.isEmpty() || !gender.equals("남") || !gender.equals("여") ){
-            String msg = URLEncoder.encode("성별은 '남' 또는 '여'만 가능합니다.", "UTF-8");
-            return "redirect:/join?msg=" +msg;
-        }
 
 
         // 아이디 중복 검사 통과한 경우,
@@ -139,13 +146,23 @@ public class MemberController {
                 return "redirect:/main";
             }
             else{
-                String msg = URLEncoder.encode("문제가 발생했습니다. 잠시 후에 다시 시도하세요.", "UTF-8");
+                String msg = null;
+                try {
+                    msg = URLEncoder.encode("문제가 발생했습니다. 잠시 후에 다시 시도하세요.", "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
                 return "redirect:/join?msg" + msg;
             }
         }
         // 아이디 중복 검사 통과 못한 경우
         else{
-            String msg = URLEncoder.encode("사용 중인 아이디입니다.", "UTF-8");
+            String msg = null;
+            try {
+                msg = URLEncoder.encode("사용 중인 아이디입니다.", "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
 
             // 사용자가 적어둔 정보 유지, 뷰 파일에서 아래 이름들(u_seqno, ...)로 value 값 넣어놓아야함.
             m.addAttribute("u_seqno", memberDto.getId());
@@ -164,41 +181,7 @@ public class MemberController {
         }
     }
 
-    /*
-    뷰 파일에서의 유효성 검사 예시:
-    <script>
-    function validateForm() {
-        String userId = document.getElementById("user_id").value;
-        String password = document.getElementById("password").value;
-        String email = document.getElementById("email").value;
-        String phoneNumber = document.getElementById("phone_number").value;
-        String gender = document.getElementById("gender").value;
 
-        if (!userId || /[^a-zA-Z0-9]/.test(userId)) {
-            alert("아이디는 특수문자를 포함할 수 없습니다.");
-            return false;
-        }
-        if (!password) {
-            alert("비밀번호를 입력하세요.");
-            return false;
-        }
-        if (!email || !email.includes("@")) {
-            alert("유효한 이메일 주소를 입력하세요.");
-            return false;
-        }
-        if (!phoneNumber || !/^\d{3}-\d{4}-\d{4}$/.test(phoneNumber)) {
-            alert("전화번호는 000-0000-0000 형식이어야 합니다.");
-            return false;
-        }
-        if (!gender || (gender !== "남" && gender !== "여")) {
-            alert("성별은 '남' 또는 '여'만 가능합니다.");
-            return false;
-        }
-        return true;
-    }
-    </script>
-
-     */
     private boolean isValid(String id){
         MemberDto member = memberService.getMember(id);
 

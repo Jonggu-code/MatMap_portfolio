@@ -202,6 +202,7 @@ public class MemberDaoImpl22Test {
 
     }
 
+//    10) 특정 회원의 리뷰 삭제 (user_id 기준)
     @Test
     public void deleteMemberReview() {
         // 회원, 리뷰, 관계 테이블 초기화
@@ -237,10 +238,8 @@ public class MemberDaoImpl22Test {
 
 
     }
-
-// 회원의 즐겨찾기 조회 관련 TDD는 restaurantMapper 완성되고 하기
-
-
+// 즐겨찾기 관련 TDD 필요.
+// 11) 회원의 즐겨찾기 조회
 //    @Test
 //    public void selectFavorites() {
 //        // 회원, 리뷰, 관계 테이블 초기화
@@ -257,6 +256,7 @@ public class MemberDaoImpl22Test {
 //
 //    }
 //
+//// 12) 회원의 즐겨찾기 삭제
 //    @Test
 //    public void deleteFavorite() {
 //    }
