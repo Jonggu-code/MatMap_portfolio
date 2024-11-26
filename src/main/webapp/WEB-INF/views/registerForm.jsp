@@ -28,7 +28,8 @@
       </div>
     </header>
 
-    <form action="<c:url value='/join' />" id="signup_form" method="post" onsubmit="return validateAndSubmit();" enctype="multipart/form-data">
+    <form action="<c:url value='/join' />" id="signup_form" method="post" onsubmit="return validateAndSubmit();"
+          enctype="multipart/form-data">
 
     <!-- 프로필 이미지 영역 -->
     <div class="profile_area">
@@ -53,7 +54,7 @@
           <div class="form_list form_txt1">
 
 
-            <div class="ip1"><input type="text" id="user_id" name="user_id" required placeholder="아이디" class="input_txt" value="${ URLDecoder.decode(param.u_id, "utf-8") }" ></div>
+            <div class="ip1"><input type="text" id="user_id" name="user_id" required placeholder="아이디" class="input_txt" value="${ URLDecoder.decode(param.u_id, "utf-8") } " ></div>
 
             <div class="ip2"><input type="password" id="password"  name="password" required placeholder="비밀번호" class="input_txt" value="${ URLDecoder.decode(param.u_pw, "utf-8") }" ></div>
             <div class="ip3"><input type="email" id="email"  name="email" required placeholder="이메일" class="input_txt" value="${ URLDecoder.decode(param.u_email, "utf-8") }" ></div>

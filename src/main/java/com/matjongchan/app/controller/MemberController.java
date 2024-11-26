@@ -97,13 +97,11 @@ public class MemberController {
 
     @PostMapping("/join")
     public String register(MemberDto memberDto, Model m, @RequestParam(value = "profile_image", required = false) MultipartFile mf){
-        log.info("11111111");
         String user_id = memberDto.getUser_id();
         String password = memberDto.getPassword();
         String email = memberDto.getEmail();
         String phone_number = memberDto.getPhone_number();
         String gender = memberDto.getGender();
-    log.info(memberDto.toString());
         // 유효성 검사
         /*
         유효성 검사 조건 (introduce 뺴고 not null)
