@@ -7,7 +7,6 @@ import com.matjongchan.app.domain.entity.ReviewDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -42,19 +41,10 @@ public class ReviewServiceImpl implements ReviewService{
     // 리뷰 삭제 메서드
     public int remove(Integer id, String reviewer){return reviewDao.delete(id, reviewer);}
 
-
-    //식당 상세페이지에서 리뷰조회시 사용할 메서드
+    // 식당 상세 페이지에서 사용할 메서드. 식당과 연관관계가 있는 리뷰 3개를 가져옴
     @Override
-    public List<ReviewDetail> getReviewDetail(ReviewDetailSearchCondition reviewDetailSearchCondition) {
-
-        List<ReviewDetail> review_dto_list = reviewDao.getReviewDetail(reviewDetailSearchCondition);
-
-
-
-        return List.of();
+    public List<ReviewDetail> getReviewDetails(ReviewDetailSearchCondition condition) {
+        return reviewDao.getRestaurantReview3(condition);
     }
-
-
-
 
 }

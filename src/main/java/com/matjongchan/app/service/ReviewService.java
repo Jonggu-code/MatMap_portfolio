@@ -21,6 +21,5 @@ public interface ReviewService {
 
     int remove(Integer id, String reviewer);
 
-    //식당 상세페이지에서 리뷰조회시 사용할 메서드
-    List<ReviewDetail> getReviewDetail(ReviewDetailSearchCondition reviewDetailSearchCondition);
+    List<ReviewDetail> getReviewDetails(ReviewDetailSearchCondition condition);
 }

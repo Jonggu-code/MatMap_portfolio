@@ -22,13 +22,11 @@ public interface ReviewDao {
 
     List<ReviewDto> selectM(String reviewer);
 
-
-
     ReviewDto select(Integer bno);
 
     int update(ReviewDto dto);
 
     int delete(int id, String writer);
 
-    List<ReviewDetail> getReviewDetail(ReviewDetailSearchCondition reviewDetailSearchCondition);
+    List<ReviewDetail> getRestaurantReview3(ReviewDetailSearchCondition condition);
 }
