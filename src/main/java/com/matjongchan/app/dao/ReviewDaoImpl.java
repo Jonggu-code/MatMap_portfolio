@@ -1,5 +1,7 @@
 package com.matjongchan.app.dao;
 
+import com.matjongchan.app.domain.dto.ReviewDetail;
+import com.matjongchan.app.domain.dto.ReviewDetailSearchCondition;
 import com.matjongchan.app.domain.entity.MemberDto;
 import com.matjongchan.app.domain.entity.ReviewDto;
 import org.apache.ibatis.session.SqlSession;
@@ -64,6 +66,11 @@ public class ReviewDaoImpl implements ReviewDao {
         map.put("reviewer", reviewer);
 
         return session.delete(namespace+"delete", map);
+    }
+
+    @Override
+    public List<ReviewDetail> getReviewDetail(ReviewDetailSearchCondition reviewDetailSearchCondition) {
+        return session.selectList(namespace+"getRestaurantReview3", reviewDetailSearchCondition);
     }
 
 }

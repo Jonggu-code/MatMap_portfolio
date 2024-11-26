@@ -1,6 +1,7 @@
 package com.matjongchan.app.service;
 
 import com.matjongchan.app.domain.dto.ReviewDetail;
+import com.matjongchan.app.domain.dto.ReviewDetailSearchCondition;
 import com.matjongchan.app.domain.entity.ReviewDto;
 
 import java.util.List;
@@ -20,5 +21,6 @@ public interface ReviewService {
 
     int remove(Integer id, String reviewer);
 
-    List<ReviewDetail> getReviewDetail(Integer review_id);
+    //식당 상세페이지에서 리뷰조회시 사용할 메서드
+    List<ReviewDetail> getReviewDetail(ReviewDetailSearchCondition reviewDetailSearchCondition);
 }
