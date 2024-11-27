@@ -87,6 +87,19 @@
             LIMIT #{offset} , #{page_size}
     </select>
 
+    <select id ="getTotalScore" parameterType="int" resultType="decimal">
+        SELECT  AVG(re.taste_score) as total_taste_score,
+                AVG(re.clean_score) as total_clean_score,
+                AVG(re.kind_score) as total_kind_score
+        FROM review as re
+        WHERE re.fk_restaurant_id = #{id}
+    </select>
+
+    <select id="getTotalScoreCountList" parameterType="int" resultType="decimal">
+        SELECT total_score
+        FROM review
+        WHERE fk_restaurant_id = #{id}
+    </select>
 
 </mapper>
 

@@ -16,6 +16,14 @@
         SELECT * FROM restaurant WHERE id = #{id}
     </select>
 
+    <select id="getDetailById" parameterType="int" resultType="RestaurantDetail">
+        SELECT
+        FROM restaurant as r
+        WHERE id = #{id}
+
+
+    </select>
+
     <!--  주어진 검색조건으로 검색  -->
     <select id="totalSearch" parameterType="SearchCondition" resultType="RestaurantDto">
         SELECT * FROM restaurant as r
@@ -82,6 +90,7 @@
                     #{total_review_count}, #{loc_x}, #{loc_y}, #{search_tag}, #{fk_category})
     </insert>
 
+    <!--  식당 정보 수정  -->
     <update id="updateRestaurant" parameterType="RestaurantDto">
         UPDATE restaurant as r set
             r.name = #{name},
@@ -117,12 +126,47 @@
                         GROUP BY r.id;
     </select>
 
+    <!--  식당 운영시간 조회   -->
+    <select id="getBusinessHours" parameterType="int" resultType="BusinessHoursDto">
+        SELECT *
+        FROM business_hours as bh
+        WHERE bh.fk_restaurant_id = #{id}
+    </select>
+
+
     <delete id="deleteRestaurant" parameterType="int">
         DELETE FROM restaurant as r WHERE r.id = #{id}
     </delete>
 
     <select id="getRestaurantAll" resultType="RestaurantDto">
         SELECT * FROM restaurant;
+    </select>
+
+    <select id="getRestaurantMenuDetail" parameterType="int" resultType="MenuDetail">
+        SELECT  m.name as menu_name,
+                m.price as menu_price,
+                m.memo as menu_memo,
+                r.id as restaurant_id,
+                m.fk_image_id as menu_image_url
+        FROM restaurant as r
+            INNER JOIN menu as m
+            ON m.fk_restaurant_id = r.id
+        WHERE r.id = #{id}
+    </select>
+
+    <select id="getRestaurantMenuImage" parameterType="int" resultType="String">
+        SELECT oi.image_url as image_url
+        FROM menu as m
+            INNER JOIN other_image as oi
+            ON m.fk_image_id = oi.id
+        WHERE oi.id = #{id}
+    </select>
+
+    <select id="getRelationRestaurant" parameterType="int" resultType="RestaurantDto">
+        SELECT *
+        FROM Restaurant as r
+        WHERE r.fk_category = #{id}
+        LIMIT 1, 3
     </select>
 
 </mapper>

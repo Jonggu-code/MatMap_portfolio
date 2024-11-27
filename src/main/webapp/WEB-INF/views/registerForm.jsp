@@ -90,6 +90,7 @@
           </label>
         </div>
         <button type="submit" class="btn_sum" >회원가입</button>
+        </div>
       </form>
     </div>
   </div>
