@@ -54,7 +54,7 @@
           <div class="form_list form_txt1">
 
 
-            <div class="ip1"><input type="text" id="user_id" name="user_id" required placeholder="아이디" class="input_txt" value="${ URLDecoder.decode(param.u_id, "utf-8") } " ></div>
+            <div class="ip1"><input type="text" id="user_id" name="user_id" required placeholder="아이디" class="input_txt" value="${ param.u_id != null && !param.u_id.isEmpty() ? param.u_id : '' }"  ></div>
 
             <div class="ip2"><input type="password" id="password"  name="password" required placeholder="비밀번호" class="input_txt" value="${ URLDecoder.decode(param.u_pw, "utf-8") }" ></div>
             <div class="ip3"><input type="email" id="email"  name="email" required placeholder="이메일" class="input_txt" value="${ URLDecoder.decode(param.u_email, "utf-8") }" ></div>
@@ -68,11 +68,11 @@
             <div class="form_gender">
               <ul class="gender_list">
                 <li class="radio_item">
-                  <input type="radio" id="gender1" name="gender" value="M" required class="btn_rd" >
+                  <input type="radio" id="gender1" name="gender" value="M" class="btn_rd" >
                   <label for="gender1">남</label>
                 </li>
                 <li class="radio_item">
-                  <input type="radio" id="gender2" name="gender" value="F" required class="btn_rd">
+                  <input type="radio" id="gender2" name="gender" value="F" class="btn_rd">
                   <label for="gender2">여</label>
                 </li>
               </ul>
@@ -90,10 +90,13 @@
           </label>
         </div>
         <button type="submit" class="btn_sum" >회원가입</button>
+      </div>
       </form>
     </div>
   </div>
-</div>
+
+
+
 
 <script src="<c:url value='/resources/js/register.js'/>"></script>
 

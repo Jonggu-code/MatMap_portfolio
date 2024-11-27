@@ -2,11 +2,14 @@
 package com.matjongchan.app.service;
 import com.matjongchan.app.dao.ReviewDao;
 import com.matjongchan.app.domain.dto.ReviewDetail;
+import com.matjongchan.app.domain.dto.ReviewDetailSearchCondition;
 import com.matjongchan.app.domain.entity.ReviewDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReviewServiceImpl implements ReviewService{
@@ -47,13 +50,28 @@ public class ReviewServiceImpl implements ReviewService{
     // 리뷰 삭제 메서드
     public int remove(Integer id, String reviewer){return reviewDao.delete(id, reviewer);}
 
+    // 식당 상세 페이지에서 사용할 메서드. 식당과 연관관계가 있는 리뷰 3개를 가져옴
     @Override
-    public List<ReviewDetail> getReviewDetail(Integer review_id) {
-
-        return null;
-
+    public List<ReviewDetail> getReviewDetails(ReviewDetailSearchCondition condition) {
+        return reviewDao.getRestaurantReview3(condition);
     }
 
-    ;
+    @Override
+    public List<Double> getTotalScore(int fk_restaurant_id) {
+        List<Double> collect = reviewDao.getTotalScore(fk_restaurant_id)
+                .stream().map(BigDecimal::doubleValue)
+                .collect(Collectors.toList());
+        if(collect.size() > 2){
+            return collect;
+        }else{
+            return List.of(0.0,0.0,0.0);
+        }
+    }
 
+    @Override
+    public List<Double> getTotalScoreCountList(int fk_restaurant_id) {
+        return reviewDao.getTotalScoreCountList(fk_restaurant_id)
+                .stream().map(BigDecimal::doubleValue)
+                .collect(Collectors.toList());
+    }
 }

@@ -1,11 +1,14 @@
 package com.matjongchan.app.dao;
 
+import com.matjongchan.app.domain.dto.ReviewDetail;
+import com.matjongchan.app.domain.dto.ReviewDetailSearchCondition;
 import com.matjongchan.app.domain.entity.MemberDto;
 import com.matjongchan.app.domain.entity.ReviewDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -99,4 +102,18 @@ public class ReviewDaoImpl implements ReviewDao {
         return session.delete(namespace+"delete", map);
     }
 
+    @Override
+    public List<ReviewDetail> getRestaurantReview3(ReviewDetailSearchCondition condition) {
+        return session.selectList(namespace+"getRestaurantReview3", condition);
+    }
+
+    @Override
+    public List<BigDecimal> getTotalScore(int fk_restaurant_id) {
+        return session.selectList(namespace+"getTotalScore", fk_restaurant_id);
+    }
+
+    @Override
+    public List<BigDecimal> getTotalScoreCountList(int fk_restaurant_id) {
+        return session.selectList(namespace+"getTotalScoreCountList", fk_restaurant_id);
+    }
 }

@@ -5,6 +5,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class OtherImageDaoImpl implements OtherImageDao {
     @Autowired
@@ -22,5 +24,15 @@ public class OtherImageDaoImpl implements OtherImageDao {
 
     public int deleteAll() {
         return session.delete(namespace+"deleteAll");
+    }
+
+    @Override
+    public List<OtherImageDto> getRestaurantImages(int restaurant_id) {
+        return session.selectList(namespace+"getRestaurantImages",restaurant_id);
+    }
+
+    @Override
+    public List<OtherImageDto> getRestaurantImages2(int restaurant_id) {
+        return session.selectList(namespace+"getRestaurantImages2",restaurant_id);
     }
 }

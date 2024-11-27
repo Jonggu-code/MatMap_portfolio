@@ -62,7 +62,8 @@
         address = #{address},
         email = #{email},
         introduce = #{introduce},
-        phone_number = #{phone_number}
+        phone_number = #{phone_number},
+        fk_image_id = #{fk_image_id}
         where user_id = #{user_id}
     </update>
 
