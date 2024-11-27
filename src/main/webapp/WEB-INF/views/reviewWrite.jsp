@@ -26,8 +26,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<c:url value='https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css'/>" />
 
-    <link rel="stylesheet" href="<c:url value='/resource/css/review_page_1.css' /> ">
-    <link rel="stylesheet" href="<c:url value='/resource/css/review_common.css' /> ">
+    <link rel="stylesheet" href="<c:url value='/resources/css/review_page_1.css' /> ">
+    <link rel="stylesheet" href="<c:url value='/resources/css/review_common.css' /> ">
 
 </head>
 <body>
@@ -129,7 +129,7 @@
 
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script src="<c:url value='/resource/js/review_common.js' /> "></script>
+<script src="<c:url value='/resources/js/review_common.js' /> "></script>
 <script src="./js/swiper.js"></script>
 
 </body>

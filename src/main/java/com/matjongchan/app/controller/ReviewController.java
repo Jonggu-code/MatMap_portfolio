@@ -2,6 +2,8 @@ package com.matjongchan.app.controller;
 
 import com.matjongchan.app.domain.entity.RestaurantDto;
 import com.matjongchan.app.domain.entity.ReviewDto;
+import com.matjongchan.app.domain.entity.ReviewMenuDto;
+import com.matjongchan.app.service.ReviewMenuService;
 import com.matjongchan.app.service.ReviewService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +13,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
+
 @Slf4j
 @Controller
 public class ReviewController {
+    @Autowired
+    ReviewMenuService reviewMenuService;
     @Autowired
     ReviewService reviewService;
 
@@ -24,8 +31,10 @@ public class ReviewController {
     public String reviewWrite(HttpServletRequest request, RestaurantDto restaurantDto, Model m) {
         m.addAttribute("restaurantDto", restaurantDto);
         log.info(".//.////////////////////////////");
-        // 세션 정보 저장
         HttpSession session = request.getSession();
+
+        List<ReviewMenuDto> list = reviewMenuService.getListR(1);
+        int listSize = list.size();
 
         // 로그인 했는지 확인
 //        if(!loginChk(session)) {
@@ -43,8 +52,10 @@ public class ReviewController {
         return "reviewWrite2";
     }
 
+    private static final String F_PATH = "/Users/joohunkang/Desktop/Spring/MatMap_portfolio/src/main/webapp/resources/img";
+
     @PostMapping("/reviewWrite2") // 리뷰 작성 두 번째 페이지 메서드
-    public String reviewWriteSubmit(HttpSession session, ReviewDto reviewDto) {
+    public String reviewWriteSubmit(HttpSession session, ReviewDto reviewDto, @RequestParam(value = "files", required = false) MultipartFile[] mf) {
         try {
             log.info(reviewDto.getContent());
 //            String reviewer = (String)session.getAttribute("id");
@@ -60,7 +71,7 @@ public class ReviewController {
             e.printStackTrace();
             return "글쓰기 실패";
         }
-        return "";
+        return "forward:/";
     }
 
     @PostMapping("/modify") // 게시글 수정 메서드

@@ -1,6 +1,7 @@
 package com.matjongchan.app.dao;
 
 import com.matjongchan.app.domain.entity.ReviewDto;
+import com.matjongchan.app.domain.entity.ReviewMenuDto;
 
 import java.util.List;
 
@@ -8,22 +9,16 @@ public interface ReviewMenuDao {
 
     int count();
 
+    int countR(int review_id);
+
+    int delete(int review_id);
+
+    int insert(ReviewMenuDto reviewMenuDto);
+
     int deleteAll();
 
-    int insert(ReviewDto dto);
+    List<ReviewMenuDto> selectAll();
 
-    List<ReviewDto> selectAll();
-
-    List<ReviewDto> selectR(int fk_restaurant_id);
-
-    List<ReviewDto> selectM(String reviewer);
-
-
-
-    ReviewDto select(Integer bno);
-
-    int update(ReviewDto dto);
-
-    int delete(int id, String writer);
+    List<ReviewMenuDto> selectR(int reviewId);
 
 }

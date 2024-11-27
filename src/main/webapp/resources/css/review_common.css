@@ -1,0 +1,101 @@
+
+* {
+    font-family: "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+}
+body {
+    margin: 0;
+}
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+h1,h2,h3,h4,h5,h6,p {
+    font-size: inherit;
+    padding: 0;
+    margin: 0;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+fieldset {
+    padding: 0;
+    margin: 0;
+}
+input {
+    padding: 0;
+    margin: 0;
+}
+#wrap{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.contents_area {
+    width: 800px;
+    min-width: 800px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    position: relative;
+}
+body::-webkit-scrollbar {
+    display: none;
+}
+
+/* 통합부분 (로고 / 헤더) */
+
+fieldset {
+    border: none;
+}
+.common_box {
+    width: 100%;
+    height: auto;
+    padding: 20px 20px;
+    box-sizing: border-box;
+    background: #f7f7f7;
+    border-radius: 20px;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+.logo_box {
+    width: 300px;
+    height: 100px;
+    
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.logo {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    background: url(../img/logo_400x100.png) no-repeat center / contain;
+    text-indent: -9999px;
+}
+.header {
+    width: 100%;
+    height: 120px;
+    background: #ff9625;
+    border-radius: 20px;
+    margin-bottom: 20px;
+
+    display: flex;
+    align-items: center;
+}
+.rest_img_box {
+    width: 80px;
+    height: 80px;
+    background: url(../img/예시이미지/1.jpg) no-repeat center / cover;
+    margin-left: 20px;
+    border-radius: 10px;
+}
+.rest_info_box {
+    width: 50%;
+    color: #fff;
+    margin-left: 18px;
+}
+.rest_title {
+    width: 100%;
+    font-weight: 700;
+}

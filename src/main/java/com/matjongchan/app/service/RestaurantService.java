@@ -7,6 +7,6 @@ public interface RestaurantService {
     //식당 상세페이지 조회기능
     RestaurantDetail getRestaurantDetail(int restaurantId);
 
-    
+
 
 }
