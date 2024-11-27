@@ -2,7 +2,46 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/schema/mybatis-3-mapper.dtd">
 
+
+
 <mapper namespace="com.matjongchan.app.dao.reviewMenuMapper">
+
+    <select id="count" resultType="int">
+        SELECT count(*) FROM review_menu
+    </select>
+
+    <!--  해당 리뷰의 선택 메뉴 개수  -->
+    <select id="countR" parameterType="int" resultType="int">
+        select count(*) from  review_menu where fk_review_id = #{fk_review_id}
+    </select>
+
+    <delete id="deleteAll">
+        truncate review_menu
+    </delete>
+
+    <delete id="delete" parameterType="reviewMenuDto">
+        delete from review_menu where id=#{id}
+    </delete>
+
+    <insert id="insert" parameterType="ReviewMenuDto">
+        insert into  review_menu
+        (id, fk_review_id,fk_menu_id)
+        values
+        (#{id}, #{fk_review_id},#{fk_menu_id})
+    </insert>
+
+    <select id="selectAll" resultType="ReviewMenuDto">
+        select * from  review_menu
+        order by id desc
+    </select>
+
+    <!--  해당 리뷰의 선택 메뉴들 불러오기  -->
+    <select id="selectR" parameterType="int" resultType="ReviewMenuDto">
+        select * from  review_menu
+        where fk_review_id = #{fk_review_id}
+        order by id desc
+    </select>
+
     <!-- 해당 리뷰에 해당하는 이미지 테이블 정보 전부 가져오기.-->
     <select id="selectReviewImage" parameterType="int" resultType="OtherImageDto">
         SELECT  oi.name as name,
@@ -15,9 +54,4 @@
             WHERE oi.fk_review_id = #{id}
             ORDER BY oi.order_number
     </select>
-
-
-
-
-
 </mapper>
