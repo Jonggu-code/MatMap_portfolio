@@ -9,6 +9,7 @@ package com.matjongchan.app.controller;
 
 import com.matjongchan.app.domain.entity.MemberDto;
 import com.matjongchan.app.domain.dto.MemberLoginDto;
+import com.matjongchan.app.domain.entity.MemberImageDto;
 import com.matjongchan.app.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,12 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.UUID;
+
 @Slf4j
 @Controller
 public class MemberController {
@@ -41,7 +46,6 @@ public class MemberController {
     }
     @GetMapping("/login")
     public String loginForm(){
-        System.out.println("sadfasfadfsd");
         return "loginForm"; //loginForm jsp 파일로 연결
     }
 
@@ -95,73 +99,20 @@ public class MemberController {
         return "registerForm";
     }
 
+    private static final String F_PATH = "C:/Users/82109/Desktop/spring/matjongchan_git/MatMap_portfolio/src/main/webapp/resources/img/";
+    private static final int defaultImageId = 1; // 기본 이미지의 id값 1
     @PostMapping("/join")
     public String register(MemberDto memberDto, Model m, @RequestParam(value = "profile_image", required = false) MultipartFile mf){
-        String user_id = memberDto.getUser_id();
-        String password = memberDto.getPassword();
-        String email = memberDto.getEmail();
-        String phone_number = memberDto.getPhone_number();
-        String gender = memberDto.getGender();
-        // 유효성 검사
-        /*
-        유효성 검사 조건 (introduce 뺴고 not null)
-        1. userId: 특수문자 불가
-        2. email: @ 포함인지 확인
-        3. phoneNumber: 000-0000-0000 형식
-        4. gender: 남/ 여
+        String user_id = memberDto.getUser_id().trim();
 
-        */
-//        if(user_id == null || user_id.isEmpty() || !user_id.matches("[a-zA-Z0-9]+")) {
-//            String msg = URLEncoder.encode("아이디는 필수 입력 항목이고, 특수문자를 포함할 수 없습니다.", "UTF-8");
-//            return "redirect:/join?msg=" + msg;
-//        }
-//
-//
-//        if(password == null || password.isEmpty()){
-//            String msg = URLEncoder.encode("비밀번호는 필수 입력 항목입니다.", "UTF-8");
-//            return "redirect:/join?msg=" +msg;
-//        }
-//        if(email == null || email.isEmpty() || !email.contains("@")){
-//            String msg = URLEncoder.encode("유효하지 않은 이메일 형식입니다.", "UTF-8");
-//            return "redirect:/join?msg=" +msg;
-//        }
-//        if(phone_number == null || phone_number.isEmpty() || !phone_number.matches("\\d{3}-\\d{4}-\\d{4}")){
-//            String msg = URLEncoder.encode("전화번호는 000-0000-0000 형식이어야 합니다.", "UTF-8");
-//            return "redirect:/join?msg=" +msg;
-//        }
-//
-//        if(gender == null || gender.isEmpty() || (!gender.equals("M") && !gender.equals("F"))){
-//            String msg = URLEncoder.encode("성별은 'M' 또는 'F'만 가능합니다.", "UTF-8");
-//            return "redirect:/join?msg=" + msg;
-//        }
-
-
-
-        // 아이디 중복 검사 통과한 경우,
-        if(isValid(user_id)){
-            // DB에 저장
-            if(memberService.addMember(memberDto) == 1){
-                return "redirect:/main";
-            }
-            else{
-                String msg = null;
-                try {
-                    msg = URLEncoder.encode("문제가 발생했습니다. 잠시 후에 다시 시도하세요.", "UTF-8");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-                return "redirect:/join?msg" + msg;
-            }
-        }
-        // 아이디 중복 검사 통과 못한 경우
-        else{
+        // 아이디 중복 검사
+        if (!isValid(user_id)) {
             String msg = null;
             try {
                 msg = URLEncoder.encode("사용 중인 아이디입니다.", "UTF-8");
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-
             // 사용자가 적어둔 정보 유지, 뷰 파일에서 아래 이름들(u_seqno, ...)로 value 값 넣어놓아야함.
             m.addAttribute("u_seqno", memberDto.getId());
             m.addAttribute("u_id", memberDto.getUser_id());
@@ -175,9 +126,62 @@ public class MemberController {
             m.addAttribute("u_pnumer", memberDto.getPhone_number());
 
             return "redirect:/join?msg=" + msg;
+        }
 
+        // 이미지 업로드 처리 (mf가 비어있지 않은 경우에만 실행)
+        if(mf != null && !mf.isEmpty()){
+            try{
+                String originalName = mf.getOriginalFilename();
+                String uniqueFileName = System.currentTimeMillis()  + "_" + originalName;
+
+                String saveFile = F_PATH + System.currentTimeMillis() + "_" + originalName; // 저장경로 설정
+                // 파일 저장
+                mf.transferTo(new File(saveFile));
+
+
+
+
+
+
+
+
+                // 새로운 이미지 정보를 MemberImageDto에 설정
+                MemberImageDto memberImageDto = new MemberImageDto();
+                memberImageDto.setName(uniqueFileName);
+                memberImageDto.setImg_url(saveFile);
+                memberImageDto.setOrder_number(1);
+
+                // DB에 행 삽입 후 id 가져오기
+                int newImageId = memberService.addMemberImage(memberImageDto);
+                Integer memberImageId = memberService.getAllImages().get(0).getId();
+
+                // member_image table의 id를 memberDto에 설정
+                memberDto.setFk_image_id(memberImageId);
+            } catch (IOException e) {
+                e.printStackTrace();
+                // 파일 업로드 실패 시 처리
+                return "redirect:/join?msg=파일 업로드 실패";
+            }
+        }else{
+            // 사용자가 사진을 첨부하지 않으면 기본 이미지 id 설정
+            memberDto.setFk_image_id(defaultImageId);
+        }
+
+        // DB에 저장
+        if (memberService.addMember(memberDto) == 1) {
+            return "redirect:/main";
+        } else {
+            String msg = null;
+            try {
+                msg = URLEncoder.encode("문제가 발생했습니다. 잠시 후에 다시 시도하세요.", "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            return "redirect:/join?msg=" + msg; // 실패 시 에러 메세지
         }
     }
+
+
 
 
     private boolean isValid(String id){
