@@ -7,7 +7,9 @@ import com.matjongchan.app.domain.entity.ReviewDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReviewServiceImpl implements ReviewService{
@@ -47,4 +49,22 @@ public class ReviewServiceImpl implements ReviewService{
         return reviewDao.getRestaurantReview3(condition);
     }
 
+    @Override
+    public List<Double> getTotalScore(int fk_restaurant_id) {
+        List<Double> collect = reviewDao.getTotalScore(fk_restaurant_id)
+                .stream().map(BigDecimal::doubleValue)
+                .collect(Collectors.toList());
+        if(collect.size() > 2){
+            return collect;
+        }else{
+            return List.of(0.0,0.0,0.0);
+        }
+    }
+
+    @Override
+    public List<Double> getTotalScoreCountList(int fk_restaurant_id) {
+        return reviewDao.getTotalScoreCountList(fk_restaurant_id)
+                .stream().map(BigDecimal::doubleValue)
+                .collect(Collectors.toList());
+    }
 }

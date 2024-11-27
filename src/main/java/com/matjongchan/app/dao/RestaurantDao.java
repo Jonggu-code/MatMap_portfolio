@@ -1,6 +1,8 @@
 package com.matjongchan.app.dao;
 
+import com.matjongchan.app.domain.dto.MenuDetail;
 import com.matjongchan.app.domain.dto.TotalCount;
+import com.matjongchan.app.domain.entity.BusinessHoursDto;
 import com.matjongchan.app.domain.entity.RestaurantDto;
 import com.matjongchan.app.domain.dto.SearchCondition;
 
@@ -92,4 +94,13 @@ public interface RestaurantDao {
     int updateTotalCount(TotalCount totalCount);
 
     List<RestaurantDto> getRestaurantAll();
+
+    BusinessHoursDto getBusinessHours(int restaurant_id);
+
+    List<MenuDetail> getMenuDetail(int restaurant_id);
+
+    String getMenuUrl(int image_id);
+
+    List<RestaurantDto> getRelationRestaurant3 (int restaurant_id);
+
 }

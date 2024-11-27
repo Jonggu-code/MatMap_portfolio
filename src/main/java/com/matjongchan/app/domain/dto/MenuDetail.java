@@ -10,10 +10,16 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReviewDetailSearchCondition {
+/**
+ * 식당 상세 페이지에서 사용할 객체.
+ * 메뉴정보 + 해당 이미지
+ */
+public class MenuDetail {
 
+    private String menu_name;
+    private String menu_price;
+    private String menu_memo;
     private Integer restaurant_id;
-    private Integer offset = 0;     // 몇번째 정보부터 가져오기 시작할건지
-    private Integer page_size = 3;  // 한번에 몇개의 정보를 가져올건지
+    private String menu_image_url;
 
 }
