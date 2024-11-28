@@ -1,0 +1,31 @@
+.container {
+    padding-top: 115px;
+    width: 100%;
+    height: 1000px;
+    background: #e3e3e3;
+}
+.banner {
+    width: 100%;
+    height: 180px;
+    background: #ff9625;
+    color: #fff;
+    font-size: 30px;
+    text-align: center;
+
+    position: relative;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+}
+.banner > p {
+    width: 100%;
+    margin-bottom: 6px;
+    font-size: 34px;
+}
+.banner > p:first-child {
+    font-size: 16px;
+    font-weight: 100;
+}
+
+/* container_main 단 */
