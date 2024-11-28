@@ -11,6 +11,7 @@ import com.matjongchan.app.domain.entity.OtherImageDto;
 import com.matjongchan.app.domain.entity.RestaurantDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-@Repository
+@Service
 public class RestaurantServiceImpl implements RestaurantService {
 
     private final RestaurantDao restaurantDao;
@@ -88,6 +89,10 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
 
+    @Override
+    public List<SimpleRestaurant> getSimpleRestaurant(SearchCondition searchCondition) {
+        return List.of();
+    }
 
     @Override
     public List<ReviewDetail> getReviewDetails(ReviewDetailSearchCondition condition) {
@@ -164,6 +169,43 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public List<RestaurantDto> getRestaurantAll() {
         return restaurantDao.getRestaurantAll();
+    }
+
+    @Override
+    public List<SimpleRestaurant> SRTotalSearch(SearchCondition searchCondition) {
+        List<RestaurantDto> dtoList = restaurantDao.totalSearch(searchCondition);
+        List<SimpleRestaurant> simpleRestaurantList = new ArrayList<>();
+        for (RestaurantDto dto : dtoList) {
+
+            SimpleRestaurant.builder()
+                    .id(dto.getId())
+                    .name(dto.getName())
+                    .image_url()
+                    .address(dto.getC_address()+dto.getD_address())
+                    .total_score_count(dto.getTotal_score_count())
+                    .total_review_count(dto.getTotal_review_count())
+                    .today_business_state(getNowOpen(restaurantDao.getBusinessHours(dto.getId())))
+                    .reservation(dto.getReservation())
+                    .number(dto.getNumber())
+                    .loc_x(dto.getLoc_x())
+                    .loc_y(dto.getLoc_y())
+                    .menu_name_list()
+                    .recentSimpleReview()
+                    .build();
+            new RestaurantDto();
+        }
+
+        return List.of();
+    }
+
+    @Override
+    public List<SimpleRestaurant> SRNearSearch(SearchCondition searchCondition) {
+        return List.of();
+    }
+
+    @Override
+    public List<SimpleRestaurant> SRRealTotalSearch(SearchCondition searchCondition) {
+        return List.of();
     }
 
     private static String getNowOpen(BusinessHoursDto hoursDto) {

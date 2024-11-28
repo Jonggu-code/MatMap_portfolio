@@ -133,7 +133,6 @@
         WHERE bh.fk_restaurant_id = #{id}
     </select>
 
-
     <delete id="deleteRestaurant" parameterType="int">
         DELETE FROM restaurant as r WHERE r.id = #{id}
     </delete>

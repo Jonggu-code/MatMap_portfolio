@@ -95,12 +95,32 @@ public interface RestaurantDao {
 
     List<RestaurantDto> getRestaurantAll();
 
+    /**
+     * 해당 식당 영업시간 조회
+     * @param restaurant_id
+     * @return
+     */
     BusinessHoursDto getBusinessHours(int restaurant_id);
 
+    /**
+     * 해당 식당 메뉴를 자세히 가져오기
+     * @param restaurant_id
+     * @return
+     */
     List<MenuDetail> getMenuDetail(int restaurant_id);
 
+    /**
+     * 해당 이미지의 Url 주소를 가져오기
+     * @param image_id
+     * @return
+     */
     String getMenuUrl(int image_id);
 
+    /**
+     * 같은 카테고리를 가진 식당 3개를 조회
+     * @param restaurant_id
+     * @return
+     */
     List<RestaurantDto> getRelationRestaurant3 (int restaurant_id);
 
 }
