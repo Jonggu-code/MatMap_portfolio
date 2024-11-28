@@ -1,0 +1,424 @@
+/* ///////////////////////////////////////////////////////// */
+/* ////////////////          기본세팅         ////////////// */
+/* ///////////////////////////////////////////////////////// */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+body {
+    margin: 0;
+    font-family: 'Noto Sans', sans-serif;
+}
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+h1,h2,h3,h4,h5,h6,p {
+    font-size: inherit;
+    padding: 0;
+    margin: 0;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+fieldset {
+    padding: 0;
+    margin: 0;
+}
+input {
+    padding: 0;
+    margin: 0;
+}
+#wrap{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    position: relative;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent
+}
+::-webkit-scrollbar-thumb {
+    width: 8px;
+    background: #d1b393;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #ac855b;
+    width: 10px;
+}
+#result {
+    width: 400px;
+
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 9;
+}
+
+/* ///////////////////////////////////////////////////////// */
+/* ////////////////         sidebar           ////////////// */
+/* ///////////////////////////////////////////////////////// */
+
+.sidebar {
+    width: 400px;
+    height: 100vh;
+    box-shadow: -2px -2px 3px 3px #585858;
+    z-index: 9;
+}
+
+/* ///////////////////////////////////////////////////////// */
+/* ////////////////          header           ////////////// */
+/* ///////////////////////////////////////////////////////// */
+
+.header {
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    box-sizing: border-box;
+    background: #ff9625;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.header_top {
+    width: 100%;
+    height: 30%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.site_logo {
+    width: 200px;
+    height: 40px;
+    /* border: 1px solid; */
+    background: url(../img/logo_white_400x100.png) no-repeat center / cover;
+
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    text-indent: -9999px;
+
+    position: relative;
+}
+.logo {
+    width: 30px;
+    height: 35px;
+    background: #ff6a25;
+    background: url(../img/무먹잘소\ logo.jpg) no-repeat center / cover;
+}
+
+/* search_box 단 */
+
+.search_box {
+    width: 95%;
+    height: 45px;
+    margin: 10px 0;
+    border-radius: 4px;
+    background-color: #fff;
+    overflow: hidden;
+}
+.KeywordSearch {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 999;
+}
+.fld_inside {
+    width: 100%;
+    height: 100%;
+    border: none;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+.search_input {
+    width: calc(100% - 70px);
+    height: 100%;
+    border: none;
+    outline: none;
+    padding: 0 5px;
+    box-sizing: border-box;
+
+    font-size: 14px;
+}
+.fld_inside > svg {
+    width: 25px;
+    height: 25px;
+    margin-left: 20px;
+    cursor: pointer;
+}
+.fld_inside > svg path {
+    stroke: #ff9625;
+    stroke-width: 1.5;
+}
+.screen_out {
+    overflow: hidden;
+    position: absolute;
+    width: 0;
+    height: 0;
+    line-height: 0;
+    text-indent: -9999px;
+}
+
+/* header_menu 단 */
+
+.header_menu {
+    width: 100%;
+    height: 30px;
+
+    display: flex;
+}
+.header_menu_item {
+    width: calc(100% / 3);
+    height: 100%;
+    box-sizing: border-box;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.header_menu_item > p {
+    width: 90%;
+    height: 90%;
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: background 0.2s;
+}
+.header_menu_item > p:hover {
+    background: #d97f1f;
+}
+
+/* ///////////////////////////////////////////////////////// */
+/* ////////////////            map            ////////////// */
+/* ///////////////////////////////////////////////////////// */
+#map {
+    width: calc(100vw - 400px);
+    height: 100vh;
+    position: relative;
+}
+.map_header {
+    height: 60px;
+    position: absolute;
+
+    display: flex;
+    justify-content: space-between;
+
+    top: 10px;
+    left: 15px;
+    right: 15px;
+    z-index: 999;
+}
+.map_box_L {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.map_box_L svg {
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+}
+.map_box_L path {
+    fill: none;
+    stroke: #fff;
+    stroke-linecap: round; 
+    stroke-linejoin: round; 
+    stroke-width: 1.5;
+}
+.choose_location, .choose_align, .choose_tag  {
+    padding: 12px 10px;
+    background-color: #6312b9;
+    cursor: pointer;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 14px;
+    
+    display: flex;
+}
+.map_box_R {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.map_box_R > div {
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.guest_login {
+    width: 60px;
+    height: 60px;
+    background-color: rgb(21, 21, 126);
+}
+.curr_location {
+    width: 40px;
+    height: 40px;
+    background-color: rgb(24, 101, 184);
+}
+.focus_map {
+    width: 40px;
+    height: 40px;
+    background-color: rgb(16, 134, 20);
+}
+
+/* ///////////////////////////////////////////////////////// */
+/* ////////////////          main             ////////////// */
+/* ///////////////////////////////////////////////////////// */
+
+.main {
+    width: 100%;
+    height: calc(100vh - 175px);
+    padding: 0 15px;
+    padding-top: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+.main_item {
+    width: 100%;
+    height: 170px;
+    margin-bottom: 20px;
+    
+    display: flex;
+    flex-wrap: wrap;
+}
+.main_item_box {
+    width: 100%;
+    height: 120px;
+    display: flex;
+}
+.main_item_Lbox {
+    width: 120px;
+    height: 120px;
+    background: #814b11;
+    border-radius: 10px;
+}
+.main_item_Lbox > a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-indent: -9999px;
+}
+.main_item_Rbox {
+    width: 65%;
+    height: 110px;
+    margin-left: 10px;
+    margin-top: 5px;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-between;
+}
+.main_item_Rbox > p {
+    width: 100%;
+    margin-bottom: 4px;
+}
+.item_title {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.item_name {
+    margin-left: 2px;
+    margin-bottom: 4px;
+    font-size: 18px;
+    font-weight: 900;
+    color: #180d01;
+}
+.item_name:hover {
+    text-decoration: underline;
+}
+.item_star {
+    display: flex;
+    font-weight: 700;
+    color: #ff9625;
+}
+.item_star > p {
+    margin-top: 1px;
+}
+.item_star > p:nth-child(3) {
+    margin-left: 5px;
+    margin-top: 3px;
+    font-size: 13px;
+    color: #585858;
+}
+.item_star > svg {
+    width: 24px;
+    height: 24px;
+    margin-right: 5px;
+}
+.item_star path {
+    fill: #ff9625;
+}
+.item_time {
+    margin-bottom: 0 !important;
+}
+.item_addr, .item_info, .item_time {
+    font-size: 13px;
+}
+.main_item_bot {
+    width: 100%;
+    height: 40px;
+    margin-top: 15px;
+
+    display: flex;
+    overflow-x: hidden;
+    white-space: nowrap;
+    align-items: flex-start;
+}
+.main_item_bot:hover {
+    overflow-x: auto;
+}
+.main_item_bot > li {
+    background: #e5b684;
+    padding: 5px 10px;
+    margin-right: 6px;
+    border-radius: 5px;
+
+    font-size: 14px;
+    color: #fff;
+}
+.review_box {
+    width: 100%;
+    height: 120px;
+    margin-top: 5px;
+    border-radius: 5px;
+    background: #eaeaea;
+}
+
+/* ///////////////////////////////////////////////////////// */
+/* ////////////////        map_layout        /////////////// */
+/* ///////////////////////////////////////////////////////// */
+
+
+
+
+/* ///////////////////////////////////////////////////////// */
+/* ////////////////          footer           ////////////// */
+/* ///////////////////////////////////////////////////////// */
+
+
+.footer {
+    width: 100%;
+    height: 25px;
+    background: #e4e4e4;
+}

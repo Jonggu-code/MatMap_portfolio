@@ -1,0 +1,258 @@
+/* ///////////////////////////////////////////////////////// */
+/* ////////         메인 제외한 페이지 기본세팅         ////// */
+/* ///////////////////////////////////////////////////////// */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+* {
+    font-family: "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+}
+body {
+    margin: 0;
+    font-family: 'Noto Sans', sans-serif;
+}
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+h1,h2,h3,h4,h5,h6,p {
+    font-size: inherit;
+    padding: 0;
+    margin: 0;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+fieldset {
+    padding: 0;
+    margin: 0;
+}
+input {
+    padding: 0;
+    margin: 0;
+}
+#wrap{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.contents_area {
+    width: 1200px;
+    min-width: 1000px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    position: relative;
+}
+body::-webkit-scrollbar {
+    display: none;
+}
+
+/* ///////////////////////////////////////////////////////// */
+/* ////////////////         header             ////////////// */
+/* ///////////////////////////////////////////////////////// */
+
+/* 메인 제외한 페이지 공통 header 관련 css 속성 */
+
+.header {
+    width: 100%;
+    height: 115px;
+    background: #fff;
+    box-shadow: 0 2px 5px 0 #bdbdbd;
+    
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+}
+.event {
+    width: 100%;
+    height: 35px;
+    background-color: #d1b393;
+    text-align: center;
+}
+.event p {
+    line-height: 35px;
+    font-size: 14px;
+    font-weight: 700;
+}
+.event svg {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+
+    cursor: pointer;
+}
+.header_main {
+    height: 80px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* ////////////////        logo 단           ////////////// */
+
+.logo_box {
+    width: 15%;
+    height: 100%;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.site_logo {
+    display: block;
+    width: 100%;
+    height: 50px;
+    text-indent: -9999px;
+
+    background: url(../img/logo_400x100.png) no-repeat -10px / cover;
+}
+
+/* ////////////////        search_box 단          ////////////// */
+
+.search_box {
+    width: 40%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+}
+.KeywordSearch {
+    width: 100%;
+    height: 45px;
+    background-color: #ececec;
+    border-radius: 30px;
+    overflow: hidden;
+
+    position: relative;
+    z-index: 999;
+}
+.fld_inside {
+    width: 100%;
+    height: 100%;
+    border: none;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+.search_input {
+    width: calc(100% - 70px);
+    height: 100%;
+    border: none;
+    outline: none;
+    padding: 0 5px;
+    box-sizing: border-box;
+    background-color: #ececec;
+
+    font-size: 14px;
+}
+.fld_inside > svg {
+    width: 25px;
+    height: 25px;
+    margin-left: 20px;
+    cursor: pointer;
+}
+.fld_inside > svg path {
+    stroke: #ff9625;
+    stroke-width: 1.5;
+}
+.screen_out {
+    overflow: hidden;
+    position: absolute;
+    width: 0;
+    height: 0;
+    line-height: 0;
+    text-indent: -9999px;
+}
+
+/* ////////////////        guest_box 단          ////////////// */
+
+.guest_box {
+    width: 35%;
+    height: 100%;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.guest_icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background-color: rgb(206, 19, 243);
+    margin-left: 12px;
+}
+.guest_menu {
+    width: 88px;
+    height: 48px;
+    border: 1px solid #ffd7ad;
+    border-radius: 25px;
+    padding: 8px;
+    box-sizing: border-box;
+    cursor: pointer;
+
+    position: relative;
+
+    transition: box-shadow 0.1s;
+    
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.guest_menu:hover {
+    box-shadow: 0px 2px 4px 0px #bdbdbd;
+}
+.guest_menu_active {
+    box-shadow: 0px 2px 4px 0px #bdbdbd;
+}
+.guest_menu > svg {
+    width: 20px;
+    height: 20px;
+}
+.guest_menu > svg path {
+    stroke-width: 1.2;
+    stroke: #ff9625;
+}
+.guest_box > p {
+    font-size: 14px;
+    font-weight: 700;
+    padding: 10px;
+    margin-right: 38px;
+    color: #d97f1f
+}
+.guest_box > p:hover {
+    color: #854e12;
+    cursor: pointer;
+}
+.guest_menu_box {
+    width: 170px;
+    height: auto;
+    background: #fff;
+    box-shadow: 0 0 4px 0px #bdbdbd;
+    border-radius: 10px;
+    overflow: hidden;
+    color: #6e6e6e;
+    display: none;
+
+    position: absolute;
+    top: 120%;
+    right: 0;
+}
+.guest_menu_box_active {
+    display: block;
+}
+.guest_menu_box > p {
+    text-align: center;
+    padding: 20px 0;
+}
+.guest_menu_box > p:hover {
+    background: #eaeaea;
+}
