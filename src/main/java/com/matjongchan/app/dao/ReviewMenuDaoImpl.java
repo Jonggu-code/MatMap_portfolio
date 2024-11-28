@@ -37,38 +37,6 @@ public class ReviewMenuDaoImpl implements ReviewMenuDao {
 
     public List<ReviewMenuDto> selectR(int reviewId){return session.selectList(namespace+"selectR",reviewId);};
 
-    private final String namespace="com.matjongchan.app.mapper.reviewMenuMapper.";
-
-    @Override
-    public int count() {
-        return 0;
-    }
-
-    @Override
-    public int deleteAll() {
-        return 0;
-    }
-
-    @Override
-    public int insert(ReviewDto dto) {
-        return 0;
-    }
-
-    @Override
-    public List<ReviewDto> selectAll() {
-        return List.of();
-    }
-
-    @Override
-    public List<ReviewDto> selectR(int fk_restaurant_id) {
-        return List.of();
-    }
-
-    @Override
-    public List<ReviewDto> selectM(String reviewer) {
-        return List.of();
-    }
-
     @Override
     public ReviewDto select(Integer bno) {
         return null;
