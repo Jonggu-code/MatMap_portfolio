@@ -9,7 +9,7 @@
         SELECT count(*) FROM review
     </select>
 
-    <select id="countR" parameterType="int" resultType="int">
+    <select id="countR" parameterType="ReviewDto" resultType="int">
         select count(*) from review where fk_restaurant_id = #{fk_restaurant_id}
     </select>
 

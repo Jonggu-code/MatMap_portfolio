@@ -26,6 +26,13 @@ public class ReviewServiceImpl implements ReviewService{
         return reviewDao.countR(fk_restaurant_id);
     };
 
+    // 전체, 고객응대, 청결도, 맛 평점 get 하는 메서드
+    public int getTotalAvg(int fk_restaurant_id){return reviewDao.totalAvgScore(fk_restaurant_id);};
+    public int getKindAvg(int fk_restaurant_id){return reviewDao.kindAvgScore(fk_restaurant_id);};
+    public int getCleanAvg(int fk_restaurant_id){return reviewDao.cleanAvgScore(fk_restaurant_id);};
+    public int getTasteAvg(int fk_restaurant_id){return reviewDao.tasteAvgScore(fk_restaurant_id);};
+
+
     // 리뷰 작성하는 하는 메서드
     public int write(ReviewDto dto) {
         return reviewDao.insert(dto);
