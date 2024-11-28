@@ -13,6 +13,11 @@ public interface ReviewDao {
 
     int countR(int fk_restaurant_id);
 
+    int totalAvgScore(int fk_restaurant_id);
+    int kindAvgScore(int fk_restaurant_id);
+    int cleanAvgScore(int fk_restaurant_id);
+    int tasteAvgScore(int fk_restaurant_id);
+
     int deleteAll();
 
     int insert(ReviewDto dto);
@@ -23,7 +28,10 @@ public interface ReviewDao {
 
     List<ReviewDto> selectM(String reviewer);
 
+    ReviewDto selectOne(int review_id);
+
     ReviewDto select(Integer bno);
+
 
     int update(ReviewDto dto);
 

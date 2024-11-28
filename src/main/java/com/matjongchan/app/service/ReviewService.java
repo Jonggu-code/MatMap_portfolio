@@ -11,6 +11,11 @@ public interface ReviewService {
 
     int getCountR(int fk_restaurant_id);
 
+    int getTotalAvg(int fk_restaurant_id);
+    int getKindAvg(int fk_restaurant_id);
+    int getCleanAvg(int fk_restaurant_id);
+    int getTasteAvg(int fk_restaurant_id);
+
     int write(ReviewDto dto);
 
     List<ReviewDto> getListAll();

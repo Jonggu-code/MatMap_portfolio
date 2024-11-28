@@ -20,13 +20,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="<c:url value='https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css'/>" />
 
-  <link rel="stylesheet" href="<c:url value='/resource/css/review_page_2.css' /> ">
-  <link rel="stylesheet" href="<c:url value='/resource/css/review_common.css' /> ">
+  <link rel="stylesheet" href="<c:url value='/resources/css/review_page_2.css' /> ">
+  <link rel="stylesheet" href="<c:url value='/resources/css/review_common.css' /> ">
 </head>
 <body>
 
-<form action="<c:url value='/reviewWrite2' />" method="post" id="wrap">
-
+<form action="<c:url value='/reviewWrite2' />" method="post" id="wrap" enctype="multipart/form-data">
 
   <input type="hidden" name="total_score" value="${reviewDto.total_score}">
   <input type="hidden" name="kind_score" value="${reviewDto.kind_score}">
@@ -60,13 +59,13 @@
         <div class="add_img_btn">
           <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><g><path d="M12.7,12l6.6,6.6l-0.7,0.7L12,12.7l-6.6,6.6l-0.7-0.7l6.6-6.6L4.6,5.4l0.7-0.7l6.6,6.6l6.6-6.6l0.7,0.7L12.7,12z"></path></g></svg>
         </div>
-        <input type="file" multiple id="add_img">
+        <input type="file" multiple id="add_img" name="files">
       </div>
 
       <!-- 리뷰 텍스트 넣는 단 -->
       <div class="common_box txt_box">
 
-        <textarea name="content" id="review_txt" maxlength="300" minlength="30" cols="6" placeholder="리뷰 작성시 리뷰를 보는 사용자와 사업자에게 욕설, 비방, 명예훼손성 표현은 자제 부탁드립니다 !" required></textarea>
+        <textarea name="content" id="review_txt" maxlength="300" minlength="15" cols="6" placeholder="리뷰 작성시 리뷰를 보는 사용자와 사업자에게 욕설, 비방, 명예훼손성 표현은 자제 부탁드립니다 !" required></textarea>
         <div class="txt_limit">
           <span>0</span>
           <span>/</span>
@@ -86,7 +85,7 @@
 
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <%--<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>--%>
-<script src="<c:url value='/resource/js/review_common.js' /> "></script>
+<script src="<c:url value='/resources/js/review_common.js' /> "></script>
 <%--<script src="../js/swiper.js"></script>--%>
 
 </body>
