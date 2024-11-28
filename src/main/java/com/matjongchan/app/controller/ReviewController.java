@@ -56,6 +56,10 @@ public class ReviewController {
 
     @PostMapping("/reviewWrite2") // 리뷰 작성 두 번째 페이지 메서드
     public String reviewWriteSubmit(HttpSession session, ReviewDto reviewDto, @RequestParam(value = "files", required = false) MultipartFile[] mf) {
+
+
+
+
         try {
             log.info(reviewDto.getContent());
 //            String reviewer = (String)session.getAttribute("id");
