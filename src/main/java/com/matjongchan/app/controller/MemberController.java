@@ -70,9 +70,10 @@ public class MemberController {
         cookie.setMaxAge(r_id?60 * 60 * 24:0);
         response.addCookie(cookie);
 
+        //다른 페이지 가려다가 로그인 안돼서 로그인창으로 넘어온 경우, 원래 창으로 돌려보내줌.
         toUrl = toUrl == ""?"":toUrl;
 
-        return "redirect:/main" + toUrl;
+        return "redirect:/" + toUrl;
 
     }
 
@@ -137,12 +138,6 @@ public class MemberController {
                 String saveFile = F_PATH + System.currentTimeMillis() + "_" + originalName; // 저장경로 설정
                 // 파일 저장
                 mf.transferTo(new File(saveFile));
-
-
-
-
-
-
 
 
                 // 새로운 이미지 정보를 MemberImageDto에 설정
