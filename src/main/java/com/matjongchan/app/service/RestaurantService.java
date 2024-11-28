@@ -10,6 +10,11 @@ public interface RestaurantService {
     //식당 상세페이지 조회기능
     RestaurantDetail getRestaurantDetail(int restaurantId);
 
+    /**
+     * 식당 상세페이지에서 리뷰 조회.
+     * @param condition
+     * @return
+     */
     List<ReviewDetail> getReviewDetails(ReviewDetailSearchCondition condition);
 
     /**
@@ -98,5 +103,7 @@ public interface RestaurantService {
      * @return
      */
     List<RestaurantDto> getRestaurantAll();
-    
+
+
+
 }

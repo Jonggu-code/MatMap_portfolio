@@ -22,4 +22,9 @@ public interface ReviewService {
     int remove(Integer id, String reviewer);
 
     List<ReviewDetail> getReviewDetails(ReviewDetailSearchCondition condition);
+
+    List<Double> getTotalScore(int fk_restaurant_id);
+
+    List<Double> getTotalScoreCountList(int fk_restaurant_id);
+
 }
