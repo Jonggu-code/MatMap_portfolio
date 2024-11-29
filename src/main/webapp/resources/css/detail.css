@@ -1,0 +1,645 @@
+/* ///////////////////////////////////////////////////////// */
+/* ////////////////         container           //////////// */
+/* ///////////////////////////////////////////////////////// */
+
+.container {
+    padding-top: 115px;
+    width: 100%;
+    height: auto;
+    background: #dbdbdb;
+}
+
+/* ////////////////        benner단          ////////////// */
+
+.banner_main {
+    padding: 30px 0;
+    background: #130a00ec;
+}
+.main_banner {
+    height: 350px;
+    display: flex;
+}
+.banner_img {
+    height: 100%;
+    width: calc(100% / 3);
+}
+
+/* ////////////////           swiper            //////////// */
+
+.banner_btn_L, .banner_btn_R {
+    height: 100%;
+    width: 100px;
+    color: rgba(255,255,255,0.3);
+    cursor: pointer;
+    box-sizing: border-box;
+    z-index: 999;
+    font-size: 50px;
+
+    display: flex;
+    align-items: center;
+
+    transition: color 0.3s;
+
+    position: absolute;
+    top: 0;
+}
+.banner_btn_L > p {
+    margin-left: 15px;
+    user-select: none;
+}
+.banner_btn_R > p {
+    margin-left: 55px;
+    user-select: none;
+}
+.banner_btn_L:hover, .banner_btn_R:hover {
+    color: #fff;
+}
+.swiper-button-prev0 {
+    background: linear-gradient(to left, rgba(0,0,0,0), rgba(0,0,0,0.7));
+    left: 0;
+}
+.swiper-button-next0 {
+    background: linear-gradient(to left, rgba(0,0,0,0.7), rgba(0,0,0,0));
+    right: 0;
+}
+
+/* ////////////////        main_box단          ////////////// */
+
+.container_main {
+    height: auto;
+    margin-top: 25px;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.container_box {
+    height: auto;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #fff;
+    box-shadow: 0px 0px 5px 2px #bdbdbd;
+    border-radius: 15px;
+
+    position: relative;
+}
+.container_title > p, .container_title {
+    font-size: 26px;
+    font-weight: 600;
+    display: flex;
+}
+.container_title {margin-bottom: 20px;}
+
+#main_box { width: calc(70% - 20px); }
+
+#sub_box { width: 30%; }
+
+.review_box {
+    width: 300px;
+    height: 50px;
+
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+.star_box, #review_leng {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+}
+#review_score, .rev_review_score {
+    font-size: 22px; 
+    font-weight: 700;
+    margin-left: 14px;
+    
+    color: #ff9625;
+    position: relative;
+    top: -4px;
+}
+#review_star, .rev_review_star, #reco_star {
+    width: 140px;
+    height: 25px;
+    background: url(../img/review_star_empty.png) repeat-x left;
+    background-size: 29px;
+
+    position: relative;
+    right: 0;
+    top: 0;
+}
+#review_leng {
+    padding-top: 6px;
+    color: #5e5e5e;
+    cursor: pointer;
+}
+#review_leng:hover {
+    text-decoration: underline;
+}
+.fill_star, .rev_fill_star, .reco_fill_star {
+    width: 97%;
+    height: 25px;
+    background: url(../img/review_star_fill.png) repeat-x left;
+    background-size: 29px;
+
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+.rev_review_score {
+    font-size: 18px;
+    top: -1px;
+}
+
+/* ////////////////        식당 정보 icon 관련단          ////////////// */
+
+#rest_title_box {
+    margin-bottom: 15px;
+
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+#rest_title {
+    font-size: 30px;
+    font-weight: 900;
+    position: relative;
+    top: -5px;
+}
+#rest_cate {
+    font-size: 18px;
+    margin-top: 5px;
+    color: #000;
+    cursor: pointer;
+}
+#rest_cate:hover {
+    color: #ff9625;
+}
+#rest_info_box {
+    margin-bottom: 25px;
+}
+#rest_d_addr, #rest_p_num, #rest_info {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* ////////////////        식당 소개단         ////////////// */
+
+#rest_intro {
+    padding: 25px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 10px;
+    background: #e3e3e3;
+}
+.rest_addr_icon, .rest_num_icon, .rest_info_icon {
+    width: 20px;
+    height: 20px;
+    background: url(../img/ico_detail_240813.png) no-repeat;
+}
+.rest_addr_icon {
+    background-position: -37px -28px;
+}
+.rest_num_icon {
+    background-position: -97px -28px;
+}
+.rest_info_icon {
+    background-position: -157px -28px;
+}
+
+/* ////////////////        영업시간 단          ////////////// */
+
+#rest_time_box {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+.time_box {
+    display: flex;
+}
+.time_icon {
+    width: 24px;
+    height: 24px;
+    background: url(../img/ico_detail_240813.png);
+    background-position: -74px -37px;
+    background-size: 350px;
+}
+#time_title {
+    font-size: 24px;
+    font-weight: 700;
+
+    position: relative;
+    top: -5px;
+}
+#open_time, #break_time, #close_time {
+    font-size: 20px;
+    display: none;
+    margin-left: 5px;
+
+    position: relative;
+    top: -5px;
+}
+#open_time { color: #ff9625; display: block;}
+#break_time { color: #10bb00; }
+#close_time { color: #ff0000; }
+
+.day_box > p:last-child {
+    margin-top: 10px;
+}
+
+/* ////////////////        사진 관리단         ////////////// */
+
+#menu_container { 
+    width: calc(70% - 20px);
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.menu_con_title {
+    width: 100%;
+    margin-bottom: 10px;
+}
+.menu_box {
+    width: calc(50% - 5px);
+    height: 120px;
+    border: 1px solid #dcdcdc;
+    border-radius: 15px;
+
+    padding: 10px;
+    box-sizing: border-box;
+
+    display: flex;
+}
+.menu_img {
+    width: 100px;
+    height: 100px;
+    background: #995900;
+    border-radius: 10px;
+}
+.menu_title_box {
+    margin-left: 15px;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    gap: 4px;
+}
+.menu_title_box > p {
+    width: 100%;
+}
+.menu_title {
+    font-size: 18px;
+}
+.menu_price {
+    font-size: 16px;
+    font-weight: 700;
+}
+/* ////////////////        사진 관리단         ////////////// */
+
+#img_container { width: calc(70% - 20px); }
+.img_con_box {
+    width: 100%;
+    height: auto;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.rest_img {
+    width: calc((100% - 20px) / 3);
+    height: 250px;
+    border-radius: 15px;
+    position: relative;
+}
+.img_con_more_btn {
+    width: 100%;
+    height: 65px;
+    font-size: 16px;
+    text-align: center;
+    background: #e3e3e3;
+    border-radius: 10px;
+    margin-top: 20px;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.img_con_more_btn > svg {
+    width: 26px;
+    height: 26px;
+}
+
+/* ////////////////        맛집 추천단        ////////////// */
+
+#reco_container {
+    width: 360px;
+    height: 780px;
+
+    position: absolute;
+    top: 313px;
+    right: 0;
+}
+#reco_container > .container_title > p:first-child {
+    color: #ff9625;
+}
+#reco_container > .container_title > p:last-child {
+    margin-left: 5px;
+}
+.reco_box {
+    padding: 10px 15px;
+    box-sizing: border-box;
+    background-color: #e3e3e3;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+.reco_title {
+    font-size: 18px;
+    font-weight: 700;
+}
+.reco_score {
+    display: flex;
+    align-items: center;
+}
+.reco_score > span:nth-child(2) {
+    color: #ff9625;
+    font-weight: 600;
+    margin-left: 2px;
+}
+.reco_score > span:last-child {
+    margin-left: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #929292;
+}
+#reco_star, .reco_fill_star {
+    display: block;
+    width: 20px;
+    background-size: 20px;
+    top: 0.5px;
+}
+.reco_title_box {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+.reco_addr {
+    font-size: 14px;
+    font-weight: 600;
+    color: #929292;
+    margin-bottom: 10px;
+    padding-left: 2px;
+}
+.reco_img_box {
+    width: 100%;
+    height: 140px;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    gap: 2px;
+}
+.reco_img {
+    width: calc(100% / 2);
+}
+.reco_img1 {
+    background: url(../img/예시이미지/june1.jpg) no-repeat center / cover;
+}
+.reco_img2 {
+    background: url(../img/예시이미지/june2.jpg) no-repeat center / cover;
+}
+
+/* ////////////////        리뷰 관리단         ////////////// */
+
+#review_container { width: calc(70% - 20px); }
+
+.rev_con_title {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.rev_create_btn {
+    width: 300px;
+    height: 45px;
+    line-height: 45px;
+    border: 1px solid #ff9625;
+    border-radius: 3px;
+    cursor: pointer;
+    
+    text-align: center;
+    font-size: 14px;
+    color: #ff9625;
+
+    transition: all 0.2s;
+}
+.rev_create_btn:hover {
+    background-color: #ff9625;
+    color: #fff;
+}
+.rev_con_score_box {
+    height: auto;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/*  rev_con_score_title  */
+
+.rev_con_score {
+    display: flex;
+    gap: 50px;
+    margin-left: 15px;
+}
+.rev_con_score_title > p {
+    margin-bottom: 20px;
+}
+
+/*  rev_con_score_star  */
+
+.rev_con_score_star {
+    width: 200px;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+}
+.rev_con_score_starbox {
+    display: flex;
+}
+.rev_review_star {
+    width: 130px;
+    background-size: 26px;
+}
+.rev_fill_star {
+    background-size: 26px;
+}
+#star_ave {width: 95%;}
+#star_kind {width: 90%;}
+#star_clean {width: 86%;}
+#star_taste {width: 99%;}
+
+/* rev_con_score_list */
+
+.rev_con_score_list {
+    width: auto;
+    margin-right: 20px;
+    display: flex;
+}
+.rcs_list_title > p{
+    margin-bottom: 10px;
+}
+.rcs_list_score {
+    padding-top: 8px;
+    padding-left: 30px;
+}
+.empty_score {
+    width: 140px;
+    height: 10px;
+    background-color: #d8d8d8;
+    margin-bottom: 24.3px;
+    position: relative;
+}
+.fill_score {
+    height: 10px;
+    background-color: #f1910a;
+}
+#score_biggood {width: 95%;}
+#score_good {width: 2%;}
+#score_common {width: 2%;}
+#score_bad {width: 2%;}
+#score_bigbad {width: 0%;}
+.rcs_etc_box {
+    width: 360px;
+    height: auto;
+    background: #a6a6a6;
+}
+
+/* rev_con_main */
+
+.rev_con_main {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.rev_con_main_box {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    border: 1px solid #cacaca;
+    box-sizing: border-box;
+    position: relative;
+
+    display: flex;
+    flex-wrap: wrap;
+}
+.rc_user_box {
+    height: 60px;
+    display: flex;
+}
+.rc_create_at {
+    font-size: 14px;
+    color: #5e5e5e;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+.rc_user_icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #10bb00;
+}
+.rc_user_info {
+    margin-left: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+}
+#user_name {
+    width: 100%;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+#user_info {
+    display: flex;
+    gap: 5px;
+    font-size: 15px;
+}
+#user_info > p:nth-child(odd){
+    color: #5e5e5e;
+}
+#user_info > p:nth-child(even){
+    color: #ff9625;
+    font-weight: 700;
+}
+.rc_user_score_box {
+    width: 100%;
+    height: 24px;
+    padding: 12px 0;
+    display: flex;
+    gap: 15px;
+    margin-left: 5px;
+}
+.rc_user_txt_box {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    background: #f4f4f4;
+    white-space: pre;
+}
+.rc_img_box {
+    width: 100%;
+    height: 177px;
+
+    display: flex;
+    gap: 10px;
+
+}
+.re_menu_box {
+    width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+    font-size: 14px;
+
+    display: flex;
+    gap: 10px;
+}
+.review_menu {
+    padding: 5px 15px;
+    border-radius: 25px;
+    background: #e1e1e1;
+}
+.review_img {
+    width: calc(100% / 4);
+    height: 100%;
+    background: #d99b9b;
+    border-radius: 5px;
+
+    text-align: center;
+    line-height: 180px;
+    font-size: 25px;
+
+}
+
+
+
+
+/* /////////////////////////////////////////// */
+.one_star {
+    width: 20px;
+    height: 20px;
+    background: url(../img/review_star_fill.png) no-repeat center / cover;
+}
+.con1 {
+    display: flex; 
+    gap: 5px;
+}
+.con1 > p:nth-child(2) {
+    color: #ff9625;
+    font-weight: 900;
+}
