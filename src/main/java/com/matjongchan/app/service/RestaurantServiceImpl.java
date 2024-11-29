@@ -2,15 +2,11 @@ package com.matjongchan.app.service;
 
 import com.matjongchan.app.dao.OtherImageDao;
 import com.matjongchan.app.dao.RestaurantDao;
-import com.matjongchan.app.dao.ReviewDao;
 import com.matjongchan.app.dao.ReviewMenuDao;
 import com.matjongchan.app.domain.dto.*;
-import com.matjongchan.app.domain.entity.BusinessHoursDto;
-import com.matjongchan.app.domain.entity.MemberDto;
-import com.matjongchan.app.domain.entity.OtherImageDto;
-import com.matjongchan.app.domain.entity.RestaurantDto;
+import com.matjongchan.app.domain.entity.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-@Repository
+@Service
 public class RestaurantServiceImpl implements RestaurantService {
 
     private final RestaurantDao restaurantDao;
@@ -28,66 +24,9 @@ public class RestaurantServiceImpl implements RestaurantService {
     private final OtherImageDao otherImageDao;
 
     @Override
-    public RestaurantDetail getRestaurantDetail(int restaurantId) {
-
-        RestaurantDto dto = restaurantDao.getRestaurantById(restaurantId);
-        List<String> image_url_list = otherImageDao.getRestaurantImages(restaurantId)
-                .stream()
-                .map(OtherImageDto::getImg_url)
-                .collect(Collectors.toList());
-
-        BusinessHoursDto hoursDto = restaurantDao.getBusinessHours(restaurantId);
-        List<MenuDetail> menuDetail = restaurantDao.getMenuDetail(restaurantId);
-        for (MenuDetail detail : menuDetail) {
-            detail.setMenu_image_url(restaurantDao.getMenuUrl(Integer.parseInt(detail.getMenu_image_url())));
-        }
-        List<RestaurantDto> restaurant_dto_list = restaurantDao.getRelationRestaurant3(restaurantId);
-
-
-        List<RelationRestaurant> relationRestaurantList = new ArrayList<>();
-        for (RestaurantDto restaurantDto : restaurant_dto_list) {
-
-            List<String> img_url_list = otherImageDao.getRestaurantImages2(restaurantId)
-                    .stream()
-                    .map(OtherImageDto::getImg_url)
-                    .collect(Collectors.toList());
-
-            RelationRestaurant relationRestaurant = RelationRestaurant.builder()
-                    .restaurant_name(restaurantDto.getName())
-                    .restaurant_total_score_count(restaurantDto.getTotal_score_count())
-                    .restaurant_total_review_count(restaurantDto.getTotal_review_count())
-                    .restaurant_address(restaurantDto.getC_address() + restaurantDto.getD_address())
-                    .restaurant_image_url_list(img_url_list)
-                    .build();
-
-            relationRestaurantList.add(relationRestaurant);
-        }
-        List<Double> totalScore = reviewService.getTotalScore(restaurantId);
-        List<Double> totalScoreCountList = reviewService.getTotalScoreCountList(restaurantId);
-
-        return RestaurantDetail.builder()
-                .restaurant_name(dto.getName())
-                .restaurant_category(CategoryChanger.numberIntoCategory(dto.getFk_category()))
-                .restaurant_total_score_count(dto.getTotal_score_count())
-                .restaurant_total_review_count(dto.getTotal_review_count())
-                .restaurant_address(dto.getC_address()+dto.getD_address())
-                .restaurant_number(dto.getNumber())
-                .restaurant_reservation(dto.getReservation())
-                .restaurant_memo(dto.getMemo())
-                .restaurant_image_url_list(image_url_list)
-                .today_business_state(getNowOpen(hoursDto)) //오늘 영업 유무..
-                .business_hours_dto(hoursDto)
-                .menu_detail_list(menuDetail) //메뉴 이름,가격,사진등등..
-                .review_image_url_list(image_url_list)
-                .relation_restaurant_list(relationRestaurantList)
-                .restaurant_total_taste_score_count(totalScore.get(0))
-                .restaurant_total_clean_score_count(totalScore.get(1))
-                .restaurant_total_kind_score_count(totalScore.get(2))
-                .restaurant_total_rating(TotalRating.listToTotalRating(totalScoreCountList))
-                .build();
+    public List<SimpleRestaurant> getSimpleRestaurant(SearchCondition searchCondition) {
+        return List.of();
     }
-
-
 
     @Override
     public List<ReviewDetail> getReviewDetails(ReviewDetailSearchCondition condition) {
@@ -166,6 +105,86 @@ public class RestaurantServiceImpl implements RestaurantService {
         return restaurantDao.getRestaurantAll();
     }
 
+    @Override
+    public List<SimpleRestaurant> SRTotalSearch(SearchCondition searchCondition) {
+        List<RestaurantDto> dtoList = restaurantDao.totalSearch(searchCondition);
+        return getSimpleRestaurantList(dtoList);
+    }
+
+    @Override
+    public List<SimpleRestaurant> SRNearSearch(SearchCondition searchCondition) {
+        List<RestaurantDto> dtoList = restaurantDao.nearSearch(searchCondition);
+        return getSimpleRestaurantList(dtoList);
+    }
+
+
+    @Override
+    public List<SimpleRestaurant> SRRealTotalSearch(SearchCondition searchCondition) {
+        List<RestaurantDto> dtoList = restaurantDao.realTotalSearch(searchCondition);
+        return getSimpleRestaurantList(dtoList);
+    }
+
+
+    @Override
+    public RestaurantDetail getRestaurantDetail(int restaurantId) {
+
+        RestaurantDto dto = restaurantDao.getRestaurantById(restaurantId);
+        List<String> image_url_list = otherImageDao.getRestaurantImages(restaurantId)
+                .stream()
+                .map(OtherImageDto::getImg_url)
+                .collect(Collectors.toList());
+
+        BusinessHoursDto hoursDto = restaurantDao.getBusinessHours(restaurantId);
+        List<MenuDetail> menuDetail = restaurantDao.getMenuDetail(restaurantId);
+        for (MenuDetail detail : menuDetail) {
+            detail.setMenu_image_url(restaurantDao.getMenuUrl(Integer.parseInt(detail.getMenu_image_url())));
+        }
+        List<RestaurantDto> restaurant_dto_list = restaurantDao.getRelationRestaurant3(restaurantId);
+
+
+        List<RelationRestaurant> relationRestaurantList = new ArrayList<>();
+        for (RestaurantDto restaurantDto : restaurant_dto_list) {
+
+            List<String> img_url_list = otherImageDao.getRestaurantImages2(restaurantId)
+                    .stream()
+                    .map(OtherImageDto::getImg_url)
+                    .collect(Collectors.toList());
+
+            RelationRestaurant relationRestaurant = RelationRestaurant.builder()
+                    .restaurant_name(restaurantDto.getName())
+                    .restaurant_total_score_count(restaurantDto.getTotal_score_count())
+                    .restaurant_total_review_count(restaurantDto.getTotal_review_count())
+                    .restaurant_address(restaurantDto.getC_address() + restaurantDto.getD_address())
+                    .restaurant_image_url_list(img_url_list)
+                    .build();
+
+            relationRestaurantList.add(relationRestaurant);
+        }
+        List<Double> totalScore = reviewService.getTotalScore(restaurantId);
+        List<Double> totalScoreCountList = reviewService.getTotalScoreCountList(restaurantId);
+
+        return RestaurantDetail.builder()
+                .restaurant_name(dto.getName())
+                .restaurant_category(CategoryChanger.numberIntoCategory(dto.getFk_category()))
+                .restaurant_total_score_count(dto.getTotal_score_count())
+                .restaurant_total_review_count(dto.getTotal_review_count())
+                .restaurant_address(dto.getC_address()+dto.getD_address())
+                .restaurant_number(dto.getNumber())
+                .restaurant_reservation(dto.getReservation())
+                .restaurant_memo(dto.getMemo())
+                .restaurant_image_url_list(image_url_list)
+                .today_business_state(getNowOpen(hoursDto)) //오늘 영업 유무..
+                .business_hours_dto(hoursDto)
+                .menu_detail_list(menuDetail) //메뉴 이름,가격,사진등등..
+                .review_image_url_list(image_url_list)
+                .relation_restaurant_list(relationRestaurantList)
+                .restaurant_total_taste_score_count(totalScore.get(0))
+                .restaurant_total_clean_score_count(totalScore.get(1))
+                .restaurant_total_kind_score_count(totalScore.get(2))
+                .restaurant_total_rating(TotalRating.listToTotalRating(totalScoreCountList))
+                .build();
+    }
+
     private static String getNowOpen(BusinessHoursDto hoursDto) {
         String business_hour = "";
         String now_open = "영업정보없음";
@@ -210,4 +229,47 @@ public class RestaurantServiceImpl implements RestaurantService {
         }
         return now_open;
     }
+
+    private List<SimpleRestaurant> getSimpleRestaurantList(List<RestaurantDto> dtoList) {
+        List<SimpleRestaurant> simpleRestaurantList = new ArrayList<>();
+
+        for (RestaurantDto dto : dtoList) {
+            SimpleRestaurant simpleRestaurant = SimpleRestaurant.builder()
+                    .id(dto.getId())
+                    .name(dto.getName())
+                    .image_url(getImgUrl(dto))
+                    .address(dto.getC_address() + dto.getD_address())
+                    .total_score_count(dto.getTotal_score_count())
+                    .total_review_count(dto.getTotal_review_count())
+                    .today_business_state(getNowOpen(restaurantDao.getBusinessHours(dto.getId())))
+                    .reservation(dto.getReservation())
+                    .number(dto.getNumber())
+                    .loc_x(dto.getLoc_x())
+                    .loc_y(dto.getLoc_y())
+                    .menu_name_list(getMenu_name_list(dto))
+                    .recentSimpleReview(getReviewDto(dto))
+                    .build();
+            simpleRestaurantList.add(simpleRestaurant);
+        }
+
+        return simpleRestaurantList;
+    }
+
+    private String getImgUrl(RestaurantDto dto) {
+        List<OtherImageDto> images = otherImageDao.getRestaurantImages2(dto.getId());
+        return images.isEmpty() ? null : images.get(0).getImg_url();
+    }
+    private List<String> getMenu_name_list(RestaurantDto dto) {
+        return restaurantDao.getMenuDetail(
+                        dto.getId())
+                .stream()
+                .map(MenuDetail::getMenu_name)
+                .collect(Collectors.toList());
+    }
+
+    private ReviewDto getReviewDto(RestaurantDto dto) {
+        List<ReviewDto> listR = reviewService.getListR(dto.getId());
+        return listR.isEmpty() ? null : listR.get(0);
+    }
+
 }
