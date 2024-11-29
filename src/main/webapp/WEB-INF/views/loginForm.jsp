@@ -28,8 +28,8 @@
             <form action="<c:url value = '/login'/>" method="post" onsubmit="return valid_chk(this)">
 
                 <input type = "hidden" name = "toUrl" value="${param.toUrl}">
-                <div id="msg" class="msg">${URL.Decoder.decode(param.msg, "utf-8")}</div>
-
+                <div id="msg" class="msg">${param.msg}</div>
+<%--                ${URL.Decoder.decode(param.msg, "utf-8")}--%>
                 <input type="text" placeholder="아이디 또는 전화번호" name="user_id" value="${cookie.id.value}" class="input_txt input_id">
                 <input type="password" placeholder="비밀번호" name="user_pw" value="" class="input_txt input_pw">
                 <div class="keep_check">

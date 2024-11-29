@@ -33,6 +33,8 @@ public interface MemberDao2 {
 
 
     List<ReviewDto> selectMemberReviews(String user_id); // user_id 기준으로 리뷰 조회
+
+    int selectMemberReviewCount(String user_id);
     int deleteMemberReview(String user_id);  // user_id 기준으로 리뷰 삭제
 
     int countMemberReview();

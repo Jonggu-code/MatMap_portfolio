@@ -7,9 +7,11 @@ package com.matjongchan.app.controller;
  * */
 
 
+import com.matjongchan.app.domain.dto.FavoriteWithRestaurantDto;
 import com.matjongchan.app.domain.entity.MemberDto;
 import com.matjongchan.app.domain.dto.MemberLoginDto;
 import com.matjongchan.app.domain.entity.MemberImageDto;
+import com.matjongchan.app.domain.entity.ReviewDto;
 import com.matjongchan.app.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -36,27 +39,28 @@ public class MemberController {
     @Autowired
     MemberService memberService;
 
-/*
-1. 로그인 컨트롤러 - get, post 방식
- */
+    /*
+    1. 로그인 컨트롤러 - get, post 방식
+     */
     @GetMapping("/logout")
-    public String logout(HttpSession session){
+    public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/main";
     }
+
     @GetMapping("/login")
-    public String loginForm(){
+    public String loginForm() {
         return "loginForm"; //loginForm jsp 파일로 연결
     }
 
     @PostMapping("/login")
-    public String login(MemberLoginDto memberlogin, String toUrl, HttpServletRequest request, HttpServletResponse response) throws Exception{
+    public String login(MemberLoginDto memberlogin, String toUrl, HttpServletRequest request, HttpServletResponse response) throws Exception {
         String user_id = memberlogin.getUser_id();
-        String user_pw = memberlogin.getPassword();
+        String user_pw = memberlogin.getUser_pw();
         boolean r_id = memberlogin.isRemember_id();
 
         // 유효성 검사
-        if(!loginChk(user_id, user_pw)){
+        if (!loginChk(user_id, user_pw)) {
             String msg = URLEncoder.encode("일치하는 회원 정보가 없습니다.", "UTF-8");
             return "redirect:/login?msg=" + msg;
         }
@@ -67,13 +71,14 @@ public class MemberController {
         // 쿠키 생성
         Cookie cookie = new Cookie("id", user_id);
         // 하루동안 쿠키 유지
-        cookie.setMaxAge(r_id?60 * 60 * 24:0);
+        cookie.setMaxAge(r_id ? 60 * 60 * 24 : 0);
         response.addCookie(cookie);
 
         //다른 페이지 가려다가 로그인 안돼서 로그인창으로 넘어온 경우, 원래 창으로 돌려보내줌.
-        toUrl = toUrl == ""?"":toUrl;
+        toUrl = toUrl == "" ? "" : toUrl;
 
-        return "redirect:/" + toUrl;
+        String msg = URLEncoder.encode("로그인 성공!", "UTF-8");
+        return "redirect:/" + toUrl + "?msg=" + msg;
 
     }
 
@@ -84,7 +89,7 @@ public class MemberController {
 
         // 아이디 확인
         MemberDto member = memberService.getMember(user_id);
-        if(member == null) return false;
+        if (member == null) return false;
         // 비밀번호 확인
         return member.getPassword().equals(user_pw);
     }
@@ -92,18 +97,19 @@ public class MemberController {
 /////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-/*
-2. 회원가입 컨트롤러 - get, post 방식
- */
+    /*
+    2. 회원가입 컨트롤러 - get, post 방식
+     */
     @GetMapping("/join")
-    public String registerForm(){
+    public String registerForm() {
         return "registerForm";
     }
 
     private static final String F_PATH = "C:/Users/82109/Desktop/spring/matjongchan_git/MatMap_portfolio/src/main/webapp/resources/img/";
     private static final int defaultImageId = 1; // 기본 이미지의 id값 1
+
     @PostMapping("/join")
-    public String register(MemberDto memberDto, Model m, @RequestParam(value = "profile_image", required = false) MultipartFile mf){
+    public String register(MemberDto memberDto, Model m, @RequestParam(value = "profile_image", required = false) MultipartFile mf) {
         String user_id = memberDto.getUser_id().trim();
 
         // 아이디 중복 검사
@@ -130,10 +136,10 @@ public class MemberController {
         }
 
         // 이미지 업로드 처리 (mf가 비어있지 않은 경우에만 실행)
-        if(mf != null && !mf.isEmpty()){
-            try{
+        if (mf != null && !mf.isEmpty()) {
+            try {
                 String originalName = mf.getOriginalFilename();
-                String uniqueFileName = System.currentTimeMillis()  + "_" + originalName;
+                String uniqueFileName = System.currentTimeMillis() + "_" + originalName;
 
                 String saveFile = F_PATH + System.currentTimeMillis() + "_" + originalName; // 저장경로 설정
                 // 파일 저장
@@ -157,14 +163,14 @@ public class MemberController {
                 // 파일 업로드 실패 시 처리
                 return "redirect:/join?msg=파일 업로드 실패";
             }
-        }else{
+        } else {
             // 사용자가 사진을 첨부하지 않으면 기본 이미지 id 설정
             memberDto.setFk_image_id(defaultImageId);
         }
 
         // DB에 저장
         if (memberService.addMember(memberDto) == 1) {
-            return "redirect:/main";
+            return "redirect:/";
         } else {
             String msg = null;
             try {
@@ -176,13 +182,51 @@ public class MemberController {
         }
     }
 
-
-
-
-    private boolean isValid(String id){
+    private boolean isValid(String id) {
         MemberDto member = memberService.getMember(id);
 
-        if(member != null) return false;
+        if (member != null) return false;
         return true;
     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /*
+    3. 마이페이지 컨트롤러 - get 방식
+     */
+    @GetMapping("/mypage")
+    public String myPage(HttpSession session, Model model){
+        // 세션에 있는 id 값 가져오기
+        String userId = (String) session.getAttribute("id");
+        // 로그인하지 않은 사용자는 로그인페이지로 리다이렉트
+        if(userId == null){
+            return "redirect:/login";
+        }
+
+        // 로그인된 사용자의 마이페이지 정보 처리
+        MemberDto member = memberService.getMember(userId);
+        model.addAttribute("member", member);
+
+        // 회원이 작성한 리뷰 개수 조회
+        int reviewCount = memberService.selectMemberReviewCount(userId);
+        model.addAttribute("reviewCount", reviewCount);
+
+        // 회원 리뷰 조회(제목, 내용, 레스토랑 이름)
+        List<ReviewDto> reviews = memberService.getMemberReviews(userId);
+        model.addAttribute("reviews", reviews);
+
+        // 회원의 즐겨찾기 레스토랑 정보 조회(이름, c_address, d_address)
+        List<FavoriteWithRestaurantDto> favorites = memberService.getMemberFavorites(userId);
+        model.addAttribute("favorites", favorites);
+
+        return "myPage";
+
+
+
+    }
+
+
 }
+
+
