@@ -123,4 +123,6 @@ public interface RestaurantDao {
      */
     List<RestaurantDto> getRelationRestaurant3 (int restaurant_id);
 
+    List<RestaurantDto> getPopularRestaurant (SearchCondition searchCondition);
+
 }

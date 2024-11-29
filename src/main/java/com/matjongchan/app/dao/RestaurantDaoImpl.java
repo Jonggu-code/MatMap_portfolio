@@ -90,7 +90,7 @@ public class RestaurantDaoImpl implements RestaurantDao {
 
     @Override
     public List<MenuDetail> getMenuDetail(int restaurant_id) {
-        return session.selectOne(namespace+"getRestaurantMenuDetail",restaurant_id);
+        return session.selectList(namespace+"getRestaurantMenuDetail",restaurant_id);
     }
 
     @Override
@@ -101,6 +101,11 @@ public class RestaurantDaoImpl implements RestaurantDao {
     @Override
     public List<RestaurantDto> getRelationRestaurant3(int restaurant_id) {
         return session.selectList(namespace+"getRelationRestaurant",restaurant_id);
+    }
+
+    @Override
+    public List<RestaurantDto> getPopularRestaurant(SearchCondition searchCondition) {
+        return session.selectList(namespace + "getPopularRestaurant", searchCondition);
     }
 }
 

@@ -2,11 +2,11 @@
 /* ////////////////          기본세팅         ////////////// */
 /* ///////////////////////////////////////////////////////// */
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-
+* {
+    font-family: "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+}
 body {
     margin: 0;
-    font-family: 'Noto Sans', sans-serif;
 }
 ul {
     list-style: none;
@@ -110,12 +110,6 @@ input {
 
     position: relative;
 }
-.logo {
-    width: 30px;
-    height: 35px;
-    background: #ff6a25;
-    background: url(../img/무먹잘소\ logo.jpg) no-repeat center / cover;
-}
 
 /* search_box 단 */
 
@@ -179,19 +173,19 @@ input {
     height: 30px;
 
     display: flex;
+    justify-content: center;
 }
 .header_menu_item {
     width: calc(100% / 3);
     height: 100%;
-    box-sizing: border-box;
 
-    display: flex;
+    display: flex; 
     justify-content: center;
     align-items: center;
 }
 .header_menu_item > p {
     width: 90%;
-    height: 90%;
+    height: 100%;
     border-radius: 5px;
     font-size: 15px;
     font-weight: 600;
@@ -260,15 +254,87 @@ input {
     align-items: center;
     gap: 10px;
 }
-.map_box_R > div {
-    border-radius: 50%;
+.guest_box {
+    width: 29%;
+    height: 100%;
+    background: #fff;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.guest_box > a {
+    font-size: 15px;
+    font-weight: 700;
+    padding: 10px;
+    color: #d97f1f
+}
+.guest_box > p:hover {
+    color: #854e12;
     cursor: pointer;
 }
+.guest_icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background-color: #eb0eeb;
+    margin-left: 12px;
+}
+.guest_menu {
+    width: 88px;
+    height: 48px;
+    border: 1px solid #fff;
+    background: #ff9625;
+    border-radius: 25px;
+    padding: 8px;
+    box-sizing: border-box;
+    cursor: pointer;
 
-.guest_login {
-    width: 60px;
-    height: 60px;
-    background-color: rgb(21, 21, 126);
+    position: relative;
+
+    transition: box-shadow 0.1s;
+    
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.guest_menu:hover {
+    box-shadow: 0px 2px 4px 0px #404040;
+}
+.guest_menu_active {
+    box-shadow: 0px 2px 4px 0px #404040;
+}
+.guest_menu > svg {
+    width: 20px;
+    height: 20px;
+}
+.guest_menu > svg path {
+    stroke-width: 1.2;
+    stroke: #fff;
+}
+.guest_menu_box {
+    width: 170px;
+    height: auto;
+    background: #fff;
+    box-shadow: 0 0 4px 0px #bdbdbd;
+    border-radius: 10px;
+    overflow: hidden;
+    color: #6e6e6e;
+    display: none;
+
+    position: absolute;
+    top: 120%;
+    right: 0;
+}
+.guest_menu_box_active {
+    display: block;
+}
+.guest_menu_box > p {
+    text-align: center;
+    padding: 20px 0;
+}
+.guest_menu_box > p:hover {
+    background: #eaeaea;
 }
 .curr_location {
     width: 40px;
@@ -279,6 +345,8 @@ input {
     width: 40px;
     height: 40px;
     background-color: rgb(16, 134, 20);
+    border-radius: 50%;
+    cursor: pointer;
 }
 
 /* ///////////////////////////////////////////////////////// */
@@ -287,16 +355,16 @@ input {
 
 .main {
     width: 100%;
-    height: calc(100vh - 175px);
+    height: calc(100% - 160px);
     padding: 0 15px;
-    padding-top: 20px;
+    padding-top: 15px;
     box-sizing: border-box;
     overflow-y: auto;
 }
 .main_item {
     width: 100%;
-    height: 170px;
-    margin-bottom: 20px;
+    height: auto;
+    margin-bottom: 30px;
     
     display: flex;
     flex-wrap: wrap;
@@ -330,12 +398,34 @@ input {
 }
 .main_item_Rbox > p {
     width: 100%;
-    margin-bottom: 4px;
+    font-weight: 500;
+    color: #585858;
+
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 .item_title {
     width: 100%;
     display: flex;
     justify-content: space-between;
+}
+.rest_addr_icon, .rest_num_icon, .rest_info_icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: url(../img/ico_detail_240813.png) no-repeat;
+    background-size: 240px;
+
+}
+.rest_addr_icon {
+    background-position: -33px -26px;
+}
+.rest_num_icon {
+    background-position: -87px -26px;
+}
+.rest_info_icon {
+    background-position: -141px -26px;
 }
 .item_name {
     margin-left: 2px;
@@ -345,26 +435,33 @@ input {
     color: #180d01;
 }
 .item_name:hover {
-    text-decoration: underline;
+    color: #ff9625;
 }
 .item_star {
-    display: flex;
     font-weight: 700;
     color: #ff9625;
+
+    position: relative;
+    top: -2px;
+
+    display: flex;
 }
 .item_star > p {
     margin-top: 1px;
 }
 .item_star > p:nth-child(3) {
     margin-left: 5px;
-    margin-top: 3px;
+    margin-top: 4px;
     font-size: 13px;
     color: #585858;
 }
 .item_star > svg {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     margin-right: 5px;
+
+    position: relative;
+    top: 3.5px;
 }
 .item_star path {
     fill: #ff9625;
@@ -378,7 +475,7 @@ input {
 .main_item_bot {
     width: 100%;
     height: 40px;
-    margin-top: 15px;
+    margin-top: 12px;
 
     display: flex;
     overflow-x: hidden;
@@ -408,7 +505,6 @@ input {
 /* ///////////////////////////////////////////////////////// */
 /* ////////////////        map_layout        /////////////// */
 /* ///////////////////////////////////////////////////////// */
-
 
 
 
