@@ -14,7 +14,7 @@ import java.util.List;
     // 식당 상세 페이지에서 사용할 객체
 public class RestaurantDetail {
 
-    private String restaurant_name; //식당 이름 
+    private String restaurant_name; //식당 이름
     private String restaurant_category; //식당 카테고리
     private Double restaurant_total_score_count;    //식당 총 평점 평균
     private Integer restaurant_total_review_count;  //식당 총 리뷰 갯수
