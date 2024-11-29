@@ -101,6 +101,7 @@ public class MemberController {
 
     private static final String F_PATH = "C:/Users/82109/Desktop/spring/matjongchan_git/MatMap_portfolio/src/main/webapp/resources/img/";
     private static final int defaultImageId = 1; // 기본 이미지의 id값 1
+
     @PostMapping("/join")
     public String register(MemberDto memberDto, Model m, @RequestParam(value = "profile_image", required = false) MultipartFile mf){
         String user_id = memberDto.getUser_id().trim();

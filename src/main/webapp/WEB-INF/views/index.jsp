@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,6 +13,7 @@
     <title>맛맵 - 메인화면</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index.css?after"/>
 
     <!-- 컬러 차트
@@ -151,6 +153,10 @@
             </div>
             <div class="map_box_R">
                 <div class="focus_map"></div>
+                <div class="curr_location"></div>
+                <div class="guest_login"></div>
+            </div>
+        </div>
                 <div class="guest_menu" tabindex="-1">
                     <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><g><path d="M21,6H3V5h18V6z M21,11H3v1h18V11z M21,17H3v1h18V17z"></path></g></svg>
                     <div class="guest_icon"></div>
@@ -162,10 +168,7 @@
 </div>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b4e6868c7b5fe35c80d9b43d3190c872"></script>
-
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="<c:url value="resources/js/map.js"/>"></script>
 <script src="<c:url value="resources/js/index.js"/>"></script>
-
 </body>
 </html>
