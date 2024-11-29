@@ -40,23 +40,44 @@ public interface RestaurantService {
     /**
      * 주어진 조건으로 검색기능
      * @param searchCondition
-     * @return
+     * @return RestaurantDto
      */
     List<RestaurantDto> totalSearch(SearchCondition searchCondition);
 
     /**
      * 현재 지도 화면 기준 20개 식당 조회
      * @param searchCondition
-     * @return
+     * @return RestaurantDto
      */
     List<RestaurantDto> nearSearch(SearchCondition searchCondition);
 
     /**
      * 검색창으로 검색어를 입력하여 조회. 조회는 c_address, d_address, name, category를 합친 키워드안에 있을경우를 조회함. 성능안좋음..
      * @param searchCondition
-     * @return
+     * @return RestaurantDto
      */
     List<RestaurantDto> realTotalSearch(SearchCondition searchCondition);
+
+    /**
+     * 주어진 조건으로 검색
+     * @param searchCondition
+     * @return  SimpleRestaurant
+     */
+    List<SimpleRestaurant> SRTotalSearch(SearchCondition searchCondition);
+
+    /**
+     * 현재 지도 화면 기준 20개 식당 조회
+     * @param searchCondition
+     * @return SimpleRestaurant
+     */
+    List<SimpleRestaurant> SRNearSearch(SearchCondition searchCondition);
+
+    /**
+     * 검색창으로 검색어를 입력하여 조회. 조회는 c_address, d_address, name, category를 합친 키워드안에 있을경우를 조회함. 성능안좋음..
+     * @param searchCondition
+     * @return SimpleRestaurant
+     */
+    List<SimpleRestaurant> SRRealTotalSearch(SearchCondition searchCondition);
 
     /**
      * 식당 추가
@@ -103,6 +124,13 @@ public interface RestaurantService {
      * @return
      */
     List<RestaurantDto> getRestaurantAll();
+
+    /**
+     * 메인화면에서 식당 리스트(20)개 조회
+     * @return
+     */
+    List<SimpleRestaurant> getSimpleRestaurant(SearchCondition searchCondition);
+
 
 
 

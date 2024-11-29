@@ -8,19 +8,19 @@ import lombok.*;
 @AllArgsConstructor
 public class RestaurantDto {
     
-    private Integer id;
-    private String name;        //식당이름
-    private String c_address;       //도시주소 ex)강남구, 서초구 
-    private String d_address;       //상세주소 ex) 테헤란로28길 어쩌구저쩌꾸
-    private String number;          //전화번호
-    private String reservation;     //예약가능여부 ex) 예약가능
-    private String memo;            //설명 (필요시 넣고 아님말고)
+    private Integer id;                     //식당 PK
+    private String name;                    //식당이름
+    private String c_address;               //도시주소 ex)강남구, 서초구
+    private String d_address;               //상세주소 ex) 테헤란로28길 어쩌구저쩌꾸
+    private String number;                  //전화번호
+    private String reservation;             //예약가능여부 ex) 예약가능
+    private String memo;                    //설명 (필요시 넣고 아님말고)
     private Double total_score_count;       //총점 평균점수
     private Integer total_review_count;     //총 리뷰 개수
-    private Double loc_x;                // 경도
-    private Double loc_y;                // 위도
-    private String search_tag;          // 식당이름+도시주소+상세주소
-    private Integer fk_category;     // 카테고리 id
+    private Double loc_x;                   // 경도
+    private Double loc_y;                   // 위도
+    private String search_tag;              // 식당이름+도시주소+상세주소
+    private Integer fk_category;            // 카테고리 id
 
     // 식당 정보 수정을 위한 메서드
     public void updateInfo(String name,String number, String reservation, String desc) {

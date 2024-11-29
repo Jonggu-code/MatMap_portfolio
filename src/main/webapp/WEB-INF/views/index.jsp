@@ -1,19 +1,10 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: user1
-  Date: 24. 11. 18.
-  Time: 오전 10:56
-  To change this template use File | Settings | File Templates.
---%>
-
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.net.URLDecoder" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,16 +13,31 @@
     <title>맛맵 - 메인화면</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="./css/index.css">
+
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index.css?after"/>
 
     <!-- 컬러 차트
-        메인 컬러 : #ff9625
+        메인 컬러 : #ff9625 
         헤더 호버 컬러 : #d97f1f
         서브 컬러 : #e5b684
     -->
 
 </head>
+<%--<script>--%>
+<%--    console.log("${sr[0].id}")--%>
+<%--    console.log("${sr[0].name}")--%>
+<%--    console.log("${sr[0].image_url}")--%>
+<%--    console.log("${sr[0].address}")--%>
+<%--    console.log("${sr[0].total_score_count}")--%>
+<%--    console.log("${sr[0].total_review_count}")--%>
+<%--    console.log("${sr[0].today_business_state}")--%>
+<%--    console.log("${sr[0].reservation}")--%>
+<%--    console.log("${sr[0].number}")--%>
+<%--    console.log("${sr[0].loc_x}")--%>
+<%--    console.log("${sr[0].loc_y}")--%>
+<%--    console.log("${sr[0].menu_name_list}")--%>
+<%--    console.log("${sr[0].recentSimpleReview}")--%>
+<%--</script>--%>
 <body>
 <div id="wrap">
     <aside class="sidebar">
@@ -40,7 +46,7 @@
                 <a class="site_logo" href="./index.html">MatMap</a>
             </div>
             <div class="search_box" id="search">
-                <form id="search_keyword" class="KeywordSearch" action="#">
+                <form id="search_keyword" class="KeywordSearch" action="./index.html">
                     <fieldset class="fld_inside">
                         <legend class="screen_out">검색어 입력폼</legend>
                         <input type="text" class="search_input" id="search.keyword.query" name="search" autocomplete="off" placeholder="무엇을 먹어야 잘 먹었다고 소문날까?" maxlength="100">
@@ -49,45 +55,83 @@
                 </form>
             </div>
             <ul class="header_menu">
-                <li class="header_menu_item"><p># 메인화면</p></li>
-                <li class="header_menu_item"><p># 이구역 랭킹</p></li>
-                <li class="header_menu_item"><p># 나만의 랭킹</p></li>
+                <a class="header_menu_item" href="./board.html"><p>게시판</p></a>
+                <a class="header_menu_item" href="./rank_page_score.html"><p>월간 맛집</p></a>
             </ul>
         </header>
         <main class="main">
+            <c:forEach var="tmp" items="${sr}">
+            <!-- 식당들은 main_item 클래스를 가진상태로 나열됨  -->
             <div class="main_item">
                 <div class="main_item_box">
                     <div class="main_item_Lbox">
-                        <a class="img" href="./detail.html"> 1</a>
+                        <a class="img" href="./detail.html">1</a>
                     </div>
                     <div class="main_item_Rbox">
                         <div class="item_title">
-                            <a class="item_name" href="./detail.html">종찬식당</a>
+
+                            <!-- 식당 이름 -->
+                            <a class="item_name" href="./detail.html">${tmp.name}</a>
                             <div class="item_star">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2Z"></path></svg>
-                                <p>4.9</p>
-                                <p>(21)</p>
+
+                                <!-- 식당 전체 평점의 평균 -->
+                                <p>${tmp.total_score_count}</p>
+
+                                <!-- 식당에 관련된 후기 갯수 -->
+                                <p>${tmp.total_review_count}</p>
                             </div>
                         </div>
-                        <p class="item_addr">서울시 강남구 역삼동 테헤란로</p>
-                        <p class="item_info">영업중 / 휴무일 월,수,금</p>
-                        <p class="item_time">평일 09:00 ~ 18:00 / 주말 09:00 ~ 18:00</p>
+
+                        <!-- 식당 주소정보 들어오는 단 -->
+                        <p class="item_addr">
+                            <i class="rest_addr_icon"></i>
+                            ${tmp.address}
+                        </p>
+
+                        <!-- 식당 영업시간정보 들어오는 단 / 빈칸이면 "영업 정보 없음"-->
+                        <p class="item_time">
+                            <i class="rest_num_icon"></i>
+                            ${tmp.number}
+<%--                            화요일 09:00 ~ 22:00--%>
+                        </p>
+
+                        <!-- 식당 정보 들어오는 단 / 빈칸이면 "매장 정보 없음"-->
+                        <p class="item_info">
+                            <i class="rest_info_icon"></i>
+                            ${tmp.reservation}
+                        </p>
                     </div>
                 </div>
+
+                <!-- 식당 메뉴 들어오는 단 -->
                 <ul class="main_item_bot">
-                    <li>#한식</li>
-                    <li>#김치찌개</li>
-                    <li>#돈까스</li>
-                    <li>#계란말이</li>
-                    <li>#한식</li>
-                    <li>#김치찌개</li>
-                    <li>#돈까스</li>
-                    <li>#계란말이</li>
+<%--                    <c:forEach var="tmp" items="${sr}">--%>
+                    <c:forEach var="menu" items="${tmp.menu_name_list}">
+                        <li>#${menu}</li>
+                    </c:forEach>
                 </ul>
-                <div class="review_box"></div>
+                <!-- 리뷰 텍스트 들어오는 단 -->
+                <div class="review_box">
+                    <div class="review_box">
+                        <div class="user_title">
+                            <div class="user_name">
+                                11
+                            </div>
+                            <div class="create_at">
+                                11
+                            </div>
+                        </div>
+                        <div class="review_txt">
+                            oo
+                        </div>
+                    </div>
+                </div>
             </div>
+            </c:forEach>
+<%--      하나임!!      --%>
+
         </main>
-        <footer class="footer"></footer>
     </aside>
     <div id="result"></div>
     <div id="map">
@@ -113,13 +157,18 @@
                 <div class="guest_login"></div>
             </div>
         </div>
+                <div class="guest_menu" tabindex="-1">
+                    <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><g><path d="M21,6H3V5h18V6z M21,11H3v1h18V11z M21,17H3v1h18V17z"></path></g></svg>
+                    <div class="guest_icon"></div>
+                    <div class="guest_menu_box"></div>
+                </div>
+            </div>
+        </div> 
     </div>
 </div>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b4e6868c7b5fe35c80d9b43d3190c872"></script>
-<script src="./js/map.js"></script>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script src="./js/index.js"></script>
+<script src="<c:url value="resources/js/map.js"/>"></script>
+<script src="<c:url value="resources/js/index.js"/>"></script>
 </body>
 </html>

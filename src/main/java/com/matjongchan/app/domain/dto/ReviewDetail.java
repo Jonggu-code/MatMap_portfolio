@@ -31,7 +31,6 @@ public class ReviewDetail {
     private Integer fk_restaurant_id;
 
     @Builder
-
     public ReviewDetail(Integer id, String reviewer, String title, String content, Double taste_score, Double clean_score, Double kind_score, Double total_score, String create_at, String gender, Integer age, List<OtherImageDto> image, Integer fk_restaurant_id) {
         this.id = id;
         this.reviewer = reviewer;

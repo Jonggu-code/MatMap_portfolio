@@ -16,12 +16,18 @@
         SELECT * FROM restaurant WHERE id = #{id}
     </select>
 
-    <select id="getDetailById" parameterType="int" resultType="RestaurantDetail">
-        SELECT
-        FROM restaurant as r
-        WHERE id = #{id}
+<!--    <select id="getDetailById" parameterType="int" resultType="RestaurantDetail">-->
+<!--        SELECT *-->
+<!--        FROM restaurant as r-->
+<!--        WHERE id = #{id}-->
+<!--    </select>-->
 
-
+<!--  인기도 순 조회  -->
+    <select id="getPopularRestaurant" parameterType="SearchCondition" resultType="RestaurantDto">
+        SELECT *
+        FROM restaurant
+        ORDER BY total_score_count DESC
+        LIMIT 1, #{page_size)
     </select>
 
     <!--  주어진 검색조건으로 검색  -->
@@ -36,7 +42,7 @@
         </if>
         order by
         <choose>
-            <when test="option == 'R'">
+            <when test='option == "R"'>
                 r.total_review_count desc
             </when>
             <otherwise>
@@ -62,14 +68,14 @@
         and #{loc_se_y} > r.loc_y
         order by
         <choose>
-            <when test="option == 'R'">
+            <when test='option == "R"'>
                 r.total_review_count desc
             </when>
             <otherwise>
                 r.total_score_count desc
             </otherwise>
         </choose>
-        limit #{offset} , 20
+        limit #{offset} , #{page_size}
     </select>
 
     <!--  검색창을 이용한 통합검색  -->
@@ -132,7 +138,6 @@
         FROM business_hours as bh
         WHERE bh.fk_restaurant_id = #{id}
     </select>
-
 
     <delete id="deleteRestaurant" parameterType="int">
         DELETE FROM restaurant as r WHERE r.id = #{id}

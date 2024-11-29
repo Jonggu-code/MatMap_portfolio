@@ -10,7 +10,7 @@ public class SearchCondition {
 
     private Integer curr_page = 1;   //현재 연결되어있는 페이지번호
     private Integer offset = 0;     // 몇번째 정보부터 가져오기 시작할건지
-    private Integer page_size = 5;  // 한번에 몇개의 정보를 가져올건지
+    private Integer page_size = null;  // 한번에 몇개의 정보를 가져올건지
     private String option= null;       // 리뷰 갯수 많은순인지, 평균 평점 높은순으로 조회인지를 알기위한 속성
     private String keyword = null;    // 일반적인 통합검색을 위한 속성. 검색은 category + address + name 임.
     private String category = null;   //한식 일식 등등 음식의 카테고리별 조회를 위한 속성
@@ -50,5 +50,18 @@ public class SearchCondition {
     public SearchCondition(Integer offset, String keyword) {
         this.offset = offset;
         this.keyword = keyword;
+    }
+    @Builder
+    public SearchCondition(Integer offset, Integer page_size, String option, String keyword, String category, String c_address, Double loc_nw_x, Double loc_nw_y, Double loc_se_x, Double loc_se_y) {
+        this.offset = offset;
+        this.page_size = page_size;
+        this.option = option;
+        this.keyword = keyword;
+        this.category = category;
+        this.c_address = c_address;
+        this.loc_nw_x = loc_nw_x;
+        this.loc_nw_y = loc_nw_y;
+        this.loc_se_x = loc_se_x;
+        this.loc_se_y = loc_se_y;
     }
 }

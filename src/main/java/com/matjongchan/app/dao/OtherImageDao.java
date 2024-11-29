@@ -20,6 +20,13 @@ public interface OtherImageDao {
      */
     List<OtherImageDto> getRestaurantImages(int restaurant_id);
 
+    /**
+     * 이미지 2개 조회
+     * @param restaurant_id
+     * @return
+     */
     List<OtherImageDto> getRestaurantImages2(int restaurant_id);
+
+    
 
 }
