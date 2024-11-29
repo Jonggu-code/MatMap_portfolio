@@ -30,8 +30,6 @@ public interface ReviewDao {
 
     ReviewDto selectOne(int review_id);
 
-    ReviewDto select(Integer bno);
-
 
     int update(ReviewDto dto);
 

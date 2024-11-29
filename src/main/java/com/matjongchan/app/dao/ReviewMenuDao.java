@@ -23,7 +23,7 @@ public interface ReviewMenuDao {
 
     List<ReviewMenuDto> selectR(int reviewId);
 
-    ReviewDto select(Integer bno);
+    ReviewDto select(int review_id);
 
     int update(ReviewDto dto);
 

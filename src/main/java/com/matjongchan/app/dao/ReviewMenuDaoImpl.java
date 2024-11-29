@@ -38,7 +38,7 @@ public class ReviewMenuDaoImpl implements ReviewMenuDao {
     public List<ReviewMenuDto> selectR(int reviewId){return session.selectList(namespace+"selectR",reviewId);};
 
     @Override
-    public ReviewDto select(Integer bno) {
+    public ReviewDto select(int review_id) {
         return null;
     }
 

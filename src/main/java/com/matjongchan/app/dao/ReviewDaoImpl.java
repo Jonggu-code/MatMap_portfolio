@@ -23,10 +23,6 @@ public class ReviewDaoImpl implements ReviewDao {
     private int tmpSum;
     private List<ReviewDto> tmpList;
 
-    @Override
-    public ReviewDto select(Integer bno) {
-        return session.selectOne(namespace+"select", bno);
-    }
 
     public int count() {
         return session.selectOne(namespace + "count");
