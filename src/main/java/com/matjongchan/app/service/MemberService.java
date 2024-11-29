@@ -51,6 +51,9 @@ public interface MemberService {
     // 회원 리뷰 조회
     public List<ReviewDto> getMemberReviews(String userId);
 
+    // 특정 회원의 리뷰 개수 조회
+    public int selectMemberReviewCount(String userId);
+
     // 회원 리뷰 삭제
     public int deleteMemberReview(String userId);
 

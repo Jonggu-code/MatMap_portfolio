@@ -90,6 +90,11 @@ public class MemberServiceImpl implements MemberService{
     public List<ReviewDto> getMemberReviews(String userId) {
         return memberDao.selectMemberReviews(userId);
     }
+    // 특정 회원의 리뷰 개수 조회
+    public int selectMemberReviewCount(String userId) {
+        return memberDao.selectMemberReviewCount(userId);
+    }
+
 
     // 회원 리뷰 삭제
     public int deleteMemberReview(String userId) {

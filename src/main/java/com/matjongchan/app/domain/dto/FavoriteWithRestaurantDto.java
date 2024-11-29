@@ -11,12 +11,14 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor //모든 필드를 포함하는 생성자를 추가.
 @NoArgsConstructor // 매개변수가 없는 기본 생성자를 추가.
 @Slf4j
+
 public class FavoriteWithRestaurantDto {
-    private Integer id;          // favorite 테이블의 ID
-    private Integer fk_member_id;          // favorite 테이블의 회원 ID
-    private Integer fk_restaurant_id;      // favorite 테이블의 레스토랑 ID
-    private String restaurant_name;       // restaurant 테이블의 이름
-    private String restaurant_address;
+    private Integer id;                // favorite 테이블의 ID
+    private Integer fk_member_id;      // favorite 테이블의 회원 ID
+    private Integer fk_restaurant_id;  // favorite 테이블의 레스토랑 ID
+    private String restaurant_name;    // restaurant 테이블의 이름 (r.name)
+    private String c_address;          // restaurant 테이블의 시/군/구 주소 (r.c_address)
+    private String d_address;          // restaurant 테이블의 상세 주소 (r.d_address)
 
     @Override
     public String toString() {
@@ -25,7 +27,8 @@ public class FavoriteWithRestaurantDto {
                 ", fk_member_id=" + fk_member_id +
                 ", fk_restaurant_id=" + fk_restaurant_id +
                 ", restaurant_name='" + restaurant_name + '\'' +
-                ", restaurant_address='" + restaurant_address + '\'' +
+                ", c_address='" + c_address + '\'' +
+                ", d_address='" + d_address + '\'' +
                 '}';
     }
 }

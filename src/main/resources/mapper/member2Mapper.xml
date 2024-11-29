@@ -107,7 +107,21 @@
 <!--3. member_reviews, review table 관련 -->
     <!-- 10) 특정 회원의 리뷰 조회 (user_id 기준) -->
     <select id="selectMemberReviews" parameterType="String" resultType="ReviewDto">
-        SELECT r.*
+        SELECT r.*, res.name AS restaurantName <!-- restaurant 테이블에서 name을 가져옴 -->
+        FROM member_reviews AS mr
+        LEFT JOIN review AS r
+        ON mr.fk_review_id = r.id
+        LEFT JOIN restaurant AS res
+        ON r.fk_restaurant_id = res.id
+        WHERE mr.fk_member_id = (
+        SELECT id FROM member WHERE user_id = #{user_id}
+        )
+    </select>
+
+
+    <!-- 11) 특정 회원의 리뷰 개수 조회 (user_id 기준) -->
+    <select id="selectMemberReviewCount" parameterType="String" resultType="int">
+        SELECT COUNT(*)
         FROM member_reviews AS mr
         LEFT JOIN review AS r
         ON mr.fk_review_id = r.id
@@ -115,6 +129,7 @@
         SELECT id FROM member WHERE user_id = #{user_id}
         )
     </select>
+
 
     <!-- 11) 특정 회원의 리뷰 삭제 (user_id 기준) -->
     <delete id="deleteMemberReview" parameterType="String">
@@ -161,14 +176,17 @@
     <!-- 즐겨찾기 작업 -->
     <!-- 12) 특정 회원의 즐겨찾기 조회 (user_id 기준) -->
     <select id="selectFavorites" parameterType="String" resultType="FavoriteWithRestaurantDto">
-        SELECT f.id,
-        f.fk_member_id,
-        f.fk_restaurant_id,
-        r.name,
-        r.address
+        SELECT f.id AS id,
+        f.fk_member_id AS fk_member_id,
+        f.fk_restaurant_id AS fk_restaurant_id,
+        r.name AS restaurant_name,
+        r.c_address AS c_address,
+        r.d_address AS d_address
         FROM favorite AS f
-        INNER JOIN member AS m ON f.fk_member_id = m.id
-        INNER JOIN restaurant AS r ON f.fk_restaurant_id = r.id
+        INNER JOIN member AS m
+        ON f.fk_member_id = m.id
+        INNER JOIN restaurant AS r
+        ON f.fk_restaurant_id = r.id
         WHERE m.user_id = #{user_id}
     </select>
 

@@ -20,7 +20,7 @@
   <div class="container">
     <header>
       <div class="logo">
-        <a href="<c:url value='/main'/>">
+        <a href="<c:url value='/'/>">
           <img src="<c:url value='/resources/img/logo_400x100.png'/>" alt="로고 이미지">
 
         </a>
