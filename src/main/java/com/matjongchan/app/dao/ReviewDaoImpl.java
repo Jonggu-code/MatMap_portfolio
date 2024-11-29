@@ -1,11 +1,14 @@
 package com.matjongchan.app.dao;
 
+import com.matjongchan.app.domain.dto.ReviewDetail;
+import com.matjongchan.app.domain.dto.ReviewDetailSearchCondition;
 import com.matjongchan.app.domain.entity.MemberDto;
 import com.matjongchan.app.domain.entity.ReviewDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +20,14 @@ public class ReviewDaoImpl implements ReviewDao {
     private SqlSession session;
     private static String namespace="com.matjongchan.app.dao.reviewMapper.";
 
+    private int tmpSum;
+    private List<ReviewDto> tmpList;
+
+    @Override
+    public ReviewDto select(Integer bno) {
+        return session.selectOne(namespace+"select", bno);
+    }
+
     public int count() {
         return session.selectOne(namespace + "count");
     }
@@ -25,9 +36,39 @@ public class ReviewDaoImpl implements ReviewDao {
         return session.selectOne(namespace + "countR", fk_restaurant_id);
     }
 
-    public List<ReviewDto> select(MemberDto memberDto) {
-        return session.selectOne(namespace + "selectM", memberDto);
-    }
+    public int totalAvgScore(int fk_restaurant_id){
+        tmpSum = 0;
+        tmpList = selectR(fk_restaurant_id);
+        for (int i = 0; i<countR(fk_restaurant_id); i++){
+            tmpSum += tmpList.get(i).getTotal_score();
+        }
+        return tmpSum/tmpList.size();
+    };
+    public int kindAvgScore(int fk_restaurant_id){
+        tmpSum = 0;
+        tmpList = selectR(fk_restaurant_id);
+        for (int i = 0; i<countR(fk_restaurant_id); i++){
+            tmpSum += tmpList.get(i).getKind_score();
+        }
+        return tmpSum/tmpList.size();
+    };
+    public int cleanAvgScore(int fk_restaurant_id){
+        tmpSum = 0;
+        tmpList = selectR(fk_restaurant_id);
+        for (int i = 0; i<countR(fk_restaurant_id); i++){
+            tmpSum += tmpList.get(i).getClean_score();
+        }
+        return tmpSum/tmpList.size();
+    };
+    public int tasteAvgScore(int fk_restaurant_id){
+        tmpSum = 0;
+        tmpList = selectR(fk_restaurant_id);
+        for (int i = 0; i<countR(fk_restaurant_id); i++){
+            tmpSum += tmpList.get(i).getTaste_score();
+        }
+        return tmpSum/tmpList.size();
+    };
+
 
     public int deleteAll() {
         return session.delete(namespace+"deleteAll");
@@ -48,8 +89,8 @@ public class ReviewDaoImpl implements ReviewDao {
         return session.selectList(namespace+"selectM", reviewer);
     }
 
-    public ReviewDto select(Integer id) {
-        return session.selectOne(namespace+"select", id);
+    public ReviewDto selectOne(int review_id ) {
+        return session.selectOne(namespace+"select", review_id);
     }
 
     public int update(ReviewDto dto) {
@@ -66,4 +107,18 @@ public class ReviewDaoImpl implements ReviewDao {
         return session.delete(namespace+"delete", map);
     }
 
+    @Override
+    public List<ReviewDetail> getRestaurantReview3(ReviewDetailSearchCondition condition) {
+        return session.selectList(namespace+"getRestaurantReview3", condition);
+    }
+
+    @Override
+    public List<BigDecimal> getTotalScore(int fk_restaurant_id) {
+        return session.selectList(namespace+"getTotalScore", fk_restaurant_id);
+    }
+
+    @Override
+    public List<BigDecimal> getTotalScoreCountList(int fk_restaurant_id) {
+        return session.selectList(namespace+"getTotalScoreCountList", fk_restaurant_id);
+    }
 }

@@ -132,7 +132,7 @@ public class ReviewDaoImplTest {
         reviewDao.insert(reviewDto);
 
         Integer id = reviewDao.selectAll().get(0).getId();
-        ReviewDto reviewDto2 = reviewDao.select(id);
+        ReviewDto reviewDto2 = reviewDao.selectOne(id);
 
         assertTrue(Objects.equals(reviewDto2.getId(), id));
     }

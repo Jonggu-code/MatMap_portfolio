@@ -9,7 +9,7 @@
         SELECT count(*) FROM review
     </select>
 
-    <select id="countR" parameterType="int" resultType="int">
+    <select id="countR" parameterType="ReviewDto" resultType="int">
         select count(*) from review where fk_restaurant_id = #{fk_restaurant_id}
     </select>
 
@@ -55,7 +55,6 @@
         SELECT * from review where id = #{id}
     </select>
 
-
     <!--   수정: 글 정보(제목, 내용) 수정시 글 번호 체크, 글쓴이와 시도하는 사용자가 같은지도 필수로 확인 해야함-->
     <update id="update" parameterType="ReviewDto">
         update review set
@@ -68,8 +67,39 @@
         where id=#{id} and reviewer=#{reviewer}
     </update>
 
+    <!--  식당 상세페이지에서 리뷰 3개 가져오기.  -->
+    <select id="getRestaurantReview3" parameterType="ReviewDetailSearchCondition" resultType="ReviewDetail">
+        SELECT  re.id as id,
+            re.reviewer as reviewer,
+            re.title as title,
+            re.content as content,
+            re.taste_score as taste_score,
+            re.clean_score as clean_score,
+            re.kind_score as kind_score,
+            re.total_score as total_score,
+            re.create_at as create_at
+            re.fk_restaurant_id as fk_restaurant_id
+        FROM review AS re
+            INNER JOIN restaurant AS r
+                ON re.fk_restaurant_id = r.id
+        WHERE r.id = #{restaurant_id}
+            ORDER BY re.id DESC
+            LIMIT #{offset} , #{page_size}
+    </select>
 
+    <select id ="getTotalScore" parameterType="int" resultType="decimal">
+        SELECT  AVG(re.taste_score) as total_taste_score,
+                AVG(re.clean_score) as total_clean_score,
+                AVG(re.kind_score) as total_kind_score
+        FROM review as re
+        WHERE re.fk_restaurant_id = #{id}
+    </select>
 
+    <select id="getTotalScoreCountList" parameterType="int" resultType="decimal">
+        SELECT total_score
+        FROM review
+        WHERE fk_restaurant_id = #{id}
+    </select>
 
 </mapper>
 

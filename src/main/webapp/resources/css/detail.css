@@ -5,7 +5,7 @@
 .container {
     padding-top: 115px;
     width: 100%;
-    height: auto;
+    height: 3000px;
     background: #dbdbdb;
 }
 
@@ -66,7 +66,6 @@
 /* ////////////////        main_box단          ////////////// */
 
 .container_main {
-    height: auto;
     margin-top: 25px;
 
     display: flex;
@@ -246,55 +245,6 @@
 .day_box > p:last-child {
     margin-top: 10px;
 }
-
-/* ////////////////        사진 관리단         ////////////// */
-
-#menu_container { 
-    width: calc(70% - 20px);
-
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-.menu_con_title {
-    width: 100%;
-    margin-bottom: 10px;
-}
-.menu_box {
-    width: calc(50% - 5px);
-    height: 120px;
-    border: 1px solid #dcdcdc;
-    border-radius: 15px;
-
-    padding: 10px;
-    box-sizing: border-box;
-
-    display: flex;
-}
-.menu_img {
-    width: 100px;
-    height: 100px;
-    background: #995900;
-    border-radius: 10px;
-}
-.menu_title_box {
-    margin-left: 15px;
-
-    display: flex;
-    flex-wrap: wrap;
-    align-content: center;
-    gap: 4px;
-}
-.menu_title_box > p {
-    width: 100%;
-}
-.menu_title {
-    font-size: 18px;
-}
-.menu_price {
-    font-size: 16px;
-    font-weight: 700;
-}
 /* ////////////////        사진 관리단         ////////////// */
 
 #img_container { width: calc(70% - 20px); }
@@ -332,14 +282,15 @@
 }
 
 /* ////////////////        맛집 추천단        ////////////// */
-
 #reco_container {
     width: 360px;
     height: 780px;
-
+}
+.reco_fixed {
     position: absolute;
     top: 313px;
     right: 0;
+
 }
 #reco_container > .container_title > p:first-child {
     color: #ff9625;
@@ -409,7 +360,6 @@
 .reco_img2 {
     background: url(../img/예시이미지/june2.jpg) no-repeat center / cover;
 }
-
 /* ////////////////        리뷰 관리단         ////////////// */
 
 #review_container { width: calc(70% - 20px); }

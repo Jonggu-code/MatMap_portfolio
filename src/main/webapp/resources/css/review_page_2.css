@@ -1,11 +1,10 @@
 .img_box {
-    height: 250px;
+    height: 300px;
     overflow-x: scroll;
 
     position: relative;
 
     display: flex;
-    align-items: center;
 }
 .img_box.hover {
     opacity: 0.5;
