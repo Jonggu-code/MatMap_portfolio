@@ -179,7 +179,7 @@ input {
     width: calc(100% / 3);
     height: 100%;
 
-    display: flex; 
+    display: flex;
     justify-content: center;
     align-items: center;
 }
@@ -211,18 +211,20 @@ input {
     position: relative;
 }
 .map_header {
+    width: 100%;
     height: 60px;
+    padding: 0 15px;
+    box-sizing: border-box;
     position: absolute;
 
     display: flex;
     justify-content: space-between;
 
     top: 10px;
-    left: 15px;
-    right: 15px;
     z-index: 999;
 }
 .map_box_L {
+    width: 40%;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -231,26 +233,141 @@ input {
     width: 20px;
     height: 20px;
     margin-left: 5px;
+
+    transition: all 0.2s;
+}
+.choose_box {
+    border: 1px solid transparent;
+    box-sizing: border-box;
+}
+.choose_box_act {
+    border: 1px solid;
 }
 .map_box_L path {
     fill: none;
-    stroke: #fff;
-    stroke-linecap: round; 
-    stroke-linejoin: round; 
+    stroke: #6e6e6e;
+    stroke-linecap: round;
+    stroke-linejoin: round;
     stroke-width: 1.5;
 }
 .choose_location, .choose_align, .choose_tag  {
-    padding: 12px 10px;
-    background-color: #6312b9;
-    cursor: pointer;
+    background-color: #fff;
     border-radius: 8px;
-    color: #fff;
     font-size: 14px;
-    
+    color: #6e6e6e;
+    box-shadow: 2px 2px 4px 0px #bdbdbd;
+    cursor: pointer;
+
     display: flex;
+    align-items: center;
+
+    position: relative;
 }
-.map_box_R {
+.choose_box > p {
+    padding: 12px 30px 12px 10px;
+    user-select: none;
+}
+.choose_box > svg {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%) rotateZ(0deg);
+}
+.choose_act {
+    transform: translateY(-50%) rotateZ(180deg) !important;
+}
+
+/* 지도 표시지역 선택창 CSS */
+.location_box, .align_box, .tag_box {
+    width: 400px;
+    height: 0;
+    opacity: 0;
+    border-radius: 10px;
+    box-shadow: 2px 2px 8px 2px #bdbdbd;
+    background: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    color: #777777;
+    text-align: center;
+    overflow: hidden;
+
     display: flex;
+    flex-wrap: wrap;
+
+    position: absolute;
+    top: 115%;
+    left: 0;
+
+    transition: all 0.3s;
+}
+
+/* 지도 표시 지역 선택 */
+.loca_box_act {
+    height: 500px;
+    opacity: 1;
+}
+.c_address::-webkit-scrollbar, .d_address::-webkit-scrollbar {
+    display: none;
+}
+.c_address, .d_address {
+    width: 40%;
+    height: 100%;
+    overflow-y: scroll;
+}
+.d_address {
+    width: 60%;
+}
+.c_addr_name, .d_addr_name {
+    background: #e7e7e7;
+    padding: 15px 0;
+    border-right: 1px solid #e2e2e2;
+    cursor: pointer;
+
+    transition: background 0.2s, color 0.2s;
+}
+.d_addr_name {
+    background-color: #fff;
+}
+.c_addr_act {
+    background-color: #fff;
+    color: #000;
+}
+
+/* 정렬방식 선택 CSS */
+.align_box {
+    width: 140px;
+}
+.align_box > li {
+    width: 100%;
+    padding: 15px 0;
+    font-size: 16px;
+    cursor: pointer;
+}
+.align_box_act {
+    height: auto;
+    opacity: 1;
+}
+
+/* 음식점 태그 선택 */
+.tag_box {
+    width: 140px;
+}
+.tag_box > li {
+    width: 100%;
+    padding: 15px 0;
+    font-size: 16px;
+    cursor: pointer;
+}
+.tag_box_act {
+    height: auto;
+    opacity: 1;
+}
+
+.map_box_R {
+    width: 40%;
+
+    display: flex;
+    justify-content: flex-end;
     align-items: center;
     gap: 10px;
 }
@@ -276,6 +393,7 @@ input {
 .guest_icon {
     width: 34px;
     height: 34px;
+    border: 1px solid #fff;
     border-radius: 50%;
     background-color: #eb0eeb;
     margin-left: 12px;
@@ -283,7 +401,6 @@ input {
 .guest_menu {
     width: 88px;
     height: 48px;
-    border: 1px solid #fff;
     background: #ff9625;
     border-radius: 25px;
     padding: 8px;
@@ -293,7 +410,7 @@ input {
     position: relative;
 
     transition: box-shadow 0.1s;
-    
+
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -307,19 +424,17 @@ input {
 .guest_menu > svg {
     width: 20px;
     height: 20px;
-}
-.guest_menu > svg path {
-    stroke-width: 1.2;
     stroke: #fff;
+    stroke-width: 1.5;
 }
 .guest_menu_box {
     width: 170px;
     height: auto;
     background: #fff;
-    box-shadow: 0 0 4px 0px #bdbdbd;
     border-radius: 10px;
     overflow: hidden;
     color: #6e6e6e;
+    box-shadow: 0 0 4px 0px #bdbdbd;
     display: none;
 
     position: absolute;
@@ -365,7 +480,7 @@ input {
     width: 100%;
     height: auto;
     margin-bottom: 30px;
-    
+
     display: flex;
     flex-wrap: wrap;
 }
@@ -422,10 +537,10 @@ input {
     background-position: -33px -26px;
 }
 .rest_num_icon {
-    background-position: -87px -26px;
+    background-position: -51px -25px;
 }
 .rest_info_icon {
-    background-position: -141px -26px;
+    background-position: -141px -25px;
 }
 .item_name {
     margin-left: 2px;
@@ -496,10 +611,33 @@ input {
 }
 .review_box {
     width: 100%;
-    height: 120px;
+    height: 110px;
     margin-top: 5px;
     border-radius: 5px;
+    padding: 15px 15px;
+    box-sizing: border-box;
     background: #eaeaea;
+}
+.user_title {
+    width: 100%;
+    height: 30px;
+    font-size: 15px;
+    margin-bottom: 10px;
+
+    display: flex;
+    justify-content: space-between;
+}
+.review_txt {
+    width: 100%;
+    height: 40px;
+    font-size: 14px;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* 최대 두 줄 */
+
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* ///////////////////////////////////////////////////////// */
