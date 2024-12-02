@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Controller
@@ -44,6 +45,7 @@ public class ReviewController {
         List<ReviewMenuDto> list = reviewMenuService.getListR(1);
         int listSize = list.size();
 
+
         // 로그인 했는지 확인
 //        if(!loginChk(session)) {
 //            // 로그인 안 했다면..
@@ -54,8 +56,13 @@ public class ReviewController {
     }
 
     @PostMapping("/showReviewWrite2")
-    public String showReviewWrite2(ReviewDto reviewDto, Model model) {
+    public String showReviewWrite2(
+            ReviewDto reviewDto,
+            @RequestParam("selected_menu[]") List<Integer> selectedMenus,
+            Model model
+    ){
         model.addAttribute("reviewDto", reviewDto);
+        model.addAttribute("selectedMenus", selectedMenus);
 
         return "reviewWrite2";
     }
@@ -63,7 +70,7 @@ public class ReviewController {
     private static final String F_PATH = "/Users/joohunkang/Desktop/Spring/MatMap_portfolio/src/main/webapp/resources/img";
 
     @PostMapping("/reviewWrite2") // 리뷰 작성 두 번째 페이지 메서드
-    public String reviewWriteSubmit(HttpSession session, ReviewDto reviewDto, @RequestParam(value = "files", required = false) List<MultipartFile> files){
+    public String reviewWriteSubmit(HttpSession session, ReviewDto reviewDto, @RequestParam(value = "files", required = false) List<MultipartFile> files, @RequestParam("selected_menu[]") List<Integer> selectedMenus){
         int order_no = 1;
         log.info("joshua1");
         OtherImageDto otherImageDto;
@@ -76,6 +83,15 @@ public class ReviewController {
             int rowCount = reviewService.write(reviewDto);
             reviewDto.setId(reviewService.getAllCount());
 
+            int reviewId = reviewService.getAllCount();
+
+            // 2. 선택한 메뉴 저장
+            for (Integer menuId : selectedMenus) {
+                ReviewMenuDto reviewMenuDto = new ReviewMenuDto(reviewId, menuId);
+                reviewMenuService.write(reviewMenuDto);
+            }
+
+
             if(rowCount != 1) {
                 throw new Exception("글쓰기 실패");
             }
@@ -86,15 +102,17 @@ public class ReviewController {
         if (files != null && files.size() > 0) {
             log.info("joshua2");
             List<OtherImageDto> imageList = new ArrayList<>();
-
-            System.out.println(files.size());
             for (MultipartFile file : files) {
                 log.info("joshua3");
 
-                log.info(file.getOriginalFilename());
                 // 원본 파일 이름
                 try {
                     String originalFilename = file.getOriginalFilename();
+
+                    // 파일 0개면 안해줌
+                    if (Objects.equals(originalFilename,"")){
+                        return "redirect:/";
+                    }
 
                     // 밀리초 기반 유니크 파일 이름 생성
                     String savedFilename = System.currentTimeMillis() + "_" + originalFilename;

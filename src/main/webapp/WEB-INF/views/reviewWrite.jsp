@@ -31,7 +31,7 @@
 
 </head>
 <body>
-<form action="<c:url value='/showReviewWrite2'/>" method="post" id="wrap">
+<form action="<c:url value='/showReviewWrite2'/>" method="post" id="wrap" onsubmit="return validateSelectedMenus();">
     <fieldset class="review_main">
         <div class="logo_box">
             <a href="index.jsp" class="logo">맛맵 - 메인화면</a>
@@ -109,20 +109,17 @@
 
                 <!-- 메뉴 클릭하면 menu_active 클래스 추가되면서 background 색 진해짐. -->
                 <ul class="menu_list">
-                    <li>닭곰탕</li>
-                    <li>곰탕</li>
-                    <li>특곰탕</li>
-                    <li>수육고기</li>
-                    <li>김치전</li>
-                    <li>파전</li>
-                    <li>사골국밥</li>
-                    <li>수육모듬</li>
-                    <li>닭개장</li>
-                    <li>육개장</li>
+                    <li class="menu_item" data-id="1">수육</li>
+                    <li class="menu_item" data-id="2">국밥</li>
+                    <li class="menu_item" data-id="3">김치전</li>
+                    <li class="menu_item" data-id="4">파전</li>
                 </ul>
+
+                <div id="selected_menus_container">
+                </div>
             </div>
-            <div class="btn_box">
-                <input type="submit" value="다음화면">
+            <div class="btn_box" id="btn_btn_btn">
+                <input type="submit" value="다음화면" id="btn_btn_btn2">
             </div>
     </fieldset>
 </form>

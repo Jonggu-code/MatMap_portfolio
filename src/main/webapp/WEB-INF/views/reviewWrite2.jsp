@@ -30,6 +30,16 @@
 
 <form action="<c:url value='/reviewWrite2' />" method="post" id="wrap" enctype="multipart/form-data">
 
+  <div class="selected_menu_list" style="display: none">
+    <p>선택한 메뉴:</p>
+    <ul>
+      <c:forEach items="${paramValues['selected_menu[]']}" var="menuId">
+        <li>메뉴 ID: ${menuId}</li>
+        <input type="hidden" name="selected_menu[]" value="${menuId}">
+      </c:forEach>
+    </ul>
+  </div>
+
   <input type="hidden" name="total_score" value="${reviewDto.total_score}">
   <input type="hidden" name="kind_score" value="${reviewDto.kind_score}">
   <input type="hidden" name="clean_score" value="${reviewDto.clean_score}">
@@ -86,29 +96,6 @@
   </fieldset>
 
 </form>
-<script>
-  const dataTransfer = new DataTransfer();
-
-  $('#ddd').click(function(){
-alert("dhktek")
-    let fileArr = document.getElementById("add_img").files;
-
-    if(fileArr != null && fileArr.length>0){
-// 팬티에 했게?~ 살에 ㅐ했게~~????????? 내 엉덩이가 더럽냐??너는 막 하고싶은 거 다 하고 나는 하고시은 거 못하게 하냐!!!?
-      // 원래 살 자국을 닦었어.. 그리고 이번에ㅡㄴ 등에다가 넣어썽 이정도면 ㄱㅊ?
-      // =====DataTransfer 파일 관리========
-      for(var i=0; i<fileArr.length; i++){
-        dataTransfer.items.add(fileArr[i])
-      }
-      document.getElementById("add_img").files = dataTransfer.files;
-      alert("dataTransfer =>",dataTransfer.files)
-      alert("input FIles =>", document.getElementById("add_img").files)
-      // ==========================================
-
-    }
-
-  })
-</script>
 
 
 <%--<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>--%>
