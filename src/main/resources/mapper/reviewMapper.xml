@@ -39,6 +39,7 @@
         select * from review
         where fk_restaurant_id = #{fk_restaurant_id}
         order by id desc
+
     </select>
 
     <!--    해당 유저의 게시글 불러오기 (최근 등록 순으로)-->

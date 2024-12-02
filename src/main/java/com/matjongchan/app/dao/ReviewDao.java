@@ -13,10 +13,10 @@ public interface ReviewDao {
 
     int countR(int fk_restaurant_id);
 
-    int totalAvgScore(int fk_restaurant_id);
-    int kindAvgScore(int fk_restaurant_id);
-    int cleanAvgScore(int fk_restaurant_id);
-    int tasteAvgScore(int fk_restaurant_id);
+    double totalAvgScore(int fk_restaurant_id);
+    double kindAvgScore(int fk_restaurant_id);
+    double cleanAvgScore(int fk_restaurant_id);
+    double tasteAvgScore(int fk_restaurant_id);
 
     int deleteAll();
 

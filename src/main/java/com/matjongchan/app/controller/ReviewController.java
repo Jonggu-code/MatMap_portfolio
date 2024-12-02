@@ -1,6 +1,7 @@
 package com.matjongchan.app.controller;
 
 import com.matjongchan.app.dao.OtherImageDao;
+import com.matjongchan.app.domain.dto.ReviewDetail;
 import com.matjongchan.app.domain.entity.OtherImageDto;
 import com.matjongchan.app.domain.entity.RestaurantDto;
 import com.matjongchan.app.domain.entity.ReviewDto;
@@ -35,6 +36,35 @@ public class ReviewController {
     ReviewService reviewService;
     @Autowired
     OtherImageService otherImageService;
+
+    @GetMapping("/detail")
+    public String getReviews(RestaurantDto restaurantDto, ReviewDto reviewDto, Model m, ReviewMenuDto reviewMenuDto, OtherImageDto otherImageDto) {
+        int fk_restaurant_id = 1;
+        List<ReviewDto> reviews = reviewService.getListR(fk_restaurant_id);
+        m.addAttribute("reviews", reviews);
+
+        List<ReviewMenuDto> menus = reviewMenuService.getListR(1002);
+
+        m.addAttribute("restaurantDto", restaurantDto);
+        m.addAttribute("reviewDto", reviewDto);
+
+        int review_count = reviewService.getCountR(fk_restaurant_id);
+        m.addAttribute("reviewCount", review_count);
+
+        Double taste_score = reviewService.getTasteAvg(fk_restaurant_id);
+        Double clean_score = reviewService.getCleanAvg(fk_restaurant_id);
+        Double kind_score = reviewService.getKindAvg(fk_restaurant_id);
+        Double total_score = reviewService.getTotalAvg(fk_restaurant_id);
+        m.addAttribute("taste_score", taste_score);
+        m.addAttribute("clean_score", clean_score);
+        m.addAttribute("kind_score", kind_score);
+        m.addAttribute("total_score", total_score);
+
+        m.addAttribute("reviewMenuDto", reviewMenuDto);
+        m.addAttribute("otherImageDto", otherImageDto);
+        return "detail";
+    }
+
 
     @GetMapping("/reviewWrite") // 리뷰 작성 첫 페이지 메서드 보여주기
     public String reviewWrite(HttpServletRequest request, RestaurantDto restaurantDto, Model m) {
@@ -78,7 +108,9 @@ public class ReviewController {
             log.info(reviewDto.getContent());
 //            String reviewer = (String)session.getAttribute("id");
             String reviewer = "김철수";
+            int fk_restaurant_id = 1;
             reviewDto.setReviewer(reviewer);
+            reviewDto.setFk_restaurant_id(fk_restaurant_id);
 
             int rowCount = reviewService.write(reviewDto);
             reviewDto.setId(reviewService.getAllCount());
