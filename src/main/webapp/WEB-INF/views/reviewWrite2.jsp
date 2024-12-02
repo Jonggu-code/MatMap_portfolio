@@ -28,7 +28,7 @@
 </head>
 <body>
 
-<form action="<c:url value='/reviewWrite2' />" method="post" id="wrap" enctype="multipart/form-data">
+<form action="<c:url value='/reviewWrite2' />" method="post" id="wrap2" enctype="multipart/form-data">
 
   <div class="selected_menu_list" style="display: none">
     <p>선택한 메뉴:</p>

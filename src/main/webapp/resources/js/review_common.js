@@ -90,17 +90,23 @@ $(document).ready(function(){
         });
     }
 
-
-    function validateSelectedMenus() {
+    function validateSelectedMenus(e) {
         const selectedMenus = document.querySelectorAll('#selected_menus_container input');
 
         if (selectedMenus.length === 0) {
+            console.log("preventDefault 호출 전");
+            e.preventDefault(); // 기본 폼 제출 방지
+            console.log("preventDefault 호출됨");
+            alert("메뉴 1개 이상 선택해주세요.");
             return false;
-        } else {
-            return true;
         }
-    }
 
+        console.log("폼 제출 허용");
+        return true;
+    }
+    $('#wrap').on('submit',function(e){
+        return validateSelectedMenus(e);
+    })
 
 
 

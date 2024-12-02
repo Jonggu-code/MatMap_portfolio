@@ -31,7 +31,7 @@
 
 </head>
 <body>
-<form action="<c:url value='/showReviewWrite2'/>" method="post" id="wrap" onsubmit="return validateSelectedMenus();">
+<form action="<c:url value='/showReviewWrite2'/>" method="post" id="wrap">
     <fieldset class="review_main">
         <div class="logo_box">
             <a href="index.jsp" class="logo">맛맵 - 메인화면</a>
