@@ -181,7 +181,11 @@
         f.fk_restaurant_id AS fk_restaurant_id,
         r.name AS restaurant_name,
         r.c_address AS c_address,
-        r.d_address AS d_address
+        r.d_address AS d_address,
+        r.number AS number,                -- 추가: 전화번호
+        r.reservation AS reservation,      -- 추가: 예약 가능 여부
+        r.total_score_count AS total_score_count, -- 추가: 총 별점 수
+        r.search_tag AS search_tag         -- 추가: 검색 태그
         FROM favorite AS f
         INNER JOIN member AS m
         ON f.fk_member_id = m.id

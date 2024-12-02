@@ -20,6 +20,12 @@ public class FavoriteWithRestaurantDto {
     private String c_address;          // restaurant 테이블의 시/군/구 주소 (r.c_address)
     private String d_address;          // restaurant 테이블의 상세 주소 (r.d_address)
 
+//     추가함.
+    private String number;
+    private String reservation;
+    private String total_score_count;
+    private String search_tag;
+
     @Override
     public String toString() {
         return "FavoriteWithRestaurantDto{" +
@@ -29,6 +35,10 @@ public class FavoriteWithRestaurantDto {
                 ", restaurant_name='" + restaurant_name + '\'' +
                 ", c_address='" + c_address + '\'' +
                 ", d_address='" + d_address + '\'' +
+                ", number='" + number + '\'' +
+                ", reservation='" + reservation + '\'' +
+                ", total_score_count=" + total_score_count +
+                ", search_tag='" + search_tag + '\'' +
                 '}';
     }
 }

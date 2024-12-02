@@ -14,6 +14,10 @@
     <link rel="stylesheet" href="<c:url value = '/resources/css/myPage.css'/>">
 </head>
 <body>
+
+
+
+
 <div id="wrap" class="wrap">
     <div class="inner">
         <!-- 좌측 메뉴 -->
@@ -21,8 +25,15 @@
             <!-- 좌측 프로필  -->
             <div class="aside_menu1">
                 <div class="profile_imgBox">
-                    <img src="https://static.nid.naver.com/images/web/user/default.png" alt="" class="profile_img">
+                    <img th:src="@{'/resources/img/' + ${memberImage != null ? memberImage.img_url : 'https://static.nid.naver.com/images/web/user/default.png'}}"
+                         alt="프로필 이미지" class="profile_img">
                 </div>
+
+            <%--                <div class="profile_imgBox">--%>
+<%--                    <img src="https://static.nid.naver.com/images/web/user/default.png" alt="" class="profile_img">--%>
+<%--                </div>--%>
+
+
                 <div class="profile_menu">
                     <div>후기</div>
                     <div>${reviewCount}개</div>  <!-- 작성한 리뷰 개수 -->
@@ -77,6 +88,11 @@
                                         <c:set var="firstFavorite" value="${favorites[0]}" />
                                         <div class="txt food">${firstFavorite.restaurant_name}</div>
                                         <div class="txt tag">${firstFavorite.c_address} ${firstFavorite.d_address}</div>
+
+                                        <div class="txt rating">
+                                            <strong>별점: ${firstFavorite.total_score_count} / 5</strong>
+                                        </div>
+
                                         <div class="txt stimg">
                                             <img src="img/img/review_star_fill.png" alt="">
                                             <img src="img/img/review_star_fill.png" alt="">
@@ -109,6 +125,11 @@
                                     <c:set var="secondFavorite" value="${favorites[1]}" />
                                     <div class="txt food">${secondFavorite.restaurant_name}</div>
                                     <div class="txt tag">${secondFavorite.c_address} ${secondFavorite.d_address}</div>
+
+                                    <div class="txt rating">
+                                        <strong>별점: ${secondFavorite.total_score_count} / 5</strong>
+                                    </div>
+
                                     <div class="txt stimg">
                                         <img src="img/img/review_star_fill.png" alt="">
                                         <img src="img/img/review_star_fill.png" alt="">

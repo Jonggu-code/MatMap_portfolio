@@ -108,79 +108,151 @@ public class MemberController {
     private static final String F_PATH = "C:/Users/82109/Desktop/spring/matjongchan_git/MatMap_portfolio/src/main/webapp/resources/img/";
     private static final int defaultImageId = 1; // 기본 이미지의 id값 1
 
-    @PostMapping("/join")
-    public String register(MemberDto memberDto, Model m, @RequestParam(value = "profile_image", required = false) MultipartFile mf) {
-        String user_id = memberDto.getUser_id().trim();
+//    @PostMapping("/join")
+//    public String register(MemberDto memberDto, Model m, @RequestParam(value = "profile_image", required = false) MultipartFile mf) {
+//        String user_id = memberDto.getUser_id().trim();
+//
+//        // 아이디 중복 검사
+//        if (!isValid(user_id)) {
+//            String msg = null;
+//            try {
+//                msg = URLEncoder.encode("사용 중인 아이디입니다.", "UTF-8");
+//            } catch (UnsupportedEncodingException e) {
+//                e.printStackTrace();
+//            }
+//            // 사용자가 적어둔 정보 유지, 뷰 파일에서 아래 이름들(u_seqno, ...)로 value 값 넣어놓아야함.
+//            m.addAttribute("u_seqno", memberDto.getId());
+//            m.addAttribute("u_id", memberDto.getUser_id());
+//            m.addAttribute("u_pw", memberDto.getPassword());
+//            m.addAttribute("u_name", memberDto.getName());
+//            m.addAttribute("u_address", memberDto.getAddress());
+//            m.addAttribute("u_email", memberDto.getEmail());
+//            m.addAttribute("u_introduce", memberDto.getIntroduce());
+//            m.addAttribute("u_gender", memberDto.getGender());
+//            m.addAttribute("u_age", memberDto.getAge());
+//            m.addAttribute("u_pnumer", memberDto.getPhone_number());
+//
+//            return "redirect:/join?msg=" + msg;
+//        }
+//
+//        // 이미지 업로드 처리 (mf가 비어있지 않은 경우에만 실행)
+//        if (mf != null && !mf.isEmpty()) {
+//            try {
+//                String originalName = mf.getOriginalFilename();
+//                String uniqueFileName = System.currentTimeMillis() + "_" + originalName;
+//
+//                String saveFile = F_PATH + System.currentTimeMillis() + "_" + originalName; // 저장경로 설정
+//                // 파일 저장
+//                mf.transferTo(new File(saveFile));
+//
+//
+//                // 새로운 이미지 정보를 MemberImageDto에 설정
+//                MemberImageDto memberImageDto = new MemberImageDto();
+//                memberImageDto.setName(uniqueFileName);
+//                memberImageDto.setImg_url(saveFile);
+//                memberImageDto.setOrder_number(1);
+//
+//                // DB에 행 삽입 후 id 가져오기
+//                int newImageId = memberService.addMemberImage(memberImageDto);
+//                Integer memberImageId = memberService.getAllImages().get(0).getId();
+//
+//                // member_image table의 id를 memberDto에 설정
+//                memberDto.setFk_image_id(memberImageId);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                // 파일 업로드 실패 시 처리
+//                return "redirect:/join?msg=파일 업로드 실패";
+//            }
+//        } else {
+//            // 사용자가 사진을 첨부하지 않으면 기본 이미지 id 설정
+//            memberDto.setFk_image_id(defaultImageId);
+//        }
+//
+//        // DB에 저장
+//        if (memberService.addMember(memberDto) == 1) {
+//            return "redirect:/";
+//        } else {
+//            String msg = null;
+//            try {
+//                msg = URLEncoder.encode("문제가 발생했습니다. 잠시 후에 다시 시도하세요.", "UTF-8");
+//            } catch (UnsupportedEncodingException e) {
+//                e.printStackTrace();
+//            }
+//            return "redirect:/join?msg=" + msg; // 실패 시 에러 메세지
+//        }
+//    }
+@PostMapping("/join")
+public String register(MemberDto memberDto, Model m, @RequestParam(value = "profile_image", required = false) MultipartFile mf) {
+    String user_id = memberDto.getUser_id().trim();
 
-        // 아이디 중복 검사
-        if (!isValid(user_id)) {
-            String msg = null;
-            try {
-                msg = URLEncoder.encode("사용 중인 아이디입니다.", "UTF-8");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-            // 사용자가 적어둔 정보 유지, 뷰 파일에서 아래 이름들(u_seqno, ...)로 value 값 넣어놓아야함.
-            m.addAttribute("u_seqno", memberDto.getId());
-            m.addAttribute("u_id", memberDto.getUser_id());
-            m.addAttribute("u_pw", memberDto.getPassword());
-            m.addAttribute("u_name", memberDto.getName());
-            m.addAttribute("u_address", memberDto.getAddress());
-            m.addAttribute("u_email", memberDto.getEmail());
-            m.addAttribute("u_introduce", memberDto.getIntroduce());
-            m.addAttribute("u_gender", memberDto.getGender());
-            m.addAttribute("u_age", memberDto.getAge());
-            m.addAttribute("u_pnumer", memberDto.getPhone_number());
-
-            return "redirect:/join?msg=" + msg;
+    // 아이디 중복 검사
+    if (!isValid(user_id)) {
+        String msg = null;
+        try {
+            msg = URLEncoder.encode("사용 중인 아이디입니다.", "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
+        m.addAttribute("u_seqno", memberDto.getId());
+        m.addAttribute("u_id", memberDto.getUser_id());
+        m.addAttribute("u_pw", memberDto.getPassword());
+        m.addAttribute("u_name", memberDto.getName());
+        m.addAttribute("u_address", memberDto.getAddress());
+        m.addAttribute("u_email", memberDto.getEmail());
+        m.addAttribute("u_introduce", memberDto.getIntroduce());
+        m.addAttribute("u_gender", memberDto.getGender());
+        m.addAttribute("u_age", memberDto.getAge());
+        m.addAttribute("u_pnumer", memberDto.getPhone_number());
 
-        // 이미지 업로드 처리 (mf가 비어있지 않은 경우에만 실행)
-        if (mf != null && !mf.isEmpty()) {
-            try {
-                String originalName = mf.getOriginalFilename();
-                String uniqueFileName = System.currentTimeMillis() + "_" + originalName;
-
-                String saveFile = F_PATH + System.currentTimeMillis() + "_" + originalName; // 저장경로 설정
-                // 파일 저장
-                mf.transferTo(new File(saveFile));
-
-
-                // 새로운 이미지 정보를 MemberImageDto에 설정
-                MemberImageDto memberImageDto = new MemberImageDto();
-                memberImageDto.setName(uniqueFileName);
-                memberImageDto.setImg_url(saveFile);
-                memberImageDto.setOrder_number(1);
-
-                // DB에 행 삽입 후 id 가져오기
-                int newImageId = memberService.addMemberImage(memberImageDto);
-                Integer memberImageId = memberService.getAllImages().get(0).getId();
-
-                // member_image table의 id를 memberDto에 설정
-                memberDto.setFk_image_id(memberImageId);
-            } catch (IOException e) {
-                e.printStackTrace();
-                // 파일 업로드 실패 시 처리
-                return "redirect:/join?msg=파일 업로드 실패";
-            }
-        } else {
-            // 사용자가 사진을 첨부하지 않으면 기본 이미지 id 설정
-            memberDto.setFk_image_id(defaultImageId);
-        }
-
-        // DB에 저장
-        if (memberService.addMember(memberDto) == 1) {
-            return "redirect:/";
-        } else {
-            String msg = null;
-            try {
-                msg = URLEncoder.encode("문제가 발생했습니다. 잠시 후에 다시 시도하세요.", "UTF-8");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-            return "redirect:/join?msg=" + msg; // 실패 시 에러 메세지
-        }
+        return "redirect:/join?msg=" + msg;
     }
+
+    // 이미지 업로드 처리 (mf가 비어있지 않은 경우에만 실행)
+    if (mf != null && !mf.isEmpty()) {
+        try {
+            String originalName = mf.getOriginalFilename();
+            String uniqueFileName = System.currentTimeMillis() + "_" + originalName;
+
+            // 상대 경로로 변경 (resources/static/img/)
+            String saveFile = "src/main/resources/static/img/" + uniqueFileName;  // 저장경로 설정
+            // 파일 저장
+            mf.transferTo(new File(saveFile));
+
+            // 새로운 이미지 정보를 MemberImageDto에 설정
+            MemberImageDto memberImageDto = new MemberImageDto();
+            memberImageDto.setName(uniqueFileName);
+            memberImageDto.setImg_url("/img/" + uniqueFileName);  // 웹 경로로 설정
+            memberImageDto.setOrder_number(1);
+
+            // DB에 행 삽입 후 id 가져오기
+            int newImageId = memberService.addMemberImage(memberImageDto);
+            Integer memberImageId = memberService.getAllImages().get(0).getId();
+
+            // member_image table의 id를 memberDto에 설정
+            memberDto.setFk_image_id(memberImageId);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "redirect:/join?msg=파일 업로드 실패";
+        }
+    } else {
+        // 사용자가 사진을 첨부하지 않으면 기본 이미지 id 설정
+        memberDto.setFk_image_id(defaultImageId);
+    }
+
+    // DB에 저장
+    if (memberService.addMember(memberDto) == 1) {
+        return "redirect:/";
+    } else {
+        String msg = null;
+        try {
+            msg = URLEncoder.encode("문제가 발생했습니다. 잠시 후에 다시 시도하세요.", "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return "redirect:/join?msg=" + msg;
+    }
+}
+
 
     private boolean isValid(String id) {
         MemberDto member = memberService.getMember(id);
@@ -216,9 +288,13 @@ public class MemberController {
         List<ReviewDto> reviews = memberService.getMemberReviews(userId);
         model.addAttribute("reviews", reviews);
 
-        // 회원의 즐겨찾기 레스토랑 정보 조회(이름, c_address, d_address)
+        // 회원의 즐겨찾기 레스토랑 정보 조회(이름, c_address, d_address, number, reservation, total_score_count, search_tag)
         List<FavoriteWithRestaurantDto> favorites = memberService.getMemberFavorites(userId);
         model.addAttribute("favorites", favorites);
+
+        // 회원 이미지 조회
+        MemberImageDto memberImage = memberService.getMemberImage(member.getId());
+        model.addAttribute("memberImage", memberImage);
 
         return "myPage";
 
