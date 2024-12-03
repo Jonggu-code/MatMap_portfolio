@@ -38,7 +38,7 @@
             and r.c_address = #{c_address}
         </if>
         <if test="category != null">
-            and r.fk_category = #{category}
+            and r.fk_category = #{category_num}
         </if>
         order by
         <choose>
@@ -60,7 +60,7 @@
             and r.c_address = #{c_address}
         </if>
         <if test="category != null">
-            and r.fk_category = #{category}
+            and r.fk_category = #{category_num}
         </if>
         and r.loc_x > #{loc_nw_x}
         and r.loc_y > #{loc_nw_y}

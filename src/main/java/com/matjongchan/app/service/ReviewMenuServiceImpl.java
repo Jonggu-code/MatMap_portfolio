@@ -2,6 +2,7 @@ package com.matjongchan.app.service;
 
 import com.matjongchan.app.dao.ReviewDao;
 import com.matjongchan.app.dao.ReviewMenuDao;
+import com.matjongchan.app.domain.entity.MenuDto;
 import com.matjongchan.app.domain.entity.ReviewMenuDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
