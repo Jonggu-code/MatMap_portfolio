@@ -152,7 +152,7 @@
                 m.price as menu_price,
                 m.memo as menu_memo,
                 r.id as restaurant_id,
-                m.fk_image_id as menu_image_url
+                m.fk_image_id as menu_img_url
         FROM restaurant as r
             INNER JOIN menu as m
             ON m.fk_restaurant_id = r.id
@@ -160,7 +160,7 @@
     </select>
 
     <select id="getRestaurantMenuImage" parameterType="int" resultType="String">
-        SELECT oi.image_url as image_url
+        SELECT oi.img_url as img_url
         FROM menu as m
             INNER JOIN other_image as oi
             ON m.fk_image_id = oi.id

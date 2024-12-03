@@ -13,7 +13,7 @@ guest.addEventListener('blur', function(){
 $(document).ready(function(){
 
     let login = false;
-    
+
     // 영업 정보 빈칸이면 "영업 정보 없음" / 아니면 정보 넣어주기
     let rest_time;
     if(rest_time == ""){
@@ -58,12 +58,53 @@ $(document).ready(function(){
         login = true;
         $('.guest_menu_box').empty()
         $('.guest_menu_box').append(login_list)
-        $('.guest_icon').css({backgroundColor: "#ffa500"})
+        $('.guest_icon').css({backgroundColor: "#814b11"})
     })
     $(document).on('click','.login_del',function(){
         login = false;
         $('.guest_menu_box').empty()
         $('.guest_menu_box').append(guest_list)
         $('.guest_icon').css({backgroundColor: "#ff00ff"})
+    })
+
+    $(document).on('click', '.choose_box > p',function(){
+        $('.choose_box').removeClass('choose_box_act')
+        $(this).closest('.choose_box').addClass('choose_box_act')
+        $('.map_box_L svg').removeClass('choose_act')
+        $(this).closest('.choose_box').children('svg').addClass('choose_act')
+    })
+
+    // 지도표시지역 선택시 하단창 뜨는 이벤트
+    $(document).on('click', '.choose_location > p',function(){
+        $('.location_box').toggleClass('loca_box_act')
+    })
+    $(document).on('click', '.c_addr_name',function(){
+        $('.c_addr_name').removeClass('c_addr_act')
+        $(this).addClass('c_addr_act')
+    })
+    $(document).on('click', '.d_addr_name',function(){
+        $('.map_box_L svg').removeClass('choose_act')
+        $('.location_box').removeClass('loca_box_act')
+        $('.choose_location > p').html(`${$(this).html()}`)
+    })
+
+    // 정렬방식 선택시 하단창 뜨는 이벤트
+    $(document).on('click', '.choose_align > p',function(){
+        $('.align_box').toggleClass('align_box_act')
+    })
+    $(document).on('click', '.align_menu',function(){
+        $('.map_box_L svg').removeClass('choose_act')
+        $('.align_box').removeClass('align_box_act')
+        $('.choose_align > p').html(`${$(this).html()}`)
+    })
+
+    // 정렬방식 선택시 하단창 뜨는 이벤트
+    $(document).on('click', '.choose_tag > p',function(){
+        $('.tag_box').toggleClass('tag_box_act')
+    })
+    $(document).on('click', '.tag_menu',function(){
+        $('.map_box_L svg').removeClass('choose_act')
+        $('.tag_box').removeClass('tag_box_act')
+        $('.choose_tag > p').html(`${$(this).html()}`)
     })
 });

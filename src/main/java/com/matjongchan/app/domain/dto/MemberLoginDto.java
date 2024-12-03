@@ -13,14 +13,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MemberLoginDto {
     private String user_id;
-    private String password;
+    private String user_pw;
     private boolean remember_id;
 
     @Override
     public String toString() {
         return "MemberLoginDto{" +
                 "user_id='" + user_id + '\'' +
-                ", password='" + password + '\'' +
+                ", user_pw='" + user_pw + '\'' +
                 ", remember_id=" + remember_id +
                 '}';
     }

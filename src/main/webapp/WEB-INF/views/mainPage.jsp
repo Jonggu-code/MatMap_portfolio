@@ -48,11 +48,11 @@
             <div class="main_item">
                 <div class="main_item_box">
                     <div class="main_item_Lbox">
-                        <a class="img" href="./detail.html"> 1</a>
+                        <a class="img" href="detail.jsp"> 1</a>
                     </div>
                     <div class="main_item_Rbox">
                         <div class="item_title">
-                            <a class="item_name" href="./detail.html">종찬식당</a>
+                            <a class="item_name" href="detail.jsp">종찬식당</a>
                             <div class="item_star">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2Z"></path></svg>
                                 <p>4.9</p>
