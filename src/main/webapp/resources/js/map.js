@@ -46,7 +46,14 @@ kakao.maps.event.addListener(map, 'click', function(mouseEvent){
     var message = `클릭한 위치의 위도는 ${latlng.getLat()} 이고 경도는 ${latlng.getLng()} 입니다.`
 
     var resultDiv = document.getElementById('result');
-    resultDiv.innerHTML = message;
+    var tmp_level = map.getLevel();
+    var tmp_center = map.getCenter();
+    // mapOptions = {
+    //     center: tmp_center,
+    //     level: tmp_level
+    // };
+    // map = new kakao.maps.Map(mapContainer, mapOptions);
+    // resultDiv.innerHTML = message;
 });
 
 var bounds = new kakao.maps.LatLngBounds();
@@ -63,7 +70,6 @@ function setBounds() {
 let isHandler = false;
 kakao.maps.event.addListener(map, 'zoom_changed', function(event) {       
     var level = map.getLevel();
-
     var message = '현재 지도 레벨은 ' + level + ' 입니다';
 
     var resultDiv = document.getElementById('result');  
@@ -130,3 +136,18 @@ function create_marker(){
         kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(info_window));
     }
 }
+
+
+function getInfo(){
+    // 지도의 현재 영역을 얻어옵니다
+    var bounds = map.getBounds();
+
+    // 영역의 남서쪽 좌표를 얻어옵니다
+    var swLatLng = bounds.getSouthWest();
+
+    // 영역의 북동쪽 좌표를 얻어옵니다
+    var neLatLng = bounds.getNorthEast();
+
+    return {swLatLng,neLatLng};
+}
+

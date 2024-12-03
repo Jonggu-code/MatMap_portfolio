@@ -62,10 +62,10 @@
         <if test="category != null">
             and r.fk_category = #{category_num}
         </if>
-        and r.loc_x > #{loc_nw_x}
-        and r.loc_y > #{loc_nw_y}
-        and #{loc_se_x} > r.loc_x
-        and #{loc_se_y} > r.loc_y
+        and r.loc_x > #{loc_se_x}
+        and r.loc_y > #{loc_se_y}
+        and #{loc_nw_x} > r.loc_x
+        and #{loc_nw_y} > r.loc_y
         order by
         <choose>
             <when test='option == "R"'>

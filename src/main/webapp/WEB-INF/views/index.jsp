@@ -268,6 +268,47 @@
                 })
             }
         })
+
+        $('.focus_map').click(function (){
+            let page_size = 20;
+            let offset = 0;
+            let option = $('.choose_align').children('p').text();
+            let category = $('.choose_tag').children('p').text();
+            let c_address = $('.choose_location').children('p').text();
+            if(option === "맛집 정렬 순서"){
+                option = null;
+            }
+            if(category === "전체"){
+                category = null;
+            }
+            if(c_address === "지도 표시 지역"){
+                c_address = null;
+            }
+            let loc = getInfo();
+
+            let sw_x = loc.swLatLng.getLat();
+            let sw_y = loc.swLatLng.getLng();
+            let ne_x = loc.neLatLng.getLat();
+            let ne_y = loc.neLatLng.getLng();
+            $.ajax({
+                method: 'POST',
+                cache: false,
+                url: 'http://localhost:8080/search/near',
+                contentType: 'application/json; charset=UTF-8',
+                data : JSON.stringify({"page_size" : page_size, "offset" : offset,
+                        "option" : option, "category" : category, "c_address" : c_address,
+                        "loc_nw_x" : ne_x, "loc_nw_y" : ne_y, "loc_se_x" : sw_x, "loc_se_y" : sw_y}),
+                success:function (sr){
+                    console.log(sr);
+                    // loadRestaurant();
+                    $('.main').html(loadRestaurant(sr));
+                },
+                error: function (request, status, error){
+                    alert("정보 받아오기 실패");
+                }
+
+            })
+        })
     })
 
     function loadRestaurant(sr){
@@ -355,6 +396,7 @@
         create_marker();
         return tmp_html;
     }
+
     // const btn = document.getElementsByClassName('focus_map')[0];
 </script>
 </body>

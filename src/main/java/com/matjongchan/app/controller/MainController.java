@@ -73,4 +73,15 @@ public class MainController {
         return new ResponseEntity<>(restaurantService.SRTotalSearch(searchCondition), HttpStatus.OK);
     }
 
+    @ResponseBody
+    @PostMapping("/search/near")
+    public ResponseEntity<List<SimpleRestaurant>> searchNear(HttpSession session, @RequestBody SearchCondition searchCondition) {
+        log.info("nw_ -> " + searchCondition.getLoc_nw_x() + "     ###     "+ searchCondition.getLoc_nw_y());
+        log.info("se_ -> " + searchCondition.getLoc_se_x() + "     ###     "+ searchCondition.getLoc_se_y());
+        log.info("태그내용 -> " +searchCondition.getOption() + searchCondition.getCategory() + searchCondition.getC_address());
+        return new ResponseEntity<>(restaurantService.SRNearSearch(searchCondition), HttpStatus.OK);
+
+    }
+
+
 }
