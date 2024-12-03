@@ -8,11 +8,13 @@ package com.matjongchan.app.controller;
 
 
 import com.matjongchan.app.domain.dto.FavoriteWithRestaurantDto;
+import com.matjongchan.app.domain.dto.RestaurantDetail;
 import com.matjongchan.app.domain.entity.MemberDto;
 import com.matjongchan.app.domain.dto.MemberLoginDto;
 import com.matjongchan.app.domain.entity.MemberImageDto;
 import com.matjongchan.app.domain.entity.ReviewDto;
 import com.matjongchan.app.service.MemberService;
+import com.matjongchan.app.service.RestaurantService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +32,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,6 +41,8 @@ import java.util.UUID;
 public class MemberController {
     @Autowired
     MemberService memberService;
+    @Autowired
+    RestaurantService restaurantService;
 
     /*
     1. 로그인 컨트롤러 - get, post 방식
@@ -108,79 +113,6 @@ public class MemberController {
     private static final String F_PATH = "C:/Users/82109/Desktop/spring/matjongchan_git/MatMap_portfolio/src/main/webapp/resources/img/";
     private static final int defaultImageId = 1; // 기본 이미지의 id값 1
 
-//    @PostMapping("/join")
-//    public String register(MemberDto memberDto, Model m, @RequestParam(value = "profile_image", required = false) MultipartFile mf) {
-//        String user_id = memberDto.getUser_id().trim();
-//
-//        // 아이디 중복 검사
-//        if (!isValid(user_id)) {
-//            String msg = null;
-//            try {
-//                msg = URLEncoder.encode("사용 중인 아이디입니다.", "UTF-8");
-//            } catch (UnsupportedEncodingException e) {
-//                e.printStackTrace();
-//            }
-//            // 사용자가 적어둔 정보 유지, 뷰 파일에서 아래 이름들(u_seqno, ...)로 value 값 넣어놓아야함.
-//            m.addAttribute("u_seqno", memberDto.getId());
-//            m.addAttribute("u_id", memberDto.getUser_id());
-//            m.addAttribute("u_pw", memberDto.getPassword());
-//            m.addAttribute("u_name", memberDto.getName());
-//            m.addAttribute("u_address", memberDto.getAddress());
-//            m.addAttribute("u_email", memberDto.getEmail());
-//            m.addAttribute("u_introduce", memberDto.getIntroduce());
-//            m.addAttribute("u_gender", memberDto.getGender());
-//            m.addAttribute("u_age", memberDto.getAge());
-//            m.addAttribute("u_pnumer", memberDto.getPhone_number());
-//
-//            return "redirect:/join?msg=" + msg;
-//        }
-//
-//        // 이미지 업로드 처리 (mf가 비어있지 않은 경우에만 실행)
-//        if (mf != null && !mf.isEmpty()) {
-//            try {
-//                String originalName = mf.getOriginalFilename();
-//                String uniqueFileName = System.currentTimeMillis() + "_" + originalName;
-//
-//                String saveFile = F_PATH + System.currentTimeMillis() + "_" + originalName; // 저장경로 설정
-//                // 파일 저장
-//                mf.transferTo(new File(saveFile));
-//
-//
-//                // 새로운 이미지 정보를 MemberImageDto에 설정
-//                MemberImageDto memberImageDto = new MemberImageDto();
-//                memberImageDto.setName(uniqueFileName);
-//                memberImageDto.setImg_url(saveFile);
-//                memberImageDto.setOrder_number(1);
-//
-//                // DB에 행 삽입 후 id 가져오기
-//                int newImageId = memberService.addMemberImage(memberImageDto);
-//                Integer memberImageId = memberService.getAllImages().get(0).getId();
-//
-//                // member_image table의 id를 memberDto에 설정
-//                memberDto.setFk_image_id(memberImageId);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//                // 파일 업로드 실패 시 처리
-//                return "redirect:/join?msg=파일 업로드 실패";
-//            }
-//        } else {
-//            // 사용자가 사진을 첨부하지 않으면 기본 이미지 id 설정
-//            memberDto.setFk_image_id(defaultImageId);
-//        }
-//
-//        // DB에 저장
-//        if (memberService.addMember(memberDto) == 1) {
-//            return "redirect:/";
-//        } else {
-//            String msg = null;
-//            try {
-//                msg = URLEncoder.encode("문제가 발생했습니다. 잠시 후에 다시 시도하세요.", "UTF-8");
-//            } catch (UnsupportedEncodingException e) {
-//                e.printStackTrace();
-//            }
-//            return "redirect:/join?msg=" + msg; // 실패 시 에러 메세지
-//        }
-//    }
 @PostMapping("/join")
 public String register(MemberDto memberDto, Model m, @RequestParam(value = "profile_image", required = false) MultipartFile mf) {
     String user_id = memberDto.getUser_id().trim();
@@ -298,11 +230,96 @@ public String register(MemberDto memberDto, Model m, @RequestParam(value = "prof
 
         return "myPage";
 
-
-
     }
 
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /*
+    3. 마이페이지 - '내가 찜한 식당' 목록
+     */
+    @GetMapping("/myPageRestaurant")
+    public String myPageRestaurant(HttpSession session, Model model) {
+        // 세션에 있는 id 값 가져오기
+        String userId = (String) session.getAttribute("id");
+        // 로그인하지 않은 사용자는 로그인페이지로 리다이렉트
+        if (userId == null) {
+            return "redirect:/login";
+        }
+
+        // 회원의 즐겨찾기 레스토랑 정보 조회(이름, c_address, d_address, number, reservation, total_score_count, search_tag)
+        List<FavoriteWithRestaurantDto> favorites = memberService.getMemberFavorites(userId);
+        model.addAttribute("favorites", favorites);
+
+        return "myPageRestaurant";
+    }
+
+
+//     오류 나서 일단 지움.
+
+//    @GetMapping("/myPageRestaurant")
+//    public String myPageRestaurant(HttpSession session, Model model) {
+//        // 1. 세션에 있는 id 값 가져오기
+//        String userId = (String) session.getAttribute("id");
+//
+//        // 로그인하지 않은 사용자는 로그인페이지로 리다이렉트
+//        if (userId == null) {
+//            return "redirect:/login";
+//        }
+//
+//        // 2. userId 이용해서 List<FavoriteWithRestaurantDto> favorites 생성
+//        List<FavoriteWithRestaurantDto> favorites = memberService.getMemberFavorites(userId);
+//
+//        // 3. 리스트인 favorites의 각 요소들의 'fk_restaurant_id' 구하기
+//        List<Integer> restaurantIds = new ArrayList<>();
+//        for (FavoriteWithRestaurantDto favorite : favorites) {
+//            restaurantIds.add(favorite.getFk_restaurant_id());
+//        }
+//
+//        // 4. fk_restaurant_id를 이용해서 restaurant 테이블의 id 구하기
+//        List<RestaurantDetail> restaurantDetails = new ArrayList<>();
+//        for (Integer restaurantId : restaurantIds) {
+//            // 5. 구한 restaurant 테이블의 id로 RestaurantDetail getRestaurantDetail(int restaurantId) 서비스 접근
+//            RestaurantDetail restaurantDetail = restaurantService.getRestaurantDetail(restaurantId);
+//            if (restaurantDetail != null) {
+//                restaurantDetails.add(restaurantDetail); // 상세 정보 리스트에 추가
+//            }
+//        }
+//
+//        // 6. 모델에 보내기
+//        model.addAttribute("restaurantDetails", restaurantDetails);
+//
+//        return "myPageRestaurant";
+//    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /*
+    3. 마이페이지 - '작성한 리뷰' 목록
+     */
+    @GetMapping("/myPageReview")
+    public String myPageReview(HttpSession session, Model model){
+        // 1. 세션에 있는 id 값 가져오기
+        String userId = (String) session.getAttribute("id");
+
+        // 로그인하지 않은 사용자는 로그인페이지로 리다이렉트
+        if (userId == null) {
+            return "redirect:/login";
+        }
+
+        // 2. 회원이 작성한 리뷰 개수 조회
+        int reviewCount = memberService.selectMemberReviewCount(userId);
+        model.addAttribute("reviewCount", reviewCount);
+
+
+        // 3. 회원 리뷰 조회(reviewer, taste_score, clean_score, kind_score, total_score, create_at, title, content)
+        List<ReviewDto> reviews = memberService.getMemberReviews(userId);
+        model.addAttribute("reviews", reviews);
+
+        return "myPageReview";
+    }
 }
 
 

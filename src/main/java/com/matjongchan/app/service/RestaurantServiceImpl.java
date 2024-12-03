@@ -178,7 +178,7 @@ public class RestaurantServiceImpl implements RestaurantService {
                 .restaurant_reservation(dto.getReservation())
                 .restaurant_memo(dto.getMemo())
                 .restaurant_image_url_list(image_url_list)
-                .today_business_state(getNowOpen(hoursDto)) //오늘 영업 유무..
+                .today_business_state("열림") //오늘 영업 유무..
                 .business_hours_dto(hoursDto)
                 .menu_detail_list(menuDetail) //메뉴 이름,가격,사진등등..
                 .review_image_url_list(image_url_list)
@@ -247,8 +247,8 @@ public class RestaurantServiceImpl implements RestaurantService {
                     .name(dto.getName())
                     .image_url(getImgUrl(dto))
                     .address(dto.getC_address() + dto.getD_address())
-                    .total_score_count(dto.getTotal_score_count())
-                    .total_review_count(dto.getTotal_review_count())
+                    .total_score_count(dto.getTotal_score_count() == null ? 0 : dto.getTotal_score_count())
+                    .total_review_count(dto.getTotal_review_count() == null ? 0 : dto.getTotal_review_count())
                     .today_business_state(getNowOpen(restaurantDao.getBusinessHours(dto.getId())))
                     .reservation(dto.getReservation())
                     .number(dto.getNumber())

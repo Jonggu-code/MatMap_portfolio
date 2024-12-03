@@ -18,7 +18,7 @@
     <header class="header">
         <div class="img_box">
             <a href="<c:url value = '/'/>">
-                <img src="<c:url value='/resources/img/logo_500x500.png'/>" alt="">
+                <img src="<c:url value='/resources/static/img/logo_500x500.png'/>" alt="">
             </a>
         </div>
     </header>

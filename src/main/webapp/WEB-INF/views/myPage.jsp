@@ -11,7 +11,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="<c:url value = '/resources/css/myPage.css'/>">
+    <link rel="stylesheet" href="<c:url value = '/resources/css/myPage.css?1'/>">
 </head>
 <body>
 
@@ -25,8 +25,10 @@
             <!-- 좌측 프로필  -->
             <div class="aside_menu1">
                 <div class="profile_imgBox">
-                    <img th:src="@{'/resources/img/' + ${memberImage != null ? memberImage.img_url : 'https://static.nid.naver.com/images/web/user/default.png'}}"
-                         alt="프로필 이미지" class="profile_img">
+                    <img src="<c:url value='${memberImage.img_url}'/>"
+                                 class="profile_img"/>
+
+
                 </div>
 
             <%--                <div class="profile_imgBox">--%>
@@ -72,9 +74,10 @@
             <div class="box box2">
                 <div class="box2_head">
                     <h2>내가 찜한 음식점</h2>
-                    <a href="#">
+                    <a href="<c:url value='/myPageRestaurant'/>">
                         <input type="button" value="목록" class="btn_mok">
                     </a>
+
                 </div>
 
                 <div class="contents_area">
@@ -156,6 +159,16 @@
 
             <!-- 3번 리뷰 영역 -->
             <div class="box box3">
+                <div class="review_headbox">
+                    <div class="head_name">작성한 리뷰</div>
+                    <a href="<c:url value='/myPageReview'/>">
+                        <input type="button" class="btn_head3" value="목록">
+                    </a>
+
+                </div>
+
+
+
                 <div class="big_pan">
                     <!-- 첫 번째 리뷰가 있을 경우 -->
                     <c:choose>

@@ -290,3 +290,27 @@ ul {
 .big_pan {
     display: flex;
 }
+
+/*////////////////////////////////////*/
+/* 3번 헤드 name,btn */
+.review_headbox {
+    display: flex;
+    justify-content: space-between;
+}
+
+.head_name {
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.btn_head3 {
+    width: 100px;
+    height: 25px;
+    border-radius: 5px;
+    background-color: orange;
+    border: none;
+    color: #fff;
+}
+.btn_head3:hover {
+    background-color: rgb(255, 194, 81);;
+}

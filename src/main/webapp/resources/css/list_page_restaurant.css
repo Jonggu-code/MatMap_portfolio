@@ -1,0 +1,296 @@
+
+.banner {
+    width: 100%;
+    height: 180px;
+    background: #ff9625;
+    color: #fff;
+    font-size: 30px;
+    text-align: center;
+
+    position: relative;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+}
+.banner > p {
+    width: 100%;
+    margin-bottom: 6px;
+    font-size: 34px;
+}
+
+.move_top {
+    width: 100px;
+    height: 50px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 0 2px 2px #ababab;
+
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+
+    transition: all 0.3s;
+}
+.move_top > svg {
+    width: 30px;
+    height: 30px;
+    transform: rotateZ(180deg);
+
+    position: relative;
+    top: 1px;
+}
+.move_top:hover {
+    color: #ff9625;
+}
+.move_top:hover > svg {
+    fill: #ff9625;
+}
+
+/* container_main 단 */
+
+.main_box {
+    width: 75%;
+    height: auto;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 15px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding: 10px 20px 20px;
+}
+.rank_box {
+    width: 100%;
+    height: 30px;
+    font-size: 26px;
+    font-weight: 900;
+    margin-bottom: 20px;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.title_box {
+    width: 100%;
+    margin-top: 20px;
+
+    position: relative;
+
+}
+
+/*  */
+.review_box {
+    width: 300px;
+    height: 100%;
+
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+.star_box, #review_leng {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+}
+.review_score, .rev_review_score {
+    font-size: 22px;
+    font-weight: 700;
+    margin-left: 14px;
+
+    color: #ff9625;
+    position: relative;
+    top: -4px;
+}
+.review_star, .rev_review_star, #reco_star {
+    width: 140px;
+    height: 25px;
+    background: url(../img/review_star_empty.png) repeat-x left;
+    background-size: 29px;
+
+    position: relative;
+    right: 0;
+    top: 0;
+}
+.review_leng {
+    padding-top: 6px;
+    color: #5e5e5e;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: flex-end;
+}
+.fill_star, .rev_fill_star, .reco_fill_star {
+    width: 97%;
+    height: 25px;
+    background: url(../img/review_star_fill.png) repeat-x left;
+    background-size: 29px;
+
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+.rev_review_score {
+    font-size: 18px;
+    top: -1px;
+}
+
+.rest_title_box {
+    margin-bottom: 5px;
+
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+.rest_title {
+    font-size: 30px;
+    font-weight: 900;
+    position: relative;
+    top: -5px;
+}
+.rest_title:hover {
+    color: #ff9625;
+}
+.rest_cate {
+    font-size: 18px;
+    margin-top: 5px;
+    color: #ff9625;
+    cursor: pointer;
+}
+.rest_info_box {
+    margin-bottom: 15px;
+}
+.rest_d_addr, .rest_p_num, .rest_info, .rest_time {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.rest_addr_icon, .rest_num_icon, .rest_info_icon, .rest_time_icon {
+    width: 20px;
+    height: 20px;
+    background: url(../img/ico_detail_240813.png) no-repeat;
+}
+.rest_addr_icon {
+    background-position: -37px -28px;
+}
+.rest_num_icon {
+    background-position: -97px -27px;
+}
+.rest_info_icon {
+    background-position: -157px -27px;
+}
+.rest_time_icon {
+    background-position: -57px -27px;
+}
+
+/* ////////////////        식당 소개단         ////////////// */
+
+.rest_intro {
+    padding: 25px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 10px;
+    background: #e3e3e3;
+}
+
+/* ////////////////        영업시간 단          ////////////// */
+
+.time_box {
+    display: flex;
+
+    position: relative;
+    top: 10px;
+}
+.time_icon {
+    width: 24px;
+    height: 24px;
+    background: url(../img/ico_detail_240813.png);
+    background-position: -74px -37px;
+    background-size: 350px;
+}
+.time_title {
+    font-size: 24px;
+    font-weight: 700;
+
+    position: relative;
+    top: -5px;
+}
+.open_time, .break_time, .close_time {
+    font-size: 20px;
+    display: none;
+    margin-left: 5px;
+
+    position: relative;
+    top: -5px;
+}
+.open_time { color: #ff9625; display: block;}
+.break_time { color: #10bb00; }
+.close_time { color: #ff0000; }
+
+.day_box > p:last-child {
+    margin-top: 10px;
+}
+
+/* ////////////////           swiper (banner)          //////////// */
+
+.container_banner {
+    width: 100%;
+    height: 220px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.main_banner {
+    width: 90%;
+    height: 100%;
+    display: flex;
+}
+.banner_img {
+    height: 100%;
+    border-radius: 15px;
+}
+
+.banner_btn_L, .banner_btn_R {
+    height: 100%;
+    width: 100px;
+    color: rgba(255,255,255,0.3);
+    cursor: pointer;
+    box-sizing: border-box;
+    z-index: 999;
+    font-size: 50px;
+
+    display: flex;
+    align-items: center;
+
+    transition: color 0.3s;
+
+    position: absolute;
+    top: 0;
+}
+.banner_btn_L > p {
+    margin-left: 15px;
+    user-select: none;
+}
+.banner_btn_R > p {
+    margin-left: 55px;
+    user-select: none;
+}
+.banner_btn_L:hover, .banner_btn_R:hover {
+    color: #fff;
+}
+.swiper-button-prev0 {
+    background: linear-gradient(to left, rgba(0,0,0,0), rgba(0,0,0,0.3));
+    left: 0;
+}
+.swiper-button-next0 {
+    background: linear-gradient(to left, rgba(0,0,0,0.3), rgba(0,0,0,0));
+    right: 0;
+}
