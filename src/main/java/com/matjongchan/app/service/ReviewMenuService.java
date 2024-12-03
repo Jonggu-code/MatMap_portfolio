@@ -17,9 +17,10 @@ public interface ReviewMenuService {
 
     int write(ReviewMenuDto reviewMenuDto);
 
-
     List<ReviewMenuDto> getListAll();
 
     List<ReviewMenuDto> getListR(int reviewId);
+
+    List<String> getMenuNames(int reviewId);
 
 }

@@ -272,9 +272,16 @@ public class RestaurantServiceImpl implements RestaurantService {
         List<OtherImageDto> images = otherImageDao.getRestaurantImages2(dto.getId());
         return images.isEmpty() ? null : images.get(0).getImg_url();
     }
-    private List<String> getMenu_name_list(RestaurantDto dto) {
+    public List<String> getMenu_name_list(RestaurantDto dto) {
         return restaurantDao.getMenuDetail(
                         dto.getId())
+                .stream()
+                .map(MenuDetail::getMenu_name)
+                .collect(Collectors.toList());
+    }
+    public List<String> getMenu_name_list(int restaurantId) {
+        return restaurantDao.getMenuDetail(
+                        restaurantId)
                 .stream()
                 .map(MenuDetail::getMenu_name)
                 .collect(Collectors.toList());
