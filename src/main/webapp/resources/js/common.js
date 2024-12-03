@@ -68,15 +68,18 @@ $(document).ready(function(){
     // 비로그인, 로그인 상태 시 헤더 노출
     let guest_box = `
         <p class="login_com">로그인</p>
-        <p class="register">회원가입</p>
+
+        <p>회원가입</p>
     `
     let login_box = `
-        <p class="my_page">마이페이지</p>
-        <p class="my_rest">마이 맛집 </p>
-        <p class="my_review">마이 후기</p>
+        <p>마이페이지</p>
+        <p>마이 맛집 </p>
+        <p>마이 후기</p>
+
         <p class="login_del">로그아웃</p>
     `
     $('.guest_menu_box').append(guest_box)
+
 
     $(document).on('click','.register',function(){
         window.location.href = './register.html'
@@ -91,6 +94,7 @@ $(document).ready(function(){
         window.location.href = './list_page_review.html'
     })
 
+
     $(document).on('click','.login_com',function(){
         login = true;
         $('.guest_menu_box').empty()
@@ -104,9 +108,11 @@ $(document).ready(function(){
         $('.guest_icon').css({backgroundColor: "#ff00ff"})
     })
 
+
     // 페이지 내려가면 상단으로 이동 버튼
     $(window).scroll(function(){
         console.log(window.scrollY)
+
         if(window.scrollY > 800) {
             $('.move_top').css({opacity: '1'})
         }

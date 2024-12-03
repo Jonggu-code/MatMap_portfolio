@@ -73,7 +73,6 @@ body::-webkit-scrollbar {
     height: 115px;
     background: #fff;
     box-shadow: 0 2px 5px 0 #bdbdbd;
-    
     position: fixed;
     top: 0;
     left: 0;
@@ -240,7 +239,6 @@ body::-webkit-scrollbar {
     position: relative;
 
     transition: box-shadow 0.1s;
-    
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -293,3 +291,4 @@ body::-webkit-scrollbar {
     height: auto;
     background: #e3e3e3;
 }
+

@@ -4,6 +4,7 @@ import com.matjongchan.app.dao.ReviewDao;
 import com.matjongchan.app.domain.dto.ReviewDetail;
 import com.matjongchan.app.domain.dto.ReviewDetailSearchCondition;
 import com.matjongchan.app.domain.entity.ReviewDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class ReviewServiceImpl implements ReviewService{
     @Autowired
@@ -27,10 +29,10 @@ public class ReviewServiceImpl implements ReviewService{
     };
 
     // 전체, 고객응대, 청결도, 맛 평점 get 하는 메서드
-    public int getTotalAvg(int fk_restaurant_id){return reviewDao.totalAvgScore(fk_restaurant_id);};
-    public int getKindAvg(int fk_restaurant_id){return reviewDao.kindAvgScore(fk_restaurant_id);};
-    public int getCleanAvg(int fk_restaurant_id){return reviewDao.cleanAvgScore(fk_restaurant_id);};
-    public int getTasteAvg(int fk_restaurant_id){return reviewDao.tasteAvgScore(fk_restaurant_id);};
+    public double getTotalAvg(int fk_restaurant_id){return reviewDao.totalAvgScore(fk_restaurant_id);};
+    public double getKindAvg(int fk_restaurant_id){return reviewDao.kindAvgScore(fk_restaurant_id);};
+    public double getCleanAvg(int fk_restaurant_id){return reviewDao.cleanAvgScore(fk_restaurant_id);};
+    public double getTasteAvg(int fk_restaurant_id){return reviewDao.tasteAvgScore(fk_restaurant_id);};
 
 
     // 리뷰 작성하는 하는 메서드
@@ -59,7 +61,8 @@ public class ReviewServiceImpl implements ReviewService{
     @Override
     public List<Double> getTotalScore(int fk_restaurant_id) {
         List<Double> collect = reviewDao.getTotalScore(fk_restaurant_id)
-                .stream().map(BigDecimal::doubleValue)
+                .stream()
+                .map(BigDecimal::doubleValue)
                 .collect(Collectors.toList());
         if(collect.size() > 2){
             return collect;

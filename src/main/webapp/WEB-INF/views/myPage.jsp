@@ -11,9 +11,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="<c:url value = '/resources/css/myPage.css'/>">
+    <link rel="stylesheet" href="<c:url value = '/resources/css/myPage.css?1'/>">
 </head>
 <body>
+
+
+
+
 <div id="wrap" class="wrap">
     <div class="inner">
         <!-- 좌측 메뉴 -->
@@ -21,8 +25,17 @@
             <!-- 좌측 프로필  -->
             <div class="aside_menu1">
                 <div class="profile_imgBox">
-                    <img src="https://static.nid.naver.com/images/web/user/default.png" alt="" class="profile_img">
+                    <img src="<c:url value='${memberImage.img_url}'/>"
+                                 class="profile_img"/>
+
+
                 </div>
+
+            <%--                <div class="profile_imgBox">--%>
+<%--                    <img src="https://static.nid.naver.com/images/web/user/default.png" alt="" class="profile_img">--%>
+<%--                </div>--%>
+
+
                 <div class="profile_menu">
                     <div>후기</div>
                     <div>${reviewCount}개</div>  <!-- 작성한 리뷰 개수 -->
@@ -61,9 +74,10 @@
             <div class="box box2">
                 <div class="box2_head">
                     <h2>내가 찜한 음식점</h2>
-                    <a href="#">
+                    <a href="<c:url value='/myPageRestaurant'/>">
                         <input type="button" value="목록" class="btn_mok">
                     </a>
+
                 </div>
 
                 <div class="contents_area">
@@ -77,6 +91,11 @@
                                         <c:set var="firstFavorite" value="${favorites[0]}" />
                                         <div class="txt food">${firstFavorite.restaurant_name}</div>
                                         <div class="txt tag">${firstFavorite.c_address} ${firstFavorite.d_address}</div>
+
+                                        <div class="txt rating">
+                                            <strong>별점: ${firstFavorite.total_score_count} / 5</strong>
+                                        </div>
+
                                         <div class="txt stimg">
                                             <img src="img/img/review_star_fill.png" alt="">
                                             <img src="img/img/review_star_fill.png" alt="">
@@ -109,6 +128,11 @@
                                     <c:set var="secondFavorite" value="${favorites[1]}" />
                                     <div class="txt food">${secondFavorite.restaurant_name}</div>
                                     <div class="txt tag">${secondFavorite.c_address} ${secondFavorite.d_address}</div>
+
+                                    <div class="txt rating">
+                                        <strong>별점: ${secondFavorite.total_score_count} / 5</strong>
+                                    </div>
+
                                     <div class="txt stimg">
                                         <img src="img/img/review_star_fill.png" alt="">
                                         <img src="img/img/review_star_fill.png" alt="">
@@ -135,6 +159,16 @@
 
             <!-- 3번 리뷰 영역 -->
             <div class="box box3">
+                <div class="review_headbox">
+                    <div class="head_name">작성한 리뷰</div>
+                    <a href="<c:url value='/myPageReview'/>">
+                        <input type="button" class="btn_head3" value="목록">
+                    </a>
+
+                </div>
+
+
+
                 <div class="big_pan">
                     <!-- 첫 번째 리뷰가 있을 경우 -->
                     <c:choose>

@@ -39,4 +39,7 @@ public class ReviewMenuServiceImpl implements ReviewMenuService {
         return reviewMenuDao.selectR(reviewId);
     };
 
+    public List<String> getMenuNames(int reviewId){
+        return reviewMenuDao.getNames(reviewId);
+    };
 }

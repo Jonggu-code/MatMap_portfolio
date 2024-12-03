@@ -109,20 +109,16 @@
 
                 <!-- 메뉴 클릭하면 menu_active 클래스 추가되면서 background 색 진해짐. -->
                 <ul class="menu_list">
-                    <li>닭곰탕</li>
-                    <li>곰탕</li>
-                    <li>특곰탕</li>
-                    <li>수육고기</li>
-                    <li>김치전</li>
-                    <li>파전</li>
-                    <li>사골국밥</li>
-                    <li>수육모듬</li>
-                    <li>닭개장</li>
-                    <li>육개장</li>
+                    <c:forEach var="menuName" items="${menus}" varStatus="status">
+                        <li class="menu_item" data-id="${status.index + 1}">${menuName}</li>
+                    </c:forEach>
                 </ul>
+
+                <div id="selected_menus_container">
+                </div>
             </div>
-            <div class="btn_box">
-                <input type="submit" value="다음화면">
+            <div class="btn_box" id="btn_btn_btn">
+                <input type="submit" value="다음화면" id="btn_btn_btn2">
             </div>
     </fieldset>
 </form>

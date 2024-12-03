@@ -35,7 +35,7 @@ public class ReviewDaoImpl implements ReviewDao {
         return session.selectOne(namespace + "countR", fk_restaurant_id);
     }
 
-    public int totalAvgScore(int fk_restaurant_id){
+    public double totalAvgScore(int fk_restaurant_id){
         tmpSum = 0;
         tmpList = selectR(fk_restaurant_id);
         for (int i = 0; i<countR(fk_restaurant_id); i++){
@@ -43,7 +43,7 @@ public class ReviewDaoImpl implements ReviewDao {
         }
         return tmpSum/tmpList.size();
     };
-    public int kindAvgScore(int fk_restaurant_id){
+    public double kindAvgScore(int fk_restaurant_id){
         tmpSum = 0;
         tmpList = selectR(fk_restaurant_id);
         for (int i = 0; i<countR(fk_restaurant_id); i++){
@@ -51,7 +51,7 @@ public class ReviewDaoImpl implements ReviewDao {
         }
         return tmpSum/tmpList.size();
     };
-    public int cleanAvgScore(int fk_restaurant_id){
+    public double cleanAvgScore(int fk_restaurant_id){
         tmpSum = 0;
         tmpList = selectR(fk_restaurant_id);
         for (int i = 0; i<countR(fk_restaurant_id); i++){
@@ -59,7 +59,7 @@ public class ReviewDaoImpl implements ReviewDao {
         }
         return tmpSum/tmpList.size();
     };
-    public int tasteAvgScore(int fk_restaurant_id){
+    public double tasteAvgScore(int fk_restaurant_id){
         tmpSum = 0;
         tmpList = selectR(fk_restaurant_id);
         for (int i = 0; i<countR(fk_restaurant_id); i++){
