@@ -89,6 +89,11 @@ public class MemberDaoImpl2 implements MemberDao2 {
     }
 
     @Override
+    public int selectMemberReviewCount(String user_id){
+        return session.selectOne(namespace + "selectMemberReviewCount", user_id);
+    }
+
+    @Override
     public int deleteMemberReview(String user_id) {
         return session.delete(namespace + "deleteMemberReview", user_id);
     }

@@ -20,6 +20,7 @@ public class ReviewDto {
     private double total_score;
     private String create_at;
     private Integer fk_restaurant_id;
+    private String restaurantName;  // 마이페이지에서 회원이 작성한 리뷰 관련해서, review table의 title, content에 더해, restaurant table의 name도 가져와야해서 컬럼 추가함.
 
     public Integer getId() {
         return id;

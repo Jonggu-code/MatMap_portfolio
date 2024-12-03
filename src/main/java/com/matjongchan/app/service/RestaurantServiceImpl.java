@@ -6,13 +6,16 @@ import com.matjongchan.app.dao.ReviewMenuDao;
 import com.matjongchan.app.domain.dto.*;
 import com.matjongchan.app.domain.entity.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
@@ -137,7 +140,9 @@ public class RestaurantServiceImpl implements RestaurantService {
         BusinessHoursDto hoursDto = restaurantDao.getBusinessHours(restaurantId);
         List<MenuDetail> menuDetail = restaurantDao.getMenuDetail(restaurantId);
         for (MenuDetail detail : menuDetail) {
-            detail.setMenu_image_url(restaurantDao.getMenuUrl(Integer.parseInt(detail.getMenu_image_url())));
+            if(!StringUtils.isEmpty(detail.getMenu_image_url())){
+                detail.setMenu_image_url(restaurantDao.getMenuUrl(Integer.parseInt(detail.getMenu_image_url())));
+            }
         }
         List<RestaurantDto> restaurant_dto_list = restaurantDao.getRelationRestaurant3(restaurantId);
 
@@ -204,6 +209,9 @@ public class RestaurantServiceImpl implements RestaurantService {
                 business_hour =  hoursDto.getFri();
             case 7:
                 business_hour =  hoursDto.getSat();
+        }
+        if(StringUtils.isEmpty(business_hour)){
+            business_hour="";
         }
         if(!business_hour.equals("")){
             int now_hour = calendar.get(Calendar.HOUR_OF_DAY);
