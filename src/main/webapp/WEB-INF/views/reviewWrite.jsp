@@ -109,10 +109,9 @@
 
                 <!-- 메뉴 클릭하면 menu_active 클래스 추가되면서 background 색 진해짐. -->
                 <ul class="menu_list">
-                    <li class="menu_item" data-id="1">수육</li>
-                    <li class="menu_item" data-id="2">국밥</li>
-                    <li class="menu_item" data-id="3">김치전</li>
-                    <li class="menu_item" data-id="4">파전</li>
+                    <c:forEach var="menuName" items="${menus}" varStatus="status">
+                        <li class="menu_item" data-id="${status.index + 1}">${menuName}</li>
+                    </c:forEach>
                 </ul>
 
                 <div id="selected_menus_container">

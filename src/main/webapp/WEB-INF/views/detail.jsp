@@ -406,21 +406,20 @@
                             <!-- 리뷰 텍스트 -->
                             <div class="rc_user_txt_box">${review.content}</div>
                             <!-- 유저가 먹은 메뉴 -->
-                            <c:set var="reviewId" value="${review.id}" />
-                                <%
-                                    ReviewMenuService rms = null;
-                                    int reviewId = (Integer)pageContext.getAttribute("review.id");
-
-                                %>
+                            <div class="re_menu_box">
+                                <c:forEach var="menuName" items="${review.menuNames}">
+                                    <div class="review_menu">${menuName}</div>
+                                </c:forEach>
+                            </div>
 
                             <!-- 유저가 올린 사진 -->
-<%--                            <div class="rc_img_box">--%>
-<%--                                <c:forEach var="img" items="${review.images}">--%>
-<%--                                    <div class="review_img">--%>
-<%--                                        <img src="${img}" alt="리뷰 이미지">--%>
-<%--                                    </div>--%>
-<%--                                </c:forEach>--%>
-<%--                            </div>--%>
+                            <div class="rc_img_box">
+                                <c:forEach var="img" items="${review.images}">
+                                    <div class="review_img">
+                                        <img src="${img}" alt="리뷰 이미지">
+                                    </div>
+                                </c:forEach>
+                            </div>
                         </div>
                     </c:forEach>
 

@@ -6,17 +6,12 @@ import com.matjongchan.app.domain.entity.OtherImageDto;
 import com.matjongchan.app.domain.entity.RestaurantDto;
 import com.matjongchan.app.domain.entity.ReviewDto;
 import com.matjongchan.app.domain.entity.ReviewMenuDto;
-import com.matjongchan.app.service.OtherImageService;
-import com.matjongchan.app.service.ReviewMenuService;
-import com.matjongchan.app.service.ReviewService;
+import com.matjongchan.app.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,14 +31,25 @@ public class ReviewController {
     ReviewService reviewService;
     @Autowired
     OtherImageService otherImageService;
+    @Autowired
+    RestaurantServiceImpl restaurantService;
+
+
 
     @GetMapping("/detail")
     public String getReviews(RestaurantDto restaurantDto, ReviewDto reviewDto, Model m, ReviewMenuDto reviewMenuDto, OtherImageDto otherImageDto) {
-        int fk_restaurant_id = 1;
+        int fk_restaurant_id =1;
         List<ReviewDto> reviews = reviewService.getListR(fk_restaurant_id);
         m.addAttribute("reviews", reviews);
 
-        List<ReviewMenuDto> menus = reviewMenuService.getListR(1002);
+        for (ReviewDto review : reviews) {
+            List<String> menuNames = reviewMenuService.getMenuNames(review.getId());
+            review.setMenuNames(menuNames); // ReviewDto에 메뉴 리스트 추가
+        }
+
+        for (ReviewDto review : reviews) {
+//            List<OtherImageDto> otherImages = otherImageService.
+        }
 
         m.addAttribute("restaurantDto", restaurantDto);
         m.addAttribute("reviewDto", reviewDto);
@@ -68,9 +74,15 @@ public class ReviewController {
 
     @GetMapping("/reviewWrite") // 리뷰 작성 첫 페이지 메서드 보여주기
     public String reviewWrite(HttpServletRequest request, RestaurantDto restaurantDto, Model m) {
+
+        int restaurant_id = 1; // example
+
         m.addAttribute("restaurantDto", restaurantDto);
 
         HttpSession session = request.getSession();
+
+        List<String> menus = restaurantService.getMenu_name_list(restaurant_id);
+        m.addAttribute("menus", menus);
 
         List<ReviewMenuDto> list = reviewMenuService.getListR(1);
         int listSize = list.size();
