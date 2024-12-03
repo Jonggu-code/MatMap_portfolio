@@ -413,13 +413,13 @@
                             </div>
 
                             <!-- 유저가 올린 사진 -->
-                            <div class="rc_img_box">
-                                <c:forEach var="img" items="${review.images}">
-                                    <div class="review_img">
-                                        <img src="${img}" alt="리뷰 이미지">
-                                    </div>
-                                </c:forEach>
-                            </div>
+<%--                            <div class="rc_img_box">--%>
+<%--                                <c:forEach var="img" items="${review.images}">--%>
+<%--                                    <div class="review_img">--%>
+<%--                                        <img src="${img}" alt="리뷰 이미지">--%>
+<%--                                    </div>--%>
+<%--                                </c:forEach>--%>
+<%--                            </div>--%>
                         </div>
                     </c:forEach>
 
