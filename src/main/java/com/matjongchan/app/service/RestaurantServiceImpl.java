@@ -110,12 +110,17 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public List<SimpleRestaurant> SRTotalSearch(SearchCondition searchCondition) {
+        Integer number = CategoryChanger.categoryIntoNumber(searchCondition.getCategory());
+        log.info(number.toString());
+        searchCondition.setCategory_num(number);
+
         List<RestaurantDto> dtoList = restaurantDao.totalSearch(searchCondition);
         return getSimpleRestaurantList(dtoList);
     }
 
     @Override
     public List<SimpleRestaurant> SRNearSearch(SearchCondition searchCondition) {
+        searchCondition.setCategory_num(CategoryChanger.categoryIntoNumber(searchCondition.getCategory()));
         List<RestaurantDto> dtoList = restaurantDao.nearSearch(searchCondition);
         return getSimpleRestaurantList(dtoList);
     }

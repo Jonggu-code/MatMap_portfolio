@@ -179,7 +179,7 @@ input {
     width: calc(100% / 3);
     height: 100%;
 
-    display: flex;
+    display: flex; 
     justify-content: center;
     align-items: center;
 }
@@ -246,8 +246,8 @@ input {
 .map_box_L path {
     fill: none;
     stroke: #6e6e6e;
-    stroke-linecap: round;
-    stroke-linejoin: round;
+    stroke-linecap: round; 
+    stroke-linejoin: round; 
     stroke-width: 1.5;
 }
 .choose_location, .choose_align, .choose_tag  {
@@ -257,7 +257,7 @@ input {
     color: #6e6e6e;
     box-shadow: 2px 2px 4px 0px #bdbdbd;
     cursor: pointer;
-
+    
     display: flex;
     align-items: center;
 
@@ -365,7 +365,7 @@ input {
 
 .map_box_R {
     width: 40%;
-
+    
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -410,7 +410,7 @@ input {
     position: relative;
 
     transition: box-shadow 0.1s;
-
+    
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -480,7 +480,7 @@ input {
     width: 100%;
     height: auto;
     margin-bottom: 30px;
-
+    
     display: flex;
     flex-wrap: wrap;
 }
@@ -635,7 +635,7 @@ input {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2; /* 최대 두 줄 */
-
+    
     overflow: hidden;
     text-overflow: ellipsis;
 }

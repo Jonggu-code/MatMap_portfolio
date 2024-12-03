@@ -32,7 +32,7 @@ public class MainController {
             searchCondition = SearchCondition.builder()
                     .offset(1)
                     .option("P")
-                    .category(null)
+                    .category("한식")
                     .c_address(null)
                     .page_size(20)
                     .build();
@@ -49,14 +49,12 @@ public class MainController {
             searchCondition = SearchCondition.builder()
                     .offset(1)
                     .option("P")
-                    .category(null)
+                    .category("한식")
                     .c_address(null)
                     .page_size(20)
                     .build();
         }
-        log.info("키워드 검색중 ... keyword => "+searchCondition.getKeyword());
         List<SimpleRestaurant> simpleRestaurantList = restaurantService.SRRealTotalSearch(searchCondition);
-        log.info("몇개 검색됨? -> "+simpleRestaurantList.size());
         return new ResponseEntity<>(simpleRestaurantList, HttpStatus.OK);
     }
 
@@ -67,7 +65,7 @@ public class MainController {
             searchCondition = SearchCondition.builder()
                     .offset(1)
                     .option("P")
-                    .category(null)
+                    .category("한식")
                     .c_address(null)
                     .page_size(20)
                     .build();

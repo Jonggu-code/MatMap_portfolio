@@ -1,6 +1,7 @@
 package com.matjongchan.app.service;
 
 import com.matjongchan.app.domain.dto.ReviewDetail;
+import com.matjongchan.app.domain.entity.MenuDto;
 import com.matjongchan.app.domain.entity.ReviewDto;
 import com.matjongchan.app.domain.entity.ReviewMenuDto;
 

@@ -13,7 +13,7 @@ guest.addEventListener('blur', function(){
 $(document).ready(function(){
 
     let login = false;
-
+    
     // 영업 정보 빈칸이면 "영업 정보 없음" / 아니면 정보 넣어주기
     let rest_time;
     if(rest_time == ""){
@@ -73,7 +73,7 @@ $(document).ready(function(){
         $('.map_box_L svg').removeClass('choose_act')
         $(this).closest('.choose_box').children('svg').addClass('choose_act')
     })
-
+    
     // 지도표시지역 선택시 하단창 뜨는 이벤트
     $(document).on('click', '.choose_location > p',function(){
         $('.location_box').toggleClass('loca_box_act')
@@ -85,6 +85,7 @@ $(document).ready(function(){
     $(document).on('click', '.d_addr_name',function(){
         $('.map_box_L svg').removeClass('choose_act')
         $('.location_box').removeClass('loca_box_act')
+        $('.choose_box').removeClass('choose_box_act')
         $('.choose_location > p').html(`${$(this).html()}`)
     })
 
@@ -95,16 +96,18 @@ $(document).ready(function(){
     $(document).on('click', '.align_menu',function(){
         $('.map_box_L svg').removeClass('choose_act')
         $('.align_box').removeClass('align_box_act')
+        $('.choose_box').removeClass('choose_box_act')
         $('.choose_align > p').html(`${$(this).html()}`)
     })
 
-    // 정렬방식 선택시 하단창 뜨는 이벤트
+    // 음식점 태그 선택시 하단창 뜨는 이벤트
     $(document).on('click', '.choose_tag > p',function(){
         $('.tag_box').toggleClass('tag_box_act')
     })
     $(document).on('click', '.tag_menu',function(){
         $('.map_box_L svg').removeClass('choose_act')
         $('.tag_box').removeClass('tag_box_act')
+        $('.choose_box').removeClass('choose_box_act')
         $('.choose_tag > p').html(`${$(this).html()}`)
     })
 });

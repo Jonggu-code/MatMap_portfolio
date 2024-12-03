@@ -1,13 +1,17 @@
 package com.matjongchan.app.controller;
 
 import com.matjongchan.app.domain.dto.RestaurantDetail;
+import com.matjongchan.app.domain.dto.ReviewDetail;
+import com.matjongchan.app.domain.dto.ReviewDetailSearchCondition;
 import com.matjongchan.app.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -38,5 +42,15 @@ public class RestaurantController {
 
     }
 
+    @ResponseBody
+    @GetMapping("/detail/review/{id}")
+    public ResponseEntity<List<ReviewDetail>> restaurantDetailReview(@PathVariable("id") int id){
+
+        ReviewDetailSearchCondition reviewDetailSearchCondition = new ReviewDetailSearchCondition(id,1,3);
+        List<ReviewDetail> reviewDetails = restaurantService.getReviewDetails(reviewDetailSearchCondition);
+
+        return new ResponseEntity<>(reviewDetails, HttpStatus.OK);
+
+    }
 
 }
