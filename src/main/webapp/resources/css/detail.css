@@ -108,10 +108,11 @@
     justify-content: flex-end;
 }
 #review_score, .rev_review_score {
+
     font-size: 22px; 
     font-weight: 700;
     margin-left: 14px;
-    
+
     color: #ff9625;
     position: relative;
     top: -4px;
@@ -152,7 +153,9 @@
 /* ////////////////        식당 정보 icon 관련단          ////////////// */
 
 #rest_title_box {
+
     width: 550px;
+
     margin-bottom: 15px;
 
     display: flex;
@@ -160,7 +163,9 @@
     gap: 15px;
 }
 #rest_title {
+
     max-width: 400px;
+
     font-size: 30px;
     font-weight: 900;
     position: relative;
@@ -201,6 +206,7 @@
     stroke-width: 1;
     stroke: #000;
 }
+
 #rest_cate:hover {
     color: #ff9625;
 }
@@ -326,6 +332,7 @@
     font-size: 16px;
     font-weight: 700;
 }
+
 /* ////////////////        사진 관리단         ////////////// */
 
 #img_container { width: calc(70% - 20px); }
@@ -364,18 +371,22 @@
 
 /* ////////////////        맛집 추천단        ////////////// */
 
+
 #reco_container {
     width: 300px;
     height: 660px;
 
     position: absolute;
     right: 60px;
+
 }
 #reco_container > .container_title > p:first-child {
     color: #ff9625;
 }
 #reco_container > .container_title > p:last-child {
+
     margin-left: 8px;
+
 }
 .reco_box {
     padding: 10px 15px;
@@ -424,7 +435,9 @@
 }
 .reco_img_box {
     width: 100%;
+
     height: 100px;
+
     border-radius: 10px;
     overflow: hidden;
     display: flex;
@@ -439,6 +452,7 @@
 .reco_img2 {
     background: url(../img/예시이미지/june2.jpg) no-repeat center / cover;
 }
+
 .move_top {
     width: 100px;
     height: 50px;
@@ -491,7 +505,7 @@
     border: 1px solid #ff9625;
     border-radius: 3px;
     cursor: pointer;
-    
+
     text-align: center;
     font-size: 14px;
     color: #ff9625;
@@ -583,7 +597,7 @@
 
 .rev_con_main {
     width: 100%;
-    height: auto;
+
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
@@ -660,10 +674,12 @@
 }
 .rc_img_box {
     width: 100%;
+
     height: auto;
 
     display: flex;
     flex-wrap: wrap;
+
     gap: 10px;
 
 }
@@ -682,21 +698,25 @@
     background: #e1e1e1;
 }
 .review_img {
+
     width: calc((100% - 30px) / 4);
     height: 177px;
     background: #d99b9b;
     border-radius: 5px;
     overflow: hidden;
 
+
     text-align: center;
     line-height: 180px;
     font-size: 25px;
+
 }
 .more_img {
     width: 100%;
     height: 100%;
     background: rgba(0,0,0,0.3);
     cursor: pointer;
+
 }
 
 
@@ -709,7 +729,9 @@
     background: url(../img/review_star_fill.png) no-repeat center / cover;
 }
 .con1 {
+
     display: flex; 
+
     gap: 5px;
 }
 .con1 > p:nth-child(2) {

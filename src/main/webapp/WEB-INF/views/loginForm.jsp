@@ -18,7 +18,7 @@
     <header class="header">
         <div class="img_box">
             <a href="<c:url value = '/'/>">
-                <img src="<c:url value='/resources/img/logo_500x500.png'/>" alt="">
+                <img src="<c:url value='/resources/static/img/logo_500x500.png'/>" alt="">
             </a>
         </div>
     </header>
@@ -34,7 +34,7 @@
                 <input type="password" placeholder="비밀번호" name="user_pw" value="" class="input_txt input_pw">
                 <div class="keep_check">
                     <input type="checkbox" id="kp" class="keep keep_btn" name = "remember_id" ${empty cookie.id.value?"":"checked"}>
-                    <label for="kp" class="keep keep_label">로그인 상태 유지</label>
+                    <label for="kp" class="keep keep_label">아이디 기억하기</label>
                 </div>
                 <button type="submit" class="input_log">로그인</button>
             </form>

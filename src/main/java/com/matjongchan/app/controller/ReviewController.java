@@ -1,14 +1,17 @@
 package com.matjongchan.app.controller;
 
 import com.matjongchan.app.dao.OtherImageDao;
+
 import com.matjongchan.app.domain.dto.ReviewDetail;
 import com.matjongchan.app.domain.entity.OtherImageDto;
 import com.matjongchan.app.domain.entity.RestaurantDto;
 import com.matjongchan.app.domain.entity.ReviewDto;
 import com.matjongchan.app.domain.entity.ReviewMenuDto;
 import com.matjongchan.app.service.*;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -228,6 +231,12 @@ public class ReviewController {
         }
 
         return "redirect:/";
+    }
+
+    @ResponseBody
+    @GetMapping("/detail/menu/{id}")
+    public ResponseEntity<List<MenuDto>> getMenu(@PathVariable int id) {
+        return null;
     }
 
 

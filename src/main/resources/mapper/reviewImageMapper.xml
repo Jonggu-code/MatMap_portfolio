@@ -43,9 +43,11 @@
     <!-- 해당 식당 이미지 2개 조회  -->
     <select id="getRestaurantImages2" parameterType="int" resultType="OtherImageDto">
         SELECT *
-        FROM other_image as oi
-        WHERE #{id} = oi.fk_restaurant_id
-        ORDER BY oi.id DESC
+        FROM menu as m
+        INNER JOIN other_image as oi
+        ON oi.id = m.fk_image_id
+        WHERE #{id} = m.fk_restaurant_id
+        ORDER BY m.id DESC
         LIMIT 1,2
     </select>
 

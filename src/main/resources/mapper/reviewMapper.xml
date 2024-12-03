@@ -78,7 +78,7 @@
             re.clean_score as clean_score,
             re.kind_score as kind_score,
             re.total_score as total_score,
-            re.create_at as create_at
+            re.create_at as create_at,
             re.fk_restaurant_id as fk_restaurant_id
         FROM review AS re
             INNER JOIN restaurant AS r
