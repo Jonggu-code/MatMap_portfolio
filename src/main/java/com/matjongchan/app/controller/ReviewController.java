@@ -3,10 +3,7 @@ package com.matjongchan.app.controller;
 import com.matjongchan.app.dao.OtherImageDao;
 
 import com.matjongchan.app.domain.dto.ReviewDetail;
-import com.matjongchan.app.domain.entity.OtherImageDto;
-import com.matjongchan.app.domain.entity.RestaurantDto;
-import com.matjongchan.app.domain.entity.ReviewDto;
-import com.matjongchan.app.domain.entity.ReviewMenuDto;
+import com.matjongchan.app.domain.entity.*;
 import com.matjongchan.app.service.*;
 
 import lombok.extern.slf4j.Slf4j;

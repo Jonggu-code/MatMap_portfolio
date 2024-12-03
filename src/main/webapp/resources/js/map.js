@@ -84,19 +84,17 @@ function makeOutListener(infowindow) {
 }
 
 //이거 그 메인화면 우측상단에있는 현재보는위치기준으로 식당조회버튼임
-const btn = document.getElementsByClassName('focus_map')[0]
-function clear_marker(){
-    for(let i=0; i < tmp_position.length; i++){
-        // marker.setMap(null)
-        // console.log(marker.positions, marker.title)
-        marker_list[i].setMap(null);
-    }
-}
+// const btn = document.getElementsByClassName('focus_map')[0]
 
 var tmp_position = [];
 function xy_location(data){
+
+    for(let i = 0; i<tmp_position.length; i++){
+        marker_list[i].setMap(null);
+    }
+    tmp_position = [];
     for(let i = 0; i<data.length; i++){
-        tmp_position[i] = ({
+        tmp_position.push({
             image : data[i].image_url,
             name : data[i].name,
             score : data[i].total_score_count,

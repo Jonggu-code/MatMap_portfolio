@@ -274,13 +274,13 @@
         let tmp_html= "";
 
         sr.forEach(function (tmp){
+
             let tmp_address = tmp.address || "식당 정보 없음";
             let tmp_time = tmp.number || "영업 정보 없음" ;
             let tmp_info = tmp.reservation || "매장 정보 없음";
             let tmp_review = tmp.recentSimpleReview || null;
             let tmp_total_score = tmp.total_score_count || 0.0;
             let tmp_total_review = tmp.total_review_count || 0;
-
             tmp_html+=`
                 <div class="main_item">
                     <div class="main_item_box">
@@ -351,13 +351,11 @@
             }
             tmp_html+= `</div>`;
         })
-        clear_marker();
         xy_location(sr);
-        console.log(tmp_position);
         create_marker();
         return tmp_html;
     }
-    const btn = document.getElementsByClassName('focus_map')[0];
+    // const btn = document.getElementsByClassName('focus_map')[0];
 </script>
 </body>
 </html>
