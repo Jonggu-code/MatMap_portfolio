@@ -80,8 +80,8 @@
         </div>
 
         <c:choose>
-            <c:when test="${not empty favorites}">
-                <c:forEach var="restaurant" items="${favorites}" varStatus="status">
+            <c:when test="${not empty restaurantDetails}">
+                <c:forEach var="restaurant" items="${restaurantDetails}" varStatus="status">
                     <div class="container_main contents_area">
                         <div class="container_box main_box">
 
@@ -115,11 +115,11 @@
                                 </span>
 
                                     <span class="review_score">
-                                            ${restaurant.total_score_count != null ? restaurant.total_score_count : '평점 정보 없음'}
+                                            ${restaurant.restaurant_total_score_count != null ? restaurant.restaurant_total_score_count : '평점 정보 없음'}
                                     </span>
                                 </div>
                                 <div class="review_leng">
-                                    후기 ${restaurant.total_review_count != null ? restaurant.total_review_count : '0'}개
+                                    후기 ${restaurant.restaurant_total_review_count != null ? restaurant.restaurant_total_review_count : '0'}개
                                 </div>
 
                             </div>
@@ -129,18 +129,18 @@
                                             ${restaurant.restaurant_name != null && !restaurant.restaurant_name.isEmpty() ? restaurant.restaurant_name : '식당명 정보 없음'}
                                     </a>
                                     <p class="rest_cate">
-                                            ${restaurant.search_tag != null && !restaurant.search_tag.isEmpty() ? restaurant.search_tag : '카테고리 정보 없음'}
+                                            ${restaurant.restaurant_category != null && !restaurant.restaurant_category.isEmpty() ? restaurant.restaurant_category : '카테고리 정보 없음'}
                                     </p>
                                 </div>
                                 <div class="rest_info_box">
-                                    <p class="rest_d_addr"><i class="rest_addr_icon"></i>${restaurant.c_address != null && !restaurant.c_address.isEmpty() ? restaurant.c_address : '주소 정보 없음1'}${restaurant.d_address != null && !restaurant.d_address.isEmpty() ? restaurant.d_address : '주소 정보 없음2'} </p>
-                                    <p class="rest_p_num"><i class="rest_num_icon"></i>${restaurant.number != null && !restaurant.number.isEmpty() ? restaurant.number : '전화번호 정보 없음'}</p>
-                                    <p class="rest_info"><i class="rest_info_icon"></i>${restaurant.search_tag != null && !restaurant.search_tag.isEmpty() ? restaurant.search_tag : '카테고리 정보 없음'}</p>
-                                    <p class="rest_time"><i class="rest_time_icon"></i>${restaurant.reservation != null && !restaurant.reservation.isEmpty() ? restaurant.reservation : '예약 정보 없음'}</p>
+                                    <p class="rest_d_addr"><i class="rest_addr_icon"></i>${restaurant.restaurant_address != null && !restaurant.restaurant_address.isEmpty() ? restaurant.restaurant_address : '주소 정보 없음1'}</p>
+                                    <p class="rest_p_num"><i class="rest_num_icon"></i>${restaurant.restaurant_number != null && !restaurant.restaurant_number.isEmpty() ? restaurant.restaurant_number : '전화번호 정보 없음'}</p>
+                                    <p class="rest_info"><i class="rest_info_icon"></i>${restaurant.restaurant_category != null && !restaurant.restaurant_category.isEmpty() ? restaurant.restaurant_category : '카테고리 정보 없음'}</p>
+                                    <p class="rest_time"><i class="rest_time_icon"></i>${restaurant.restaurant_reservation != null && !restaurant.restaurant_reservation.isEmpty() ? restaurant.restaurant_reservation : '예약 정보 없음'}</p>
                                 </div>
 
                                 <div class="rest_intro">
-                                    <p>${restaurant.memo != null && !restaurant.memo.isEmpty() ? restaurant.memo : '식당 상세정보 없음'}</p>
+                                    <p>${restaurant.restaurant_memo != null && !restaurant.restaurant_memo.isEmpty() ? restaurant.restaurant_memo : '식당 상세정보 없음'}</p>
                                 </div>
                             </div>
                         </div>

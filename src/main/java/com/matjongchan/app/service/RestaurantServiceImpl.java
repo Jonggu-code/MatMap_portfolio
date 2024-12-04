@@ -195,6 +195,9 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     private static String getNowOpen(BusinessHoursDto hoursDto) {
+        if(hoursDto == null){
+            return "영업정보없음";
+        }
         String business_hour = "";
         String now_open = "영업정보없음";
         Calendar calendar = Calendar.getInstance();
