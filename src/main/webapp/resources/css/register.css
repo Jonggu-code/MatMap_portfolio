@@ -145,6 +145,16 @@ input[type="radio"]:checked + label:hover {
     background-color: orange;
     color: #fff;
 }
+/* 수정, 취소 버튼*/
+.btn_sum1{
+    width: 45%;
+    float: left;
+}
+.btn_sum2{
+    width: 45%;
+    float: right;
+}
+
 .my {
     margin-bottom: 5px;
 }

@@ -111,7 +111,6 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public List<SimpleRestaurant> SRTotalSearch(SearchCondition searchCondition) {
         Integer number = CategoryChanger.categoryIntoNumber(searchCondition.getCategory());
-        log.info(number.toString());
         searchCondition.setCategory_num(number);
 
         List<RestaurantDto> dtoList = restaurantDao.totalSearch(searchCondition);
@@ -196,6 +195,9 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     private static String getNowOpen(BusinessHoursDto hoursDto) {
+        if(hoursDto == null){
+            return "영업정보없음";
+        }
         String business_hour = "";
         String now_open = "영업정보없음";
         Calendar calendar = Calendar.getInstance();

@@ -61,7 +61,9 @@
             <!-- 1번 프로필 영역 -->
             <div class="box box1">
                 <h2>${member.name}님 소개</h2> <!-- 회원이름 -->
-                <input type="button" class="fix_btn" value="프로필 수정하기">
+                <a href="<c:url value='/changeMemInfo'/>"><input type="button" class="fix_btn" value="프로필 수정하기"></a>
+
+
                 <div class="text_area">${member.introduce}</div>    <!-- 자기소개 -->
             </div>
 
@@ -81,7 +83,7 @@
                             <c:when test="${favorites.size() > 0}">
                                 <!-- 첫 번째 찜한 목록 -->
                                 <div class="contentsBox menu1">
-                                    <div class="menu_img"></div>
+<%--                                    <div class="menu_img"></div>--%>
                                     <div class="menu_infor">
                                         <c:set var="firstFavorite" value="${favorites[0]}" />
                                         <div class="txt food">${firstFavorite.restaurant_name}</div>
@@ -104,7 +106,7 @@
                             <c:otherwise>
                                 <!-- 찜한 음식점이 없을 경우 "정보 없음" 표시 -->
                                 <div class="contentsBox menu1">
-                                    <div class="menu_img"></div>
+<%--                                    <div class="menu_img"></div>--%>
                                     <div class="menu_infor">
                                         <div class="txt food">정보 없음</div>
                                         <div class="txt tag">찜한 음식점이 없습니다.</div>
@@ -118,7 +120,7 @@
                         <c:when test="${favorites.size() > 1}">
                             <!-- 두 번째 찜한 음식점 -->
                             <div class="contentsBox menu2">
-                                <div class="menu_img"></div>
+<%--                                <div class="menu_img"></div>--%>
                                 <div class="menu_infor">
                                     <c:set var="secondFavorite" value="${favorites[1]}" />
                                     <div class="txt food">${secondFavorite.restaurant_name}</div>
@@ -141,7 +143,7 @@
                         <c:otherwise>
                             <!-- 두 번째 찜한 음식점이 없을 경우 "정보 없음" 표시 -->
                             <div class="contentsBox menu2">
-                                <div class="menu_img"></div>
+<%--                                <div class="menu_img"></div>--%>
                                 <div class="menu_infor">
                                     <div class="txt food">정보 없음</div>
                                     <div class="txt tag">찜한 음식점이 없습니다.</div>

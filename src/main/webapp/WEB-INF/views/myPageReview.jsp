@@ -135,7 +135,7 @@
                                 </div>
 
                                 <!-- 리뷰 내용 -->
-                                <div class="rc_user_txt_box">${review.content}</div>
+                                <div class="rc_user_txt_box">${review.title} <br>${review.content}</div>
                             </div>
                         </div>
                     </div>
