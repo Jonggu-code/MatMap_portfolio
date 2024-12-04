@@ -93,6 +93,24 @@ $(document).ready(function(){
     // $(document).on('click','.my_review',function(){
     //     window.location.href = './list_page_review.html'
 
+    $(document).on('click','.login_com',function(){
+        window.location.href = 'login'
+    })
+    $(document).on('click','.register_com',function(){
+        window.location.href = 'join'
+    })
+    $(document).on('click','.myPage_com',function(){
+        window.location.href = 'mypage'
+    })
+    $(document).on('click','.myFavorite_com',function(){
+        window.location.href = 'myPageRestaurant'
+    })
+    $(document).on('click','.myReview_com',function(){
+        window.location.href = 'myPageReview'
+    })
+    $(document).on('click','.logout_com',function(){
+        window.location.href = 'logout'
+    })
 
 
     $(document).on('click','.login_com',function(){

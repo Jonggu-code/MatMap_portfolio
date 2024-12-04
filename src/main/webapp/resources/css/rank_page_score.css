@@ -205,8 +205,8 @@
     top: -5px;
 }
 .open_time { color: #ff9625; display: block;}
-.break_time { color: #10bb00; }
-.close_time { color: #ff0000; }
+.break_time { color: #bcbcbc; display: block}
+.close_time { color: #ff0000; display: block}
 
 .day_box > p:last-child {
     margin-top: 10px;

@@ -294,9 +294,9 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public List<SimpleRestaurant> getRankDescRestaurant(SearchCondition searchCondition) {
-        if(searchCondition.getPage_size() == null){
-            searchCondition.setPage_size(10);
-        }
+        searchCondition.setPage_size(10);
+        Integer number = CategoryChanger.categoryIntoNumber(searchCondition.getCategory());
+        searchCondition.setCategory_num(number);
         if(searchCondition.getOffset() == null){
             searchCondition.setOffset(0);
         }
@@ -306,7 +306,7 @@ public class RestaurantServiceImpl implements RestaurantService {
             SimpleRestaurant simpleRestaurant = SimpleRestaurant.builder()
                     .name(dto.getName())
                     .category(CategoryChanger.numberIntoCategory(dto.getFk_category()))
-                    .address(dto.getC_address() + dto.getD_address())
+                    .address(dto.getC_address() +" "+ dto.getD_address())
                     .number(dto.getNumber())
                     .reservation(dto.getReservation())
                     .total_score_count(dto.getTotal_score_count())

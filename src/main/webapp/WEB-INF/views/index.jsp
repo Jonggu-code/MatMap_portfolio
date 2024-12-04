@@ -143,7 +143,9 @@
                 <div class="random_food"></div>
             </div>
             <div class="map_box_R">
-                <div class="focus_map"></div>
+                <div class="focus_map">
+                    <svg xmlns="http://www.w3.org/2000/svg"><path stroke="#000" stroke-linejoin="round" stroke-width="1.5" d="M20 4 3 11l7 3 3 7 7-17Z"></path></svg>
+                </div>
                 <div class="guest_menu" tabindex="-1">
                     <svg viewBox="0 0 24 24"><g><path d="M21,6H3V5h18V6z M21,11H3v1h18V11z M21,17H3v1h18V17z"></path></g></svg>
                     <div class="guest_icon"></div>
@@ -171,8 +173,8 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b4e6868c7b5fe35c80d9b43d3190c872"></script>
 
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
-<script src="<c:url value="resources/js/map_hoho.js?3"/>"></script>
-<script src="<c:url value="resources/js/index.js?2"/>"></script>
+<script src="<c:url value="resources/js/map_hoho.js?9"/>"></script>
+<script src="<c:url value="resources/js/index_hoho.js?6"/>"></script>
 
 <script>
     $(document).ready(function (){
@@ -314,7 +316,7 @@
                         "option" : option, "category" : category, "c_address" : c_address,
                         "loc_nw_x" : ne_x, "loc_nw_y" : ne_y, "loc_se_x" : sw_x, "loc_se_y" : sw_y}),
                 success:function (sr){
-                    console.log(sr);
+                    // console.log(sr);
                     // loadRestaurant();
                     $('.main').html(loadRestaurant(sr));
                 },
@@ -407,6 +409,14 @@
             }
             tmp_html+= `</div>`;
         })
+        tmp_html += `
+            <div class="pagination">
+                <button class="page_btn" id="prev_page">&lt;</button>
+                <div class="page_box">
+                    <!--  페이지네이션 들어오는곳 -->
+                </div>
+                <button class="page_btn page_btn_act" id="next_page">&gt;</button>
+            </div>`
         xy_location(sr);
         create_marker();
         return tmp_html;

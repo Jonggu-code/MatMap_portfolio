@@ -26,8 +26,12 @@
     <select id="getPopularRestaurant" parameterType="SearchCondition" resultType="RestaurantDto">
         SELECT *
         FROM restaurant
+        WHERE true
+            <if test="category != null">
+                and restaurant.category = #{category_num}
+            </if>
         ORDER BY total_score_count DESC
-        LIMIT 1, #{page_size)
+        LIMIT 1, #{page_size}
     </select>
 
     <!--  주어진 검색조건으로 검색  -->

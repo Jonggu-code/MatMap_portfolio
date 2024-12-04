@@ -40,18 +40,29 @@ var polygon = new kakao.maps.Polygon({
     fillOpacity: 0.7 
 })
 
-//이거 그 메인화면 우측상단에있는 현재보는위치기준으로 식당조회버튼임
-const btn = document.getElementsByClassName('focus_map')[0]
-function clear_marker(){
-    for(let i=0; i < tmp_position.length; i++){
-        // marker.setMap(null)
-        // console.log(marker.positions, marker.title)
-        marker_list[i].setMap(null);
-    }
+var bounds = new kakao.maps.LatLngBounds();
+
+for (i=0; i < points.length; i++){
+    bounds.extend(points[i]);
+}
+
+function setBounds() {
+    map.setBounds(bounds);
 }
 
 var tmp_position = [];
 function xy_location(data){
+
+    for(let i = 0; i<tmp_position.length; i++){
+        marker_list[i].setMap(null);
+    }
+
+    for(let i = 0; i<tmp_position.length; i++){
+        overlay_list[i].setMap(null);
+    }
+
+    tmp_position = [];
+
     for(let i = 0; i<data.length; i++){
         tmp_position[i] = ({
             image : data[i].image_url,
@@ -139,7 +150,7 @@ function create_marker(){
             removable: true
         });
 
-        overlay_list.push(customOverlay);
+        overlay_list[i] = customOverlay;
         marker_list[i] = marker;
 
         kakao.maps.event.addListener(marker, 'click', function (index) {
@@ -174,4 +185,17 @@ function closeAllOverlays(overlay_list) {
     for (var i = 0; i < overlay_list.length; i++) {
         overlay_list[i].setMap(null); // 오버레이를 지도에서 제거
     }
+}
+
+function getInfo(){
+    // 지도의 현재 영역을 얻어옵니다
+    var bounds = map.getBounds();
+
+    // 영역의 남서쪽 좌표를 얻어옵니다
+    var swLatLng = bounds.getSouthWest();
+
+    // 영역의 북동쪽 좌표를 얻어옵니다
+    var neLatLng = bounds.getNorthEast();
+
+    return {swLatLng,neLatLng};
 }

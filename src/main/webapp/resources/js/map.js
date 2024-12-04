@@ -99,6 +99,7 @@ function xy_location(data){
         marker_list[i].setMap(null);
     }
     tmp_position = [];
+
     for(let i = 0; i<data.length; i++){
         tmp_position.push({
             image : data[i].image_url,
@@ -112,6 +113,7 @@ function xy_location(data){
         })
     }
 }
+
 var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 var marker_list = [];
 function create_marker(){
