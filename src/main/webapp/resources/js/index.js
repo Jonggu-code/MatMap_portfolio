@@ -98,8 +98,7 @@ $(document).ready(function(){
             element.closest('.choose_box').children('svg').toggleClass('choose_act')
             option1.toggleClass(option2)
     }
-    
-    
+
     // 지도표시지역 선택시 하단창 뜨는 이벤트
     $(document).on('click', '.choose_location > p',function(){
         common_control()

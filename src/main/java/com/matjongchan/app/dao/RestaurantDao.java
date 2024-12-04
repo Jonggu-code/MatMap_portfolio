@@ -130,4 +130,6 @@ public interface RestaurantDao {
      */
     List<RestaurantDto> getPopularRestaurant (SearchCondition searchCondition);
 
+    List<RestaurantDto> getAllConsiderRestaurant(SearchCondition searchCondition);
+
 }

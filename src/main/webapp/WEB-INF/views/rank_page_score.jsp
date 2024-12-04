@@ -14,7 +14,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="<c:url value="/resources/css/common.css?1"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/css/common.css?2"/>">
     <link rel="stylesheet" href="<c:url value="/resources/css/rank_page_score.css?1"/>">
 </head>
 <body>
@@ -37,16 +37,15 @@
 
         <!-- 헤더 메인 -->
         <div class="header_main contents_area">
-
             <!-- 로고 -->
             <div class="logo_box">
                 <a class="site_logo" href="<c:url value="/"/>">MatMap</a>
             </div>
             <div class="search_box" id="search">
-                <form id="search_keyword" class="KeywordSearch" action="./index.html">
+                <form id="search_keyword" class="KeywordSearch" action="<c:url value='/'/>" method="post">
                     <fieldset class="fld_inside">
                         <legend class="screen_out">검색어 입력폼</legend>
-                        <input type="text" class="search_input" id="search.keyword.query" name="search" autocomplete="off" placeholder="무엇을 먹어야 잘 먹었다고 소문날까?" maxlength="100">
+                        <input type="text" class="search_input" id="search_keyword_query" name="keyword" autocomplete="off" placeholder="무엇을 먹어야 잘 먹었다고 소문날까?" maxlength="100">
                         <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><g><path d="M20.87,20.17l-5.59-5.59C16.35,13.35,17,11.75,17,10c0-3.87-3.13-7-7-7s-7,3.13-7,7s3.13,7,7,7c1.75,0,3.35-0.65,4.58-1.71 l5.59,5.59L20.87,20.17z M10,16c-3.31,0-6-2.69-6-6s2.69-6,6-6s6,2.69,6,6S13.31,16,10,16z"></path></g></svg>
                     </fieldset>
                 </form>
@@ -192,6 +191,10 @@
 
         </div>
     </div>
+    <div class="move_top">
+        <p>TOP</p>
+        <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><g><path d="M18,9l-6,6L6,9H18z"></path></g></svg>
+    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -201,75 +204,86 @@
 <script src="<c:url value="/resources/js/swiper.js"/>"></script>
 
 <script>
-    // <div className="container_box main_box">
-    //
-    //     <!-- 맛집 랭킹단 -->
-    //     <div className="rank_box">
-    //         <p>TOP 1</p>
-    //         <div className="time_box">
-    //             <p className="time_icon"></p>
-    //             <p className="open_time">영업중</p>
-    //             <p className="break_time">브레이크 타임</p>
-    //             <p className="close_time">영업종료</p>
-    //         </div>
-    //     </div>
-    //
-    //     <!-- 배너 = 스위퍼 -->
-    //     <div className="container_banner swiper rank_swiper0">
-    //         <div className="swiper-button-prev0 banner_btn_L"><p>&lt</p></div>
-    //         <div className="swiper-button-next0 banner_btn_R"><p>&gt</p></div>
-    //         <div className="main_banner swiper-wrapper">
-    //             <div className="banner_img swiper-slide count_0"></div>
-    //             <div className="banner_img swiper-slide count_1"></div>
-    //             <div className="banner_img swiper-slide count_2"></div>
-    //             <div className="banner_img swiper-slide count_3"></div>
-    //             <div className="banner_img swiper-slide count_4"></div>
-    //             <div className="banner_img swiper-slide count_5"></div>
-    //             <div className="banner_img swiper-slide count_6"></div>
-    //             <div className="banner_img swiper-slide count_7"></div>
-    //             <div className="banner_img swiper-slide count_8"></div>
-    //             <div className="banner_img swiper-slide count_9"></div>
-    //             <div className="banner_img swiper-slide count_10"></div>
-    //             <div className="banner_img swiper-slide count_11"></div>
-    //         </div>
-    //     </div>
-    //
-    //     <!-- 메인 박스의 메인 -->
-    //     <div className="title_box">
-    //
-    //         <div className="review_box">
-    //             <!-- 별점 스코어 박스 -->
-    //             <div className="star_box">
-    //                         <span className="empty_star review_star">
-    //                             <p className="fill_star"></p>
-    //                         </span>
-    //                 <span className="review_score"></span>
-    //             </div>
-    //
-    //             <!-- 별점 스코어 밑 후기 갯수 관련 -->
-    //             <div className="review_leng">후기 23개</div>
-    //
-    //             <!-- 별점 스코어 밑 후기 갯수 관련 -->
-    //         </div>
-    //
-    //         <div className="rest_title_box">
-    //             <a href="./detail.html" className="rest_title">종찬식당</a>
-    //             <p className="rest_cate">한식</p>
-    //         </div>
-    //         <div className="rest_info_box">
-    //             <p className="rest_d_addr"><i className="rest_addr_icon"></i>서울시 강남구 역삼동 테헤란로</p>
-    //             <p className="rest_p_num"><i className="rest_num_icon"></i>0507-1316-0924</p>
-    //             <p className="rest_info"><i className="rest_info_icon"></i>예약가능, 주차가능, 배달가능, 포장불가</p>
-    //             <p className="rest_time"><i className="rest_time_icon"></i>화요일 09:00 ~ 22:00</p>
-    //         </div>
-    //
-    //
-    //         <div className="rest_intro">
-    //             <p>최고, 최상의 맛과 경험을 선사하는 퓨전 한식 전문점 종찬 식당입니다.</p>
-    //         </div>
-    //     </div>
-    // </div>
+$(document).ready(function () {
+    //검색어 폼으로 검색
+    $(document).on('keydown', '#search_keyword', function (e) {
+        if (e.keyCode === 13) {
+            e.preventDefault(); //폼 제출 방지
+            $(".KeywordSearch").submit();
+        }
+    })
+})
 </script>
+
+
+<%--    // <div className="container_box main_box">--%>
+<%--    //--%>
+<%--    //     <!-- 맛집 랭킹단 -->--%>
+<%--    //     <div className="rank_box">--%>
+<%--    //         <p>TOP 1</p>--%>
+<%--    //         <div className="time_box">--%>
+<%--    //             <p className="time_icon"></p>--%>
+<%--    //             <p className="open_time">영업중</p>--%>
+<%--    //             <p className="break_time">브레이크 타임</p>--%>
+<%--    //             <p className="close_time">영업종료</p>--%>
+<%--    //         </div>--%>
+<%--    //     </div>--%>
+<%--    //--%>
+<%--    //     <!-- 배너 = 스위퍼 -->--%>
+<%--    //     <div className="container_banner swiper rank_swiper0">--%>
+<%--    //         <div className="swiper-button-prev0 banner_btn_L"><p>&lt</p></div>--%>
+<%--    //         <div className="swiper-button-next0 banner_btn_R"><p>&gt</p></div>--%>
+<%--    //         <div className="main_banner swiper-wrapper">--%>
+<%--    //             <div className="banner_img swiper-slide count_0"></div>--%>
+<%--    //             <div className="banner_img swiper-slide count_1"></div>--%>
+<%--    //             <div className="banner_img swiper-slide count_2"></div>--%>
+<%--    //             <div className="banner_img swiper-slide count_3"></div>--%>
+<%--    //             <div className="banner_img swiper-slide count_4"></div>--%>
+<%--    //             <div className="banner_img swiper-slide count_5"></div>--%>
+<%--    //             <div className="banner_img swiper-slide count_6"></div>--%>
+<%--    //             <div className="banner_img swiper-slide count_7"></div>--%>
+<%--    //             <div className="banner_img swiper-slide count_8"></div>--%>
+<%--    //             <div className="banner_img swiper-slide count_9"></div>--%>
+<%--    //             <div className="banner_img swiper-slide count_10"></div>--%>
+<%--    //             <div className="banner_img swiper-slide count_11"></div>--%>
+<%--    //         </div>--%>
+<%--    //     </div>--%>
+<%--    //--%>
+<%--    //     <!-- 메인 박스의 메인 -->--%>
+<%--    //     <div className="title_box">--%>
+<%--    //--%>
+<%--    //         <div className="review_box">--%>
+<%--    //             <!-- 별점 스코어 박스 -->--%>
+<%--    //             <div className="star_box">--%>
+<%--    //                         <span className="empty_star review_star">--%>
+<%--    //                             <p className="fill_star"></p>--%>
+<%--    //                         </span>--%>
+<%--    //                 <span className="review_score"></span>--%>
+<%--    //             </div>--%>
+<%--    //--%>
+<%--    //             <!-- 별점 스코어 밑 후기 갯수 관련 -->--%>
+<%--    //             <div className="review_leng">후기 23개</div>--%>
+<%--    //--%>
+<%--    //             <!-- 별점 스코어 밑 후기 갯수 관련 -->--%>
+<%--    //         </div>--%>
+<%--    //--%>
+<%--    //         <div className="rest_title_box">--%>
+<%--    //             <a href="./detail.html" className="rest_title">종찬식당</a>--%>
+<%--    //             <p className="rest_cate">한식</p>--%>
+<%--    //         </div>--%>
+<%--    //         <div className="rest_info_box">--%>
+<%--    //             <p className="rest_d_addr"><i className="rest_addr_icon"></i>서울시 강남구 역삼동 테헤란로</p>--%>
+<%--    //             <p className="rest_p_num"><i className="rest_num_icon"></i>0507-1316-0924</p>--%>
+<%--    //             <p className="rest_info"><i className="rest_info_icon"></i>예약가능, 주차가능, 배달가능, 포장불가</p>--%>
+<%--    //             <p className="rest_time"><i className="rest_time_icon"></i>화요일 09:00 ~ 22:00</p>--%>
+<%--    //         </div>--%>
+<%--    //--%>
+<%--    //--%>
+<%--    //         <div className="rest_intro">--%>
+<%--    //             <p>최고, 최상의 맛과 경험을 선사하는 퓨전 한식 전문점 종찬 식당입니다.</p>--%>
+<%--    //         </div>--%>
+<%--    //     </div>--%>
+<%--    // </div>--%>
 
 </body>
 </html>

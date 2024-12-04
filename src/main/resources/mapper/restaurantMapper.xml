@@ -33,6 +33,31 @@
         ORDER BY total_score_count DESC
         LIMIT 1, #{page_size}
     </select>
+<!--    .모두고려 검색 -->
+    <select id="allConsiderSearch" parameterType="SearchCondition" resultType="RestaurantDto">
+        SELECT *
+        FROM restaurant
+        WHERE true
+        <if test="c_address != null">
+            and r.c_address = #{c_address}
+        </if>
+        <if test="category != null">
+            and r.fk_category = #{category_num}
+        </if>
+        <if test="keyword != null">
+            r.search_tag LIKE concat('%',#{keyword},'%')
+        </if>
+        order by
+        <choose>
+            <when test='option == "R"'>
+                r.total_review_count desc
+            </when>
+            <otherwise>
+                r.total_score_count desc
+            </otherwise>
+        </choose>
+        limit #{offset} , #{page_size}
+    </select>
 
     <!--  주어진 검색조건으로 검색  -->
     <select id="totalSearch" parameterType="SearchCondition" resultType="RestaurantDto">

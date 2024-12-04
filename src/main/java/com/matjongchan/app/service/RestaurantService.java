@@ -138,5 +138,6 @@ public interface RestaurantService {
      */
     List<SimpleRestaurant> getRankDescRestaurant(SearchCondition searchCondition);
 
+    List<SimpleRestaurant> getAllConsiderRestaurant(SearchCondition searchCondition);
 
 }

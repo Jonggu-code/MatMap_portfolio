@@ -111,7 +111,10 @@ $(document).ready(function(){
     $(document).on('click','.logout_com',function(){
         window.location.href = 'logout'
     })
-
+    $(document).on('click', '.search_submit', function() {
+        const e = $.Event('keydown', { keyCode: 13 }); // Enter 키
+        $('#search_keyword').trigger(e);
+    });
 
     $(document).on('click','.login_com',function(){
         login = true;
@@ -128,8 +131,6 @@ $(document).ready(function(){
 
     // 페이지 내려가면 상단으로 이동 버튼
     $(window).scroll(function(){
-        console.log(window.scrollY)
-
         if(window.scrollY > 800) {
             $('.move_top').css({opacity: '1'})
         }
@@ -137,6 +138,9 @@ $(document).ready(function(){
             $('.move_top').css({opacity: '0'})
         }
     })
+
+
+
 });
 
 

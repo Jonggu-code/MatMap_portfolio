@@ -229,4 +229,34 @@
     </div>
 </div>
 </body>
-</html>
+
+<script>
+$(document).ready(function () {
+
+    $(document).on('keydown', '#search_keyword', function (e) {
+        if (e.keyCode === 13) {
+            e.preventDefault(); //폼 제출 방지
+            let page_size = 20;
+            let offset = 0;
+            let option = $('.choose_align').children('p').text();
+            let category = $('.choose_tag').children('p').text();
+            let c_address = $('.choose_location').children('p').text();
+            let keyword = $('#search_keyword_query').val();
+            if (option === "맛집 정렬 순서") {
+                option = null;
+            }
+            if (category === "전체") {
+                category = null;
+            }
+            if (c_address === "지도 표시 지역") {
+                c_address = null;
+            }
+            if (keyword === "무엇을 먹어야 잘 먹었다고 소문날까?") {
+                keyword = "";
+            }
+
+        }
+    })
+})
+</script>
+

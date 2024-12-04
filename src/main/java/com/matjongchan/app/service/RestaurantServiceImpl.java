@@ -321,4 +321,29 @@ public class RestaurantServiceImpl implements RestaurantService {
         }
         return simpleRestaurantList;
     }
+
+    @Override
+    public List<SimpleRestaurant> getAllConsiderRestaurant(SearchCondition searchCondition) {
+        searchCondition.setCategory_num(CategoryChanger.categoryIntoNumber(searchCondition.getCategory()));
+
+        List<RestaurantDto> restaurantDtoList = restaurantDao.getAllConsiderRestaurant(searchCondition);
+        List<SimpleRestaurant> simpleRestaurantList = new ArrayList<>();
+
+        for (RestaurantDto dto : restaurantDtoList) {
+            SimpleRestaurant simpleRestaurant = SimpleRestaurant.builder()
+                    .name(dto.getName())
+                    .category(CategoryChanger.numberIntoCategory(dto.getFk_category()))
+                    .address(dto.getC_address() +" "+ dto.getD_address())
+                    .number(dto.getNumber())
+                    .reservation(dto.getReservation())
+                    .total_score_count(dto.getTotal_score_count())
+                    .total_review_count(dto.getTotal_review_count())
+                    .today_business_state(getNowOpen(restaurantDao.getBusinessHours(dto.getId())))
+                    .memo(dto.getMemo())
+                    .searchCondition(searchCondition)
+                    .build();
+            simpleRestaurantList.add(simpleRestaurant);
+        }
+        return simpleRestaurantList;
+    }
 }
