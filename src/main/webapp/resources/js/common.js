@@ -66,33 +66,33 @@ document.getElementsByClassName('move_top')[0].addEventListener('click', functio
 
 $(document).ready(function(){
     // 비로그인, 로그인 상태 시 헤더 노출
-    let guest_box = `
-        <p class="login_com">로그인</p>
+    // let guest_box = `
+    //     <p class="login_com">로그인</p>
+    //
+    //     <p>회원가입</p>
+    // `
+    // let login_box = `
+    //     <p>마이페이지</p>
+    //     <p>마이 맛집 </p>
+    //     <p>마이 후기</p>
+    //
+    //     <p class="login_del">로그아웃</p>
+    // `
+    // $('.guest_menu_box').append(guest_box)
+    //
+    //
+    // $(document).on('click','.register',function(){
+    //     window.location.href = './register.html'
+    // })
+    // $(document).on('click','.my_page',function(){
+    //     window.location.href = './mypage.html'
+    // })
+    // $(document).on('click','.my_rest',function(){
+    //     window.location.href = './list_page_restaurant.html'
+    // })
+    // $(document).on('click','.my_review',function(){
+    //     window.location.href = './list_page_review.html'
 
-        <p>회원가입</p>
-    `
-    let login_box = `
-        <p>마이페이지</p>
-        <p>마이 맛집 </p>
-        <p>마이 후기</p>
-
-        <p class="login_del">로그아웃</p>
-    `
-    $('.guest_menu_box').append(guest_box)
-
-
-    $(document).on('click','.register',function(){
-        window.location.href = './register.html'
-    })
-    $(document).on('click','.my_page',function(){
-        window.location.href = './mypage.html'
-    })
-    $(document).on('click','.my_rest',function(){
-        window.location.href = './list_page_restaurant.html'
-    })
-    $(document).on('click','.my_review',function(){
-        window.location.href = './list_page_review.html'
-    })
 
 
     $(document).on('click','.login_com',function(){
@@ -107,7 +107,6 @@ $(document).ready(function(){
         $('.guest_menu_box').append(guest_box)
         $('.guest_icon').css({backgroundColor: "#ff00ff"})
     })
-
 
     // 페이지 내려가면 상단으로 이동 버튼
     $(window).scroll(function(){

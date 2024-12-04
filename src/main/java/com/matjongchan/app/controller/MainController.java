@@ -28,6 +28,7 @@ public class MainController {
 
     @GetMapping("/")
     public String mainPage(HttpSession session, Model model, SearchCondition searchCondition) {
+        log.info("세션 아이디 => "+(String) session.getAttribute("id"));
         if(searchCondition.getKeyword() == null){
             searchCondition = SearchCondition.builder()
                     .offset(1)

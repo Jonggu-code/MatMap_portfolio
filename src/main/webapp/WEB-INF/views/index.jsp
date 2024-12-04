@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="uId" value="${sessionScope.id }" />
 
 <!DOCTYPE html>
 <html lang="en">
@@ -146,7 +147,21 @@
                 <div class="guest_menu" tabindex="-1">
                     <svg viewBox="0 0 24 24"><g><path d="M21,6H3V5h18V6z M21,11H3v1h18V11z M21,17H3v1h18V17z"></path></g></svg>
                     <div class="guest_icon"></div>
-                    <div class="guest_menu_box"></div>
+                    <div class="guest_menu_box">
+                        <c:choose>
+                            <c:when test="${sessionScope.id == null}">
+                                <p class="login_com">로그인</p>
+                                <p class="register_com">회원가입</p>
+                            </c:when>
+                            <c:when test="${sessionScope.id != null}">
+                                <p class="myPage_com">마이페이지</p>
+                                <p class="myFavorite_com">마이 맛집 </p>
+                                <p class="myReview_com">마이 후기</p>
+
+                                <p class="logout_com">로그아웃</p>
+                            </c:when>
+                        </c:choose>
+                    </div>
                 </div>
             </div>
         </div>
@@ -157,7 +172,7 @@
 
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 <script src="<c:url value="resources/js/map.js?2"/>"></script>
-<script src="<c:url value="resources/js/index.js?1"/>"></script>
+<script src="<c:url value="resources/js/index.js?2"/>"></script>
 
 <script>
     $(document).ready(function (){

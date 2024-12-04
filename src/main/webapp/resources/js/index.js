@@ -12,6 +12,25 @@ guest.addEventListener('blur', function(){
 
 $(document).ready(function(){
 
+    $(document).on('click','.login_com',function(){
+        window.location.href = 'login'
+    })
+    $(document).on('click','.register_com',function(){
+        window.location.href = 'join'
+    })
+    $(document).on('click','.myPage_com',function(){
+        window.location.href = 'mypage'
+    })
+    $(document).on('click','.myFavorite_com',function(){
+        window.location.href = 'myPageRestaurant'
+    })
+    $(document).on('click','.myReview_com',function(){
+        window.location.href = 'myPageReview'
+    })
+    $(document).on('click','.logout_com',function(){
+        window.location.href = 'logout'
+    })
+
     let login = false;
     
     // 영업 정보 빈칸이면 "영업 정보 없음" / 아니면 정보 넣어주기
@@ -42,30 +61,30 @@ $(document).ready(function(){
     }
 
     // 비로그인, 로그인 상태 시 헤더 노출
-    let guest_list = `
-        <p class="login_com">로그인</p>
-        <p>회원가입</p>
-    `
-    let login_list = `
-        <p>마이페이지</p>
-        <p>마이 맛집 </p>
-        <p>마이 후기</p>
-        <p class="login_del">로그아웃</p>
-    `
-    $('.guest_menu_box').append(guest_list)
-
-    $(document).on('click','.login_com',function(){
-        login = true;
-        $('.guest_menu_box').empty()
-        $('.guest_menu_box').append(login_list)
-        $('.guest_icon').css({backgroundColor: "#814b11"})
-    })
-    $(document).on('click','.login_del',function(){
-        login = false;
-        $('.guest_menu_box').empty()
-        $('.guest_menu_box').append(guest_list)
-        $('.guest_icon').css({backgroundColor: "#ff00ff"})
-    })
+    // let guest_list = `
+    //     <p class="login_com">로그인</p>
+    //     <p>회원가입</p>
+    // `
+    // let login_list = `
+    //     <p>마이페이지</p>
+    //     <p>마이 맛집 </p>
+    //     <p>마이 후기</p>
+    //     <p class="login_del">로그아웃</p>
+    // `
+    // $('.guest_menu_box').append(guest_list)
+    //
+    // $(document).on('click','.login_com',function(){
+    //     login = true;
+    //     $('.guest_menu_box').empty()
+    //     $('.guest_menu_box').append(login_list)
+    //     $('.guest_icon').css({backgroundColor: "#814b11"})
+    // })
+    // $(document).on('click','.login_del',function(){
+    //     login = false;
+    //     $('.guest_menu_box').empty()
+    //     $('.guest_menu_box').append(guest_list)
+    //     $('.guest_icon').css({backgroundColor: "#ff00ff"})
+    // })
 
     $(document).on('click', '.choose_box > p',function(){
         $('.choose_box').removeClass('choose_box_act')

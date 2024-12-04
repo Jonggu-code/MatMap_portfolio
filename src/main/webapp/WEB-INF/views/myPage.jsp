@@ -11,11 +11,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="<c:url value = '/resources/css/myPage.css?1'/>">
+    <link rel="stylesheet" href="<c:url value = '/resources/css/mypage.css?1'/>">
 </head>
 <body>
-
-
 
 
 <div id="wrap" class="wrap">
@@ -25,10 +23,7 @@
             <!-- 좌측 프로필  -->
             <div class="aside_menu1">
                 <div class="profile_imgBox">
-                    <img src="<c:url value='${memberImage.img_url}'/>"
-                                 class="profile_img"/>
-
-
+                    <img src="<c:url value='${memberImage.img_url}'/>" class=profile_img>
                 </div>
 
             <%--                <div class="profile_imgBox">--%>

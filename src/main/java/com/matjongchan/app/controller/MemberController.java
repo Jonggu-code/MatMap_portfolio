@@ -8,7 +8,6 @@ package com.matjongchan.app.controller;
 
 
 import com.matjongchan.app.domain.dto.FavoriteWithRestaurantDto;
-import com.matjongchan.app.domain.dto.RestaurantDetail;
 import com.matjongchan.app.domain.entity.MemberDto;
 import com.matjongchan.app.domain.dto.MemberLoginDto;
 import com.matjongchan.app.domain.entity.MemberImageDto;
@@ -32,9 +31,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @Controller
@@ -44,13 +41,17 @@ public class MemberController {
     @Autowired
     RestaurantService restaurantService;
 
+
+    File file = new File(".");
+    private final String root_path = file.getAbsolutePath().split("work")[0]+= "\\work\\MatMap_portfolio\\src\\main\\webapp\\resources\\img\\profile_img";
+
     /*
     1. 로그인 컨트롤러 - get, post 방식
      */
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "redirect:/main";
+        return "redirect:/";
     }
 
     @GetMapping("/login")
@@ -110,7 +111,7 @@ public class MemberController {
         return "registerForm";
     }
 
-    private static final String F_PATH = "C:/Users/82109/Desktop/spring/matjongchan_git/MatMap_portfolio/src/main/webapp/resources/img/";
+//    private static final String F_PATH = "C:/Users/82109/Desktop/spring/matjongchan_git/MatMap_portfolio/src/main/webapp/resources/img/profile_img/";
     private static final int defaultImageId = 1; // 기본 이미지의 id값 1
 
 @PostMapping("/join")
@@ -146,19 +147,20 @@ public String register(MemberDto memberDto, Model m, @RequestParam(value = "prof
             String uniqueFileName = System.currentTimeMillis() + "_" + originalName;
 
             // 상대 경로로 변경 (resources/static/img/)
-            String saveFile = "src/main/resources/static/img/" + uniqueFileName;  // 저장경로 설정
+            File saveFile = new File(root_path , uniqueFileName);
             // 파일 저장
-            mf.transferTo(new File(saveFile));
+            mf.transferTo(saveFile);
 
+            log.info("이미지경로 ->" + saveFile.getAbsolutePath());
             // 새로운 이미지 정보를 MemberImageDto에 설정
             MemberImageDto memberImageDto = new MemberImageDto();
             memberImageDto.setName(uniqueFileName);
-            memberImageDto.setImg_url("/img/" + uniqueFileName);  // 웹 경로로 설정
+            memberImageDto.setImg_url("/resources/img/profile_img/" + uniqueFileName);  // 웹 경로로 설정
             memberImageDto.setOrder_number(1);
 
             // DB에 행 삽입 후 id 가져오기
             int newImageId = memberService.addMemberImage(memberImageDto);
-            Integer memberImageId = memberService.getAllImages().get(0).getId();
+            Integer memberImageId = memberService.selectRecentImageOne().getId();
 
             // member_image table의 id를 memberDto에 설정
             memberDto.setFk_image_id(memberImageId);
@@ -225,9 +227,9 @@ public String register(MemberDto memberDto, Model m, @RequestParam(value = "prof
         model.addAttribute("favorites", favorites);
 
         // 회원 이미지 조회
-        MemberImageDto memberImage = memberService.getMemberImage(member.getId());
+        MemberImageDto memberImage = memberService.getMemberImage(member.getFk_image_id());
         model.addAttribute("memberImage", memberImage);
-
+        log.info(memberImage.getImg_url());
         return "myPage";
 
     }
