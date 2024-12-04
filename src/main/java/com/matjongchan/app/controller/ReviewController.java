@@ -34,7 +34,8 @@ public class ReviewController {
     @Autowired
     RestaurantServiceImpl restaurantService;
 
-
+    File file = new File(".");
+    private final String root_path = file.getAbsolutePath().split("work")[0]+= "\\work\\MatMap_portfolio\\src\\main\\webapp\\resources\\img\\other_img";
 
     @GetMapping("/detail")
     public String getReviews(RestaurantDto restaurantDto, ReviewDto reviewDto, Model m, ReviewMenuDto reviewMenuDto, OtherImageDto otherImageDto) {
@@ -109,8 +110,6 @@ public class ReviewController {
         return "reviewWrite2";
     }
 
-    private static final String F_PATH = "/Users/joohunkang/Desktop/Spring/MatMap_portfolio/src/main/webapp/resources/img";
-
     @PostMapping("/reviewWrite2") // 리뷰 작성 두 번째 페이지 메서드
     public String reviewWriteSubmit(HttpSession session, ReviewDto reviewDto, @RequestParam(value = "files", required = false) List<MultipartFile> files, @RequestParam("selected_menu[]") List<Integer> selectedMenus){
         int order_no = 1;
@@ -160,9 +159,11 @@ public class ReviewController {
 
                     // 밀리초 기반 유니크 파일 이름 생성
                     String savedFilename = System.currentTimeMillis() + "_" + originalFilename;
-                    String saveFile = F_PATH + System.currentTimeMillis() + "_" + originalFilename; // 저장경로 설정
+                    String saveFile = root_path + System.currentTimeMillis() + "_" + originalFilename; // 저장경로 설정
 
-                    file.transferTo(new File(saveFile));
+                    File save_root = new File(root_path , savedFilename);
+                    // 파일 저장
+                    file.transferTo(save_root);
 
                     // OtherImageDto에 정보 추가
                     otherImageDto = new OtherImageDto();

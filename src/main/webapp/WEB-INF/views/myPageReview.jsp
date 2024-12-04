@@ -58,7 +58,7 @@
             <!-- 게스트 아이콘 뜨는 박스 -->
             <div class="guest_box">
                 <a href="./board.html">게시판</a>
-                <a href="./rank_page_score.html">월간 맛집</a>
+                <a href="rank_page_score.jsp">월간 맛집</a>
                 <div class="guest_menu" tabindex="-1">
                     <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><g><path d="M21,6H3V5h18V6z M21,11H3v1h18V11z M21,17H3v1h18V17z"></path></g></svg>
                     <div class="guest_icon"></div>

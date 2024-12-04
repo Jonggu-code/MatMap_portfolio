@@ -15,7 +15,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index.css?dt=1"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index.css?dt=2"/>
 
     <!-- 컬러 차트
         메인 컬러 : #ff9625 
@@ -42,7 +42,7 @@
             </div>
             <ul class="header_menu">
                 <a class="header_menu_item" href="<c:url value="board"/>"><p>게시판</p></a>
-                <a class="header_menu_item" href="./rank_page_score.html"><p>월간 맛집</p></a>
+                <a class="header_menu_item" href="<c:url value="rank"/>"><p>월간 맛집</p></a>
             </ul>
         </header>
         <main class="main">
@@ -171,7 +171,7 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b4e6868c7b5fe35c80d9b43d3190c872"></script>
 
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
-<script src="<c:url value="resources/js/map.js?2"/>"></script>
+<script src="<c:url value="resources/js/map_hoho.js?3"/>"></script>
 <script src="<c:url value="resources/js/index.js?2"/>"></script>
 
 <script>

@@ -78,6 +78,17 @@
         limit #{offset} , #{page_size}
     </select>
 
+    <select id="getRelationRestaurant" parameterType="SearchCondition" resultType="RestaurantDto">
+        SELECT *
+        FROM Restaurant as r
+        WHERE true
+        <if test="category != null">
+            and r.fk_category = #{category}
+        </if>
+        ORDER BY r.total_score_count DESC, r.total_review_count DESC
+        LIMIT #{offset}, #{page_size}
+    </select>
+
     <!--  검색창을 이용한 통합검색  -->
     <select id="realTotalSearch" parameterType="SearchCondition" resultType="RestaurantDto">
         SELECT * FROM restaurant as r
@@ -167,12 +178,6 @@
         WHERE oi.id = #{id}
     </select>
 
-    <select id="getRelationRestaurant" parameterType="int" resultType="RestaurantDto">
-        SELECT *
-        FROM Restaurant as r
-        WHERE r.fk_category = #{id}
-        LIMIT 1, 3
-    </select>
 
 </mapper>
 

@@ -111,7 +111,6 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public List<SimpleRestaurant> SRTotalSearch(SearchCondition searchCondition) {
         Integer number = CategoryChanger.categoryIntoNumber(searchCondition.getCategory());
-        log.info(number.toString());
         searchCondition.setCategory_num(number);
 
         List<RestaurantDto> dtoList = restaurantDao.totalSearch(searchCondition);
@@ -292,4 +291,31 @@ public class RestaurantServiceImpl implements RestaurantService {
         return listR.isEmpty() ? null : listR.get(0);
     }
 
+
+    @Override
+    public List<SimpleRestaurant> getRankDescRestaurant(SearchCondition searchCondition) {
+        if(searchCondition.getPage_size() == null){
+            searchCondition.setPage_size(10);
+        }
+        if(searchCondition.getOffset() == null){
+            searchCondition.setOffset(0);
+        }
+        List<RestaurantDto> popularRestaurant = restaurantDao.getPopularRestaurant(searchCondition);
+        List<SimpleRestaurant> simpleRestaurantList = new ArrayList<>();
+        for (RestaurantDto dto : popularRestaurant) {
+            SimpleRestaurant simpleRestaurant = SimpleRestaurant.builder()
+                    .name(dto.getName())
+                    .category(CategoryChanger.numberIntoCategory(dto.getFk_category()))
+                    .address(dto.getC_address() + dto.getD_address())
+                    .number(dto.getNumber())
+                    .reservation(dto.getReservation())
+                    .total_score_count(dto.getTotal_score_count())
+                    .total_review_count(dto.getTotal_review_count())
+                    .today_business_state(getNowOpen(restaurantDao.getBusinessHours(dto.getId())))
+                    .memo(dto.getMemo())
+                    .build();
+            simpleRestaurantList.add(simpleRestaurant);
+        }
+        return simpleRestaurantList;
+    }
 }
