@@ -129,7 +129,7 @@
                     </div>
 
                     <!-- 별점 스코어 밑 후기 갯수 관련 -->
-                    <div id="review_leng">후기 23개</div>
+                    <div id="review_leng">후기 ${reviewCount}개</div>
                 </div>
 
                 <!-- 식당 정보 관련 박스 -->
@@ -299,6 +299,8 @@
                     <h1 class="container_title">종찬식당 방문자 평가 ${reviewCount}건</h1>
                     <div href="./review_pdivge_1.html" class="rev_create_btn">후기를 작성해서 맛맵을 지원해주세요.</div>
                 </div>
+
+
                 <!-- 평점 관련단 -->
                 <div class="rev_con_score_box">
                     <div class="rev_con_score">
@@ -480,11 +482,10 @@
                             <div class="review_img">n개 더보기</div>
                         </div>
                     </div>
-                    <div class="rev_con_main_box"></div>
-                    <div class="rev_con_main_box"></div>
-                    <div class="rev_con_main_box"></div>
-                    <div class="rev_con_main_box"></div>
-                    <div class="rev_con_main_box"></div>
+                </div>
+                <div class="rev_con_more_btn">
+                    <p>리뷰 더 불러오기</p>
+                    <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><g><path d="M18,9l-6,6L6,9H18z"></path></g></svg>
                 </div>
             </div>
         </div>
@@ -497,5 +498,85 @@
 <script src="<c:url value='/resources/js/detail.js' /> "></script>
 <script src="./js/swiper.js"></script>
 
-</body>
+<script>
+    $(document).ready(function (){
+    document.querySelector('.rev_con_more_btn').addEventListener('click', function() {
+    offset += limit;
+    fetch(`/detail/reviews/${restaurantId}`)
+    .then(response => response.json())
+    .then(data => {
+    data.forEach(review => {
+    const reviewHtml = `
+
+    <c:forEach var="review" items="${reviews}">
+        <div class="rev_con_main_box">
+        <!-- 리뷰 작성 날짜 -->
+        <div class="rc_create_at">${review.create_at}</div>
+        <!-- 유저 정보 -->
+        <div class="rc_user_box">
+        <div class="rc_user_icon"></div>
+        <div class="rc_user_info">
+        <div id="user_name">${review.reviewer}</div>
+                                    <div id="user_info">
+                                        <p>평균 별점</p>
+                                        <p>3.21</p>
+                                        <p>후기</p>
+                                        <p>-3000</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 유저가 준 평점 -->
+                            <div class="rc_user_score_box">
+                                <div class="con1">
+                                    <p>전체</p>
+                                    <p>${review.total_score}</p>
+                                </div>
+                                <div class="con1">
+                                    <p>고객응대</p>
+                                    <p>${review.kind_score}</p>
+                                </div>
+                                <div class="con1">
+                                    <p>청결도</p>
+                                    <p>${review.clean_score}</p>
+                                </div>
+                                <div class="con1">
+                                    <p>맛</p>
+                                    <p>${review.taste_score}</p>
+                                </div>
+                            </div>
+                            <!-- 리뷰 텍스트 -->
+                            <div class="rc_user_txt_box">${review.content}</div>
+                            <!-- 유저가 먹은 메뉴 -->
+                            <div class="re_menu_box">
+                                <c:forEach var="menuName" items="${review.menuNames}">
+                                    <div class="review_menu">${menuName}</div>
+                                </c:forEach>
+                            </div>
+
+                            <!-- 유저가 올린 사진 -->
+<%--                            <div class="rc_img_box">--%>
+<%--                                <c:forEach var="img" items="${review.images}">--%>
+<%--                                    <div class="review_img">--%>
+<%--                                        <img src="${img}" alt="리뷰 이미지">--%>
+<%--                                    </div>--%>
+<%--                                </c:forEach>--%>
+<%--                            </div>--%>
+                        </div>
+                    </c:forEach>
+                        `;
+                        document.querySelector('.rev_con_main').insertAdjacentHTML('beforeend', reviewHtml);
+                    });
+
+                    // 모든 리뷰를 다 불러왔다면 버튼 숨기기
+                    if (data.length < limit) {
+                        document.querySelector('.rev_con_more_btn').style.display = 'none';
+                    }
+                })
+                .catch(error => console.error('Error fetching reviews:', error));
+        });
+
+    })
+</script>
+
+    </body>
 </html>

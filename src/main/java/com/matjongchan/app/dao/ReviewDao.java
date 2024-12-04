@@ -6,6 +6,7 @@ import com.matjongchan.app.domain.entity.ReviewDto;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 public interface ReviewDao {
 
@@ -25,6 +26,8 @@ public interface ReviewDao {
     List<ReviewDto> selectAll();
 
     List<ReviewDto> selectR(int fk_restaurant_id);
+
+    List<ReviewDto> selectFive(Map<String, Object> params);
 
     List<ReviewDto> selectM(String reviewer);
 

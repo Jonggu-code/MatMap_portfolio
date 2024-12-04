@@ -5,6 +5,7 @@ import com.matjongchan.app.domain.dto.ReviewDetailSearchCondition;
 import com.matjongchan.app.domain.entity.ReviewDto;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ReviewService {
     int getAllCount();
@@ -21,6 +22,7 @@ public interface ReviewService {
     List<ReviewDto> getListAll();
 
     List<ReviewDto> getListR(int fk_restaurant_id);
+    List<ReviewDto> getListFive(Map<String, Object> params);
 
     int modify(ReviewDto dto);
 

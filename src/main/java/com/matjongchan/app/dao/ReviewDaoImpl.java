@@ -83,6 +83,9 @@ public class ReviewDaoImpl implements ReviewDao {
     public List<ReviewDto> selectR(int fk_restaurant_id) {
         return session.selectList(namespace+"selectR",fk_restaurant_id);
     }
+    public List<ReviewDto> selectFive(Map<String, Object> params){
+        return session.selectList(namespace+"selectFive", params);
+    };
     @Override
     public List<ReviewDto> selectM(String reviewer) {
         return session.selectList(namespace+"selectM", reviewer);

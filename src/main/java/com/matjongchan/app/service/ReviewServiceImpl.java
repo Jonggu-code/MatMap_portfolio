@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -45,6 +46,9 @@ public class ReviewServiceImpl implements ReviewService{
 
     // 특정 음식점 모든 리뷰 불러오는 메서드
     public List<ReviewDto> getListR(int fk_restaurant_id){return reviewDao.selectR(fk_restaurant_id);};
+    public List<ReviewDto> getListFive(Map<String, Object> params){
+        return reviewDao.selectFive(params);
+    };
 
     // 리뷰 수정 메서드
     public int modify(ReviewDto dto){return reviewDao.update(dto);};

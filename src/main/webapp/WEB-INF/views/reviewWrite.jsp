@@ -41,8 +41,8 @@
             <div class="header">
                 <div class="rest_img_box"></div>
                 <div class="rest_info_box">
-                    <p class="rest_title">종찬식당</p>
-                    <span>한식</span>
+                    <p class="rest_title">${restaurant.name}</p>
+                    <span>${category}</span>
                     <span>/</span>
                     <span>2024년 11월 25일</span>
                 </div>

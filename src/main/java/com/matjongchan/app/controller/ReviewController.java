@@ -36,56 +36,59 @@ public class ReviewController {
 
 
 
-    @GetMapping("/detail")
-    public String getReviews(RestaurantDto restaurantDto, ReviewDto reviewDto, Model m, ReviewMenuDto reviewMenuDto, OtherImageDto otherImageDto) {
-        int fk_restaurant_id =1;
-        List<ReviewDto> reviews = reviewService.getListR(fk_restaurant_id);
-        m.addAttribute("reviews", reviews);
-
-        for (ReviewDto review : reviews) {
-            List<String> menuNames = reviewMenuService.getMenuNames(review.getId());
-            review.setMenuNames(menuNames); // ReviewDto에 메뉴 리스트 추가
-        }
-
-        for (ReviewDto review : reviews) {
-//            List<OtherImageDto> otherImages = otherImageService.
-        }
-
-        m.addAttribute("restaurantDto", restaurantDto);
-        m.addAttribute("reviewDto", reviewDto);
-
-        int review_count = reviewService.getCountR(fk_restaurant_id);
-        m.addAttribute("reviewCount", review_count);
-
-        Double taste_score = reviewService.getTasteAvg(fk_restaurant_id);
-        Double clean_score = reviewService.getCleanAvg(fk_restaurant_id);
-        Double kind_score = reviewService.getKindAvg(fk_restaurant_id);
-        Double total_score = reviewService.getTotalAvg(fk_restaurant_id);
-        m.addAttribute("taste_score", taste_score);
-        m.addAttribute("clean_score", clean_score);
-        m.addAttribute("kind_score", kind_score);
-        m.addAttribute("total_score", total_score);
-
-        m.addAttribute("reviewMenuDto", reviewMenuDto);
-        m.addAttribute("otherImageDto", otherImageDto);
-        return "detail";
-    }
+//    @GetMapping("/detail")
+//    public String getReviews(RestaurantDto restaurantDto, ReviewDto reviewDto, Model m, ReviewMenuDto reviewMenuDto, OtherImageDto otherImageDto) {
+//        int fk_restaurant_id =1;
+//        List<ReviewDto> reviews = reviewService.getListR(fk_restaurant_id);
+//        m.addAttribute("reviews", reviews);
+//
+//        for (ReviewDto review : reviews) {
+//            List<String> menuNames = reviewMenuService.getMenuNames(review.getId());
+//            review.setMenuNames(menuNames); // ReviewDto에 메뉴 리스트 추가
+//        }
+//
+//        for (ReviewDto review : reviews) {
+////            List<OtherImageDto> otherImages = otherImageService.
+//        }
+//
+//        m.addAttribute("restaurantDto", restaurantDto);
+//        m.addAttribute("reviewDto", reviewDto);
+//
+//        int review_count = reviewService.getCountR(fk_restaurant_id);
+//        m.addAttribute("reviewCount", review_count);
+//
+//        Double taste_score = reviewService.getTasteAvg(fk_restaurant_id);
+//        Double clean_score = reviewService.getCleanAvg(fk_restaurant_id);
+//        Double kind_score = reviewService.getKindAvg(fk_restaurant_id);
+//        Double total_score = reviewService.getTotalAvg(fk_restaurant_id);
+//        m.addAttribute("taste_score", taste_score);
+//        m.addAttribute("clean_score", clean_score);
+//        m.addAttribute("kind_score", kind_score);
+//        m.addAttribute("total_score", total_score);
+//
+//        m.addAttribute("reviewMenuDto", reviewMenuDto);
+//        m.addAttribute("otherImageDto", otherImageDto);
+//        return "detail";
+//    }
 
 
     @GetMapping("/reviewWrite") // 리뷰 작성 첫 페이지 메서드 보여주기
     public String reviewWrite(HttpServletRequest request, RestaurantDto restaurantDto, Model m) {
-
-        int restaurant_id = 1; // example
+        int restaurant_id = 2; // example
 
         m.addAttribute("restaurantDto", restaurantDto);
 
         HttpSession session = request.getSession();
 
+        RestaurantDto restaurant = restaurantService.getRestaurantById(restaurant_id);
+        m.addAttribute("restaurant", restaurant);
+        String category = CategoryChanger.numberIntoCategory(restaurant.getFk_category());
+        m.addAttribute("category", category);
+
+
         List<String> menus = restaurantService.getMenu_name_list(restaurant_id);
         m.addAttribute("menus", menus);
 
-        List<ReviewMenuDto> list = reviewMenuService.getListR(1);
-        int listSize = list.size();
 
 
         // 로그인 했는지 확인
@@ -101,10 +104,18 @@ public class ReviewController {
     public String showReviewWrite2(
             ReviewDto reviewDto,
             @RequestParam("selected_menu[]") List<Integer> selectedMenus,
-            Model model
+            Model m
     ){
-        model.addAttribute("reviewDto", reviewDto);
-        model.addAttribute("selectedMenus", selectedMenus);
+
+        int restaurant_id = 2;
+        m.addAttribute("reviewDto", reviewDto);
+        m.addAttribute("selectedMenus", selectedMenus);
+
+
+        RestaurantDto restaurant = restaurantService.getRestaurantById(restaurant_id);
+        m.addAttribute("restaurant", restaurant);
+        String category = CategoryChanger.numberIntoCategory(restaurant.getFk_category());
+        m.addAttribute("category", category);
 
         return "reviewWrite2";
     }
@@ -120,7 +131,7 @@ public class ReviewController {
             log.info(reviewDto.getContent());
 //            String reviewer = (String)session.getAttribute("id");
             String reviewer = "김철수";
-            int fk_restaurant_id = 1;
+            int fk_restaurant_id = 2;
             reviewDto.setReviewer(reviewer);
             reviewDto.setFk_restaurant_id(fk_restaurant_id);
 

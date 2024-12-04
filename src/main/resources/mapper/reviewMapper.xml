@@ -102,6 +102,15 @@
         WHERE fk_restaurant_id = #{id}
     </select>
 
+
+
+    <select id="selectFive" parameterType="int" resultType="ReviewDto">
+        SELECT *
+        FROM review
+        WHERE fk_restaurant_id = #{restaurantId}
+        ORDER BY create_at DESC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
 </mapper>
 
 
