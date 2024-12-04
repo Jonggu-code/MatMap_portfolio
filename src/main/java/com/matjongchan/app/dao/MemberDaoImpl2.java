@@ -84,6 +84,11 @@ public class MemberDaoImpl2 implements MemberDao2 {
     }
 
     @Override
+    public MemberImageDto selectImageOne(Integer id) {
+        return session.selectOne(namespace + "selectOne", id);
+    }
+
+    @Override
     public List<ReviewDto> selectMemberReviews(String user_id) {
         return session.selectList(namespace + "selectMemberReviews", user_id);
     }
@@ -125,7 +130,10 @@ public class MemberDaoImpl2 implements MemberDao2 {
         return session.selectOne(namespace + "selectMemberReview", id);
     }
 
-
+    @Override
+    public MemberImageDto selectMemberImageOne(){
+        return session.selectOne(namespace + "selectOne");
+    }
 
 
 

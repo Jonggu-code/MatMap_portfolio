@@ -31,4 +31,5 @@ public interface ReviewMenuDao {
 
     List<OtherImageDto> getReviewImages(int review_id);
 
+    List<String> getNames(int review_id);
 }

@@ -123,6 +123,11 @@ public interface RestaurantDao {
      */
     List<RestaurantDto> getRelationRestaurant3 (int restaurant_id);
 
+    /**
+     * 랭킹 조회
+     * @param searchCondition
+     * @return
+     */
     List<RestaurantDto> getPopularRestaurant (SearchCondition searchCondition);
 
 }

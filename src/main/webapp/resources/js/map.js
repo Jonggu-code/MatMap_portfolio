@@ -7,7 +7,7 @@ var mapOptions = {
 var map = new kakao.maps.Map(mapContainer, mapOptions);
 
 var points = [
-    new kakao.maps.LatLng(37.509548471097105, 127.0159250467026),
+    new kakao.maps.LatLng(37.509548471097105, 128.0159250467026),
     new kakao.maps.LatLng(37.483543665468815, 127.02584661602873),
     new kakao.maps.LatLng(37.49464806546498, 127.06312211842112),
     new kakao.maps.LatLng(37.51887323827288, 127.05029230479465)
@@ -46,7 +46,14 @@ kakao.maps.event.addListener(map, 'click', function(mouseEvent){
     var message = `클릭한 위치의 위도는 ${latlng.getLat()} 이고 경도는 ${latlng.getLng()} 입니다.`
 
     var resultDiv = document.getElementById('result');
-    resultDiv.innerHTML = message;
+    var tmp_level = map.getLevel();
+    var tmp_center = map.getCenter();
+    // mapOptions = {
+    //     center: tmp_center,
+    //     level: tmp_level
+    // };
+    // map = new kakao.maps.Map(mapContainer, mapOptions);
+    // resultDiv.innerHTML = message;
 });
 
 var bounds = new kakao.maps.LatLngBounds();
@@ -63,100 +70,12 @@ function setBounds() {
 let isHandler = false;
 kakao.maps.event.addListener(map, 'zoom_changed', function(event) {       
     var level = map.getLevel();
-
-    // 지도의 현재 레벨을 얻어옵니다
-    if(level < 6) {
-        level = map.getLevel();
-    }
-    else if(level >= 6 && !isHandler){
-        isHandler = true;
-        alert('동작 실행');
-        setBounds()
-
-    }
-
-    
     var message = '현재 지도 레벨은 ' + level + ' 입니다';
 
     var resultDiv = document.getElementById('result');  
     resultDiv.innerHTML = message;
 });
 
-
-// 마커 생성단
-let rest_name = '카카오 아이디'
-
-var positions = [
-    {
-        title: '카카오',
-        content:'<div class="wrap">' + 
-        '    <div class="info">' + 
-        '        <div class="title">' + 
-        rest_name + 
-        '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
-        '        </div>' + 
-        '        <div class="body">' + 
-        '            <div class="img">' +
-        '                <img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/thumnail.png" width="73" height="70">' +
-        '           </div>' + 
-        '            <div class="desc">' + 
-        '                <div class="ellipsis">제주특별자치도 제주시 첨단로 242</div>' + 
-        '                <div class="jibun ellipsis">(우) 63309 (지번) 영평동 2181</div>' + 
-        '                <div><a href="https://www.kakaocorp.com/main" target="_blank" class="link">홈페이지</a></div>' + 
-        '            </div>' + 
-        '        </div>' + 
-        '    </div>' +    
-        '</div>',
-        latlng: new kakao.maps.LatLng(37.50164685853944, 127.03563532174606)
-    },
-    {
-        title: '임호준띠',
-        content: '<div>임호준띠</div>',
-        latlng: new kakao.maps.LatLng(37.500892909011384, 127.04062227483718)
-    },
-    {
-        title: '심재용띠',
-        content: '<div>심재용띠</div>',
-        latlng: new kakao.maps.LatLng(37.49855254774154, 127.03342864632779)
-    },
-    {
-        title: '곽채연띠',
-        content: '<div>곽채연띠</div>',
-        latlng: new kakao.maps.LatLng(37.50331012355251, 127.03248077266952)
-    },
-    {
-        title: '강주헌띠',
-        content: '<div>강주헌띠</div>',
-        latlng: new kakao.maps.LatLng(37.504623364154185, 127.03976476192746)
-    },
-]
-
-var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
-
-var marker_list = [];
-for (var i=0; i < positions.length; i++){
-    var imageSize = new kakao.maps.Size(24, 35); 
-    
-    // 마커 이미지를 생성합니다    
-    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
-    
-    // 마커를 생성합니다
-    var marker = new kakao.maps.Marker({
-        map: map, // 마커를 표시할 지도
-        position: positions[i].latlng, // 마커를 표시할 위치
-        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-        image : markerImage, // 마커 이미지 
-    });
-
-    marker_list.push(marker)
-
-    var infowindow = new kakao.maps.InfoWindow({
-        content: positions[i].content
-    })
-
-    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
-    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
-}
 
 function makeOverListener(map, marker, infowindow) {
     return function() {
@@ -170,15 +89,67 @@ function makeOutListener(infowindow) {
     };
 }
 
-const btn = document.getElementsByClassName('focus_map')[0]
+//이거 그 메인화면 우측상단에있는 현재보는위치기준으로 식당조회버튼임
+// const btn = document.getElementsByClassName('focus_map')[0]
 
-btn.addEventListener('click', function(){
-    // delete positions[0,1,2,3,4]
-    // console.log(positions)
+var tmp_position = [];
+function xy_location(data){
 
-    for(let i=0; i < positions.length; i++){
-        // marker.setMap(null)
-        // console.log(marker.positions, marker.title)
+    for(let i = 0; i<tmp_position.length; i++){
         marker_list[i].setMap(null);
     }
-})
+    tmp_position = [];
+
+    for(let i = 0; i<data.length; i++){
+        tmp_position.push({
+            image : data[i].image_url,
+            name : data[i].name,
+            score : data[i].total_score_count,
+            review : data[i].total_review_count,
+            address : data[i].address,
+            business_hour : data[i].business_hours_dto,
+            business_now : data[i].today_business_state,
+            latlng : new kakao.maps.LatLng(data[i].loc_x, data[i].loc_y)
+        })
+    }
+}
+
+var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+var marker_list = [];
+function create_marker(){
+    for(let i = 0; i < tmp_position.length; i++){
+        var imageSize = new kakao.maps.Size(24, 35);
+        // 마커 이미지를 생성합니다
+        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
+        var marker = new kakao.maps.Marker({
+            map:map,
+            position: tmp_position[i].latlng,
+            title : tmp_position[i].name,
+            image: markerImage,
+        });
+        marker_list[i] = marker;
+
+        var info_window = new  kakao.maps.InfoWindow({
+            content : tmp_position[i].name,
+            image : tmp_position[i].image_url,
+        })
+        kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, info_window));
+        kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(info_window));
+    }
+}
+
+
+function getInfo(){
+    // 지도의 현재 영역을 얻어옵니다
+    var bounds = map.getBounds();
+
+    // 영역의 남서쪽 좌표를 얻어옵니다
+    var swLatLng = bounds.getSouthWest();
+
+    // 영역의 북동쪽 좌표를 얻어옵니다
+    var neLatLng = bounds.getNorthEast();
+
+    return {swLatLng,neLatLng};
+}
+

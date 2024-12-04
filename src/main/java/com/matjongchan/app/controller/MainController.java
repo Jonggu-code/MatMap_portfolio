@@ -13,9 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 import java.util.List;
 
 
@@ -32,7 +29,7 @@ public class MainController {
             searchCondition = SearchCondition.builder()
                     .offset(1)
                     .option("P")
-                    .category(null)
+                    .category("한식")
                     .c_address(null)
                     .page_size(20)
                     .build();
@@ -49,14 +46,12 @@ public class MainController {
             searchCondition = SearchCondition.builder()
                     .offset(1)
                     .option("P")
-                    .category(null)
+                    .category("한식")
                     .c_address(null)
                     .page_size(20)
                     .build();
         }
-        log.info("키워드 검색중 ... keyword => "+searchCondition.getKeyword());
         List<SimpleRestaurant> simpleRestaurantList = restaurantService.SRRealTotalSearch(searchCondition);
-        log.info("몇개 검색됨? -> "+simpleRestaurantList.size());
         return new ResponseEntity<>(simpleRestaurantList, HttpStatus.OK);
     }
 
@@ -67,12 +62,37 @@ public class MainController {
             searchCondition = SearchCondition.builder()
                     .offset(1)
                     .option("P")
-                    .category(null)
+                    .category("한식")
                     .c_address(null)
                     .page_size(20)
                     .build();
         }
         return new ResponseEntity<>(restaurantService.SRTotalSearch(searchCondition), HttpStatus.OK);
+    }
+
+    @ResponseBody
+    @PostMapping("/search/near")
+    public ResponseEntity<List<SimpleRestaurant>> searchNear(HttpSession session, @RequestBody SearchCondition searchCondition) {
+        return new ResponseEntity<>(restaurantService.SRNearSearch(searchCondition), HttpStatus.OK);
+
+    }
+
+    @GetMapping("/rank")
+    public String rank(HttpSession session, Model model, SearchCondition searchCondition) {
+        List<SimpleRestaurant> rankDescRestaurant = restaurantService.getRankDescRestaurant(searchCondition);
+        model.addAttribute("rank_list",rankDescRestaurant);
+        model.addAttribute("category","");
+        return "rank_page_score";
+    }
+
+    @ResponseBody
+    @GetMapping("/get/rank")
+    public ResponseEntity<List<SimpleRestaurant>> getRank(HttpSession session, SearchCondition searchCondition) {
+        if(searchCondition.getCategory().isEmpty()){
+            searchCondition.setCategory(null);
+        }
+
+        return new ResponseEntity<>(restaurantService.getRankDescRestaurant(searchCondition),HttpStatus.OK);
     }
 
 }

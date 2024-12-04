@@ -135,4 +135,9 @@ public class MemberServiceImpl implements MemberService{
     public int deleteMemberFavorite(String userId) {
         return memberDao.deleteFavorite(userId);
     }
+
+    @Override
+    public MemberImageDto selectRecentImageOne() {
+        return memberDao.selectMemberImageOne();
+    }
 }

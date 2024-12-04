@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="uId" value="${sessionScope.id }" />
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +15,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index.css?dt=1"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index.css?dt=2"/>
 
     <!-- 컬러 차트
         메인 컬러 : #ff9625 
@@ -41,99 +42,11 @@
             </div>
             <ul class="header_menu">
                 <a class="header_menu_item" href="<c:url value="board"/>"><p>게시판</p></a>
-                <a class="header_menu_item" href="./rank_page_score.html"><p>월간 맛집</p></a>
+                <a class="header_menu_item" href="<c:url value="rank"/>"><p>월간 맛집</p></a>
             </ul>
         </header>
         <main class="main">
-            <c:forEach var="tmp" items="${sr}">
-            <!-- 식당들은 main_item 클래스를 가진상태로 나열됨  -->
-            <div class="main_item">
-                <div class="main_item_box">
-                    <div class="main_item_Lbox">
-                        <a class="img" href="<c:url value="detail/${tmp.id}"/>">1</a>
-                    </div>
-                    <div class="main_item_Rbox">
-                        <div class="item_title">
 
-                            <!-- 식당 이름 -->
-                            <a class="item_name" href="<c:url value="detail/${tmp.id}"/>">${tmp.name}</a>
-                            <div class="item_star">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2Z"></path></svg>
-
-                                <!-- 식당 전체 평점의 평균 -->
-                                <p>${tmp.total_score_count}</p>
-
-                                <!-- 식당에 관련된 후기 갯수 -->
-                                <p>${tmp.total_review_count}</p>
-                            </div>
-                        </div>
-
-                        <!-- 식당 주소정보 들어오는 단 -->
-                        <p class="item_addr">
-                            <i class="rest_addr_icon"></i>
-                            <c:choose>
-                                <c:when test='${tmp.address != ""}'>
-                                    ${tmp.address}
-                                </c:when>
-                                <c:when test='${tmp.address == ""}'>
-                                    식당 정보 없음
-                                </c:when>
-                            </c:choose>
-                        </p>
-
-                        <!-- 식당 영업시간정보 들어오는 단 / 빈칸이면 "영업 정보 없음"-->
-                        <p class="item_time">
-                            <i class="rest_num_icon"></i>
-                            <c:choose>
-                                <c:when test='${tmp.number != ""}'>
-                                    ${tmp.number}
-                                </c:when>
-                                <c:when test='${tmp.number == ""}'>
-                                    영업 정보 없음
-                                </c:when>
-                            </c:choose>
-                        </p>
-                        <!-- 식당 정보 들어오는 단 / 빈칸이면 "매장 정보 없음"-->
-                        <p class="item_info">
-                            <i class="rest_info_icon"></i>
-                            <c:choose>
-                                <c:when test='${tmp.reservation != ""}'>
-                                    ${tmp.reservation}
-                                </c:when>
-                                <c:when test='${tmp.reservation == ""}'>
-                                    매장 정보 없음
-                                </c:when>
-                            </c:choose>
-                        </p>
-                    </div>
-                </div>
-
-                <!-- 식당 메뉴 들어오는 단 -->
-                <ul class="main_item_bot">
-                    <c:forEach var="menu" items="${tmp.menu_name_list}">
-                        <li>#${menu}</li>
-                    </c:forEach>
-                </ul>
-                <!-- 리뷰 텍스트 들어오는 단 -->
-                <c:choose>
-                    <c:when test="${tmp.recentSimpleReview.id != null}">
-                        <div class="review_box">
-                            <div class="user_title">
-                                <div class="user_name">
-                                    ${tmp.recentSimpleReview.reviewer}
-                                </div>
-                                <div class="create_at">
-                                    ${tmp.recentSimpleReview.create_at}
-                                </div>
-                            </div>
-                            <div class="review_txt">
-                                ${tmp.recentSimpleReview.content}
-                            </div>
-                        </div>
-                    </c:when>
-                </c:choose>
-            </div>
-            </c:forEach>
         </main>
     </aside>
     <div id="map">
@@ -230,11 +143,27 @@
                 <div class="random_food"></div>
             </div>
             <div class="map_box_R">
-                <div class="focus_map"></div>
+                <div class="focus_map">
+                    <svg xmlns="http://www.w3.org/2000/svg"><path stroke="#000" stroke-linejoin="round" stroke-width="1.5" d="M20 4 3 11l7 3 3 7 7-17Z"></path></svg>
+                </div>
                 <div class="guest_menu" tabindex="-1">
                     <svg viewBox="0 0 24 24"><g><path d="M21,6H3V5h18V6z M21,11H3v1h18V11z M21,17H3v1h18V17z"></path></g></svg>
                     <div class="guest_icon"></div>
-                    <div class="guest_menu_box"></div>
+                    <div class="guest_menu_box">
+                        <c:choose>
+                            <c:when test="${sessionScope.id == null}">
+                                <p class="login_com">로그인</p>
+                                <p class="register_com">회원가입</p>
+                            </c:when>
+                            <c:when test="${sessionScope.id != null}">
+                                <p class="myPage_com">마이페이지</p>
+                                <p class="myFavorite_com">마이 맛집 </p>
+                                <p class="myReview_com">마이 후기</p>
+
+                                <p class="logout_com">로그아웃</p>
+                            </c:when>
+                        </c:choose>
+                    </div>
                 </div>
             </div>
         </div>
@@ -244,18 +173,80 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b4e6868c7b5fe35c80d9b43d3190c872"></script>
 
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
-<script src="<c:url value="resources/js/map.js?1"/>"></script>
-<script src="<c:url value="resources/js/index.js?1"/>"></script>
+<script src="<c:url value="resources/js/map_hoho.js?9"/>"></script>
+<script src="<c:url value="resources/js/index_hoho.js?6"/>"></script>
 
 <script>
     $(document).ready(function (){
+        let target_1 = document.getElementsByClassName('map_box_L')[0];
+        let config = { attributes: true, childList: true, subtree: true };
+        // 처음 불러올떄 호출!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        $.ajax({
+            method: 'POST',
+            cache: false,
+            url: 'http://localhost:8080/search/category',
+            contentType: 'application/json; charset=UTF-8',
+            data : JSON.stringify({"page_size" : 20, "offset" : 1,
+                "option" : null, "category" : null, "c_address" : null}),
+            success:function (sr){
+                console.log(sr);
+                $('.main').html(loadRestaurant(sr));
+            },
+            error: function (request, status, error){
+                alert("정보 받아오기 실패");
+            }
+        })
+        // 처음 불러올떄 호출!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        function reload_list(){
+            let option = $('.choose_align').children('p').html();
+            let category = $('.choose_tag').children('p').html();
+            let c_address = $('.choose_location').children('p').html();
+            let page_size = 20;
+            let offset = 0;
+            if(option === "맛집 정렬 순서"){
+                option = null;
+            }
+            if(category === "전체"){
+                category = null;
+            }
+            if(c_address === "지도 표시 지역"){
+                c_address = null;
+            }
+            if(option === "리뷰 많은 순"){
+                option = "R";
+            }else{
+                option = "P";
+            }
+            $.ajax({
+                method: 'POST',
+                cache: false,
+                url: '<c:url value="/search/category"/>',
+                contentType: 'application/json; charset=UTF-8',
+                data : JSON.stringify({"page_size" : page_size, "offset" : offset,
+                    "option" : option, "category" : category, "c_address" : c_address}),
+                success:function (sr){
+                    console.log(sr);
+                    $('.main').html(loadRestaurant(sr));
+                },
+                error: function (request, status, error){
+                    alert("정보 받아오기 실패");
+                }
+            })
+        }
 
-        // loadRestaurant();
+        let callback = function (mutationsList, observer){
+            for (let mutation of mutationsList){
+                if(mutation.type == 'childList'){
+                    reload_list();
+                }
+            }
+        };
+        let observer = new MutationObserver(callback);
+        observer.observe(target_1,config);
 
         $(document).on('keydown', '#search_keyword', function (e){
             if(e.keyCode === 13){
                 e.preventDefault(); //폼 제출 방지
-
                 let page_size = 20;
                 let offset = 0;
                 let option = $('.choose_align').children('p').text();
@@ -276,29 +267,162 @@
                 }
 
                 $.ajax({
-                    type: 'POST',
-                    url: '<c:url value="/search/keyword"/>',
+                    method: 'POST',
+                    cache: false,
+                    url: 'http://localhost:8080/search/keyword',
                     contentType: 'application/json; charset=UTF-8',
                     data : JSON.stringify({"page_size" : page_size, "offset" : offset, "keyword" : keyword}),
                     // data : JSON.stringify({"page_size" : page_size, "offset" : offset,
                     //         "option" : option, "category" : category, "c_address" : c_address}),
                     success:function (sr){
-                        alert("정보 받아오기 성공");
                         console.log(sr);
                         // loadRestaurant();
-                        console.log(page_size,offset,keyword)
+                        $('.main').html(loadRestaurant(sr));
                     },
                     error: function (request, status, error){
                         alert("정보 받아오기 실패");
                     }
                 })
-
             }
         })
 
+        $('.focus_map').click(function (){
+            let page_size = 20;
+            let offset = 0;
+            let option = $('.choose_align').children('p').text();
+            let category = $('.choose_tag').children('p').text();
+            let c_address = $('.choose_location').children('p').text();
+            if(option === "맛집 정렬 순서"){
+                option = null;
+            }
+            if(category === "전체"){
+                category = null;
+            }
+            if(c_address === "지도 표시 지역"){
+                c_address = null;
+            }
+            let loc = getInfo();
+
+            let sw_x = loc.swLatLng.getLat();
+            let sw_y = loc.swLatLng.getLng();
+            let ne_x = loc.neLatLng.getLat();
+            let ne_y = loc.neLatLng.getLng();
+            $.ajax({
+                method: 'POST',
+                cache: false,
+                url: 'http://localhost:8080/search/near',
+                contentType: 'application/json; charset=UTF-8',
+                data : JSON.stringify({"page_size" : page_size, "offset" : offset,
+                        "option" : option, "category" : category, "c_address" : c_address,
+                        "loc_nw_x" : ne_x, "loc_nw_y" : ne_y, "loc_se_x" : sw_x, "loc_se_y" : sw_y}),
+                success:function (sr){
+                    // console.log(sr);
+                    // loadRestaurant();
+                    $('.main').html(loadRestaurant(sr));
+                },
+                error: function (request, status, error){
+                    alert("정보 받아오기 실패");
+                }
+
+            })
+        })
     })
 
-</script>
+    function loadRestaurant(sr){
+        let tmp_html= "";
 
+        sr.forEach(function (tmp){
+
+            let tmp_address = tmp.address || "식당 정보 없음";
+            let tmp_time = tmp.number || "영업 정보 없음" ;
+            let tmp_info = tmp.reservation || "매장 정보 없음";
+            let tmp_review = tmp.recentSimpleReview || null;
+            let tmp_total_score = tmp.total_score_count || 0.0;
+            let tmp_total_review = tmp.total_review_count || 0;
+            tmp_html+=`
+                <div class="main_item">
+                    <div class="main_item_box">
+                        <div class="main_item_Lbox" style="background: url('<c:url value="${'${tmp.image_url}'}"/>') no-repeat center / cover">
+                            <a class="img" href="<c:url value="detail/${'${tmp.id}'}"/>">1</a>
+                        </div>
+                        <div class="main_item_Rbox">
+                            <div class="item_title">
+
+                                <!-- 식당 이름 -->
+                                <a class="item_name" href="<c:url value="detail/${'${tmp.id}'}"/>">${'${tmp.name}'}</a>
+                                <div class="item_star">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2Z"></path></svg>
+
+                                    <!-- 식당 전체 평점의 평균 -->
+                                    <p>${'${tmp_total_score}'}</p>
+
+                                    <!-- 식당에 관련된 후기 갯수 -->
+                                    <p>(${'${tmp_total_review}'})</p>
+                                </div>
+                            </div>
+
+                            <!-- 식당 주소정보 들어오는 단 -->
+                            <p class="item_addr">
+                                <i class="rest_addr_icon"></i>
+                                ${'${tmp_address}'}
+                            </p>
+
+                            <!-- 식당 영업시간정보 들어오는 단 / 빈칸이면 "영업 정보 없음"-->
+                            <p class="item_time">
+                                <i class="rest_num_icon"></i>
+                                ${'${tmp_time}'}
+                            </p>
+                            <!-- 식당 정보 들어오는 단 / 빈칸이면 "매장 정보 없음"-->
+                            <p class="item_info">
+                                <i class="rest_info_icon"></i>
+                                ${'${tmp_info}'}
+                            </p>
+                        </div>
+                    </div>
+                    <!-- 식당 메뉴 들어오는 단 -->
+                    <ul class="main_item_bot">`
+            tmp.menu_name_list.forEach(function (menu){
+                tmp_html+=`<li>#${"${menu}"}</li>`
+            })
+            tmp_html+=`</ul>`;
+            if(tmp_review !== null){
+                tmp_html+=`
+                    <!-- 리뷰 텍스트 들어오는 단 -->
+                    <c:choose>
+                        <c:when test="${'${tmp.recentSimpleReview.id}' != null}">
+                            <div class="review_box">
+                                <div class="user_title">
+                                    <div class="user_name">
+                                            ${"${tmp.recentSimpleReview.reviewer}"}
+                                    </div>
+                                    <div class="create_at">
+                                            ${"${tmp.recentSimpleReview.create_at}"}
+                                    </div>
+                                </div>
+                                <div class="review_txt">
+                                        ${"${tmp.recentSimpleReview.content}"}
+                                </div>
+                            </div>
+                        </c:when>
+                    </c:choose>
+                    `
+            }
+            tmp_html+= `</div>`;
+        })
+        tmp_html += `
+            <div class="pagination">
+                <button class="page_btn" id="prev_page">&lt;</button>
+                <div class="page_box">
+                    <!--  페이지네이션 들어오는곳 -->
+                </div>
+                <button class="page_btn page_btn_act" id="next_page">&gt;</button>
+            </div>`
+        xy_location(sr);
+        create_marker();
+        return tmp_html;
+    }
+
+    // const btn = document.getElementsByClassName('focus_map')[0];
+</script>
 </body>
 </html>

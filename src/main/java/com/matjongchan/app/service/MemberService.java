@@ -76,4 +76,6 @@ public interface MemberService {
     // 특정 즐겨찾기 삭제
 
     public int deleteMemberFavorite(String userId);
+
+    MemberImageDto selectRecentImageOne();
 }

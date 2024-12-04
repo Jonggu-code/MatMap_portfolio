@@ -85,6 +85,12 @@
         ORDER BY id DESC
     </select>
 
+    <select id="selectOne" resultType="MemberImageDto">
+        SELECT * FROM member_image
+        ORDER BY id DESC
+        LIMIT 1, 1;
+    </select>
+
     <!-- 7) 프로필 이미지 조회 -->
     <select id="selectMemberImage" parameterType="Integer" resultType="MemberImageDto">
         SELECT * FROM member_image WHERE id = #{id}
@@ -107,15 +113,23 @@
 <!--3. member_reviews, review table 관련 -->
     <!-- 10) 특정 회원의 리뷰 조회 (user_id 기준) -->
     <select id="selectMemberReviews" parameterType="String" resultType="ReviewDto">
-        SELECT r.*, res.name AS restaurantName <!-- restaurant 테이블에서 name을 가져옴 -->
-        FROM member_reviews AS mr
-        LEFT JOIN review AS r
-        ON mr.fk_review_id = r.id
-        LEFT JOIN restaurant AS res
-        ON r.fk_restaurant_id = res.id
-        WHERE mr.fk_member_id = (
-        SELECT id FROM member WHERE user_id = #{user_id}
-        )
+<!--        SELECT r.*, res.name AS restaurantName &lt;!&ndash; restaurant 테이블에서 name을 가져옴 &ndash;&gt;-->
+<!--        FROM member_reviews AS mr-->
+<!--        LEFT JOIN review AS r-->
+<!--        ON mr.fk_review_id = r.id-->
+<!--        LEFT JOIN restaurant AS res-->
+<!--        ON r.fk_restaurant_id = res.id-->
+<!--        WHERE mr.fk_member_id = (-->
+<!--        SELECT id FROM member WHERE user_id = #{user_id}-->
+<!--        )-->
+
+        SELECT r.*
+        FROM review AS r
+        LEFT JOIN member_reviews AS mr
+        ON r.id = mr.fk_review_id
+        LEFT JOIN member AS m
+        ON mr.fk_member_id = m.id
+        WHERE r.reviewer = #{user_id};
     </select>
 
 
@@ -181,7 +195,13 @@
         f.fk_restaurant_id AS fk_restaurant_id,
         r.name AS restaurant_name,
         r.c_address AS c_address,
-        r.d_address AS d_address
+        r.d_address AS d_address,
+        r.number AS number,
+        r.reservation AS reservation,
+        r.memo AS memo,
+        r.total_score_count AS total_score_count,
+        r.total_review_count AS total_review_count,
+        r.search_tag AS search_tag
         FROM favorite AS f
         INNER JOIN member AS m
         ON f.fk_member_id = m.id

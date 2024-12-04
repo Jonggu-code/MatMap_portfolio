@@ -114,7 +114,7 @@ $(document).ready(function(){
     let star_taste = $('.score_taste').html()
 
     function set_star_width(){
-
+        
         setTimeout(() => {
             console.log(star_ave * 20)
             $('#star_ave').css({width: `${star_ave * 20}%`})
@@ -126,3 +126,4 @@ $(document).ready(function(){
     set_star_width()
 
 });
+

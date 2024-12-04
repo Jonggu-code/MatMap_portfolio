@@ -108,10 +108,10 @@
     justify-content: flex-end;
 }
 #review_score, .rev_review_score {
-    font-size: 22px;
+    font-size: 22px; 
     font-weight: 700;
     margin-left: 14px;
-
+    
     color: #ff9625;
     position: relative;
     top: -4px;
@@ -181,7 +181,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
+    
     position: relative;
     top: -5px;
     left: -5px;
@@ -280,7 +280,7 @@
 
 /* ////////////////        사진 관리단         ////////////// */
 
-#menu_container {
+#menu_container { 
     width: calc(70% - 20px);
 
     display: flex;
@@ -491,7 +491,7 @@
     border: 1px solid #ff9625;
     border-radius: 3px;
     cursor: pointer;
-
+    
     text-align: center;
     font-size: 14px;
     color: #ff9625;
@@ -709,7 +709,7 @@
     background: url(../img/review_star_fill.png) no-repeat center / cover;
 }
 .con1 {
-    display: flex;
+    display: flex; 
     gap: 5px;
 }
 .con1 > p:nth-child(2) {

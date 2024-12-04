@@ -19,6 +19,7 @@ public class SearchCondition {
     private Double loc_nw_y = null;                // 현재 지도상 남서 끝 위도좌표
     private Double loc_se_x = null;                // 현재 지도상 북동 끝 경도좌표
     private Double loc_se_y = null;                // 현재 지도상 북동 끝 위도좌표
+    private Integer category_num = null;
 
     /**
      * 메인페이지에서 식당관련 검색을 할때 사용할 생성자.

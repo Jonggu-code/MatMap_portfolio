@@ -131,7 +131,12 @@ public interface RestaurantService {
      */
     List<SimpleRestaurant> getSimpleRestaurant(SearchCondition searchCondition);
 
-
+    /**
+     * 랭킹 페이지 조회관련
+     * @param searchCondition
+     * @return
+     */
+    List<SimpleRestaurant> getRankDescRestaurant(SearchCondition searchCondition);
 
 
 }

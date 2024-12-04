@@ -58,4 +58,9 @@ public class ReviewMenuDaoImpl implements ReviewMenuDao {
         return session.selectList(namespace+"selectReviewImage",review_id);
     }
 
+    @Override
+    public List<String> getNames(int review_id){
+        return session.selectList(namespace+"selectName",review_id);
+    };
+
 }

@@ -110,12 +110,16 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public List<SimpleRestaurant> SRTotalSearch(SearchCondition searchCondition) {
+        Integer number = CategoryChanger.categoryIntoNumber(searchCondition.getCategory());
+        searchCondition.setCategory_num(number);
+
         List<RestaurantDto> dtoList = restaurantDao.totalSearch(searchCondition);
         return getSimpleRestaurantList(dtoList);
     }
 
     @Override
     public List<SimpleRestaurant> SRNearSearch(SearchCondition searchCondition) {
+        searchCondition.setCategory_num(CategoryChanger.categoryIntoNumber(searchCondition.getCategory()));
         List<RestaurantDto> dtoList = restaurantDao.nearSearch(searchCondition);
         return getSimpleRestaurantList(dtoList);
     }
@@ -178,7 +182,7 @@ public class RestaurantServiceImpl implements RestaurantService {
                 .restaurant_reservation(dto.getReservation())
                 .restaurant_memo(dto.getMemo())
                 .restaurant_image_url_list(image_url_list)
-                .today_business_state(getNowOpen(hoursDto)) //오늘 영업 유무..
+                .today_business_state("열림") //오늘 영업 유무..
                 .business_hours_dto(hoursDto)
                 .menu_detail_list(menuDetail) //메뉴 이름,가격,사진등등..
                 .review_image_url_list(image_url_list)
@@ -191,6 +195,9 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     private static String getNowOpen(BusinessHoursDto hoursDto) {
+        if(hoursDto == null){
+            return "영업정보없음";
+        }
         String business_hour = "";
         String now_open = "영업정보없음";
         Calendar calendar = Calendar.getInstance();
@@ -247,8 +254,8 @@ public class RestaurantServiceImpl implements RestaurantService {
                     .name(dto.getName())
                     .image_url(getImgUrl(dto))
                     .address(dto.getC_address() + dto.getD_address())
-                    .total_score_count(dto.getTotal_score_count())
-                    .total_review_count(dto.getTotal_review_count())
+                    .total_score_count(dto.getTotal_score_count() == null ? 0 : dto.getTotal_score_count())
+                    .total_review_count(dto.getTotal_review_count() == null ? 0 : dto.getTotal_review_count())
                     .today_business_state(getNowOpen(restaurantDao.getBusinessHours(dto.getId())))
                     .reservation(dto.getReservation())
                     .number(dto.getNumber())
@@ -267,9 +274,16 @@ public class RestaurantServiceImpl implements RestaurantService {
         List<OtherImageDto> images = otherImageDao.getRestaurantImages2(dto.getId());
         return images.isEmpty() ? null : images.get(0).getImg_url();
     }
-    private List<String> getMenu_name_list(RestaurantDto dto) {
+    public List<String> getMenu_name_list(RestaurantDto dto) {
         return restaurantDao.getMenuDetail(
                         dto.getId())
+                .stream()
+                .map(MenuDetail::getMenu_name)
+                .collect(Collectors.toList());
+    }
+    public List<String> getMenu_name_list(int restaurantId) {
+        return restaurantDao.getMenuDetail(
+                        restaurantId)
                 .stream()
                 .map(MenuDetail::getMenu_name)
                 .collect(Collectors.toList());
@@ -280,4 +294,31 @@ public class RestaurantServiceImpl implements RestaurantService {
         return listR.isEmpty() ? null : listR.get(0);
     }
 
+
+    @Override
+    public List<SimpleRestaurant> getRankDescRestaurant(SearchCondition searchCondition) {
+        searchCondition.setPage_size(10);
+        Integer number = CategoryChanger.categoryIntoNumber(searchCondition.getCategory());
+        searchCondition.setCategory_num(number);
+        if(searchCondition.getOffset() == null){
+            searchCondition.setOffset(0);
+        }
+        List<RestaurantDto> popularRestaurant = restaurantDao.getPopularRestaurant(searchCondition);
+        List<SimpleRestaurant> simpleRestaurantList = new ArrayList<>();
+        for (RestaurantDto dto : popularRestaurant) {
+            SimpleRestaurant simpleRestaurant = SimpleRestaurant.builder()
+                    .name(dto.getName())
+                    .category(CategoryChanger.numberIntoCategory(dto.getFk_category()))
+                    .address(dto.getC_address() +" "+ dto.getD_address())
+                    .number(dto.getNumber())
+                    .reservation(dto.getReservation())
+                    .total_score_count(dto.getTotal_score_count())
+                    .total_review_count(dto.getTotal_review_count())
+                    .today_business_state(getNowOpen(restaurantDao.getBusinessHours(dto.getId())))
+                    .memo(dto.getMemo())
+                    .build();
+            simpleRestaurantList.add(simpleRestaurant);
+        }
+        return simpleRestaurantList;
+    }
 }
