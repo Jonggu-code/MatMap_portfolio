@@ -19,6 +19,11 @@ public interface ReviewDao {
     double cleanAvgScore(int fk_restaurant_id);
     double tasteAvgScore(int fk_restaurant_id);
 
+    double totalS(ReviewDto reviewDto);
+    double kindS(ReviewDto reviewDto);
+    double cleanS(ReviewDto reviewDto);
+    double tasteS(ReviewDto reviewDto);
+
     int deleteAll();
 
     int insert(ReviewDto dto);

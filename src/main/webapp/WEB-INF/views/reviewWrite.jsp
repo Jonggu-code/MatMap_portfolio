@@ -31,7 +31,7 @@
 
 </head>
 <body>
-<form action="<c:url value='/showReviewWrite2'/>" method="post" id="wrap">
+<form action="<c:url value='/showReviewWrite2/${id}'/>" method="post" id="wrap">
     <fieldset class="review_main">
         <div class="logo_box">
             <a href="index.jsp" class="logo">맛맵 - 메인화면</a>
@@ -109,8 +109,8 @@
 
                 <!-- 메뉴 클릭하면 menu_active 클래스 추가되면서 background 색 진해짐. -->
                 <ul class="menu_list">
-                    <c:forEach var="menuName" items="${menus}" varStatus="status">
-                        <li class="menu_item" data-id="${status.index + 1}">${menuName}</li>
+                    <c:forEach var="menuDtos" items="${menuDtos}">
+                        <li class="menu_item" data-id="${menuDtos.id}">${menuDtos.menu_name}</li>
                     </c:forEach>
                 </ul>
 

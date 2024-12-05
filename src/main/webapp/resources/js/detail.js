@@ -16,15 +16,6 @@ document.getElementById('review_leng').addEventListener('click',function(e){
     window.scrollTo({top:t_move, behavior: 'smooth'})
 })
 
-document.getElementsByClassName('rev_create_btn')[0].addEventListener('click',function(){
-    if(login == false){
-        alert("로그인 후 작성해주세요.")
-        window.location.href = "login.html";
-    }
-    else if(login == true){
-        window.location.href = "review_page_1.html"
-    }
-})
 
 // 제이쿼리
 $(document).ready(function(){
@@ -35,7 +26,7 @@ $(document).ready(function(){
     $(window).scroll(function(){
         let reco_box = $('#reco_container').offset().top
         let test = window.scrollY
-        console.log(reco_box, test, reco_box_top)
+        // console.log(reco_box, test, reco_box_top)
         if(test > reco_box_top - 120){
             $('#reco_container').css({top: `${test - 420}px`})
             $('.move_top').css({opacity: '1'})

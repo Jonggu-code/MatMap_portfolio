@@ -30,7 +30,8 @@ public class ReviewServiceImpl implements ReviewService{
     };
 
     // 전체, 고객응대, 청결도, 맛 평점 get 하는 메서드
-    public double getTotalAvg(int fk_restaurant_id){return reviewDao.totalAvgScore(fk_restaurant_id);};
+    public double getTotalAvg(int fk_restaurant_id){
+        return reviewDao.totalAvgScore(fk_restaurant_id);};
     public double getKindAvg(int fk_restaurant_id){return reviewDao.kindAvgScore(fk_restaurant_id);};
     public double getCleanAvg(int fk_restaurant_id){return reviewDao.cleanAvgScore(fk_restaurant_id);};
     public double getTasteAvg(int fk_restaurant_id){return reviewDao.tasteAvgScore(fk_restaurant_id);};

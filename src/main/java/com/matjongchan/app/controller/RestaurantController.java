@@ -1,5 +1,7 @@
 package com.matjongchan.app.controller;
 
+import com.matjongchan.app.dao.ReviewDao;
+import com.matjongchan.app.domain.dto.RestaurantDetail;
 import com.matjongchan.app.domain.dto.ReviewDetail;
 import com.matjongchan.app.domain.dto.ReviewDetailSearchCondition;
 import com.matjongchan.app.domain.entity.OtherImageDto;
@@ -30,6 +32,8 @@ public class RestaurantController {
     ReviewMenuService reviewMenuService;
     @Autowired
     ReviewService reviewService;
+    @Autowired
+    ReviewDao reviewDao;
 
     private final RestaurantService restaurantService;
 
@@ -45,17 +49,29 @@ public class RestaurantController {
     @GetMapping("/detail/{id}")
     public String restaurantDetail(@PathVariable("id") int id, RestaurantDto restaurantDto, ReviewDto reviewDto, Model m, ReviewMenuDto reviewMenuDto, OtherImageDto otherImageDto){
 
+        m.addAttribute("id", id);
+
+        RestaurantDetail restaurantDetail = restaurantService.getRestaurantDetail(id);
+        m.addAttribute("restaurantDetail", restaurantDetail);
+
         Map<String, Object> param = new HashMap<>();
         param.put("offset", 0);
         param.put("limit", 5);
         param.put("fk_restaurant_id", id);
 
-        List<ReviewDto> reviews = reviewService.getListFive(param);
+        List<ReviewDto> reviews = null;
+
+        reviews = reviewService.getListR(id);
         m.addAttribute("reviews", reviews);
 
         for (ReviewDto review : reviews) {
             List<String> menuNames = reviewMenuService.getMenuNames(review.getId());
             review.setMenuNames(menuNames); // ReviewDto에 메뉴 리스트 추가
+
+//            Double tasteS = reviewDao.tasteS(review);
+//            Double cleanS = reviewDao.cleanS(review);
+//            Double kindS = reviewDao.kindS(review);
+//            Double totalS = reviewDao.totalS(review);
         }
 
 //        for (ReviewDto review : reviews) {
@@ -65,14 +81,14 @@ public class RestaurantController {
         m.addAttribute("restaurantDto", restaurantDto);
         m.addAttribute("reviewDto", reviewDto);
 
-
-        int review_count = reviewService.getCountR(id);
-        m.addAttribute("reviewCount", review_count);
+        Integer reviewCount = reviewService.getCountR(id);
+        m.addAttribute("reviewCount", reviewCount);
 
         Double taste_score = reviewService.getTasteAvg(id);
         Double clean_score = reviewService.getCleanAvg(id);
         Double kind_score = reviewService.getKindAvg(id);
         Double total_score = reviewService.getTotalAvg(id);
+
         m.addAttribute("taste_score", taste_score);
         m.addAttribute("clean_score", clean_score);
         m.addAttribute("kind_score", kind_score);

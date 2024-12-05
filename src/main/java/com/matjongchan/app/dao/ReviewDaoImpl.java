@@ -69,7 +69,40 @@ public class ReviewDaoImpl implements ReviewDao {
     };
 
 
-    public int deleteAll() {
+    public double totalS(ReviewDto reviewDto){
+        if (reviewDto == null) {
+            return 0.0;
+        }
+        return session.selectOne(namespace + "totalS", reviewDto);
+
+    };
+    public double kindS(ReviewDto reviewDto){
+        if (reviewDto == null){
+            return 0.0;
+
+        }
+        return session.selectOne(namespace + "kindS", reviewDto);
+    };
+
+
+    public double cleanS(ReviewDto reviewDto){
+        if (reviewDto == null){
+            return 0.0;
+        }
+        return session.selectOne(namespace + "cleanS", reviewDto);
+};
+
+
+    public double tasteS(ReviewDto reviewDto){
+        if (reviewDto == null){
+            return 0.0;
+        }
+        return session.selectOne(namespace + "tasteS", reviewDto);
+
+    };
+
+
+public int deleteAll() {
         return session.delete(namespace+"deleteAll");
     }
 

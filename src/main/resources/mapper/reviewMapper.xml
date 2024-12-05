@@ -102,12 +102,25 @@
         WHERE fk_restaurant_id = #{id}
     </select>
 
+    <select id="getTotalS" parameterType="ReviewDto" resultType="decimal">
+        select total_score from review where id = #{id}
+    </select>
+    <select id="getKindS" parameterType="ReviewDto" resultType="decimal">
+        select kind_score from review where id = #{id}
+    </select>
+    <select id="getCleanS" parameterType="ReviewDto" resultType="decimal">
+        select clean_score from review where id = #{id}
+    </select>
+    <select id="getTasteS" parameterType="ReviewDto" resultType="decimal">
+        select taste_score from review where id = #{id}
+    </select>
 
 
-    <select id="selectFive" parameterType="int" resultType="ReviewDto">
+
+    <select id="selectFive" parameterType="map" resultType="ReviewDto">
         SELECT *
         FROM review
-        WHERE fk_restaurant_id = #{restaurantId}
+        WHERE fk_restaurant_id = #{fk_restaurant_id}
         ORDER BY create_at DESC
         LIMIT #{limit} OFFSET #{offset}
     </select>
