@@ -132,4 +132,6 @@ public interface RestaurantDao {
 
     List<RestaurantDto> getAllConsiderRestaurant(SearchCondition searchCondition);
 
+    int allConsiderSearchGetTotalCount (SearchCondition searchCondition);
+
 }

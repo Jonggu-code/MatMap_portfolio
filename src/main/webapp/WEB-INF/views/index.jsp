@@ -15,7 +15,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index.css?d=1"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index.css?d=2"/>
 
     <!-- 컬러 차트
         메인 컬러 : #ff9625 
@@ -49,11 +49,17 @@
             <div class="main_up"></div>
             <div class="main_down">
                 <div class="pagination">
-                    <button class="page_btn" id="prev_page">&lt;</button>
-                    <div class="page_box">
-                        <!--  페이지네이션 들어오는곳 -->
-                    </div>
-                    <button class="page_btn page_btn_act" id="next_page">&gt;</button>
+<%--                    <c:if test="${tmp.show_prev}">--%>
+<%--                        <button class="page_btn" id="prev_page">&lt;</button>--%>
+<%--                    </c:if>--%>
+
+<%--                    <c:forEach var="i" begin="${tmp.begin_page}" end="${tmp.end_page}">--%>
+<%--                        <a class="page ${i==tmp.curr_page ? "page_active" : ""}" id="page_no${i}">${i}</a>--%>
+<%--                    </c:forEach>--%>
+
+<%--                    <c:if test="${tmp.show_next}">--%>
+<%--                        <button class="page_btn" id="next_page">&gt;</button>--%>
+<%--                    </c:if>--%>
                 </div>
             </div>
         </main>
@@ -207,7 +213,6 @@
                 // data : JSON.stringify({"page_size" : page_size, "offset" : offset,
                 //         "option" : option, "category" : category, "c_address" : c_address}),
                 success:function (sr){
-                    console.log(sr);
                     $('.main_up').html(loadRestaurant(sr));
                 },
                 error: function (request, status, error){
@@ -218,13 +223,13 @@
             $.ajax({
                 method: 'POST',
                 cache: false,
-                url: 'http://localhost:8080/search/category',
+                url: 'http://localhost:8080/search',
                 contentType: 'application/json; charset=UTF-8',
                 data : JSON.stringify({"page_size" : 20, "offset" : 1,
                     "option" : null, "category" : null, "c_address" : null}),
                 success:function (sr){
-                    console.log(sr);
                     $('.main_up').html(loadRestaurant(sr));
+                    $('.pagination').html(loadPagination(sr));
                 },
                 error: function (request, status, error){
                     alert("정보 받아오기 실패");
@@ -232,7 +237,6 @@
             })
         }
 
-        // 처음 불러올떄 호출!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         function reload_list(){
             let option = $('.choose_align').children('p').html();
             let category = $('.choose_tag').children('p').html();
@@ -261,7 +265,6 @@
                 data : JSON.stringify({"page_size" : page_size, "offset" : offset,
                     "option" : option, "category" : category, "c_address" : c_address}),
                 success:function (sr){
-                    console.log(sr);
                     $('.main_up').html(loadRestaurant(sr));
                 },
                 error: function (request, status, error){
@@ -311,8 +314,6 @@
                     // data : JSON.stringify({"page_size" : page_size, "offset" : offset,
                     //         "option" : option, "category" : category, "c_address" : c_address}),
                     success:function (sr){
-                        console.log(sr);
-                        // loadRestaurant();
                         $('.main_up').html(loadRestaurant(sr));
                     },
                     error: function (request, status, error){
@@ -452,10 +453,39 @@
         create_marker();
         return tmp_html;
     }
+    function loadPagination(sr){
+        console.log(sr);
+        let c = sr[0].searchCondition;
+        let show_prev = sr[0].searchCondition.show_prev;
+        let show_next = sr[0].searchCondition.show_next;
+        let begin_page = sr[0].searchCondition.begin_page;
+        let end_page = sr[0].searchCondition.end_page;
+        let curr_page = sr[0].searchCondition.curr_page;
+        // 여기 하다맘
+        tmp_html = "";
+
+        if(show_prev){
+            tmp_html+= `<button class="page_btn" id="prev_page">&lt;</button>`
+        }
+        for(let i = begin_page; i<=end_page; i++){
+            if(i === curr_page){
+                tmp_html+= `<a class="page page_act" id="page_no${'${i}'}">${'${i}'}</a>`
+            }else{
+                tmp_html+= `<a class="page" id="page_no${'${i}'}">${'${i}'}</a>`
+            }
+        }
+        if(show_next){
+            tmp_html+= `<button class="page_btn" id="next_page">&gt;</button>`
+        }
+        return tmp_html;
+    }
+
+
+
     // const btn = document.getElementsByClassName('focus_map')[0];
 
     //페이지네이션 관련되어있는 조회
-    $("#next_page").click(function (){
+    $(".page").click(function (){
         let page_size = 20;
         let offset = '${n_offset}';
         let option = $('.choose_align').children('p').text();
@@ -476,9 +506,8 @@
         }else{
             option = "P";
         }
+        console.log("여기옴!")
     })
-
-    //  list_up(len) <-- 리스트업 (새로운 검색조건으로 검색)할때마다 이거 호출해야함.
     //  len <= 조회한 게시글의 총 개수
 
 </script>

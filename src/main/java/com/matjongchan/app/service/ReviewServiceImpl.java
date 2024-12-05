@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,10 +61,15 @@ public class ReviewServiceImpl implements ReviewService{
 
     @Override
     public List<Double> getTotalScore(int fk_restaurant_id) {
-        List<Double> collect = reviewDao.getTotalScore(fk_restaurant_id)
-                .stream()
-                .map(BigDecimal::doubleValue)
-                .collect(Collectors.toList());
+        List<Double> collect = new ArrayList<>();
+        try{
+            collect = reviewDao.getTotalScore(fk_restaurant_id)
+                    .stream()
+                    .map(BigDecimal::doubleValue)
+                    .collect(Collectors.toList());
+        }catch (NullPointerException e){
+            return List.of(0.0,0.0,0.0);
+        }
         if(collect.size() > 2){
             return collect;
         }else{
