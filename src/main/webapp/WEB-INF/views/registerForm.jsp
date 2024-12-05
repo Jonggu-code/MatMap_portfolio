@@ -98,7 +98,7 @@
 
 
 
-<script src="<c:url value='/resources/js/register.js'/>"></script>
+<script src="<c:url value='/resources/js/register.js?1'/>"></script>
 
 
 </body>

@@ -31,8 +31,13 @@ public class SimpleRestaurant {
     private List<String> menu_name_list;        //식당 메뉴 리스트
     private ReviewDto recentSimpleReview;  //그 식당 최근 리뷰 하나
 
+    private String category;        //카테고리 급추가..
+    private String memo;            //메모도 급추가..
+
+    private SearchCondition searchCondition;
+
     @Builder
-    public SimpleRestaurant(Integer id, String name, String image_url, String address, Double total_score_count, Integer total_review_count, String today_business_state, BusinessHoursDto business_hours_dto, String reservation, String number, Double loc_x, Double loc_y, List<String> menu_name_list, ReviewDto recentSimpleReview) {
+    public SimpleRestaurant(Integer id, String name, String image_url, String address, Double total_score_count, Integer total_review_count, String today_business_state, BusinessHoursDto business_hours_dto, String reservation, String number, Double loc_x, Double loc_y, List<String> menu_name_list, ReviewDto recentSimpleReview, String category, String memo, SearchCondition searchCondition) {
         this.id = id;
         this.name = name;
         this.image_url = image_url;
@@ -47,5 +52,8 @@ public class SimpleRestaurant {
         this.loc_y = loc_y;
         this.menu_name_list = menu_name_list;
         this.recentSimpleReview = recentSimpleReview;
+        this.category = category;
+        this.memo = memo;
+        this.searchCondition = searchCondition;
     }
 }

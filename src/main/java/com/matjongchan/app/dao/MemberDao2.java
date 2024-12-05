@@ -23,14 +23,13 @@ public interface MemberDao2 {
     List<MemberImageDto> selectAllImage();
     // 2) 프로필 이미지 조회
     MemberImageDto selectMemberImage(Integer id);
-
     // 4) 프로필 이미지 삭제
     int deleteMemberImage(Integer id);
 
     // 3) 프로필 이미지 수정
     int updateMemberImage(MemberImageDto dto);
 
-
+    MemberImageDto selectImageOne(Integer id);
 
     List<ReviewDto> selectMemberReviews(String user_id); // user_id 기준으로 리뷰 조회
 
@@ -43,6 +42,8 @@ public interface MemberDao2 {
     List<MemberReviewsDto> selectAllMemberReview();
     MemberReviewsDto selectMemberReview(Integer id);
 
+
+    MemberImageDto selectMemberImageOne();
 
     List<FavoriteWithRestaurantDto> selectFavorites(String user_id);  // user_id 기준으로 즐겨찾기 조회
     int deleteFavorite(String user_id);  // user_id 기준으로 즐겨찾기 삭제

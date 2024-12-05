@@ -85,6 +85,12 @@
         ORDER BY id DESC
     </select>
 
+    <select id="selectOne" resultType="MemberImageDto">
+        SELECT * FROM member_image
+        ORDER BY id DESC
+        LIMIT 1, 1;
+    </select>
+
     <!-- 7) 프로필 이미지 조회 -->
     <select id="selectMemberImage" parameterType="Integer" resultType="MemberImageDto">
         SELECT * FROM member_image WHERE id = #{id}

@@ -16,10 +16,12 @@ import com.matjongchan.app.domain.entity.ReviewDto;
 import com.matjongchan.app.service.MemberService;
 import com.matjongchan.app.service.RestaurantService;
 import lombok.extern.slf4j.Slf4j;
+import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,13 +30,13 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @Controller
@@ -44,13 +46,23 @@ public class MemberController {
     @Autowired
     RestaurantService restaurantService;
 
+
+    File file = new File(".");
+    private final String root_path = "C:\\Users\\82109\\Desktop\\spring\\MatMap_portfolio___\\src\\main\\webapp\\resources\\img\\profile_img";
+    private boolean isValid(String id) {
+        MemberDto member = memberService.getMember(id);
+
+        if (member != null) return false;
+        return true;
+    }
+
     /*
     1. 로그인 컨트롤러 - get, post 방식
      */
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "redirect:/main";
+        return "redirect:/";
     }
 
     @GetMapping("/login")
@@ -110,7 +122,7 @@ public class MemberController {
         return "registerForm";
     }
 
-    private static final String F_PATH = "C:/Users/82109/Desktop/spring/matjongchan_git/MatMap_portfolio/src/main/webapp/resources/img/";
+//    private static final String F_PATH = "C:/Users/82109/Desktop/spring/matjongchan_git/MatMap_portfolio/src/main/webapp/resources/img/profile_img/";
     private static final int defaultImageId = 1; // 기본 이미지의 id값 1
 
 @PostMapping("/join")
@@ -146,19 +158,20 @@ public String register(MemberDto memberDto, Model m, @RequestParam(value = "prof
             String uniqueFileName = System.currentTimeMillis() + "_" + originalName;
 
             // 상대 경로로 변경 (resources/static/img/)
-            String saveFile = "src/main/resources/static/img/" + uniqueFileName;  // 저장경로 설정
+            File saveFile = new File(root_path , uniqueFileName);
             // 파일 저장
-            mf.transferTo(new File(saveFile));
+            mf.transferTo(saveFile);
 
+            log.info("이미지경로 ->" + saveFile.getAbsolutePath());
             // 새로운 이미지 정보를 MemberImageDto에 설정
             MemberImageDto memberImageDto = new MemberImageDto();
             memberImageDto.setName(uniqueFileName);
-            memberImageDto.setImg_url("/img/" + uniqueFileName);  // 웹 경로로 설정
+            memberImageDto.setImg_url("/resources/img/profile_img/" + uniqueFileName);  // 웹 경로로 설정
             memberImageDto.setOrder_number(1);
 
             // DB에 행 삽입 후 id 가져오기
             int newImageId = memberService.addMemberImage(memberImageDto);
-            Integer memberImageId = memberService.getAllImages().get(0).getId();
+            Integer memberImageId = memberService.selectRecentImageOne().getId();
 
             // member_image table의 id를 memberDto에 설정
             memberDto.setFk_image_id(memberImageId);
@@ -186,12 +199,7 @@ public String register(MemberDto memberDto, Model m, @RequestParam(value = "prof
 }
 
 
-    private boolean isValid(String id) {
-        MemberDto member = memberService.getMember(id);
 
-        if (member != null) return false;
-        return true;
-    }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -225,9 +233,9 @@ public String register(MemberDto memberDto, Model m, @RequestParam(value = "prof
         model.addAttribute("favorites", favorites);
 
         // 회원 이미지 조회
-        MemberImageDto memberImage = memberService.getMemberImage(member.getId());
+        MemberImageDto memberImage = memberService.getMemberImage(member.getFk_image_id());
         model.addAttribute("memberImage", memberImage);
-
+        log.info(memberImage.getImg_url());
         return "myPage";
 
     }
@@ -239,59 +247,58 @@ public String register(MemberDto memberDto, Model m, @RequestParam(value = "prof
     /*
     3. 마이페이지 - '내가 찜한 식당' 목록
      */
-    @GetMapping("/myPageRestaurant")
-    public String myPageRestaurant(HttpSession session, Model model) {
-        // 세션에 있는 id 값 가져오기
-        String userId = (String) session.getAttribute("id");
-        // 로그인하지 않은 사용자는 로그인페이지로 리다이렉트
-        if (userId == null) {
-            return "redirect:/login";
-        }
-
-        // 회원의 즐겨찾기 레스토랑 정보 조회(이름, c_address, d_address, number, reservation, total_score_count, search_tag)
-        List<FavoriteWithRestaurantDto> favorites = memberService.getMemberFavorites(userId);
-        model.addAttribute("favorites", favorites);
-
-        return "myPageRestaurant";
-    }
-
-
-//     오류 나서 일단 지움.
-
 //    @GetMapping("/myPageRestaurant")
 //    public String myPageRestaurant(HttpSession session, Model model) {
-//        // 1. 세션에 있는 id 값 가져오기
+//        // 세션에 있는 id 값 가져오기
 //        String userId = (String) session.getAttribute("id");
-//
 //        // 로그인하지 않은 사용자는 로그인페이지로 리다이렉트
 //        if (userId == null) {
 //            return "redirect:/login";
 //        }
 //
-//        // 2. userId 이용해서 List<FavoriteWithRestaurantDto> favorites 생성
+//        // 회원의 즐겨찾기 레스토랑 정보 조회(이름, c_address, d_address, number, reservation, total_score_count, search_tag)
 //        List<FavoriteWithRestaurantDto> favorites = memberService.getMemberFavorites(userId);
-//
-//        // 3. 리스트인 favorites의 각 요소들의 'fk_restaurant_id' 구하기
-//        List<Integer> restaurantIds = new ArrayList<>();
-//        for (FavoriteWithRestaurantDto favorite : favorites) {
-//            restaurantIds.add(favorite.getFk_restaurant_id());
-//        }
-//
-//        // 4. fk_restaurant_id를 이용해서 restaurant 테이블의 id 구하기
-//        List<RestaurantDetail> restaurantDetails = new ArrayList<>();
-//        for (Integer restaurantId : restaurantIds) {
-//            // 5. 구한 restaurant 테이블의 id로 RestaurantDetail getRestaurantDetail(int restaurantId) 서비스 접근
-//            RestaurantDetail restaurantDetail = restaurantService.getRestaurantDetail(restaurantId);
-//            if (restaurantDetail != null) {
-//                restaurantDetails.add(restaurantDetail); // 상세 정보 리스트에 추가
-//            }
-//        }
-//
-//        // 6. 모델에 보내기
-//        model.addAttribute("restaurantDetails", restaurantDetails);
+//        model.addAttribute("favorites", favorites);
 //
 //        return "myPageRestaurant";
 //    }
+
+
+
+    @GetMapping("/myPageRestaurant")
+    public String myPageRestaurant(HttpSession session, Model model) {
+        // 1. 세션에 있는 id 값 가져오기
+        String userId = (String) session.getAttribute("id");
+
+        // 로그인하지 않은 사용자는 로그인페이지로 리다이렉트
+        if (userId == null) {
+            return "redirect:/login";
+        }
+
+        // 2. userId 이용해서 List<FavoriteWithRestaurantDto> favorites 생성
+        List<FavoriteWithRestaurantDto> favorites = memberService.getMemberFavorites(userId);
+
+        // 3. 리스트인 favorites의 각 요소들의 'fk_restaurant_id' 구하기
+        List<Integer> restaurantIds = new ArrayList<>();
+        for (FavoriteWithRestaurantDto favorite : favorites) {
+            restaurantIds.add(favorite.getFk_restaurant_id());
+        }
+
+        // 4. fk_restaurant_id를 이용해서 restaurant 테이블의 id 구하기
+        List<RestaurantDetail> restaurantDetails = new ArrayList<>();
+        for (Integer restaurantId : restaurantIds) {
+            // 5. 구한 restaurant 테이블의 id로 RestaurantDetail getRestaurantDetail(int restaurantId) 서비스 접근
+            RestaurantDetail restaurantDetail = restaurantService.getRestaurantDetail(restaurantId);
+            if (restaurantDetail != null) {
+                restaurantDetails.add(restaurantDetail); // 상세 정보 리스트에 추가
+            }
+        }
+
+        // 6. 모델에 보내기
+        model.addAttribute("restaurantDetails", restaurantDetails);
+
+        return "myPageRestaurant";
+    }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -320,6 +327,80 @@ public String register(MemberDto memberDto, Model m, @RequestParam(value = "prof
 
         return "myPageReview";
     }
+
+        /*
+    4. 마이페이지 - '프로필 수정하기'
+     */
+    @GetMapping("/changeMemInfo")
+    public String changeMemInfo(HttpSession session, Model model){
+        // 1. 세션에 있는 id 값 가져오기
+        String userId = (String) session.getAttribute("id");
+
+        // 로그인하지 않은 사용자는 로그인페이지로 리다이렉트
+        if (userId == null) {
+            return "redirect:/login";
+        }
+
+        // 2. 로그인된 사용자의 마이페이지 정보 처리
+        MemberDto member = memberService.getMember(userId);
+        model.addAttribute("member", member);
+
+        return "changeMemInfo";
+    }
+
+//    4 - 1) 프로필 수정 사항 업데이트하기
+    @PostMapping("/changeMemInfo")
+    public String changeMemInfo(MemberDto memberDto, @RequestParam(value = "profile_image", required = false) MultipartFile mf) {
+
+        // 이미지 업로드 처리 (mf가 비어있지 않은 경우에만 실행)
+        if (mf != null && !mf.isEmpty()) {
+            try {
+                String originalName = mf.getOriginalFilename();
+                String uniqueFileName = System.currentTimeMillis() + "_" + originalName;
+
+                // 상대 경로로 변경 (resources/static/img/)
+                File saveFile = new File(root_path , uniqueFileName);
+                // 저장경로 설정
+                // 파일 저장
+                mf.transferTo(saveFile);
+
+                // 새로운 이미지 정보를 MemberImageDto에 설정
+                MemberImageDto memberImageDto = new MemberImageDto();
+                memberImageDto.setName(uniqueFileName);
+                memberImageDto.setImg_url("/resources/img/profile_img/" + uniqueFileName);  // 웹 경로로 설정
+                memberImageDto.setOrder_number(1);
+
+                // DB에 행 삽입 후 id 가져오기
+                int newImageId = memberService.updateMemberImage(memberImageDto);
+                Integer memberImageId = memberService.selectRecentImageOne().getId();
+
+                // member_image table의 id를 memberDto에 설정
+                memberDto.setFk_image_id(memberImageId);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "redirect:/join?msg=파일 업로드 실패";
+            }
+        } else {
+            // 사용자가 사진을 첨부하지 않으면 기본 이미지 id 설정
+            memberDto.setFk_image_id(defaultImageId);
+        }
+
+        // DB에 저장
+        if (memberService.updateMember(memberDto) == 1) {
+            return "redirect:/mypage";
+        } else {
+            String msg = null;
+            try {
+                msg = URLEncoder.encode("문제가 발생했습니다. 잠시 후에 다시 시도하세요.", "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            return "redirect:/changeMemInfo?msg=" + msg;
+        }
+    }
+
+
+
 }
 
 

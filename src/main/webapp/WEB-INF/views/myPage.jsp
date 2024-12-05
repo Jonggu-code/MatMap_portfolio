@@ -16,8 +16,6 @@
 <body>
 
 
-
-
 <div id="wrap" class="wrap">
     <div class="inner">
         <!-- 좌측 메뉴 -->
@@ -25,10 +23,7 @@
             <!-- 좌측 프로필  -->
             <div class="aside_menu1">
                 <div class="profile_imgBox">
-                    <img src="<c:url value='${memberImage.img_url}'/>"
-                                 class="profile_img"/>
-
-
+                    <img src="<c:url value='${memberImage.img_url}'/>" class=profile_img>
                 </div>
 
             <%--                <div class="profile_imgBox">--%>
@@ -66,7 +61,9 @@
             <!-- 1번 프로필 영역 -->
             <div class="box box1">
                 <h2>${member.name}님 소개</h2> <!-- 회원이름 -->
-                <input type="button" class="fix_btn" value="프로필 수정하기">
+                <a href="<c:url value='/changeMemInfo'/>"><input type="button" class="fix_btn" value="프로필 수정하기"></a>
+
+
                 <div class="text_area">${member.introduce}</div>    <!-- 자기소개 -->
             </div>
 
@@ -86,7 +83,7 @@
                             <c:when test="${favorites.size() > 0}">
                                 <!-- 첫 번째 찜한 목록 -->
                                 <div class="contentsBox menu1">
-                                    <div class="menu_img"></div>
+<%--                                    <div class="menu_img"></div>--%>
                                     <div class="menu_infor">
                                         <c:set var="firstFavorite" value="${favorites[0]}" />
                                         <div class="txt food">${firstFavorite.restaurant_name}</div>
@@ -109,7 +106,7 @@
                             <c:otherwise>
                                 <!-- 찜한 음식점이 없을 경우 "정보 없음" 표시 -->
                                 <div class="contentsBox menu1">
-                                    <div class="menu_img"></div>
+<%--                                    <div class="menu_img"></div>--%>
                                     <div class="menu_infor">
                                         <div class="txt food">정보 없음</div>
                                         <div class="txt tag">찜한 음식점이 없습니다.</div>
@@ -123,7 +120,7 @@
                         <c:when test="${favorites.size() > 1}">
                             <!-- 두 번째 찜한 음식점 -->
                             <div class="contentsBox menu2">
-                                <div class="menu_img"></div>
+<%--                                <div class="menu_img"></div>--%>
                                 <div class="menu_infor">
                                     <c:set var="secondFavorite" value="${favorites[1]}" />
                                     <div class="txt food">${secondFavorite.restaurant_name}</div>
@@ -146,7 +143,7 @@
                         <c:otherwise>
                             <!-- 두 번째 찜한 음식점이 없을 경우 "정보 없음" 표시 -->
                             <div class="contentsBox menu2">
-                                <div class="menu_img"></div>
+<%--                                <div class="menu_img"></div>--%>
                                 <div class="menu_infor">
                                     <div class="txt food">정보 없음</div>
                                     <div class="txt tag">찜한 음식점이 없습니다.</div>
@@ -232,4 +229,34 @@
     </div>
 </div>
 </body>
-</html>
+
+<script>
+$(document).ready(function () {
+
+    $(document).on('keydown', '#search_keyword', function (e) {
+        if (e.keyCode === 13) {
+            e.preventDefault(); //폼 제출 방지
+            let page_size = 20;
+            let offset = 0;
+            let option = $('.choose_align').children('p').text();
+            let category = $('.choose_tag').children('p').text();
+            let c_address = $('.choose_location').children('p').text();
+            let keyword = $('#search_keyword_query').val();
+            if (option === "맛집 정렬 순서") {
+                option = null;
+            }
+            if (category === "전체") {
+                category = null;
+            }
+            if (c_address === "지도 표시 지역") {
+                c_address = null;
+            }
+            if (keyword === "무엇을 먹어야 잘 먹었다고 소문날까?") {
+                keyword = "";
+            }
+
+        }
+    })
+})
+</script>
+

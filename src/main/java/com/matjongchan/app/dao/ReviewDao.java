@@ -43,4 +43,7 @@ public interface ReviewDao {
     List<BigDecimal> getTotalScore(int fk_restaurant_id);
 
     List<BigDecimal> getTotalScoreCountList(int fk_restaurant_id);
+
+
+
 }

@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="uId" value="${sessionScope.id }" />
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +15,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index.css?dt=1"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index.css?d=1"/>
 
     <!-- 컬러 차트
         메인 컬러 : #ff9625 
@@ -34,18 +35,27 @@
                 <form id="search_keyword" class="KeywordSearch" action='<c:url value="/search/keyword"/>'>
                     <fieldset class="fld_inside">
                         <legend class="screen_out">검색어 입력폼</legend>
-                        <input type="text" class="search_input" id="search_keyword_query" name="keyword" autocomplete="off" placeholder="무엇을 먹어야 잘 먹었다고 소문날까?" maxlength="100">
-                        <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><g><path d="M20.87,20.17l-5.59-5.59C16.35,13.35,17,11.75,17,10c0-3.87-3.13-7-7-7s-7,3.13-7,7s3.13,7,7,7c1.75,0,3.35-0.65,4.58-1.71 l5.59,5.59L20.87,20.17z M10,16c-3.31,0-6-2.69-6-6s2.69-6,6-6s6,2.69,6,6S13.31,16,10,16z"></path></g></svg>
+                        <input type="text" class="search_input" id="search_keyword_query" name="keyword" autocomplete="off" placeholder="무엇을 먹어야 잘 먹었다고 소문날까?" maxlength="100" value="${a_keyword}">
+                        <svg class="search_submit" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><g><path d="M20.87,20.17l-5.59-5.59C16.35,13.35,17,11.75,17,10c0-3.87-3.13-7-7-7s-7,3.13-7,7s3.13,7,7,7c1.75,0,3.35-0.65,4.58-1.71 l5.59,5.59L20.87,20.17z M10,16c-3.31,0-6-2.69-6-6s2.69-6,6-6s6,2.69,6,6S13.31,16,10,16z"></path></g></svg>
                     </fieldset>
                 </form>
             </div>
             <ul class="header_menu">
                 <a class="header_menu_item" href="<c:url value="board"/>"><p>게시판</p></a>
-                <a class="header_menu_item" href="./rank_page_score.html"><p>월간 맛집</p></a>
+                <a class="header_menu_item" href="<c:url value="rank"/>"><p>월간 맛집</p></a>
             </ul>
         </header>
         <main class="main">
-
+            <div class="main_up"></div>
+            <div class="main_down">
+                <div class="pagination">
+                    <button class="page_btn" id="prev_page">&lt;</button>
+                    <div class="page_box">
+                        <!--  페이지네이션 들어오는곳 -->
+                    </div>
+                    <button class="page_btn page_btn_act" id="next_page">&gt;</button>
+                </div>
+            </div>
         </main>
     </aside>
     <div id="map">
@@ -142,43 +152,86 @@
                 <div class="random_food"></div>
             </div>
             <div class="map_box_R">
-                <div class="focus_map"></div>
+                <div class="focus_map">
+                    <svg xmlns="http://www.w3.org/2000/svg"><path stroke="#000" stroke-linejoin="round" stroke-width="1.5" d="M20 4 3 11l7 3 3 7 7-17Z"></path></svg>
+                </div>
                 <div class="guest_menu" tabindex="-1">
                     <svg viewBox="0 0 24 24"><g><path d="M21,6H3V5h18V6z M21,11H3v1h18V11z M21,17H3v1h18V17z"></path></g></svg>
                     <div class="guest_icon"></div>
-                    <div class="guest_menu_box"></div>
+                    <div class="guest_menu_box">
+                        <c:choose>
+                            <c:when test="${sessionScope.id == null}">
+                                <p class="login_com">로그인</p>
+                                <p class="register_com">회원가입</p>
+                            </c:when>
+                            <c:when test="${sessionScope.id != null}">
+                                <p class="myPage_com">마이페이지</p>
+                                <p class="myFavorite_com">마이 맛집 </p>
+                                <p class="myReview_com">마이 후기</p>
+
+                                <p class="logout_com">로그아웃</p>
+                            </c:when>
+                        </c:choose>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+</body>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b4e6868c7b5fe35c80d9b43d3190c872"></script>
-
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
-<script src="<c:url value="resources/js/map.js?2"/>"></script>
-<script src="<c:url value="resources/js/index.js?1"/>"></script>
+<script src="<c:url value="resources/js/map_hoho.js?9"/>"></script>
+<script src="<c:url value="resources/js/index_hoho.js?1"/>"></script>
+</html>
 
 <script>
     $(document).ready(function (){
         let target_1 = document.getElementsByClassName('map_box_L')[0];
         let config = { attributes: true, childList: true, subtree: true };
         // 처음 불러올떄 호출!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        $.ajax({
-            method: 'POST',
-            cache: false,
-            url: 'http://localhost:8080/search/category',
-            contentType: 'application/json; charset=UTF-8',
-            data : JSON.stringify({"page_size" : 20, "offset" : 1,
-                "option" : null, "category" : null, "c_address" : null}),
-            success:function (sr){
-                console.log(sr);
-                $('.main').html(loadRestaurant(sr));
-            },
-            error: function (request, status, error){
-                alert("정보 받아오기 실패");
+        if("${a_keyword}" != null && "${a_keyword}" !== ''){
+            let page_size = 20;
+            let offset = 0;
+            let keyword = $('#search_keyword_query').val();
+            if(keyword === "무엇을 먹어야 잘 먹었다고 소문날까?"){
+                keyword = "";
             }
-        })
+            $.ajax({
+                method: 'POST',
+                cache: false,
+                url: 'http://localhost:8080/search/keyword',
+                contentType: 'application/json; charset=UTF-8',
+                data : JSON.stringify({"page_size" : page_size, "offset" : offset, "keyword" : keyword}),
+                // data : JSON.stringify({"page_size" : page_size, "offset" : offset,
+                //         "option" : option, "category" : category, "c_address" : c_address}),
+                success:function (sr){
+                    console.log(sr);
+                    $('.main_up').html(loadRestaurant(sr));
+                },
+                error: function (request, status, error){
+                    alert("정보 받아오기 실패");
+                }
+            })
+        }else{
+            $.ajax({
+                method: 'POST',
+                cache: false,
+                url: 'http://localhost:8080/search/category',
+                contentType: 'application/json; charset=UTF-8',
+                data : JSON.stringify({"page_size" : 20, "offset" : 1,
+                    "option" : null, "category" : null, "c_address" : null}),
+                success:function (sr){
+                    console.log(sr);
+                    $('.main_up').html(loadRestaurant(sr));
+                },
+                error: function (request, status, error){
+                    alert("정보 받아오기 실패");
+                }
+            })
+        }
+
         // 처음 불러올떄 호출!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         function reload_list(){
             let option = $('.choose_align').children('p').html();
@@ -209,7 +262,7 @@
                     "option" : option, "category" : category, "c_address" : c_address}),
                 success:function (sr){
                     console.log(sr);
-                    $('.main').html(loadRestaurant(sr));
+                    $('.main_up').html(loadRestaurant(sr));
                 },
                 error: function (request, status, error){
                     alert("정보 받아오기 실패");
@@ -260,7 +313,7 @@
                     success:function (sr){
                         console.log(sr);
                         // loadRestaurant();
-                        $('.main').html(loadRestaurant(sr));
+                        $('.main_up').html(loadRestaurant(sr));
                     },
                     error: function (request, status, error){
                         alert("정보 받아오기 실패");
@@ -296,12 +349,12 @@
                 url: 'http://localhost:8080/search/near',
                 contentType: 'application/json; charset=UTF-8',
                 data : JSON.stringify({"page_size" : page_size, "offset" : offset,
-                        "option" : option, "category" : category, "c_address" : c_address,
-                        "loc_nw_x" : ne_x, "loc_nw_y" : ne_y, "loc_se_x" : sw_x, "loc_se_y" : sw_y}),
+                    "option" : option, "category" : category, "c_address" : c_address,
+                    "loc_nw_x" : ne_x, "loc_nw_y" : ne_y, "loc_se_x" : sw_x, "loc_se_y" : sw_y}),
                 success:function (sr){
-                    console.log(sr);
+                    // console.log(sr);
                     // loadRestaurant();
-                    $('.main').html(loadRestaurant(sr));
+                    $('.main_up').html(loadRestaurant(sr));
                 },
                 error: function (request, status, error){
                     alert("정보 받아오기 실패");
@@ -309,6 +362,9 @@
 
             })
         })
+        //     검색버튼누르면 검색기능으로
+
+
     })
 
     function loadRestaurant(sr){
@@ -391,13 +447,40 @@
                     `
             }
             tmp_html+= `</div>`;
-        })
+        });
         xy_location(sr);
         create_marker();
         return tmp_html;
     }
-
     // const btn = document.getElementsByClassName('focus_map')[0];
+
+    //페이지네이션 관련되어있는 조회
+    $("#next_page").click(function (){
+        let page_size = 20;
+        let offset = '${n_offset}';
+        let option = $('.choose_align').children('p').text();
+        let category = $('.choose_tag').children('p').text();
+        let c_address = $('.choose_location').children('p').text();
+        let keyword = $('#search_keyword_query').val();
+        if(option === "맛집 정렬 순서"){
+            option = null;
+        }
+        if(category === "전체"){
+            category = null;
+        }
+        if(c_address === "지도 표시 지역"){
+            c_address = null;
+        }
+        if(option === "리뷰 많은 순"){
+            option = "R";
+        }else{
+            option = "P";
+        }
+    })
+
+    //  list_up(len) <-- 리스트업 (새로운 검색조건으로 검색)할때마다 이거 호출해야함.
+    //  len <= 조회한 게시글의 총 개수
+
 </script>
-</body>
-</html>
+
+
