@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="<c:url value="/resources/css/common.css?2"/>">
-    <link rel="stylesheet" href="<c:url value="/resources/css/rank_page_score.css?1"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/css/rank_page_score.css?2"/>">
 </head>
 <body>
 <div id="wrap">
@@ -107,7 +107,6 @@
                         </c:choose>
                     </div>
                 </div>
-
                 <!-- 배너 = 스위퍼 -->
                 <div class="container_banner swiper rank_swiper0">
                     <div class="swiper-button-prev0 banner_btn_L"><p>&lt</p></div>
@@ -127,7 +126,6 @@
                         <div class="banner_img swiper-slide count_11"></div>
                     </div>
                 </div>
-
                 <!-- 메인 박스의 메인 -->
                 <div class="title_box">
 
@@ -200,7 +198,7 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="<c:url value='/resources/js/common.js'/>"></script>
-<script src="<c:url value='/resources/js/rank_page_score.js'/>"></script>
+<script src="<c:url value='/resources/js/rank_page_score.js?1'/>"></script>
 <script src="<c:url value="/resources/js/swiper.js"/>"></script>
 
 <script>
@@ -212,6 +210,18 @@ $(document).ready(function () {
             $(".KeywordSearch").submit();
         }
     })
+
+    let banner_img_length = $('.banner_img').length
+
+    // 배너에 이미지 넣어주는 반복문
+    for(i=0; i<banner_img_length; i++){
+        $(`.count_${'${i}'}`).css({
+            background: `url(<c:url value="/resources/img/dummy_img/${'${i+1}'}.jpg"/>) no-repeat center / cover`
+        })
+    }
+
+
+
 })
 </script>
 

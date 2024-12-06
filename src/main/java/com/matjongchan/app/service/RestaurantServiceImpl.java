@@ -307,6 +307,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         List<SimpleRestaurant> simpleRestaurantList = new ArrayList<>();
         for (RestaurantDto dto : popularRestaurant) {
             SimpleRestaurant simpleRestaurant = SimpleRestaurant.builder()
+                    .id(dto.getId())
                     .name(dto.getName())
                     .category(CategoryChanger.numberIntoCategory(dto.getFk_category()))
                     .address(dto.getC_address() +" "+ dto.getD_address())
@@ -327,14 +328,26 @@ public class RestaurantServiceImpl implements RestaurantService {
         searchCondition.setCategory_num(CategoryChanger.categoryIntoNumber(searchCondition.getCategory()));
 
         List<RestaurantDto> restaurantDtoList = restaurantDao.getAllConsiderRestaurant(searchCondition);
+
+        if(searchCondition.getTotal_count() == null){
+            int total_count = restaurantDao.allConsiderSearchGetTotalCount(searchCondition);
+            searchCondition.setTotal_count(total_count);
+            searchCondition.setPage_size(20);
+            searchCondition.setCurr_page(1);
+            SearchCondition.updateCondition(searchCondition);
+        }
+
         List<SimpleRestaurant> simpleRestaurantList = new ArrayList<>();
 
         for (RestaurantDto dto : restaurantDtoList) {
             SimpleRestaurant simpleRestaurant = SimpleRestaurant.builder()
+                    .id(dto.getId())
                     .name(dto.getName())
                     .category(CategoryChanger.numberIntoCategory(dto.getFk_category()))
                     .address(dto.getC_address() +" "+ dto.getD_address())
                     .number(dto.getNumber())
+                    .image_url(getImgUrl(dto))
+                    .menu_name_list(getMenu_name_list(dto))
                     .reservation(dto.getReservation())
                     .total_score_count(dto.getTotal_score_count())
                     .total_review_count(dto.getTotal_review_count())

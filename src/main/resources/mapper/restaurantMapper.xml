@@ -36,7 +36,7 @@
 <!--    .모두고려 검색 -->
     <select id="allConsiderSearch" parameterType="SearchCondition" resultType="RestaurantDto">
         SELECT *
-        FROM restaurant
+        FROM restaurant as r
         WHERE true
         <if test="c_address != null">
             and r.c_address = #{c_address}
@@ -57,6 +57,21 @@
             </otherwise>
         </choose>
         limit #{offset} , #{page_size}
+    </select>
+
+    <select id="allConsiderSearchGetTotalCount" parameterType="SearchCondition" resultType="int">
+        SELECT count(*)
+        FROM restaurant
+        WHERE true
+        <if test="c_address != null">
+            and r.c_address = #{c_address}
+        </if>
+        <if test="category != null">
+            and r.fk_category = #{category_num}
+        </if>
+        <if test="keyword != null">
+            r.search_tag LIKE concat('%',#{keyword},'%')
+        </if>
     </select>
 
     <!--  주어진 검색조건으로 검색  -->

@@ -194,16 +194,16 @@ $(document).ready(function(){
         pos = 0;
     }
 
-    function create_page(){
-        for(let i=0; i<all_rest_length; i++){
-            let tmp = `<a href="#" id="page_no${i+1}" class="page">${i+1}</a>`
-            $('.page_box').append(tmp)
-        }
-        $('#page_no1').addClass('page_act')
-    } 
-
-    create_page()
-    
+    // function create_page(){
+    //     for(let i=0; i<all_rest_length; i++){
+    //         let tmp = `<a href="#" id="page_no${i+1}" class="page">${i+1}</a>`
+    //         $('.page_box').append(tmp)
+    //     }
+    //     $('#page_no1').addClass('page_act')
+    // }
+    //
+    // create_page()
+    //
     // 페이지 수가 5개 이하일때 양쪽 버튼 둘다 lock
     if(all_rest_length < 5){
         prev_btn_lock = false;

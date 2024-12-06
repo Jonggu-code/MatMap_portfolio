@@ -118,6 +118,11 @@ public class RestaurantDaoImpl implements RestaurantDao {
     public List<RestaurantDto> getAllConsiderRestaurant(SearchCondition searchCondition) {
         return session.selectList(namespace + "allConsiderSearch", searchCondition);
     }
+
+    @Override
+    public int allConsiderSearchGetTotalCount(SearchCondition searchCondition) {
+        return session.selectOne(namespace + "allConsiderSearchGetTotalCount", searchCondition);
+    }
 }
 
 
