@@ -71,14 +71,14 @@ public class ReviewDaoImpl implements ReviewDao {
 
     public double totalS(ReviewDto reviewDto){
         if (reviewDto == null) {
-            return 0.0;
+            return 0;
         }
         return session.selectOne(namespace + "totalS", reviewDto);
 
     };
     public double kindS(ReviewDto reviewDto){
         if (reviewDto == null){
-            return 0.0;
+            return 0;
 
         }
         return session.selectOne(namespace + "kindS", reviewDto);
@@ -87,7 +87,7 @@ public class ReviewDaoImpl implements ReviewDao {
 
     public double cleanS(ReviewDto reviewDto){
         if (reviewDto == null){
-            return 0.0;
+            return 0;
         }
         return session.selectOne(namespace + "cleanS", reviewDto);
 };
@@ -95,7 +95,7 @@ public class ReviewDaoImpl implements ReviewDao {
 
     public double tasteS(ReviewDto reviewDto){
         if (reviewDto == null){
-            return 0.0;
+            return 0;
         }
         return session.selectOne(namespace + "tasteS", reviewDto);
 
@@ -105,6 +105,11 @@ public class ReviewDaoImpl implements ReviewDao {
 public int deleteAll() {
         return session.delete(namespace+"deleteAll");
     }
+
+
+    public int lastOne(){
+        return session.selectOne(namespace+"lastOne");
+    };
 
     public int insert(ReviewDto dto) {
         return session.insert(namespace+"insert", dto);

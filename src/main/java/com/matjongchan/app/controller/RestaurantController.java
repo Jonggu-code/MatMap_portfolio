@@ -1,9 +1,8 @@
 package com.matjongchan.app.controller;
 
+import com.matjongchan.app.dao.RestaurantDao;
 import com.matjongchan.app.dao.ReviewDao;
-import com.matjongchan.app.domain.dto.RestaurantDetail;
-import com.matjongchan.app.domain.dto.ReviewDetail;
-import com.matjongchan.app.domain.dto.ReviewDetailSearchCondition;
+import com.matjongchan.app.domain.dto.*;
 import com.matjongchan.app.domain.entity.OtherImageDto;
 import com.matjongchan.app.domain.entity.RestaurantDto;
 import com.matjongchan.app.domain.entity.ReviewDto;
@@ -34,6 +33,9 @@ public class RestaurantController {
     ReviewService reviewService;
     @Autowired
     ReviewDao reviewDao;
+    @Autowired
+    RestaurantDao restaurantDao;
+
 
     private final RestaurantService restaurantService;
 
@@ -54,13 +56,25 @@ public class RestaurantController {
         RestaurantDetail restaurantDetail = restaurantService.getRestaurantDetail(id);
         m.addAttribute("restaurantDetail", restaurantDetail);
 
+        List<RelationRestaurant> relationRestaurant = restaurantDetail.getRelation_restaurant_list();
+        m.addAttribute("relationRestaurant", relationRestaurant);
+        if (relationRestaurant.size() != 0){
+            for (int i = 0; i < relationRestaurant.size(); i++){
+                Integer relId = restaurantDao.getIdByName(relationRestaurant.get(i).getRestaurant_name());
+                double relScore = reviewService.getTotalAvg(relId);
+                int relCount = reviewService.getCountR(relId);
+                m.addAttribute("relCount", relCount);
+                m.addAttribute("relScore", relScore);
+            }
+        }
+
+
         Map<String, Object> param = new HashMap<>();
         param.put("offset", 0);
         param.put("limit", 5);
         param.put("fk_restaurant_id", id);
 
         List<ReviewDto> reviews = null;
-
         reviews = reviewService.getListR(id);
         m.addAttribute("reviews", reviews);
 
@@ -68,10 +82,16 @@ public class RestaurantController {
             List<String> menuNames = reviewMenuService.getMenuNames(review.getId());
             review.setMenuNames(menuNames); // ReviewDto에 메뉴 리스트 추가
 
-//            Double tasteS = reviewDao.tasteS(review);
-//            Double cleanS = reviewDao.cleanS(review);
-//            Double kindS = reviewDao.kindS(review);
-//            Double totalS = reviewDao.totalS(review);
+            Double tasteS = reviewDao.tasteS(review);
+            Double cleanS = reviewDao.cleanS(review);
+            Double kindS = reviewDao.kindS(review);
+            Double totalS = reviewDao.totalS(review);
+
+            m.addAttribute("tasteS", tasteS);
+            m.addAttribute("cleanS", cleanS);
+            m.addAttribute("kindS", kindS);
+            m.addAttribute("totalS", totalS);
+
         }
 
 //        for (ReviewDto review : reviews) {

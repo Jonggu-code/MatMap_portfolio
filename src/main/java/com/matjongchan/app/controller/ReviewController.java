@@ -3,6 +3,7 @@ package com.matjongchan.app.controller;
 import com.matjongchan.app.dao.OtherImageDao;
 
 import com.matjongchan.app.dao.RestaurantDao;
+import com.matjongchan.app.dao.ReviewDao;
 import com.matjongchan.app.domain.dto.ReviewDetail;
 import com.matjongchan.app.domain.entity.*;
 import com.matjongchan.app.service.*;
@@ -36,6 +37,8 @@ public class ReviewController {
     RestaurantServiceImpl restaurantService;
     @Autowired
     RestaurantDao restaurantDao;
+    @Autowired
+    ReviewDao reviewDao;
 
     File file = new File(".");
     private final String root_path = file.getAbsolutePath().split("work")[0]+= "\\work\\MatMap_portfolio\\src\\main\\webapp\\resources\\img\\other_img";
@@ -130,6 +133,7 @@ public class ReviewController {
     @PostMapping("/reviewWrite2/{r_id}") // 리뷰 작성 두 번째 페이지 메서드
     public String reviewWriteSubmit( @PathVariable("r_id") int id, HttpSession session, ReviewDto reviewDto, @RequestParam(value = "files", required = false) List<MultipartFile> files, @RequestParam("selected_menu[]") List<Integer> selectedMenus){
 
+        int orderId = reviewDao.lastOne() + 1;
         int order_no = 1;
         log.info("joshua1");
         OtherImageDto otherImageDto;
@@ -186,7 +190,7 @@ public class ReviewController {
                     otherImageDto.setName(savedFilename);
                     otherImageDto.setImg_url(saveFile); // 실제 저장된 경로
                     otherImageDto.setOrder_number(order_no);
-                    otherImageDto.setFk_review_id(reviewDto.getId());
+                    otherImageDto.setFk_review_id(orderId);
                     otherImageDto.setFk_restaurant_id(id);
                     order_no++;
                     imageList.add(otherImageDto);
@@ -200,7 +204,7 @@ public class ReviewController {
             }
 
         }
-        return "forward:/";
+        return "redirect:/";
     }
 
     @PostMapping("/modify") // 게시글 수정 메서드

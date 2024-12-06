@@ -169,7 +169,7 @@
     font-size: 18px;
     margin-top: 5px;
     color: #000;
-    cursor: pointer;
+    user-select: none;
 }
 
 .rest_save {
@@ -261,17 +261,6 @@
     position: relative;
     top: -5px;
 }
-#open_time, #break_time, #close_time {
-    font-size: 20px;
-    display: none;
-    margin-left: 5px;
-
-    position: relative;
-    top: -5px;
-}
-#open_time { color: #ff9625; display: block;}
-#break_time { color: #10bb00; }
-#close_time { color: #ff0000; }
 
 .day_box > p:last-child {
     margin-top: 10px;
@@ -365,7 +354,7 @@
 
 #reco_container {
     width: 300px;
-    height: 660px;
+    height: auto;
 
     position: absolute;
     right: 60px;
@@ -402,11 +391,13 @@
     font-weight: 600;
     color: #929292;
 }
-#reco_star, .reco_fill_star {
+.reco_star, .reco_fill_star {
     display: block;
     width: 20px;
     background-size: 20px;
     top: 0.5px;
+
+    position: relative;
 }
 .reco_title_box {
     width: 100%;
@@ -454,9 +445,9 @@
     gap: 3px;
 
 
-    position: relative;
-    top: 20px;
-    left: -20px;
+    position: absolute;
+    top: 102%;
+    left: 0;
 
     transition: all 0.5s;
 }
@@ -578,7 +569,6 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    /*display: none;*/
 }
 .rev_con_main_box {
     width: 100%;
@@ -588,9 +578,8 @@
     box-sizing: border-box;
     position: relative;
 
-    /*display: flex;*/
-    flex-wrap: wrap;
     display: none;
+    flex-wrap: wrap;
 }
 .rev_con_more_btn {
     width: 100%;
@@ -726,4 +715,16 @@
 .con1 > p:nth-child(2) {
     color: #ff9625;
     font-weight: 900;
+}
+
+
+.empty_box {
+    width: 100%;
+    padding: 20px 10px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background: #ebebeb;
+    text-align: center;
+
+    /* display: none; */
 }

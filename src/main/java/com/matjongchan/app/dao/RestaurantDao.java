@@ -134,6 +134,8 @@ public interface RestaurantDao {
 
     List<RestaurantDto> getAllConsiderRestaurant(SearchCondition searchCondition);
 
+    Integer getIdByName(String restaurantName);
+
     int allConsiderSearchGetTotalCount (SearchCondition searchCondition);
 
 }

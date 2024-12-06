@@ -53,7 +53,12 @@
 
     <!-- 게시글 한개 불러오기-->
     <select id="select" parameterType="int" resultType="ReviewDto">
-        SELECT * from review where id = #{id}
+        SELECT id fROM review order by id desc limit 1
+    </select>
+
+    <!-- 마지막 리뷰의 id 가져오기 -->
+    <select id="lastOne" resultType="int">
+        SELECT id from review order by id desc limit 1
     </select>
 
     <!--   수정: 글 정보(제목, 내용) 수정시 글 번호 체크, 글쓴이와 시도하는 사용자가 같은지도 필수로 확인 해야함-->
@@ -102,16 +107,16 @@
         WHERE fk_restaurant_id = #{id}
     </select>
 
-    <select id="getTotalS" parameterType="ReviewDto" resultType="decimal">
+    <select id="totalS" parameterType="ReviewDto" resultType="double">
         select total_score from review where id = #{id}
     </select>
-    <select id="getKindS" parameterType="ReviewDto" resultType="decimal">
+    <select id="kindS" parameterType="ReviewDto" resultType="double">
         select kind_score from review where id = #{id}
     </select>
-    <select id="getCleanS" parameterType="ReviewDto" resultType="decimal">
+    <select id="cleanS" parameterType="ReviewDto" resultType="double">
         select clean_score from review where id = #{id}
     </select>
-    <select id="getTasteS" parameterType="ReviewDto" resultType="decimal">
+    <select id="tasteS" parameterType="ReviewDto" resultType="double">
         select taste_score from review where id = #{id}
     </select>
 

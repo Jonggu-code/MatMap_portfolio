@@ -50,7 +50,7 @@
 
   <fieldset class="review_main">
     <div class="logo_box">
-      <a href="index.jsp" class="logo">맛맵 - 메인화면</a>
+      <a href="<c:url value='/'/>"class="logo">맛맵 - 메인화면</a>
     </div>
     <!-- 메인 화면단 -->
     <div class="container contents_area">

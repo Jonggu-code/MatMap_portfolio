@@ -123,6 +123,12 @@ public class RestaurantDaoImpl implements RestaurantDao {
     public int allConsiderSearchGetTotalCount(SearchCondition searchCondition) {
         return session.selectOne(namespace + "allConsiderSearchGetTotalCount", searchCondition);
     }
+
+    @Override
+    public Integer getIdByName(String restaurantName){
+        return session.selectOne(namespace + "getIdByName",restaurantName);
+    };
 }
+
 
 

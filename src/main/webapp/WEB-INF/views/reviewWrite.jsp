@@ -34,7 +34,7 @@
 <form action="<c:url value='/showReviewWrite2/${id}'/>" method="post" id="wrap">
     <fieldset class="review_main">
         <div class="logo_box">
-            <a href="index.jsp" class="logo">맛맵 - 메인화면</a>
+            <a  href="<c:url value='/'/>" class="logo">맛맵 - 메인화면</a>
         </div>
         <div class="container contents_area">
             <!-- 식당 이름 칸 -->

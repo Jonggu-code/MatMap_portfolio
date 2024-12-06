@@ -236,6 +236,10 @@
         WHERE oi.id = #{id}
     </select>
 
+    <select id="getIdByName" parameterType="String" resultType="int">
+        SELECT id FROM restaurant WHERE name=#{restaurantName};
+    </select>
+
 
 </mapper>
 

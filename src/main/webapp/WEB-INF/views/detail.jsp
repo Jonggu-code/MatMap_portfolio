@@ -26,8 +26,8 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="<c:url value='/resources/css/common.css' /> ">
-    <link rel="stylesheet" href="<c:url value='/resources/css/detail.css' /> ">
+    <link rel="stylesheet" href="<c:url value='/resources/css/common.css?1' /> ">
+    <link rel="stylesheet" href="<c:url value='/resources/css/detail.css?3' /> ">
 
     <!-- 컬러 차트
         메인 컬러 : #ff9625
@@ -62,7 +62,7 @@
 
             <!-- 로고 -->
             <div class="logo_box">
-                <a class="site_logo" href="./index.html">MatMap</a>
+                <a class="site_logo" href="<c:url value='/'/>">MatMap</a>
             </div>
             <div class="search_box" id="search">
                 <form id="search_keyword" class="KeywordSearch" action="./index.html">
@@ -114,6 +114,9 @@
             </div>
         </div>
 
+
+        <%--            //////////////////////////////--%>
+
         <!-- 메인 콘테이너 박스 -->
         <div class="container_main contents_area">
             <div class="container_box" id="main_box">
@@ -123,13 +126,13 @@
                     <!-- 별점 스코어 박스 -->
                     <div class="star_box">
                         <span id="review_star" class="empty_star">
-                            <p class="fill_star"></p>
+                            <p class="fill_star" id="star_main"></p>
                         </span>
-                        <span id="review_score">${total_score==null?"리뷰가 없습니다.":total_score}</span>
+                        <span id="review_score" class="score_main">${total_score}</span>
                     </div>
 
                     <!-- 별점 스코어 밑 후기 갯수 관련 -->
-                    <div id="review_leng">후기 ${reviewCount==null?"리뷰가 없습니다.":reviewCount}개</div>
+                    <div id="review_leng">후기 ${reviewCount}개</div>
                 </div>
 
                 <!-- 식당 정보 관련 박스 -->
@@ -145,7 +148,7 @@
                 <div id="rest_info_box">
                     <p id="rest_d_addr"><i class="rest_addr_icon"></i>${restaurantDetail.restaurant_address}</p>
                     <p id="rest_p_num"><i class="rest_num_icon"></i>${restaurantDetail.restaurant_number}</p>
-                    <p id="rest_info"><i class="rest_info_icon"></i>예약가능, 주차가능, 배달가능, 포장불가</p>
+                    <p id="rest_info"><i class="rest_info_icon"></i>${restaurantDetail.restaurant_reservation.equals("")?"예약정보 없음":restaurantDetail.restaurant_reservation}</p>
                 </div>
                 <p id="rest_intro">${restaurantDetail.restaurant_memo}</p>
             </div>
@@ -157,9 +160,19 @@
                     <p id="time_title">영업시간</p>
                     <div class="time_box">
                         <p class="time_icon"></p>
-                        <p id="open_time">영업중</p>
-                        <p id="break_time">브레이크 타임</p>
-                        <p id="close_time">영업종료</p>
+
+                        <c:choose>
+                            <c:when test="${restaurantDetail.getToday_business_state().equals('열림')}">
+                                <p class="open_time">${restaurantDetail.getToday_business_state()}</p>
+                            </c:when>
+                            <c:when test="${restaurantDetail.getToday_business_state().equals('브레이크 타임')}">
+                                <p class="break_time">${restaurantDetail.getToday_business_state()}</p>
+                            </c:when>
+                            <c:otherwise>
+                                <p class="close_time">${restaurantDetail.getToday_business_state()}</p>
+                            </c:otherwise>
+
+                        </c:choose>
                     </div>
                 </div>
 
@@ -172,7 +185,7 @@
                     <p>금  ${restaurantDetail.business_hours_dto.fri.equals("")?"휴무":restaurantDetail.business_hours_dto.fri}</p>
                     <p>토  ${restaurantDetail.business_hours_dto.sat.equals("")?"휴무":restaurantDetail.business_hours_dto.sat}</p>
                     <p>일  ${restaurantDetail.business_hours_dto.sun.equals("")?"휴무":restaurantDetail.business_hours_dto.sun}</p>
-                    <p>브레이크 타임  ${restaurantDetail.business_hours_dto.break_time.equals("")?"X":restaurantDetail.business_hours_dto.sun}</p>
+                    <p>브레이크 타임:  ${restaurantDetail.business_hours_dto.break_time.equals("")?"X":restaurantDetail.business_hours_dto.break_time}</p>
                 </div>
             </div>
 
@@ -203,67 +216,39 @@
             </div>
 
             <!-- 현재 식당 태그 관련 추천 맛집 -->
+        <c:choose>
+            <c:when test="${relationRestaurant.size()!=0}">
             <div class="container_box" id="reco_container">
                 <div class="container_title">
-                    <p>한식</p>
+                    <p>${restaurantDetail.restaurant_category}</p>
                     <p>추천 맛집</p>
                 </div>
-                <div class="reco_box reco_box1">
+                <c:forEach var="relList" items="${relationRestaurant}" begin="0" end="2">
+                 <div class="reco_box reco_box1">
                     <div class="reco_title_box">
-                        <div class="reco_title">준성식 한식</div>
+                        <div class="reco_title">${relList.getRestaurant_name()}</div>
                         <div class="reco_score">
-                            <span id="reco_star" class="reco_empty_star">
+                            <span class="reco_empty_star reco_star">
                                 <p class="reco_fill_star"></p>
                             </span>
-                            <span id="reco_score">4.9</span>
-                            <span>(93)</span>
+                            <span class="reco_score">${relScore}</span>
+                            <span>(${relCount})</span>
                         </div>
                     </div>
-                    <div class="reco_addr">경기도 고양시 일산구 유령동</div>
+                    <div class="reco_addr">${relList.getRestaurant_address()}</div>
                     <div class="reco_img_box">
                         <div class="reco_img reco_img1"></div>
                         <div class="reco_img reco_img2"></div>
                     </div>
                 </div>
-                <div class="reco_box reco_box1">
-                    <div class="reco_title_box">
-                        <div class="reco_title">준성식 한식</div>
-                        <div class="reco_score">
-                            <span id="reco_star" class="reco_empty_star">
-                                <p class="reco_fill_star"></p>
-                            </span>
-                            <span id="reco_score">4.9</span>
-                            <span>(93)</span>
-                        </div>
-                    </div>
-                    <div class="reco_addr">경기도 고양시 일산구 유령동</div>
-                    <div class="reco_img_box">
-                        <div class="reco_img reco_img1"></div>
-                        <div class="reco_img reco_img2"></div>
-                    </div>
-                </div>
-                <div class="reco_box reco_box1">
-                    <div class="reco_title_box">
-                        <div class="reco_title">준성식 한식</div>
-                        <div class="reco_score">
-                            <span id="reco_star" class="reco_empty_star">
-                                <p class="reco_fill_star"></p>
-                            </span>
-                            <span id="reco_score">4.9</span>
-                            <span>(93)</span>
-                        </div>
-                    </div>
-                    <div class="reco_addr">경기도 고양시 일산구 유령동</div>
-                    <div class="reco_img_box">
-                        <div class="reco_img reco_img1"></div>
-                        <div class="reco_img reco_img2"></div>
-                    </div>
-                </div>
+                </c:forEach>
                 <div class="move_top">
                     <p>TOP</p>
                     <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><g><path d="M18,9l-6,6L6,9H18z"></path></g></svg>
                 </div>
             </div>
+            </c:when>
+        </c:choose>
 
 
 
@@ -325,11 +310,11 @@
                     <!-- 평점 관련 ( 점수 관련 ) -->
                     <div class="rev_con_score_list">
                         <div class="rcs_list_title">
-                            <p>매우만족 (20)</p>
-                            <p>만족 (1)</p>
-                            <p>보통 (1)</p>
-                            <p>불만 (1)</p>
-                            <p>매우불만 (0)</p>
+                            <p>매우만족 (<i id="bar_biggood">${restaurantDetail.getRestaurant_total_rating().getFifth()}</i>)</p>
+                            <p>만족 (<i id="bar_good">${restaurantDetail.getRestaurant_total_rating().getFourth()}</i>)</p>
+                            <p>보통 (<i id="bar_common">${restaurantDetail.getRestaurant_total_rating().getThird()}</i>)</p>
+                            <p>불만 (<i id="bar_bad">${restaurantDetail.getRestaurant_total_rating().getSecond()}</i>)</p>
+                            <p>매우불만 (<i id="bar_bigbad">${restaurantDetail.getRestaurant_total_rating().getFirst()}</i>)</p>
                         </div>
                         <div class="rcs_list_score">
                             <div class="empty_score">
@@ -365,10 +350,10 @@
                                 <div class="rc_user_info">
                                     <div id="user_name">${review.reviewer}</div>
                                     <div id="user_info">
-                                        <p>평균 별점</p>
-                                        <p>3.21</p>
-                                        <p>후기</p>
-                                        <p>-3000</p>
+<%--                                        <p>성별</p>--%>
+<%--                                        <p>${}</p>--%>
+<%--                                        <p>나이</p>--%>
+<%--                                        <p>-3000</p>--%>
                                     </div>
                                 </div>
                             </div>
@@ -481,8 +466,8 @@
 
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script src="<c:url value='/resources/js/common.js' /> "></script>
-<script src="<c:url value='/resources/js/detail.js' /> "></script>
+<script src="<c:url value='/resources/js/common.js?1' /> "></script>
+<script src="<c:url value='/resources/js/detail.js?3' /> "></script>
 <script src="./js/swiper.js"></script>
 
 <script>

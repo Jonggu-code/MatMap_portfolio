@@ -26,6 +26,8 @@ public interface ReviewDao {
 
     int deleteAll();
 
+    int lastOne();
+
     int insert(ReviewDto dto);
 
     List<ReviewDto> selectAll();
