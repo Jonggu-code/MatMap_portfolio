@@ -21,7 +21,7 @@
     <header>
       <div class="logo">
         <a href="<c:url value='/'/>">
-          <img src="<c:url value='/resources/static/img/logo_400x100.png'/>" alt="로고 이미지">
+          <img src="<c:url value='/resources/img/logo_400x100.png'/>" alt="로고 이미지">
 
         </a>
 
@@ -57,6 +57,12 @@
             <div class="ip1"><input type="text" id="user_id" name="user_id" required placeholder="아이디" class="input_txt" value="${ param.u_id != null && !param.u_id.isEmpty() ? param.u_id : '' }"  ></div>
 
             <div class="ip2"><input type="password" id="password"  name="password" required placeholder="비밀번호" class="input_txt" value="${ URLDecoder.decode(param.u_pw, "utf-8") }" ></div>
+
+            <div class="ip2"><input type="password" id="passwordTrue"  name="password" required placeholder="비밀번호 확인" class="input_txt" value="${ URLDecoder.decode(param.u_pw, "utf-8") }" ></div>
+            <div id="passwordMessage" style="margin-top: 5px;"></div>
+
+
+
             <div class="ip3"><input type="email" id="email"  name="email" required placeholder="이메일" class="input_txt" value="${ URLDecoder.decode(param.u_email, "utf-8") }" ></div>
             <div class="ip3"><input type="text" name="address" required placeholder="주소" class="input_txt" value="${ URLDecoder.decode(param.u_address, "utf-8") }" ></div>
 
@@ -98,7 +104,7 @@
 
 
 
-<script src="<c:url value='/resources/js/register.js?1'/>"></script>
+<script src="<c:url value='/resources/js/register.js'/>"></script>
 
 
 </body>

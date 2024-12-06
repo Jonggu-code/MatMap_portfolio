@@ -36,7 +36,9 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -204,41 +206,45 @@ public String register(MemberDto memberDto, Model m, @RequestParam(value = "prof
 /////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-    /*
-    3. 마이페이지 컨트롤러 - get 방식
-     */
-    @GetMapping("/mypage")
-    public String myPage(HttpSession session, Model model){
-        // 세션에 있는 id 값 가져오기
-        String userId = (String) session.getAttribute("id");
-        // 로그인하지 않은 사용자는 로그인페이지로 리다이렉트
-        if(userId == null){
-            return "redirect:/login";
-        }
-
-        // 로그인된 사용자의 마이페이지 정보 처리
-        MemberDto member = memberService.getMember(userId);
-        model.addAttribute("member", member);
-
-        // 회원이 작성한 리뷰 개수 조회
-        int reviewCount = memberService.selectMemberReviewCount(userId);
-        model.addAttribute("reviewCount", reviewCount);
-
-        // 회원 리뷰 조회(제목, 내용, 레스토랑 이름)
-        List<ReviewDto> reviews = memberService.getMemberReviews(userId);
-        model.addAttribute("reviews", reviews);
-
-        // 회원의 즐겨찾기 레스토랑 정보 조회(이름, c_address, d_address, number, reservation, total_score_count, search_tag)
-        List<FavoriteWithRestaurantDto> favorites = memberService.getMemberFavorites(userId);
-        model.addAttribute("favorites", favorites);
-
-        // 회원 이미지 조회
-        MemberImageDto memberImage = memberService.getMemberImage(member.getFk_image_id());
-        model.addAttribute("memberImage", memberImage);
-        log.info(memberImage.getImg_url());
-        return "myPage";
-
-    }
+//    /*
+//    3. 마이페이지 컨트롤러 - get 방식
+//     */
+//    @GetMapping("/mypage")
+//    public String myPage(HttpSession session, Model model){
+//        // 세션에 있는 id 값 가져오기
+//        String userId = (String) session.getAttribute("id");
+//        // 로그인하지 않은 사용자는 로그인페이지로 리다이렉트
+//        if(userId == null){
+//            return "redirect:/login";
+//        }
+//System.out.println("userId: " + userId  );
+//        // 로그인된 사용자의 마이페이지 정보 처리
+//        MemberDto member = memberService.getMember(userId);
+//        model.addAttribute("member", member);
+//
+//System.out.println("member: " + member  );
+//        // 회원이 작성한 리뷰 개수 조회
+//        int reviewCount = memberService.selectMemberReviewCount(userId);
+//        model.addAttribute("reviewCount", reviewCount);
+//
+//System.out.println("reviewCount: " + reviewCount  );
+//        // 회원 리뷰 조회(제목, 내용, 레스토랑 이름)
+//        List<ReviewDto> reviews = memberService.getMemberReviews(userId);
+//        model.addAttribute("reviews", reviews);
+//System.out.println("reviews: " + reviews  );
+//
+//        // 회원의 즐겨찾기 레스토랑 정보 조회(이름, c_address, d_address, number, reservation, total_score_count, search_tag)
+//        List<FavoriteWithRestaurantDto> favorites = memberService.getMemberFavorites(userId);
+//        model.addAttribute("favorites", favorites);
+//System.out.println("favorites: " + favorites  );
+//
+//        // 회원 이미지 조회
+//        MemberImageDto memberImage = memberService.getMemberImage(member.getFk_image_id());
+//        model.addAttribute("memberImage", memberImage);
+////        log.info(memberImage.getImg_url());
+//        return "myPage";
+//
+//    }
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -267,6 +273,7 @@ public String register(MemberDto memberDto, Model m, @RequestParam(value = "prof
 
     @GetMapping("/myPageRestaurant")
     public String myPageRestaurant(HttpSession session, Model model) {
+
         // 1. 세션에 있는 id 값 가져오기
         String userId = (String) session.getAttribute("id");
 
@@ -324,6 +331,18 @@ public String register(MemberDto memberDto, Model m, @RequestParam(value = "prof
         // 3. 회원 리뷰 조회(reviewer, taste_score, clean_score, kind_score, total_score, create_at, title, content)
         List<ReviewDto> reviews = memberService.getMemberReviews(userId);
         model.addAttribute("reviews", reviews);
+
+        // 4. 리뷰와 매칭되는 레스토랑 정보 조회 및 저장
+        Map<Integer, RestaurantDetail> restaurantMap = new HashMap<>();
+        for(ReviewDto review: reviews){
+            int restaurantId = review.getfk_restaurant_id();
+            RestaurantDetail restaurantDetail = restaurantService.getRestaurantDetail(restaurantId);
+            if(restaurantDetail != null){
+                restaurantMap.put(restaurantId, restaurantDetail);
+            }
+        }
+        model.addAttribute("restaurantMap", restaurantMap);
+
 
         return "myPageReview";
     }
@@ -399,7 +418,102 @@ public String register(MemberDto memberDto, Model m, @RequestParam(value = "prof
         }
     }
 
+    /*
+    3. 마이페이지 컨트롤러 - get 방식
+     */
+    @GetMapping("/mypage2")
+    public String myPage2(HttpSession session, Model model){
+        // 세션에 있는 id 값 가져오기
+        String userId = (String) session.getAttribute("id");
+        // 로그인하지 않은 사용자는 로그인페이지로 리다이렉트
+        if(userId == null){
+            return "redirect:/login";
+        }
+        System.out.println("userId: " + userId  );
+        // 로그인된 사용자의 마이페이지 정보 처리
+        MemberDto member = memberService.getMember(userId);
+        model.addAttribute("member", member);
 
+        System.out.println("member: " + member  );
+        // 회원이 작성한 리뷰 개수 조회
+        int reviewCount = memberService.selectMemberReviewCount(userId);
+        model.addAttribute("reviewCount", reviewCount);
+
+        System.out.println("reviewCount: " + reviewCount  );
+        // 회원 리뷰 조회(제목, 내용, 레스토랑 이름)
+        List<ReviewDto> reviews = memberService.getMemberReviews(userId);
+        model.addAttribute("reviews", reviews);
+        System.out.println("reviews: " + reviews  );
+
+        // 회원의 즐겨찾기 레스토랑 정보 조회(이름, c_address, d_address, number, reservation, total_score_count, search_tag)
+        List<FavoriteWithRestaurantDto> favorites = memberService.getMemberFavorites(userId);
+        model.addAttribute("favorites", favorites);
+        System.out.println("favorites: " + favorites  );
+
+        // 회원 이미지 조회
+        MemberImageDto memberImage = memberService.getMemberImage(member.getFk_image_id());
+        model.addAttribute("memberImage", memberImage);
+//        log.info(memberImage.getImg_url());
+
+//        ////////////////////////////////////////////////////
+        // 2. userId 이용해서 List<FavoriteWithRestaurantDto> favorites 생성
+
+        // 3. 리스트인 favorites의 각 요소들의 'fk_restaurant_id' 구하기
+        List<Integer> restaurantIds = new ArrayList<>();
+        for (FavoriteWithRestaurantDto favorite : favorites) {
+            restaurantIds.add(favorite.getFk_restaurant_id());
+        }
+
+        // 4. fk_restaurant_id를 이용해서 restaurant 테이블의 id 구하기
+        List<RestaurantDetail> restaurantDetails = new ArrayList<>();
+        for (Integer restaurantId : restaurantIds) {
+            // 5. 구한 restaurant 테이블의 id로 RestaurantDetail getRestaurantDetail(int restaurantId) 서비스 접근
+            RestaurantDetail restaurantDetail = restaurantService.getRestaurantDetail(restaurantId);
+            if (restaurantDetail != null) {
+                restaurantDetails.add(restaurantDetail); // 상세 정보 리스트에 추가
+            }
+        }
+
+        // 6. 모델에 보내기
+        model.addAttribute("restaurantDetails", restaurantDetails);
+
+
+        /////////////////////////////////////
+
+
+        // 4. 리뷰와 매칭되는 레스토랑 정보 조회 및 저장
+        Map<Integer, RestaurantDetail> restaurantMap = new HashMap<>();
+        for(ReviewDto review: reviews){
+            int restaurantId = review.getfk_restaurant_id();
+            RestaurantDetail restaurantDetail = restaurantService.getRestaurantDetail(restaurantId);
+            if(restaurantDetail != null){
+                restaurantMap.put(restaurantId, restaurantDetail);
+            }
+        }
+        model.addAttribute("restaurantMap", restaurantMap);
+
+
+        return "myPage2";
+
+    }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /*
+    3. 마이페이지 - '리뷰 삭제' 목록
+     */
+//    @PostMapping("/remove")
+//    public String remove(HttpSession session, Integer id, Model m){
+//        // 세션에 있는 id 값 가져오기
+//        String userId = (String) session.getAttribute("id");
+//        // 로그인하지 않은 사용자는 로그인페이지로 리다이렉트
+//        if(userId == null){
+//            return "redirect:/login";
+//        }
+//
+//
+//    }
 
 }
 
