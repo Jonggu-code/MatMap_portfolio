@@ -349,3 +349,25 @@ body::-webkit-scrollbar {
 .open_time { color: #ff9625; display: block;}
 .break_time { color: #8a8a8a; display: block;}
 .close_time { color: #ff0000; display: block;}
+
+/*수정, 삭제 버튼 추가사항*/
+
+.review_edit_delete {
+    width: 100%;
+    margin-top: 10px;
+    padding-right: 5px;
+    box-sizing: border-box;
+
+    font-size: 16px;
+    font-weight: 600;
+    color: #6e6e6e;
+
+    display: flex;
+    justify-content: flex-end;
+}
+.review_edit_delete > a:hover {
+    color: #ff9625;
+}
+.review_edit_delete > p {
+    margin: 0 5px;
+}

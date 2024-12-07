@@ -86,9 +86,16 @@
         <div class="container_main contents_area">
             <!-- 리뷰가 없는 경우 -->
             <c:if test="${empty reviews}">
-                <div class="no_reviews">
-                    <p>작성한 리뷰가 없습니다.</p>
+<%--                <div class="no_reviews">--%>
+<%--                    <p>작성한 리뷰가 없습니다.</p>--%>
+<%--                </div>--%>
+                <div class="empty_box">
+                    <img class="empty_icon" src="./img/empty_img.png" alt="">
+                    <p class="empty_favo_rest">
+                        '내가 작성한 후기가 없습니다.'
+                    </p>
                 </div>
+
             </c:if>
 
             <!-- 리뷰 리스트 출력 -->

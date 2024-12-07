@@ -148,7 +148,14 @@
                 </c:forEach>
             </c:when>
             <c:otherwise>
-                <p>찜한 식당이 없습니다.</p>
+<%--                <p>찜한 식당이 없습니다.</p>--%>
+                <div class="empty_box">
+                    <img class="empty_icon" src="./img/empty_img.png" alt="">
+                    <p class="empty_favo_rest">
+                       '내가 찜한 맛집이 없습니다.'
+                    </p>
+                </div>
+
             </c:otherwise>
         </c:choose>
 

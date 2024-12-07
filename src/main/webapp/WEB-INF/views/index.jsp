@@ -46,6 +46,7 @@
             </ul>
         </header>
         <main class="main">
+
             <div class="main_up"></div>
             <div class="main_down">
                 <div class="pagination">
