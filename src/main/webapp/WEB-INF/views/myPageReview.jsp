@@ -134,9 +134,16 @@
                                     </div>
                                 </div>
 
+                                <c:set var = "restaurantDetail" value="${restaurantMap[review.fk_restaurant_id]}" />
+
                                 <!-- 리뷰 내용 -->
-                                <div class="rc_user_txt_box">${review.title} <br>${review.content}</div>
+                                <div class="rc_user_txt_box">식당명: ${restaurantDetail.restaurant_name}<br>리뷰제목: ${review.title} <br>리뷰내용:${review.content}
+                                </div>
                             </div>
+                            <div>수정</div>
+                            <a href="<c:url value="/remove"/>">
+                                <div>삭제</div>
+                            </a>
                         </div>
                     </div>
                 </c:forEach>

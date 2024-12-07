@@ -1,3 +1,29 @@
+// 비밀번호 확인
+// 입력 필드와 메시지 요소 가져오기
+const passwordField = document.getElementById('password');
+const passwordConfirmField = document.getElementById('passwordTrue');
+const messageField = document.getElementById('passwordMessage');
+
+// 비밀번호 확인 실시간 검증
+passwordConfirmField.addEventListener('input', () => {
+    const password = passwordField.value; // 비밀번호 입력 값
+    const passwordConfirm = passwordConfirmField.value; // 비밀번호 확인 입력 값
+
+    // 조건 확인 및 메시지 표시
+    if (password !== passwordConfirm) {
+        messageField.textContent = '일치하지 않는 비밀번호입니다.';
+        messageField.style.color = 'red';
+    } else {
+        messageField.textContent = '일치합니다';
+        messageField.style.color = 'yellowgreen';
+    }
+});
+
+
+
+
+
+
  // 프로필
  function previewImage(event) {
     var reader = new FileReader();
@@ -12,6 +38,7 @@
      // 입력 필드 값 가져오기
      const userId = document.getElementById("user_id").value.trim();
      const password = document.getElementById("password").value.trim();
+     const passwordConfirmField = document.getElementById('passwordTrue').value.trim();
      const email = document.getElementById("email").value.trim();
      const phoneNumber = document.getElementById("phone_number").value.trim();
      const gender = document.querySelector('input[name="gender"]:checked'); // 선택된 성별
@@ -32,6 +59,10 @@
          return false;
      }
 
+     if(password != passwordConfirmField){
+         msgDiv.textContent = "입력하신 비밀번호와 비밀번호 확인이 일치하지 않습니다.";
+         return false;
+     }
      if (!email || !email.includes("@")) {
          msgDiv.textContent = "유효하지 않은 이메일 형식입니다.";
          return false;
