@@ -364,6 +364,7 @@ public class RestaurantServiceImpl implements RestaurantService {
                     .total_score_count(dto.getTotal_score_count())
                     .total_review_count(dto.getTotal_review_count())
                     .today_business_state(getNowOpen(restaurantDao.getBusinessHours(dto.getId())))
+                    .recentSimpleReview(getReviewDto(dto))
                     .memo(dto.getMemo())
                     .searchCondition(searchCondition)
                     .build();
