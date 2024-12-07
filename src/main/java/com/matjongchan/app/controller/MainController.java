@@ -107,9 +107,7 @@ public class MainController {
     @ResponseBody
     @PostMapping("/search")
     public ResponseEntity<List<SimpleRestaurant>> search(HttpSession session, @RequestBody SearchCondition searchCondition) {
-
         return new ResponseEntity<>(restaurantService.getAllConsiderRestaurant(searchCondition),HttpStatus.OK);
-
     }
 
 }

@@ -52,7 +52,6 @@ function setBounds() {
 
 var tmp_position = [];
 function xy_location(data){
-
     for(let i = 0; i<tmp_position.length; i++){
         marker_list[i].setMap(null);
     }

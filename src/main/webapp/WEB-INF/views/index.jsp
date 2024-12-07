@@ -188,38 +188,20 @@
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b4e6868c7b5fe35c80d9b43d3190c872"></script>
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
-<script src="<c:url value="resources/js/map_hoho.js?9"/>"></script>
-<script src="<c:url value="resources/js/index_hoho.js?1"/>"></script>
+<script src="<c:url value="resources/js/map_hoho.js?1"/>"></script>
+<script src="<c:url value="resources/js/index_hoho.js?2"/>"></script>
 </html>
 
 <script>
     $(document).ready(function (){
         let target_1 = document.getElementsByClassName('map_box_L')[0];
         let config = { attributes: true, childList: true, subtree: true };
-        // 처음 불러올떄 호출!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+        // 다른창에서 검색창으로 검색시 -------
         if("${a_keyword}" != null && "${a_keyword}" !== ''){
-            let page_size = 20;
-            let offset = 0;
-            let keyword = $('#search_keyword_query').val();
-            if(keyword === "무엇을 먹어야 잘 먹었다고 소문날까?"){
-                keyword = "";
-            }
-            $.ajax({
-                method: 'POST',
-                cache: false,
-                url: 'http://localhost:8080/search/keyword',
-                contentType: 'application/json; charset=UTF-8',
-                data : JSON.stringify({"page_size" : page_size, "offset" : offset, "keyword" : keyword}),
-                // data : JSON.stringify({"page_size" : page_size, "offset" : offset,
-                //         "option" : option, "category" : category, "c_address" : c_address}),
-                success:function (sr){
-                    $('.main_up').html(loadRestaurant(sr));
-                },
-                error: function (request, status, error){
-                    alert("정보 받아오기 실패");
-                }
-            })
+            loadAjax();
         }else{
+            // 처음 불러올떄 호출---------------------
             $.ajax({
                 method: 'POST',
                 cache: false,
@@ -230,42 +212,8 @@
                 success:function (sr){
                     $('.main_up').html(loadRestaurant(sr));
                     $('.pagination').html(loadPagination(sr));
-                },
-                error: function (request, status, error){
-                    alert("정보 받아오기 실패");
-                }
-            })
-        }
-
-        function reload_list(){
-            let option = $('.choose_align').children('p').html();
-            let category = $('.choose_tag').children('p').html();
-            let c_address = $('.choose_location').children('p').html();
-            let page_size = 20;
-            let offset = 0;
-            if(option === "맛집 정렬 순서"){
-                option = null;
-            }
-            if(category === "전체"){
-                category = null;
-            }
-            if(c_address === "지도 표시 지역"){
-                c_address = null;
-            }
-            if(option === "리뷰 많은 순"){
-                option = "R";
-            }else{
-                option = "P";
-            }
-            $.ajax({
-                method: 'POST',
-                cache: false,
-                url: '<c:url value="/search/category"/>',
-                contentType: 'application/json; charset=UTF-8',
-                data : JSON.stringify({"page_size" : page_size, "offset" : offset,
-                    "option" : option, "category" : category, "c_address" : c_address}),
-                success:function (sr){
-                    $('.main_up').html(loadRestaurant(sr));
+                    xy_location(sr);
+                    create_marker();
                 },
                 error: function (request, status, error){
                     alert("정보 받아오기 실패");
@@ -276,53 +224,22 @@
         let callback = function (mutationsList, observer){
             for (let mutation of mutationsList){
                 if(mutation.type == 'childList'){
-                    reload_list();
+                    loadAjax();
                 }
             }
         };
         let observer = new MutationObserver(callback);
         observer.observe(target_1,config);
 
+        //검색어 창으로 검색어 넣은 검색 ---------------------------
         $(document).on('keydown', '#search_keyword', function (e){
             if(e.keyCode === 13){
                 e.preventDefault(); //폼 제출 방지
-                let page_size = 20;
-                let offset = 0;
-                let option = $('.choose_align').children('p').text();
-                let category = $('.choose_tag').children('p').text();
-                let c_address = $('.choose_location').children('p').text();
-                let keyword = $('#search_keyword_query').val();
-                if(option === "맛집 정렬 순서"){
-                    option = null;
-                }
-                if(category === "전체"){
-                    category = null;
-                }
-                if(c_address === "지도 표시 지역"){
-                    c_address = null;
-                }
-                if(keyword === "무엇을 먹어야 잘 먹었다고 소문날까?"){
-                    keyword = "";
-                }
-
-                $.ajax({
-                    method: 'POST',
-                    cache: false,
-                    url: 'http://localhost:8080/search/keyword',
-                    contentType: 'application/json; charset=UTF-8',
-                    data : JSON.stringify({"page_size" : page_size, "offset" : offset, "keyword" : keyword}),
-                    // data : JSON.stringify({"page_size" : page_size, "offset" : offset,
-                    //         "option" : option, "category" : category, "c_address" : c_address}),
-                    success:function (sr){
-                        $('.main_up').html(loadRestaurant(sr));
-                    },
-                    error: function (request, status, error){
-                        alert("정보 받아오기 실패");
-                    }
-                })
+                loadAjax();
             }
         })
 
+        // 현재 보고있는 지도 기반 검색-----------------------------
         $('.focus_map').click(function (){
             let page_size = 20;
             let offset = 0;
@@ -353,9 +270,8 @@
                     "option" : option, "category" : category, "c_address" : c_address,
                     "loc_nw_x" : ne_x, "loc_nw_y" : ne_y, "loc_se_x" : sw_x, "loc_se_y" : sw_y}),
                 success:function (sr){
-                    // console.log(sr);
-                    // loadRestaurant();
                     $('.main_up').html(loadRestaurant(sr));
+                    $('.pagination').html(loadPagination(sr));
                 },
                 error: function (request, status, error){
                     alert("정보 받아오기 실패");
@@ -364,13 +280,10 @@
             })
         })
         //     검색버튼누르면 검색기능으로
-
-
     })
 
     function loadRestaurant(sr){
         let tmp_html= "";
-
         sr.forEach(function (tmp){
 
             let tmp_address = tmp.address || "식당 정보 없음";
@@ -449,19 +362,15 @@
             }
             tmp_html+= `</div>`;
         });
-        xy_location(sr);
-        create_marker();
+
         return tmp_html;
     }
     function loadPagination(sr){
-        console.log(sr);
-        let c = sr[0].searchCondition;
         let show_prev = sr[0].searchCondition.show_prev;
         let show_next = sr[0].searchCondition.show_next;
         let begin_page = sr[0].searchCondition.begin_page;
         let end_page = sr[0].searchCondition.end_page;
         let curr_page = sr[0].searchCondition.curr_page;
-        // 여기 하다맘
         tmp_html = "";
 
         if(show_prev){
@@ -479,19 +388,35 @@
         }
         return tmp_html;
     }
-
-
-
-    // const btn = document.getElementsByClassName('focus_map')[0];
-
-    //페이지네이션 관련되어있는 조회
-    $(".page").click(function (){
+    //이전
+    $(document).on('click', '#prev_page', function(){
+        let first_num = $('.pagination a').first().text();
+        loadAjax(Number(first_num)-1);
+    })
+    //다음
+    $(document).on('click', '#next_page', function(){
+        let last_num = $('.pagination a').last().text();
+        loadAjax(Number(last_num)+1);
+    })
+    // pagination 관련 함수
+    $(document).on('click', '.page', function(){
+        $('.page').removeClass('page_act')
+        $(this).addClass('page_act')
+        let click_number = $(this).text()
+        //여기에서 AJAX 호출해야해
+        loadAjax(click_number);
+    })
+    function loadAjax(tmp_curr_page){
+        let curr_page = tmp_curr_page != null ? tmp_curr_page : 0;
         let page_size = 20;
-        let offset = '${n_offset}';
-        let option = $('.choose_align').children('p').text();
-        let category = $('.choose_tag').children('p').text();
-        let c_address = $('.choose_location').children('p').text();
+        let offset = (tmp_curr_page-1) * page_size == null ? 0 : (tmp_curr_page-1) * page_size;
         let keyword = $('#search_keyword_query').val();
+        let option = $('.choose_align').children('p').html();
+        let category = $('.choose_tag').children('p').html();
+        let c_address = $('.choose_location').children('p').html();
+        if(keyword === "무엇을 먹어야 잘 먹었다고 소문날까?"){
+            keyword = "";
+        }
         if(option === "맛집 정렬 순서"){
             option = null;
         }
@@ -506,9 +431,25 @@
         }else{
             option = "P";
         }
-        console.log("여기옴!")
-    })
-    //  len <= 조회한 게시글의 총 개수
+        $.ajax({
+            method: 'POST',
+            cache: false,
+            url: 'http://localhost:8080/search',
+            contentType: 'application/json; charset=UTF-8',
+            data : JSON.stringify({"page_size" : page_size, "offset" : offset, "keyword" : keyword,
+                "option" : option, "category" : category, "c_address" : c_address, "curr_page" : curr_page}),
+            success:function (sr){
+                $('.main_up').html(loadRestaurant(sr));
+                $('.pagination').html(loadPagination(sr));
+                xy_location(sr);
+                create_marker();
+                $('.main').scrollTop();
+            },
+            error: function (request, status, error){
+                alert("정보 받아오기 실패");
+            }
+        })
+    }
 
 </script>
 

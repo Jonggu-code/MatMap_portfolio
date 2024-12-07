@@ -31,7 +31,7 @@
                 and restaurant.category = #{category_num}
             </if>
         ORDER BY total_score_count DESC
-        LIMIT 1, #{page_size}
+        LIMIT 0, #{page_size}
     </select>
 <!--    .모두고려 검색 -->
     <select id="allConsiderSearch" parameterType="SearchCondition" resultType="RestaurantDto">
@@ -45,7 +45,7 @@
             and r.fk_category = #{category_num}
         </if>
         <if test="keyword != null">
-            r.search_tag LIKE concat('%',#{keyword},'%')
+            and r.search_tag LIKE concat('%',#{keyword},'%')
         </if>
         order by
         <choose>
@@ -61,7 +61,7 @@
 
     <select id="allConsiderSearchGetTotalCount" parameterType="SearchCondition" resultType="int">
         SELECT count(*)
-        FROM restaurant
+        FROM restaurant as r
         WHERE true
         <if test="c_address != null">
             and r.c_address = #{c_address}
@@ -70,7 +70,7 @@
             and r.fk_category = #{category_num}
         </if>
         <if test="keyword != null">
-            r.search_tag LIKE concat('%',#{keyword},'%')
+            and r.search_tag LIKE concat('%',#{keyword},'%')
         </if>
     </select>
 

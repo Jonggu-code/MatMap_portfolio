@@ -327,13 +327,23 @@ public class RestaurantServiceImpl implements RestaurantService {
     public List<SimpleRestaurant> getAllConsiderRestaurant(SearchCondition searchCondition) {
         searchCondition.setCategory_num(CategoryChanger.categoryIntoNumber(searchCondition.getCategory()));
 
+        if(searchCondition.getOffset() == null){
+            searchCondition.setOffset(0);
+        }
+
         List<RestaurantDto> restaurantDtoList = restaurantDao.getAllConsiderRestaurant(searchCondition);
 
-        if(searchCondition.getTotal_count() == null){
+        if(searchCondition.getCurr_page() == null){
             int total_count = restaurantDao.allConsiderSearchGetTotalCount(searchCondition);
             searchCondition.setTotal_count(total_count);
             searchCondition.setPage_size(20);
             searchCondition.setCurr_page(1);
+            SearchCondition.updateCondition(searchCondition);
+        }else{
+            int total_count = restaurantDao.allConsiderSearchGetTotalCount(searchCondition);
+            searchCondition.setTotal_count(total_count);
+            searchCondition.setPage_size(searchCondition.getPage_size());
+            searchCondition.setCurr_page(searchCondition.getCurr_page());
             SearchCondition.updateCondition(searchCondition);
         }
 
@@ -349,6 +359,8 @@ public class RestaurantServiceImpl implements RestaurantService {
                     .image_url(getImgUrl(dto))
                     .menu_name_list(getMenu_name_list(dto))
                     .reservation(dto.getReservation())
+                    .loc_x(dto.getLoc_x())
+                    .loc_y(dto.getLoc_y())
                     .total_score_count(dto.getTotal_score_count())
                     .total_review_count(dto.getTotal_review_count())
                     .today_business_state(getNowOpen(restaurantDao.getBusinessHours(dto.getId())))

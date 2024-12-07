@@ -169,13 +169,7 @@ $(document).ready(function(){
     })
 
 
-    // pagination 관련 함수
-    $(document).on('click', '.page', function(){
-        $('.page').removeClass('page_act')
-        $(this).addClass('page_act')
 
-        //여기에서 AJAX 호출해야해
-    })
 
     let all_restaurant; // 총 음식점 length 가 담기면 된다.
     let all_rest_length; // 페이지 번호 생성
@@ -186,13 +180,13 @@ $(document).ready(function(){
     let next_btn_lock = true; // 다음페이지 버튼 lock
 
     // 메인화면에서 식당 정보 리스트업할때 호출해야함.
-    function list_up(len){
-        all_restaurant = len;
-        all_rest_length = Math.ceil(all_restaurant / 20); // 페이지 번호 생성
-        limit_page = Math.ceil(all_restaurant / 100); // 페이지 5개 기준 생기는 페이지네이션
-        curr_page = 1;
-        pos = 0;
-    }
+    // function list_up(len){
+    //     all_restaurant = len;
+    //     all_rest_length = Math.ceil(all_restaurant / 20); // 페이지 번호 생성
+    //     limit_page = Math.ceil(all_restaurant / 100); // 페이지 5개 기준 생기는 페이지네이션
+    //     curr_page = 1;
+    //     pos = 0;
+    // }
 
     // function create_page(){
     //     for(let i=0; i<all_rest_length; i++){
@@ -211,52 +205,15 @@ $(document).ready(function(){
     }
 
     // 페이지 수가 5개 초과일때 (6개 이상일때) next 버튼 on
-    if(all_rest_length > 5){
-        $('#next_page').addClass('page_btn_act')
-    }
+    // if(all_rest_length > 5){
+    //     $('#next_page').addClass('page_btn_act')
+    // }
     
-    function page_control(option1, option2){
-        curr_page += option1
-        pos += option2
-        $('.page').css({left: `${pos}px`})
-    }
+    // function page_control(option1, option2){
+    //     curr_page += option1
+    //     pos += option2
+    //     $('.page').css({left: `${pos}px`})
+    // }
 
-    $(document).on('click', '#prev_page', function(){
-        if(!prev_btn_lock) return;
 
-        if(curr_page == 2){
-            page_control(-1, 200)
-            prev_btn_lock = false;
-            next_btn_lock = true;
-            $('#next_page').addClass('page_btn_act')
-            $(this).removeClass('page_btn_act')
-        }
-
-        else {
-            next_btn_lock = true;
-            $('#next_page').addClass('page_btn_act')
-            $(this).addClass('page_btn_act')
-            page_control(-1, 200)
-        }
-    })
-
-    $(document).on('click', '#next_page', function(){
-        if(!next_btn_lock) return;
-
-        if(curr_page == limit_page - 1){
-            page_control(1, -200)
-            next_btn_lock = false;
-            prev_btn_lock = true;
-            $('#prev_page').addClass('page_btn_act')
-            $(this).removeClass('page_btn_act')
-            return;
-        }
-
-        else {
-            prev_btn_lock = true;
-            $('#prev_page').addClass('page_btn_act')
-            $(this).addClass('page_btn_act')
-            page_control(1, -200)
-        }
-    })
 });
