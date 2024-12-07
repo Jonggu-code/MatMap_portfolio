@@ -204,13 +204,27 @@
 
     <select id="getRestaurantMenuDetail" parameterType="int" resultType="MenuDetail">
         SELECT  m.name as menu_name,
-                m.price as menu_price,
-                m.memo as menu_memo,
-                r.id as restaurant_id,
-                m.fk_image_id as menu_img_url
+        m.price as menu_price,
+        m.memo as menu_memo,
+        r.id as restaurant_id,
+        m.fk_image_id as menu_img_url
         FROM restaurant as r
-            INNER JOIN menu as m
-            ON m.fk_restaurant_id = r.id
+        INNER JOIN menu as m
+        ON m.fk_restaurant_id = r.id
+        WHERE r.id = #{id}
+    </select>
+
+    <select id="getRestaurantMenuDto" parameterType="int" resultType="MenuDetail">
+        SELECT
+        m.id,
+        m.name as menu_name,
+        m.price as menu_price,
+        m.memo as menu_memo,
+        r.id as restaurant_id,
+        m.fk_image_id as menu_img_url
+        FROM restaurant as r
+        INNER JOIN menu as m
+        ON m.fk_restaurant_id = r.id
         WHERE r.id = #{id}
     </select>
 
@@ -220,6 +234,10 @@
             INNER JOIN other_image as oi
             ON m.fk_image_id = oi.id
         WHERE oi.id = #{id}
+    </select>
+
+    <select id="getIdByName" parameterType="String" resultType="int">
+        SELECT id FROM restaurant WHERE name=#{restaurantName};
     </select>
 
 

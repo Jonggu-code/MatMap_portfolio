@@ -6,6 +6,7 @@ import com.matjongchan.app.domain.entity.ReviewDto;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 public interface ReviewDao {
 
@@ -18,13 +19,22 @@ public interface ReviewDao {
     double cleanAvgScore(int fk_restaurant_id);
     double tasteAvgScore(int fk_restaurant_id);
 
+    double totalS(ReviewDto reviewDto);
+    double kindS(ReviewDto reviewDto);
+    double cleanS(ReviewDto reviewDto);
+    double tasteS(ReviewDto reviewDto);
+
     int deleteAll();
+
+    int lastOne();
 
     int insert(ReviewDto dto);
 
     List<ReviewDto> selectAll();
 
     List<ReviewDto> selectR(int fk_restaurant_id);
+
+    List<ReviewDto> selectFive(Map<String, Object> params);
 
     List<ReviewDto> selectM(String reviewer);
 

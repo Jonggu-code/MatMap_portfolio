@@ -3,6 +3,7 @@ package com.matjongchan.app.dao;
 import com.matjongchan.app.domain.dto.MenuDetail;
 import com.matjongchan.app.domain.dto.TotalCount;
 import com.matjongchan.app.domain.entity.BusinessHoursDto;
+import com.matjongchan.app.domain.entity.MenuDto;
 import com.matjongchan.app.domain.entity.RestaurantDto;
 import com.matjongchan.app.domain.dto.SearchCondition;
 
@@ -108,6 +109,7 @@ public interface RestaurantDao {
      * @return
      */
     List<MenuDetail> getMenuDetail(int restaurant_id);
+    List<MenuDto> getMenuDto(int restaurant_id);
 
     /**
      * 해당 이미지의 Url 주소를 가져오기
@@ -131,6 +133,8 @@ public interface RestaurantDao {
     List<RestaurantDto> getPopularRestaurant (SearchCondition searchCondition);
 
     List<RestaurantDto> getAllConsiderRestaurant(SearchCondition searchCondition);
+
+    Integer getIdByName(String restaurantName);
 
     int allConsiderSearchGetTotalCount (SearchCondition searchCondition);
 

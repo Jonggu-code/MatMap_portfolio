@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -18,6 +19,8 @@ import java.util.stream.Collectors;
 public class ReviewServiceImpl implements ReviewService{
     @Autowired
     ReviewDao reviewDao;
+    @Autowired
+    ReviewService reviewService;
 
     // 모든 리뷰 개수 get 하는 메서드
     public int getAllCount(){
@@ -30,10 +33,18 @@ public class ReviewServiceImpl implements ReviewService{
     };
 
     // 전체, 고객응대, 청결도, 맛 평점 get 하는 메서드
-    public double getTotalAvg(int fk_restaurant_id){return reviewDao.totalAvgScore(fk_restaurant_id);};
-    public double getKindAvg(int fk_restaurant_id){return reviewDao.kindAvgScore(fk_restaurant_id);};
-    public double getCleanAvg(int fk_restaurant_id){return reviewDao.cleanAvgScore(fk_restaurant_id);};
-    public double getTasteAvg(int fk_restaurant_id){return reviewDao.tasteAvgScore(fk_restaurant_id);};
+    public double getTotalAvg(int fk_restaurant_id){
+        if (reviewService.getListR(fk_restaurant_id).size() == 0){return 0.0;}
+        return reviewDao.totalAvgScore(fk_restaurant_id);};
+    public double getKindAvg(int fk_restaurant_id){
+        if (reviewService.getListR(fk_restaurant_id).size() == 0){return 0.0;}
+        return reviewDao.kindAvgScore(fk_restaurant_id);};
+    public double getCleanAvg(int fk_restaurant_id){
+        if (reviewService.getListR(fk_restaurant_id).size() == 0){return 0.0;}
+        return reviewDao.cleanAvgScore(fk_restaurant_id);};
+    public double getTasteAvg(int fk_restaurant_id){
+        if (reviewService.getListR(fk_restaurant_id).size() == 0){return 0.0;}
+        return reviewDao.tasteAvgScore(fk_restaurant_id);};
 
 
     // 리뷰 작성하는 하는 메서드
@@ -46,6 +57,9 @@ public class ReviewServiceImpl implements ReviewService{
 
     // 특정 음식점 모든 리뷰 불러오는 메서드
     public List<ReviewDto> getListR(int fk_restaurant_id){return reviewDao.selectR(fk_restaurant_id);};
+    public List<ReviewDto> getListFive(Map<String, Object> params){
+        return reviewDao.selectFive(params);
+    };
 
     // 리뷰 수정 메서드
     public int modify(ReviewDto dto){return reviewDao.update(dto);};

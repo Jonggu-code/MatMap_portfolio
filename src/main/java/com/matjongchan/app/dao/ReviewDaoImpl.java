@@ -69,9 +69,47 @@ public class ReviewDaoImpl implements ReviewDao {
     };
 
 
-    public int deleteAll() {
+    public double totalS(ReviewDto reviewDto){
+        if (reviewDto == null) {
+            return 0;
+        }
+        return session.selectOne(namespace + "totalS", reviewDto);
+
+    };
+    public double kindS(ReviewDto reviewDto){
+        if (reviewDto == null){
+            return 0;
+
+        }
+        return session.selectOne(namespace + "kindS", reviewDto);
+    };
+
+
+    public double cleanS(ReviewDto reviewDto){
+        if (reviewDto == null){
+            return 0;
+        }
+        return session.selectOne(namespace + "cleanS", reviewDto);
+};
+
+
+    public double tasteS(ReviewDto reviewDto){
+        if (reviewDto == null){
+            return 0;
+        }
+        return session.selectOne(namespace + "tasteS", reviewDto);
+
+    };
+
+
+public int deleteAll() {
         return session.delete(namespace+"deleteAll");
     }
+
+
+    public int lastOne(){
+        return session.selectOne(namespace+"lastOne");
+    };
 
     public int insert(ReviewDto dto) {
         return session.insert(namespace+"insert", dto);
@@ -83,6 +121,9 @@ public class ReviewDaoImpl implements ReviewDao {
     public List<ReviewDto> selectR(int fk_restaurant_id) {
         return session.selectList(namespace+"selectR",fk_restaurant_id);
     }
+    public List<ReviewDto> selectFive(Map<String, Object> params){
+        return session.selectList(namespace+"selectFive", params);
+    };
     @Override
     public List<ReviewDto> selectM(String reviewer) {
         return session.selectList(namespace+"selectM", reviewer);

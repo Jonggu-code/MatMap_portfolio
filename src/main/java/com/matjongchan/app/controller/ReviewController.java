@@ -2,6 +2,8 @@ package com.matjongchan.app.controller;
 
 import com.matjongchan.app.dao.OtherImageDao;
 
+import com.matjongchan.app.dao.RestaurantDao;
+import com.matjongchan.app.dao.ReviewDao;
 import com.matjongchan.app.domain.dto.ReviewDetail;
 import com.matjongchan.app.domain.entity.*;
 import com.matjongchan.app.service.*;
@@ -33,60 +35,70 @@ public class ReviewController {
     OtherImageService otherImageService;
     @Autowired
     RestaurantServiceImpl restaurantService;
+    @Autowired
+    RestaurantDao restaurantDao;
+    @Autowired
+    ReviewDao reviewDao;
 
     File file = new File(".");
     private final String root_path = file.getAbsolutePath().split("work")[0]+= "\\work\\MatMap_portfolio\\src\\main\\webapp\\resources\\img\\other_img";
 
-    @GetMapping("/detail")
-    public String getReviews(RestaurantDto restaurantDto, ReviewDto reviewDto, Model m, ReviewMenuDto reviewMenuDto, OtherImageDto otherImageDto) {
-        int fk_restaurant_id =1;
-        List<ReviewDto> reviews = reviewService.getListR(fk_restaurant_id);
-        m.addAttribute("reviews", reviews);
+//    @GetMapping("/detail")
+//    public String getReviews(RestaurantDto restaurantDto, ReviewDto reviewDto, Model m, ReviewMenuDto reviewMenuDto, OtherImageDto otherImageDto) {
+//        int fk_restaurant_id =1;
+//        List<ReviewDto> reviews = reviewService.getListR(fk_restaurant_id);
+//        m.addAttribute("reviews", reviews);
+//
+//        for (ReviewDto review : reviews) {
+//            List<String> menuNames = reviewMenuService.getMenuNames(review.getId());
+//            review.setMenuNames(menuNames); // ReviewDto에 메뉴 리스트 추가
+//        }
+//
+//        for (ReviewDto review : reviews) {
+////            List<OtherImageDto> otherImages = otherImageService.
+//        }
+//
+//        m.addAttribute("restaurantDto", restaurantDto);
+//        m.addAttribute("reviewDto", reviewDto);
+//
+//        int review_count = reviewService.getCountR(fk_restaurant_id);
+//        m.addAttribute("reviewCount", review_count);
+//
+//        Double taste_score = reviewService.getTasteAvg(fk_restaurant_id);
+//        Double clean_score = reviewService.getCleanAvg(fk_restaurant_id);
+//        Double kind_score = reviewService.getKindAvg(fk_restaurant_id);
+//        Double total_score = reviewService.getTotalAvg(fk_restaurant_id);
+//        m.addAttribute("taste_score", taste_score);
+//        m.addAttribute("clean_score", clean_score);
+//        m.addAttribute("kind_score", kind_score);
+//        m.addAttribute("total_score", total_score);
+//
+//        m.addAttribute("reviewMenuDto", reviewMenuDto);
+//        m.addAttribute("otherImageDto", otherImageDto);
+//        return "detail";
+//    }
 
-        for (ReviewDto review : reviews) {
-            List<String> menuNames = reviewMenuService.getMenuNames(review.getId());
-            review.setMenuNames(menuNames); // ReviewDto에 메뉴 리스트 추가
-        }
 
-        for (ReviewDto review : reviews) {
-//            List<OtherImageDto> otherImages = otherImageService.
-        }
+    @GetMapping("/reviewWrite/{id}") // 리뷰 작성 첫 페이지 메서드 보여주기
+    public String reviewWrite(@PathVariable("id") int id, HttpServletRequest request, RestaurantDto restaurantDto, Model m) {
 
-        m.addAttribute("restaurantDto", restaurantDto);
-        m.addAttribute("reviewDto", reviewDto);
-
-        int review_count = reviewService.getCountR(fk_restaurant_id);
-        m.addAttribute("reviewCount", review_count);
-
-        Double taste_score = reviewService.getTasteAvg(fk_restaurant_id);
-        Double clean_score = reviewService.getCleanAvg(fk_restaurant_id);
-        Double kind_score = reviewService.getKindAvg(fk_restaurant_id);
-        Double total_score = reviewService.getTotalAvg(fk_restaurant_id);
-        m.addAttribute("taste_score", taste_score);
-        m.addAttribute("clean_score", clean_score);
-        m.addAttribute("kind_score", kind_score);
-        m.addAttribute("total_score", total_score);
-
-        m.addAttribute("reviewMenuDto", reviewMenuDto);
-        m.addAttribute("otherImageDto", otherImageDto);
-        return "detail";
-    }
-
-
-    @GetMapping("/reviewWrite") // 리뷰 작성 첫 페이지 메서드 보여주기
-    public String reviewWrite(HttpServletRequest request, RestaurantDto restaurantDto, Model m) {
-
-        int restaurant_id = 1; // example
-
+        m.addAttribute("id", id);
         m.addAttribute("restaurantDto", restaurantDto);
 
         HttpSession session = request.getSession();
 
-        List<String> menus = restaurantService.getMenu_name_list(restaurant_id);
+        RestaurantDto restaurant = restaurantService.getRestaurantById(id);
+        m.addAttribute("restaurant", restaurant);
+        String category = CategoryChanger.numberIntoCategory(restaurant.getFk_category());
+        m.addAttribute("category", category);
+
+        List<MenuDto> menuDtos = restaurantDao.getMenuDto(id);
+        m.addAttribute("menuDtos", menuDtos);
+
+
+        List<String> menus = restaurantService.getMenu_name_list(id);
         m.addAttribute("menus", menus);
 
-        List<ReviewMenuDto> list = reviewMenuService.getListR(1);
-        int listSize = list.size();
 
 
         // 로그인 했는지 확인
@@ -98,33 +110,41 @@ public class ReviewController {
         return "reviewWrite";
     }
 
-    @PostMapping("/showReviewWrite2")
+    @PostMapping("/showReviewWrite2/{id}")
     public String showReviewWrite2(
+            @PathVariable("id") int id,
             ReviewDto reviewDto,
             @RequestParam("selected_menu[]") List<Integer> selectedMenus,
-            Model model
+            Model m
     ){
-        model.addAttribute("reviewDto", reviewDto);
-        model.addAttribute("selectedMenus", selectedMenus);
+        m.addAttribute("id", id);
+        m.addAttribute("reviewDto", reviewDto);
+        m.addAttribute("selectedMenus", selectedMenus);
+
+
+        RestaurantDto restaurant = restaurantService.getRestaurantById(id);
+        m.addAttribute("restaurant", restaurant);
+        String category = CategoryChanger.numberIntoCategory(restaurant.getFk_category());
+        m.addAttribute("category", category);
 
         return "reviewWrite2";
     }
 
-    @PostMapping("/reviewWrite2") // 리뷰 작성 두 번째 페이지 메서드
-    public String reviewWriteSubmit(HttpSession session, ReviewDto reviewDto, @RequestParam(value = "files", required = false) List<MultipartFile> files, @RequestParam("selected_menu[]") List<Integer> selectedMenus){
+    @PostMapping("/reviewWrite2/{r_id}") // 리뷰 작성 두 번째 페이지 메서드
+    public String reviewWriteSubmit( @PathVariable("r_id") int id, HttpSession session, ReviewDto reviewDto, @RequestParam(value = "files", required = false) List<MultipartFile> files, @RequestParam("selected_menu[]") List<Integer> selectedMenus){
+
+        int orderId = reviewDao.lastOne() + 1;
         int order_no = 1;
         log.info("joshua1");
         OtherImageDto otherImageDto;
         try {
             log.info(reviewDto.getContent());
-//            String reviewer = (String)session.getAttribute("id");
-            String reviewer = "김철수";
-            int fk_restaurant_id = 1;
+            String reviewer = (String)session.getAttribute("id");
             reviewDto.setReviewer(reviewer);
-            reviewDto.setFk_restaurant_id(fk_restaurant_id);
+            reviewDto.setFk_restaurant_id(id);
 
             int rowCount = reviewService.write(reviewDto);
-            reviewDto.setId(reviewService.getAllCount());
+//            reviewDto.setId(reviewService.getAllCount());
 
             int reviewId = reviewService.getAllCount();
 
@@ -170,8 +190,8 @@ public class ReviewController {
                     otherImageDto.setName(savedFilename);
                     otherImageDto.setImg_url(saveFile); // 실제 저장된 경로
                     otherImageDto.setOrder_number(order_no);
-                    otherImageDto.setFk_review_id(reviewDto.getId());
-                    otherImageDto.setFk_restaurant_id(1);
+                    otherImageDto.setFk_review_id(orderId);
+                    otherImageDto.setFk_restaurant_id(id);
                     order_no++;
                     imageList.add(otherImageDto);
                     otherImageService.insertImage(otherImageDto);
@@ -184,15 +204,7 @@ public class ReviewController {
             }
 
         }
-
-
-
-
         return "redirect:/";
-
-
-
-
     }
 
     @PostMapping("/modify") // 게시글 수정 메서드

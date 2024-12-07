@@ -3,6 +3,7 @@ package com.matjongchan.app.dao;
 import com.matjongchan.app.domain.dto.MenuDetail;
 import com.matjongchan.app.domain.dto.TotalCount;
 import com.matjongchan.app.domain.entity.BusinessHoursDto;
+import com.matjongchan.app.domain.entity.MenuDto;
 import com.matjongchan.app.domain.entity.RestaurantDto;
 import com.matjongchan.app.domain.dto.SearchCondition;
 import lombok.RequiredArgsConstructor;
@@ -92,6 +93,11 @@ public class RestaurantDaoImpl implements RestaurantDao {
     public List<MenuDetail> getMenuDetail(int restaurant_id) {
         return session.selectList(namespace+"getRestaurantMenuDetail",restaurant_id);
     }
+    @Override
+    public List<MenuDto> getMenuDto(int restaurant_id) {
+        return session.selectList(namespace+"getRestaurantMenuDto",restaurant_id);
+    }
+
 
     @Override
     public String getMenuUrl(int image_id) {
@@ -117,6 +123,12 @@ public class RestaurantDaoImpl implements RestaurantDao {
     public int allConsiderSearchGetTotalCount(SearchCondition searchCondition) {
         return session.selectOne(namespace + "allConsiderSearchGetTotalCount", searchCondition);
     }
+
+    @Override
+    public Integer getIdByName(String restaurantName){
+        return session.selectOne(namespace + "getIdByName",restaurantName);
+    };
 }
+
 
 

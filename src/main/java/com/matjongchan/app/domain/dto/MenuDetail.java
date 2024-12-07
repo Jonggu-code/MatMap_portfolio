@@ -15,7 +15,7 @@ import lombok.Setter;
  * 메뉴정보 + 해당 이미지
  */
 public class MenuDetail {
-
+    private Integer id;
     private String menu_name;
     private String menu_price;
     private String menu_memo;

@@ -28,7 +28,7 @@
 </head>
 <body>
 
-<form action="<c:url value='/reviewWrite2' />" method="post" id="wrap2" enctype="multipart/form-data">
+<form action="<c:url value='/reviewWrite2/${id}' />" method="post" id="wrap2" enctype="multipart/form-data">
 
   <div class="selected_menu_list" style="display: none">
     <p>선택한 메뉴:</p>
@@ -50,7 +50,7 @@
 
   <fieldset class="review_main">
     <div class="logo_box">
-      <a href="index.jsp" class="logo">맛맵 - 메인화면</a>
+      <a href="<c:url value='/'/>"class="logo">맛맵 - 메인화면</a>
     </div>
     <!-- 메인 화면단 -->
     <div class="container contents_area">
@@ -59,8 +59,8 @@
       <div class="header">
         <div class="rest_img_box"></div>
         <div class="rest_info_box">
-          <p class="rest_title">종찬식당</p>
-          <span>한식</span>
+          <p class="rest_title">${restaurant.name}</p>
+          <span>${category}</span>
           <span>/</span>
           <span>2024년 11월 25일</span>
         </div>
@@ -89,7 +89,7 @@
 
       <!-- 이전 버튼 / 등록 버튼 단 -->
       <div class="btn_box">
-        <a href="./review_page_1.html">&lt; 이전 화면</a>
+        <a href="<c:url value='/reviewWrite/${id}' />">&lt; 이전 화면</a>
         <input type="submit" name="submit"  id="ddd" value="후기 등록">
       </div>
     </div>

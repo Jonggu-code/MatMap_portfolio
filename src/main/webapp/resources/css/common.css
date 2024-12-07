@@ -33,6 +33,9 @@ h1,h2,h3,h4,h5,h6,p {
     padding: 0;
     margin: 0;
 }
+i {
+    font-style: inherit;
+}
 a {
     text-decoration: none;
     color: inherit;
@@ -61,13 +64,18 @@ input {
 body::-webkit-scrollbar {
     display: none;
 }
+.shadow_box {
+    box-shadow: 0px 3px 20px 2px #dfdfdf;
+}
 
 /* ///////////////////////////////////////////////////////// */
 /* ////////////////         header             ////////////// */
 /* ///////////////////////////////////////////////////////// */
 
 /* 메인 제외한 페이지 공통 header 관련 css 속성 */
-
+.container {
+    background: #e3e3e3;
+}
 .header {
     width: 100%;
     height: 115px;
@@ -291,7 +299,6 @@ body::-webkit-scrollbar {
     padding-bottom: 50px;
     width: 100%;
     height: auto;
-    background: #e3e3e3;
 }
 
 .move_top {
@@ -330,3 +337,15 @@ body::-webkit-scrollbar {
 .move_top:hover > svg {
     fill: #ff9625;
 }
+
+.open_time, .break_time, .close_time {
+    font-size: 20px;
+    display: none;
+    margin-left: 5px;
+
+    position: relative;
+    top: -5px;
+}
+.open_time { color: #ff9625; display: block;}
+.break_time { color: #8a8a8a; display: block;}
+.close_time { color: #ff0000; display: block;}

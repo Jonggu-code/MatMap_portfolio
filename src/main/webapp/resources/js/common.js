@@ -41,80 +41,48 @@ function event_play(){
 
 let interval = setInterval(() => {
     event_play()
-},3000 )
-
-// 헤더에서 로그인 메뉴 클릭시 포커스 이벤트
-
-guest.addEventListener('focus', function(){
-    guest.classList.add('guest_menu_active');
-    guest_box.classList.add('guest_menu_box_active')
-});
-guest.addEventListener('blur', function(){
-    guest.classList.remove('guest_menu_active');
-    guest_box.classList.remove('guest_menu_box_active')
-});
+}, 3000)
 
 // top 버튼 누르면 페이지 상단으로 이동
+let move_top_btn = document.getElementsByClassName('move_top')[0]
 
-document.getElementsByClassName('move_top')[0].addEventListener('click', function(e){
+move_top_btn.addEventListener('click', function(e){
     e.preventDefault();
-
     window.scrollTo({top:0, behavior: 'smooth'})
 });
 
-
-
 $(document).ready(function(){
-    // 비로그인, 로그인 상태 시 헤더 노출
-    // let guest_box = `
-    //     <p class="login_com">로그인</p>
-    //
-    //     <p>회원가입</p>
-    // `
-    // let login_box = `
-    //     <p>마이페이지</p>
-    //     <p>마이 맛집 </p>
-    //     <p>마이 후기</p>
-    //
-    //     <p class="login_del">로그아웃</p>
-    // `
-    // $('.guest_menu_box').append(guest_box)
-    //
-    //
-    // $(document).on('click','.register',function(){
-    //     window.location.href = './register.html'
-    // })
-    // $(document).on('click','.my_page',function(){
-    //     window.location.href = './mypage.html'
-    // })
-    // $(document).on('click','.my_rest',function(){
-    //     window.location.href = './list_page_restaurant.html'
-    // })
-    // $(document).on('click','.my_review',function(){
-    //     window.location.href = './list_page_review.html'
 
-    $(document).on('click','.login_com',function(){
-        window.location.href = 'login'
-    })
-    $(document).on('click','.register_com',function(){
-        window.location.href = 'join'
-    })
-    $(document).on('click','.myPage_com',function(){
-        window.location.href = 'mypage'
-    })
-    $(document).on('click','.myFavorite_com',function(){
-        window.location.href = 'myPageRestaurant'
-    })
-    $(document).on('click','.myReview_com',function(){
-        window.location.href = 'myPageReview'
-    })
-    $(document).on('click','.logout_com',function(){
-        window.location.href = 'logout'
-    })
     $(document).on('click', '.search_submit', function() {
         const e = $.Event('keydown', { keyCode: 13 }); // Enter 키
         $('#search_keyword').trigger(e);
     });
+
+
+    let guest_box = `
+        <p class="login_com">로그인</p>
+        <p class="register">회원가입</p>
+    `
+    let login_box = `
+        <p class="my_page">마이페이지</p>
+        <p class="my_rest">내가 찜한 맛집</p>
+        <p class="my_review">내가 작성한 후기</p>
+        <p class="login_del">로그아웃</p>
+    `
+    $('.guest_menu_box').append(guest_box)
+
+    $(document).on('click','.register',function(){
+        window.location.href = './register.html'
+    })
+    $(document).on('click','.my_page',function(){
+        window.location.href = './mypage.html'
+    })
+    $(document).on('click','.my_rest',function(){
+        window.location.href = './list_page_restaurant.html'
+    })
+    $(document).on('click','.my_review',function(){
+        window.location.href = './list_page_review.html'
+    })
 
     $(document).on('click','.login_com',function(){
         login = true;
@@ -129,8 +97,27 @@ $(document).ready(function(){
         $('.guest_icon').css({backgroundColor: "#ff00ff"})
     })
 
+
+    let fact = true;
+
+    // 게스트 메뉴 클릭시 이벤트
+    $(document).on('click','.guest_menu', function(){
+        if(fact == true){
+            fact = false;
+            $(this).addClass('guest_menu_active');
+            $('.guest_menu_box').addClass('guest_menu_box_active')
+        }
+        else if(fact == false){
+            fact = true;
+            $(this).removeClass('guest_menu_active');
+            $('.guest_menu_box').removeClass('guest_menu_box_active')
+        }
+    });
+
+
     // 페이지 내려가면 상단으로 이동 버튼
     $(window).scroll(function(){
+        console.log(window.scrollY)
         if(window.scrollY > 800) {
             $('.move_top').css({opacity: '1'})
         }
@@ -140,7 +127,42 @@ $(document).ready(function(){
     })
 
 
+    // 점수에 따른 별점 width 값 조정
+    let star_ave = $('.score_ave').html()
+    let star_kind = $('.score_kind').html()
+    let star_clean = $('.score_clean').html()
+    let star_taste = $('.score_taste').html()
+    let star_main = $('.score_main').html()
 
+    function set_star_width(){
+        setTimeout(() => {
+            $('#star_ave').css({width: `${star_ave * 20}%`})
+            $('#star_kind').css({width: `${star_kind * 20}%`})
+            $('#star_clean').css({width: `${star_clean * 20}%`})
+            $('#star_taste').css({width: `${star_taste * 20}%`})
+            $('.fill_star').css({width: `${star_main * 20}%`})
+            console.log(star_main * 20)
+        }, 100);
+    }
+    set_star_width()
+
+    let bar_biggood = $('#bar_biggood').html()
+    let bar_good = $('#bar_good').html()
+    let bar_common = $('#bar_common').html()
+    let bar_bad = $('#bar_bad').html()
+    let bar_bigbad = $('#bar_bigbad').html()
+    let bar_main = 23;
+
+    function set_bar_width(){
+        console.log((bar_biggood / bar_main) * 100)
+        setTimeout(() => {
+            $('#score_biggood').css({width: `${(bar_biggood / bar_main) * 100}%`})
+            $('#score_good').css({width: `${(bar_good / bar_main) * 100}%`})
+            $('#score_common').css({width: `${(bar_common / bar_main) * 100}%`})
+            $('#score_bad').css({width: `${(bar_bad / bar_main) * 100}%`})
+            $('#score_bigbad').css({width: `${(bar_bigbad / bar_main) * 100}%`})
+        }, 100);
+    }
+    set_bar_width()
 });
-
 

@@ -108,10 +108,10 @@
     justify-content: flex-end;
 }
 #review_score, .rev_review_score {
-    font-size: 22px; 
+    font-size: 22px;
     font-weight: 700;
     margin-left: 14px;
-    
+
     color: #ff9625;
     position: relative;
     top: -4px;
@@ -135,7 +135,6 @@
     text-decoration: underline;
 }
 .fill_star, .rev_fill_star, .reco_fill_star {
-    width: 97%;
     height: 25px;
     background: url(../img/review_star_fill.png) repeat-x left;
     background-size: 29px;
@@ -170,7 +169,7 @@
     font-size: 18px;
     margin-top: 5px;
     color: #000;
-    cursor: pointer;
+    user-select: none;
 }
 
 .rest_save {
@@ -181,7 +180,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
     position: relative;
     top: -5px;
     left: -5px;
@@ -262,17 +261,6 @@
     position: relative;
     top: -5px;
 }
-#open_time, #break_time, #close_time {
-    font-size: 20px;
-    display: none;
-    margin-left: 5px;
-
-    position: relative;
-    top: -5px;
-}
-#open_time { color: #ff9625; display: block;}
-#break_time { color: #10bb00; }
-#close_time { color: #ff0000; }
 
 .day_box > p:last-child {
     margin-top: 10px;
@@ -280,7 +268,7 @@
 
 /* ////////////////        사진 관리단         ////////////// */
 
-#menu_container { 
+#menu_container {
     width: calc(70% - 20px);
 
     display: flex;
@@ -366,7 +354,7 @@
 
 #reco_container {
     width: 300px;
-    height: 660px;
+    height: auto;
 
     position: absolute;
     right: 60px;
@@ -403,11 +391,13 @@
     font-weight: 600;
     color: #929292;
 }
-#reco_star, .reco_fill_star {
+.reco_star, .reco_fill_star {
     display: block;
     width: 20px;
     background-size: 20px;
     top: 0.5px;
+
+    position: relative;
 }
 .reco_title_box {
     width: 100%;
@@ -454,9 +444,10 @@
     justify-content: center;
     gap: 3px;
 
-    position: relative;
-    top: 20px;
-    left: -20px;
+
+    position: absolute;
+    top: 102%;
+    left: 0;
 
     transition: all 0.5s;
 }
@@ -491,7 +482,7 @@
     border: 1px solid #ff9625;
     border-radius: 3px;
     cursor: pointer;
-    
+
     text-align: center;
     font-size: 14px;
     color: #ff9625;
@@ -538,10 +529,6 @@
 .rev_fill_star {
     background-size: 26px;
 }
-#star_ave {width: 95%;}
-#star_kind {width: 90%;}
-#star_clean {width: 86%;}
-#star_taste {width: 99%;}
 
 /* rev_con_score_list */
 
@@ -568,11 +555,6 @@
     height: 10px;
     background-color: #f1910a;
 }
-#score_biggood {width: 95%;}
-#score_good {width: 2%;}
-#score_common {width: 2%;}
-#score_bad {width: 2%;}
-#score_bigbad {width: 0%;}
 .rcs_etc_box {
     width: 360px;
     height: auto;
@@ -596,8 +578,26 @@
     box-sizing: border-box;
     position: relative;
 
-    display: flex;
+    display: none;
     flex-wrap: wrap;
+}
+.rev_con_more_btn {
+    width: 100%;
+    height: 65px;
+    font-size: 16px;
+    text-align: center;
+    background: #e3e3e3;
+    border-radius: 10px;
+    margin-top: 20px;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.rev_con_more_btn > svg {
+    width: 26px;
+    height: 26px;
 }
 .rc_user_box {
     height: 60px;
@@ -633,13 +633,6 @@
     gap: 5px;
     font-size: 15px;
 }
-#user_info > p:nth-child(odd){
-    color: #5e5e5e;
-}
-#user_info > p:nth-child(even){
-    color: #ff9625;
-    font-weight: 700;
-}
 .rc_user_score_box {
     width: 100%;
     height: 24px;
@@ -660,12 +653,18 @@
 }
 .rc_img_box {
     width: 100%;
+    height: 190px;
+    overflow: hidden;
+}
+.rc_img_box:hover{
+    overflow-x: auto;
+}
+.rc_img_box_scroll {
+    width: max-content;
     height: auto;
 
     display: flex;
-    flex-wrap: wrap;
     gap: 10px;
-
 }
 .re_menu_box {
     width: 100%;
@@ -674,6 +673,7 @@
     font-size: 14px;
 
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
 }
 .review_menu {
@@ -682,7 +682,7 @@
     background: #e1e1e1;
 }
 .review_img {
-    width: calc((100% - 30px) / 4);
+    width: 177px;
     height: 177px;
     background: #d99b9b;
     border-radius: 5px;
@@ -709,10 +709,22 @@
     background: url(../img/review_star_fill.png) no-repeat center / cover;
 }
 .con1 {
-    display: flex; 
+    display: flex;
     gap: 5px;
 }
 .con1 > p:nth-child(2) {
     color: #ff9625;
     font-weight: 900;
+}
+
+
+.empty_box {
+    width: 100%;
+    padding: 20px 10px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background: #ebebeb;
+    text-align: center;
+
+    /* display: none; */
 }
