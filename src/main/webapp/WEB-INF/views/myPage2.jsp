@@ -81,7 +81,7 @@
 <%--                    <div class="user_img">--%>
 <%--                        <img src="<c:url value='${memberImage.img_url}'/>" class="profile_img">--%>
 <%--                    </div>--%>
-                    <div class="user_img" style="background: url(${memberImage.img_url}) no-repeat center / cover;"></div>
+                    <div class="user_img" style="background: url(<c:url value='${memberImage.img_url}'/>) no-repeat center / cover;"></div>
                     <!-- 유저 네임 -->
                     <p class="user_name">${member.name}</p>
                 </div>
@@ -190,7 +190,7 @@
 <%--                                        <div class="menu_img"></div>--%>
                                             <!-- 식당 이미지 출력 -->
                                             <div class="menu_img">
-                                                <img src="${restaurantImageUrls[status.index]}" alt="${favorite.restaurant_name}" />
+                                                <img src="<c:url value="${restaurantImageUrls[status.index]}"/>" alt="${favorite.restaurant_name}" />
                                             </div>
                                     </div>
                                     <div class="rest_box_R">
@@ -281,9 +281,9 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script src="<c:url value='/resources/js/mypage2.js'/>"></script>
-<script src="<c:url value='/resources/js/swiper.js'/>"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js?1"></script>
+<script src="<c:url value='/resources/js/mypage2.js?1'/>"></script>
+<script src="<c:url value='/resources/js/swiper.js?1'/>"></script>
 
 </body>
 </html>

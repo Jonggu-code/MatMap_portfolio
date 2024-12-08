@@ -133,7 +133,6 @@ public interface RestaurantService {
      * @return
      */
     List<SimpleRestaurant> getSimpleRestaurant(SearchCondition searchCondition);
-
     /**
      * 랭킹 페이지 조회관련
      * @param searchCondition

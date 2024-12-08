@@ -58,10 +58,10 @@
 
             <div class="ip2"><input type="password" id="password"  name="password" required placeholder="비밀번호" class="input_txt" value="${ URLDecoder.decode(param.u_pw, "utf-8") }" ></div>
 
-            <div class="ip2"><input type="password" id="passwordTrue"  required placeholder="비밀번호 확인" class="input_txt" value="${ URLDecoder.decode(param.u_pw, "utf-8") }" ></div>
+            <div class="ip2">
+              <input type="password" id="passwordTrue" required placeholder="비밀번호 확인" class="input_txt" value="${ URLDecoder.decode(param.u_pw, "utf-8") }" >
+            </div>
             <div id="passwordMessage" style="margin-top: 5px;"></div>
-
-
 
             <div class="ip3"><input type="email" id="email"  name="email" required placeholder="이메일" class="input_txt" value="${ URLDecoder.decode(param.u_email, "utf-8") }" ></div>
             <div class="ip3"><input type="text" name="address" required placeholder="주소" class="input_txt" value="${ URLDecoder.decode(param.u_address, "utf-8") }" ></div>

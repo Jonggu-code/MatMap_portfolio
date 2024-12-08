@@ -36,6 +36,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,9 +52,8 @@ public class MemberController {
     @Autowired
     RestaurantService restaurantService;
 
-
-    File file = new File(".");
-    private final String root_path = "C:\\Users\\82109\\Desktop\\spring\\MatMap_portfolio___\\src\\main\\webapp\\resources\\img\\profile_img";
+//    private final String root_path = "C:\\Users\\power\\Desktop\\study\\MatMap_portfolio\\src\\main\\webapp\\resources\\img\\profile_img";
+    private final String root_path = "C:\\Users\\power\\Desktop\\study\\profile_img\\";
     private boolean isValid(String id) {
         MemberDto member = memberService.getMember(id);
 
@@ -87,6 +89,10 @@ public class MemberController {
         // 세션 생성
         HttpSession httpSession = request.getSession();
         httpSession.setAttribute("id", user_id);
+
+        MemberDto member = memberService.getMember(user_id);
+        String img_url = memberService.getMemberImage(member.getFk_image_id()).getImg_url();
+        httpSession.setAttribute("img", img_url);
 
         // 쿠키 생성
         Cookie cookie = new Cookie("id", user_id);
@@ -164,17 +170,16 @@ public String register(MemberDto memberDto, Model m, @RequestParam(value = "prof
             // 파일 저장
             mf.transferTo(saveFile);
 
-            log.info("이미지경로 ->" + saveFile.getAbsolutePath());
             // 새로운 이미지 정보를 MemberImageDto에 설정
             MemberImageDto memberImageDto = new MemberImageDto();
             memberImageDto.setName(uniqueFileName);
-            memberImageDto.setImg_url("/resources/img/profile_img/" + uniqueFileName);  // 웹 경로로 설정
+            memberImageDto.setImg_url("/image/" + uniqueFileName);  // 웹 경로로 설정
             memberImageDto.setOrder_number(1);
 
             // DB에 행 삽입 후 id 가져오기
             int newImageId = memberService.addMemberImage(memberImageDto);
-            Integer memberImageId = memberService.selectRecentImageOne().getId();
 
+            Integer memberImageId = memberService.selectRecentImageOne(uniqueFileName).getId();
             // member_image table의 id를 memberDto에 설정
             memberDto.setFk_image_id(memberImageId);
         } catch (IOException e) {
@@ -183,7 +188,11 @@ public String register(MemberDto memberDto, Model m, @RequestParam(value = "prof
         }
     } else {
         // 사용자가 사진을 첨부하지 않으면 기본 이미지 id 설정
-        memberDto.setFk_image_id(defaultImageId);
+        if(memberDto.getGender().equals("F")) {
+            memberDto.setFk_image_id(1);
+        }else{
+            memberDto.setFk_image_id(2);
+        }
     }
 
     // DB에 저장
@@ -199,76 +208,6 @@ public String register(MemberDto memberDto, Model m, @RequestParam(value = "prof
         return "redirect:/join?msg=" + msg;
     }
 }
-
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////
-
-//    /*
-//    3. 마이페이지 컨트롤러 - get 방식
-//     */
-//    @GetMapping("/mypage")
-//    public String myPage(HttpSession session, Model model){
-//        // 세션에 있는 id 값 가져오기
-//        String userId = (String) session.getAttribute("id");
-//        // 로그인하지 않은 사용자는 로그인페이지로 리다이렉트
-//        if(userId == null){
-//            return "redirect:/login";
-//        }
-//System.out.println("userId: " + userId  );
-//        // 로그인된 사용자의 마이페이지 정보 처리
-//        MemberDto member = memberService.getMember(userId);
-//        model.addAttribute("member", member);
-//
-//System.out.println("member: " + member  );
-//        // 회원이 작성한 리뷰 개수 조회
-//        int reviewCount = memberService.selectMemberReviewCount(userId);
-//        model.addAttribute("reviewCount", reviewCount);
-//
-//System.out.println("reviewCount: " + reviewCount  );
-//        // 회원 리뷰 조회(제목, 내용, 레스토랑 이름)
-//        List<ReviewDto> reviews = memberService.getMemberReviews(userId);
-//        model.addAttribute("reviews", reviews);
-//System.out.println("reviews: " + reviews  );
-//
-//        // 회원의 즐겨찾기 레스토랑 정보 조회(이름, c_address, d_address, number, reservation, total_score_count, search_tag)
-//        List<FavoriteWithRestaurantDto> favorites = memberService.getMemberFavorites(userId);
-//        model.addAttribute("favorites", favorites);
-//System.out.println("favorites: " + favorites  );
-//
-//        // 회원 이미지 조회
-//        MemberImageDto memberImage = memberService.getMemberImage(member.getFk_image_id());
-//        model.addAttribute("memberImage", memberImage);
-////        log.info(memberImage.getImg_url());
-//        return "myPage";
-//
-//    }
-
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////
-
-    /*
-    3. 마이페이지 - '내가 찜한 식당' 목록
-     */
-//    @GetMapping("/myPageRestaurant")
-//    public String myPageRestaurant(HttpSession session, Model model) {
-//        // 세션에 있는 id 값 가져오기
-//        String userId = (String) session.getAttribute("id");
-//        // 로그인하지 않은 사용자는 로그인페이지로 리다이렉트
-//        if (userId == null) {
-//            return "redirect:/login";
-//        }
-//
-//        // 회원의 즐겨찾기 레스토랑 정보 조회(이름, c_address, d_address, number, reservation, total_score_count, search_tag)
-//        List<FavoriteWithRestaurantDto> favorites = memberService.getMemberFavorites(userId);
-//        model.addAttribute("favorites", favorites);
-//
-//        return "myPageRestaurant";
-//    }
-
 
     @GetMapping("/myPageRestaurant")
     public String myPageRestaurant(HttpSession session, Model model) {
@@ -380,9 +319,13 @@ public String register(MemberDto memberDto, Model m, @RequestParam(value = "prof
 
 //    4 - 1) 프로필 수정 사항 업데이트하기
     @PostMapping("/changeMemInfo")
-    public String changeMemInfo(MemberDto memberDto, @RequestParam(value = "profile_image", required = false) MultipartFile mf) {
-
-        // 이미지 업로드 처리 (mf가 비어있지 않은 경우에만 실행)
+    public String changeMemInfo(MemberDto memberDto, @RequestParam(value = "profile_image", required = false) MultipartFile mf,HttpSession session) {
+        String userId = (String) session.getAttribute("id");
+        MemberDto member = memberService.getMember(userId);
+        if(userId == null){
+            return "redirect:/login";
+        }
+        // 이미지 업로드 처리 (mf가 비어있지 않은 경우에만 실행 + 기본이미지일경우를 제외함.)
         if (mf != null && !mf.isEmpty()) {
             try {
                 String originalName = mf.getOriginalFilename();
@@ -393,31 +336,49 @@ public String register(MemberDto memberDto, Model m, @RequestParam(value = "prof
                 // 저장경로 설정
                 // 파일 저장
                 mf.transferTo(saveFile);
-
                 // 새로운 이미지 정보를 MemberImageDto에 설정
+                MemberImageDto memberWithImage = memberService.getMemberWithImage(member.getUser_id());
+
+                if(memberWithImage.getId() != 1 && memberWithImage.getId() != 2){
+                    //기존 이미지 삭제.
+                    MemberImageDto memberImage = memberService.getMemberImage(member.getFk_image_id());
+//                    log.info(root_path.split("\\\\resources")[0]+memberImage.getImg_url());
+//                    Path deleteFilePath = Paths.get(root_path.split("\\\\resources")[0]+memberImage.getImg_url());
+                    Path deleteFilePath = Paths.get(root_path,memberImage.getImg_url());
+
+                    if(Files.exists(deleteFilePath)){
+                        try{
+                            Files.delete(deleteFilePath);
+                            log.info("기존 프로필 이미지 삭제완료");
+                        }catch (IOException e){
+                            log.info("기존 프로필 이미지 삭제실패");
+                        }
+                    }else{
+                        log.info("기존 프로필 이미지 경로가 존재하지않음???");
+                    }
+                }
+
                 MemberImageDto memberImageDto = new MemberImageDto();
-                memberImageDto.setName(uniqueFileName);
-                memberImageDto.setImg_url("/resources/img/profile_img/" + uniqueFileName);  // 웹 경로로 설정
+                memberImageDto.setName(memberWithImage.getName());
+                memberImageDto.setImg_url("/image/" + uniqueFileName);  // 웹 경로로 설정
                 memberImageDto.setOrder_number(1);
+                memberImageDto.setId(memberWithImage.getId());
 
-                // DB에 행 삽입 후 id 가져오기
-                int newImageId = memberService.updateMemberImage(memberImageDto);
-                Integer memberImageId = memberService.selectRecentImageOne().getId();
+                int i = memberService.updateMemberImage(memberImageDto);
+                memberDto.setFk_image_id(memberWithImage.getId());
 
-                // member_image table의 id를 memberDto에 설정
-                memberDto.setFk_image_id(memberImageId);
             } catch (IOException e) {
                 e.printStackTrace();
                 return "redirect:/join?msg=파일 업로드 실패";
             }
-        } else {
-            // 사용자가 사진을 첨부하지 않으면 기본 이미지 id 설정
-            memberDto.setFk_image_id(defaultImageId);
         }
 
         // DB에 저장
         if (memberService.updateMember(memberDto) == 1) {
-            return "redirect:/mypage";
+            MemberImageDto memberImage = memberService.getMemberImage(member.getFk_image_id());
+            log.info("여기까지왔음 " + memberImage.getImg_url());
+            session.setAttribute("img",memberImage.getImg_url());
+            return "redirect:/mypage2";
         } else {
             String msg = null;
             try {
@@ -440,26 +401,21 @@ public String register(MemberDto memberDto, Model m, @RequestParam(value = "prof
         if(userId == null){
             return "redirect:/login";
         }
-        System.out.println("userId: " + userId);
         // 로그인된 사용자의 마이페이지 정보 처리
         MemberDto member = memberService.getMember(userId);
         model.addAttribute("member", member);
 
-        System.out.println("member: " + member  );
         // 회원이 작성한 리뷰 개수 조회
         int reviewCount = memberService.selectMemberReviewCount(userId);
         model.addAttribute("reviewCount", reviewCount);
 
-        System.out.println("reviewCount: " + reviewCount  );
         // 회원 리뷰 조회(제목, 내용, 레스토랑 이름)
         List<ReviewDto> reviews = memberService.getMemberReviews(userId);
         model.addAttribute("reviews", reviews);
-        System.out.println("reviews: " + reviews  );
 
         // 회원의 즐겨찾기 레스토랑 정보 조회(이름, c_address, d_address, number, reservation, total_score_count, search_tag)
         List<FavoriteWithRestaurantDto> favorites = memberService.getMemberFavorites(userId);
         model.addAttribute("favorites", favorites);
-        System.out.println("favorites: " + favorites  );
 
         // 회원 이미지 조회
         MemberImageDto memberImage = memberService.getMemberImage(member.getFk_image_id());
@@ -521,23 +477,6 @@ public String register(MemberDto memberDto, Model m, @RequestParam(value = "prof
 
     }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////
-
-    /*
-    3. 마이페이지 - '리뷰 삭제' 목록
-     */
-//    @PostMapping("/remove")
-//    public String remove(HttpSession session, Integer id, Model m){
-//        // 세션에 있는 id 값 가져오기
-//        String userId = (String) session.getAttribute("id");
-//        // 로그인하지 않은 사용자는 로그인페이지로 리다이렉트
-//        if(userId == null){
-//            return "redirect:/login";
-//        }
-//
-//
-//    }
 
 }
 

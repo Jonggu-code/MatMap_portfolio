@@ -58,12 +58,24 @@
     <!-- 5) 회원 정보 수정 (user_id 기준) -->
     <update id="update" parameterType="MemberDto">
         update member set
-        password = #{password},
-        address = #{address},
-        email = #{email},
-        introduce = #{introduce},
-        phone_number = #{phone_number},
-        fk_image_id = #{fk_image_id}
+        <if test="password != null">
+            password = #{password},
+        </if>
+        <if test="address != null">
+            address = #{address},
+        </if>
+        <if test="email != null">
+            email = #{email},
+        </if>
+        <if test="introduce != null">
+            introduce = #{introduce},
+        </if>
+        <if test="phone_number != null">
+            phone_number = #{phone_number},
+        </if>
+        <if test="fk_image_id != null">
+            fk_image_id = #{fk_image_id}
+        </if>
         where user_id = #{user_id}
     </update>
 
@@ -85,10 +97,9 @@
         ORDER BY id DESC
     </select>
 
-    <select id="selectOne" resultType="MemberImageDto">
+    <select id="selectOne" resultType="MemberImageDto" parameterType="String">
         SELECT * FROM member_image
-        ORDER BY id DESC
-        LIMIT 1, 1;
+        WHERE member_image.name = #{name}
     </select>
 
     <!-- 7) 프로필 이미지 조회 -->

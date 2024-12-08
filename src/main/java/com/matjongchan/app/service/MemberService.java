@@ -77,5 +77,8 @@ public interface MemberService {
 
     public int deleteMemberFavorite(String userId);
 
-    MemberImageDto selectRecentImageOne();
+    MemberImageDto selectRecentImageOne(String img_name);
+
+
+
 }

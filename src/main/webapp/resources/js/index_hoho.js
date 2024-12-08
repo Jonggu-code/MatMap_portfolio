@@ -55,7 +55,7 @@ $(document).ready(function(){
         window.location.href = 'join'
     })
     $(document).on('click','.myPage_com',function(){
-        window.location.href = 'mypage'
+        window.location.href = 'mypage2'
     })
     $(document).on('click','.myFavorite_com',function(){
         window.location.href = 'myPageRestaurant'

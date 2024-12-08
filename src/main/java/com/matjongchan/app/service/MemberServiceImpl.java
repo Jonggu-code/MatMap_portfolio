@@ -137,7 +137,7 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public MemberImageDto selectRecentImageOne() {
-        return memberDao.selectMemberImageOne();
+    public MemberImageDto selectRecentImageOne(String img_name) {
+        return memberDao.selectMemberImageOne(img_name);
     }
 }

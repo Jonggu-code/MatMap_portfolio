@@ -4,8 +4,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <c:set var="uId" value="${sessionScope.id }" />
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -164,7 +164,12 @@
                 </div>
                 <div class="guest_menu" tabindex="-1">
                     <svg viewBox="0 0 24 24"><g><path d="M21,6H3V5h18V6z M21,11H3v1h18V11z M21,17H3v1h18V17z"></path></g></svg>
-                    <div class="guest_icon"></div>
+                    <c:if test='${!empty sessionScope.img}'>
+                        <div class="guest_icon" style='background: url("<spring:url value='${sessionScope.img}'/>") no-repeat center / cover'></div>
+                    </c:if>
+                    <c:if test='${empty sessionScope.img}'>
+                        <div class="guest_icon" style='background: url("<c:url value='/resources/img/other_img/1.png'/>") no-repeat center / cover'></div>
+                    </c:if>
                     <div class="guest_menu_box">
                         <c:choose>
                             <c:when test="${sessionScope.id == null}">
@@ -189,8 +194,8 @@
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b4e6868c7b5fe35c80d9b43d3190c872"></script>
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
-<script src="<c:url value="resources/js/map_hoho.js?1"/>"></script>
-<script src="<c:url value="resources/js/index_hoho.js?2"/>"></script>
+<script src="<c:url value="resources/js/map_hoho.js"/>"></script>
+<script src="<c:url value="resources/js/index_hoho.js"/>"></script>
 </html>
 
 <script>
@@ -217,7 +222,6 @@
                     create_marker();
                 },
                 error: function (request, status, error){
-                    console.log("정보 받아오기 실패 1",request,status,error)
                     alert("정보 받아오기 실패 1");
                 }
             })

@@ -131,11 +131,9 @@ public class MemberDaoImpl2 implements MemberDao2 {
     }
 
     @Override
-    public MemberImageDto selectMemberImageOne(){
-        return session.selectOne(namespace + "selectOne");
+    public MemberImageDto selectMemberImageOne(String img_name){
+        return session.selectOne(namespace+"selectOne",img_name);
     }
-
-
 
     @Override
     public  List<FavoriteWithRestaurantDto> selectFavorites(String user_id) {

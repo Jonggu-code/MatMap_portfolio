@@ -43,7 +43,7 @@ public interface MemberDao2 {
     MemberReviewsDto selectMemberReview(Integer id);
 
 
-    MemberImageDto selectMemberImageOne();
+    MemberImageDto selectMemberImageOne(String img_name);
 
     List<FavoriteWithRestaurantDto> selectFavorites(String user_id);  // user_id 기준으로 즐겨찾기 조회
     int deleteFavorite(String user_id);  // user_id 기준으로 즐겨찾기 삭제
