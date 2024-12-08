@@ -27,8 +27,8 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="<c:url value='/resources/css/common.css?1' /> ">
-    <link rel="stylesheet" href="<c:url value='/resources/css/detail.css?3' /> ">
+    <link rel="stylesheet" href="<c:url value='/resources/css/common.css?2' /> ">
+    <link rel="stylesheet" href="<c:url value='/resources/css/detail.css?4' /> ">
 
     <!-- 컬러 차트
         메인 컬러 : #ff9625
@@ -39,6 +39,9 @@
 </head>
 <body>
 <div id="wrap">
+    <div class="photo_viewer">
+        <!-- <img src="./etc/예시이미지/1.jpg" alt=""> -->
+    </div>
     <!-- 헤더 -->
     <header class="header">
 
@@ -112,18 +115,20 @@
                 <div class="swiper-button-prev0 banner_btn_L"><p>&lt</p></div>
                 <div class="swiper-button-next0 banner_btn_R"><p>&gt</p></div>
                 <div class="main_banner swiper-wrapper">
-                    <div class="banner_img swiper-slide count_0"></div>
-                    <div class="banner_img swiper-slide count_1"></div>
-                    <div class="banner_img swiper-slide count_2"></div>
-                    <div class="banner_img swiper-slide count_3"></div>
-                    <div class="banner_img swiper-slide count_4"></div>
-                    <div class="banner_img swiper-slide count_5"></div>
-                    <div class="banner_img swiper-slide count_6"></div>
-                    <div class="banner_img swiper-slide count_7"></div>
-                    <div class="banner_img swiper-slide count_8"></div>
-                    <div class="banner_img swiper-slide count_9"></div>
-                    <div class="banner_img swiper-slide count_10"></div>
-                    <div class="banner_img swiper-slide count_11"></div>
+                    <c:forEach var="tmp" begin="0" end="10">
+                        <div class="banner_img swiper-slide count_${tmp}" style="background: url(<c:url value='${restaurantImages[tmp]}'/>) no-repeat center / cover"></div>
+                    </c:forEach>
+<%--                    <div class="banner_img swiper-slide count_1"></div>--%>
+<%--                    <div class="banner_img swiper-slide count_2"></div>--%>
+<%--                    <div class="banner_img swiper-slide count_3"></div>--%>
+<%--                    <div class="banner_img swiper-slide count_4"></div>--%>
+<%--                    <div class="banner_img swiper-slide count_5"></div>--%>
+<%--                    <div class="banner_img swiper-slide count_6"></div>--%>
+<%--                    <div class="banner_img swiper-slide count_7"></div>--%>
+<%--                    <div class="banner_img swiper-slide count_8"></div>--%>
+<%--                    <div class="banner_img swiper-slide count_9"></div>--%>
+<%--                    <div class="banner_img swiper-slide count_10"></div>--%>
+<%--                    <div class="banner_img swiper-slide count_11"></div>--%>
                 </div>
             </div>
         </div>
@@ -425,16 +430,34 @@
 
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script src="<c:url value='/resources/js/common.js?4' /> "></script>
-<script src="<c:url value='/resources/js/detail.js?6' /> "></script>
-<script src="./js/swiper.js"></script>
+<script src="<c:url value='/resources/js/common.js?5' /> "></script>
+<script src="<c:url value='/resources/js/detail.js?8' /> "></script>
+<script src="<c:url value='/resources/js/swiper.js?1' /> "></script>
 
 <script>
     $(document).ready(function (){
+
+        $(document).on('click', '.rest_img', function(){
+            $('body').addClass('photo_view')
+            $('.photo_viewer').addClass('photo_active')
+
+            let curr_rest_img = $(this).css("background")
+            let curr_img_url = curr_rest_img.match(/url\("?(.*?)"?\)/)?.[1]
+
+            let photo = `<img src="${'${curr_img_url}'}" alt=""></img>`
+            $('.photo_viewer').append(photo)
+        })
+        $(document).on('click', '.photo_viewer', function(){
+            $(this).removeClass('photo_active')
+            $('body').removeClass('photo_view')
+            $('.photo_viewer').empty()
+        })
+
+
+
         let countTmp = 0;
         let curTmp=1;
         let revTmp = document.getElementsByClassName('rev_con_main_box').length;
-
 
         let imgCountTmp = 0;
         let imgCurTmp=1;
@@ -495,7 +518,9 @@
             }
         })
     })
+
+
 </script>
 
-    </body>
+</body>
 </html>

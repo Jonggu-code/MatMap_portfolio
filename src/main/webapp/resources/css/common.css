@@ -371,3 +371,28 @@ body::-webkit-scrollbar {
 .review_edit_delete > p {
     margin: 0 5px;
 }
+
+.photo_view {
+    overflow: hidden;
+}
+.photo_viewer {
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+
+    position: fixed;
+
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 999999;
+}
+.photo_viewer > img {
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+}
+.photo_active {
+    display: flex;
+}
