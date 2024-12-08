@@ -260,8 +260,8 @@
                             <span class="reco_empty_star reco_star">
                                 <p class="reco_fill_star"></p>
                             </span>
-                            <span class="reco_score">${restaurant_total_score_count}</span>
-                            <span>(${restaurant_total_review_count})</span>
+                            <span class="reco_score">${relList.restaurant_total_score_count}</span>
+                            <span>(${relList.restaurant_total_review_count})</span>
                         </div>
                     </div>
                     <div class="reco_addr">${relList.restaurant_address}</div>
