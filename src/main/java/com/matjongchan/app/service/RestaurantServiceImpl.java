@@ -270,7 +270,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         return simpleRestaurantList;
     }
 
-    private String getImgUrl(RestaurantDto dto) {
+    public String getImgUrl(RestaurantDto dto) {
         List<OtherImageDto> images = otherImageDao.getRestaurantImages2(dto.getId());
         return images.isEmpty() ? null : images.get(0).getImg_url();
     }

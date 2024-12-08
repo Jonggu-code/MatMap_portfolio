@@ -12,6 +12,7 @@ import com.matjongchan.app.domain.dto.RestaurantDetail;
 import com.matjongchan.app.domain.entity.MemberDto;
 import com.matjongchan.app.domain.dto.MemberLoginDto;
 import com.matjongchan.app.domain.entity.MemberImageDto;
+import com.matjongchan.app.domain.entity.RestaurantDto;
 import com.matjongchan.app.domain.entity.ReviewDto;
 import com.matjongchan.app.service.MemberService;
 import com.matjongchan.app.service.RestaurantService;
@@ -270,7 +271,6 @@ public String register(MemberDto memberDto, Model m, @RequestParam(value = "prof
 //    }
 
 
-
     @GetMapping("/myPageRestaurant")
     public String myPageRestaurant(HttpSession session, Model model) {
 
@@ -293,16 +293,28 @@ public String register(MemberDto memberDto, Model m, @RequestParam(value = "prof
 
         // 4. fk_restaurant_id를 이용해서 restaurant 테이블의 id 구하기
         List<RestaurantDetail> restaurantDetails = new ArrayList<>();
+        List<String> restaurantImageUrls = new ArrayList<>(); // 이미지 URL 리스트
+
         for (Integer restaurantId : restaurantIds) {
             // 5. 구한 restaurant 테이블의 id로 RestaurantDetail getRestaurantDetail(int restaurantId) 서비스 접근
             RestaurantDetail restaurantDetail = restaurantService.getRestaurantDetail(restaurantId);
             if (restaurantDetail != null) {
                 restaurantDetails.add(restaurantDetail); // 상세 정보 리스트에 추가
+
+                // RestaurantDto를 생성하여 이미지 URL 구하기
+                RestaurantDto restaurantDto = restaurantService.getRestaurantById(restaurantId);
+                if (restaurantDto != null) {
+                    String imgUrl = restaurantService.getImgUrl(restaurantDto);
+                    restaurantImageUrls.add(imgUrl); // 이미지 URL 추가
+                }
+
             }
         }
 
+
         // 6. 모델에 보내기
         model.addAttribute("restaurantDetails", restaurantDetails);
+        model.addAttribute("restaurantImageUrls", restaurantImageUrls); // 이미지 URL 데이터
 
         return "myPageRestaurant";
     }
@@ -429,7 +441,7 @@ public String register(MemberDto memberDto, Model m, @RequestParam(value = "prof
         if(userId == null){
             return "redirect:/login";
         }
-        System.out.println("userId: " + userId  );
+        System.out.println("userId: " + userId);
         // 로그인된 사용자의 마이페이지 정보 처리
         MemberDto member = memberService.getMember(userId);
         model.addAttribute("member", member);
@@ -466,17 +478,30 @@ public String register(MemberDto memberDto, Model m, @RequestParam(value = "prof
 
         // 4. fk_restaurant_id를 이용해서 restaurant 테이블의 id 구하기
         List<RestaurantDetail> restaurantDetails = new ArrayList<>();
+        List<String> restaurantImageUrls = new ArrayList<>();
+
+
         for (Integer restaurantId : restaurantIds) {
             // 5. 구한 restaurant 테이블의 id로 RestaurantDetail getRestaurantDetail(int restaurantId) 서비스 접근
             RestaurantDetail restaurantDetail = restaurantService.getRestaurantDetail(restaurantId);
             if (restaurantDetail != null) {
                 restaurantDetails.add(restaurantDetail); // 상세 정보 리스트에 추가
+
+                // 이미지 URL 추가
+                RestaurantDto restaurantDto = restaurantService.getRestaurantById(restaurantId);
+                if (restaurantDto != null) {
+                    String imgUrl = restaurantService.getImgUrl(restaurantDto);
+                    restaurantImageUrls.add(imgUrl); // 이미지 URL 리스트에 추가
+                }
+
+
+
             }
         }
 
         // 6. 모델에 보내기
         model.addAttribute("restaurantDetails", restaurantDetails);
-
+        model.addAttribute("restaurantImageUrls", restaurantImageUrls);
 
         /////////////////////////////////////
 

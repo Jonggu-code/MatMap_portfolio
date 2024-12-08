@@ -187,7 +187,11 @@
 
                                 <div class="rest_box_main swiper-slide">
                                     <div class="rest_box_L">
-                                        <div class="menu_img"></div>
+<%--                                        <div class="menu_img"></div>--%>
+                                            <!-- 식당 이미지 출력 -->
+                                            <div class="menu_img">
+                                                <img src="${restaurantImageUrls[status.index]}" alt="${favorite.restaurant_name}" />
+                                            </div>
                                     </div>
                                     <div class="rest_box_R">
                                         <div class="rest_title_box">

@@ -101,9 +101,18 @@
                                 <div class="swiper-button-prev0 banner_btn_L"><p>&lt</p></div>
                                 <div class="swiper-button-next0 banner_btn_R"><p>&gt</p></div>
                                 <div class="main_banner swiper-wrapper">
-                                    <div class="banner_img swiper-slide count_0"></div>
-                                    <div class="banner_img swiper-slide count_1"></div>
-                                    <!-- 배너 이미지들 -->
+<%--                                    <div class="banner_img swiper-slide count_0"></div>--%>
+<%--                                    <div class="banner_img swiper-slide count_1"></div>--%>
+<%--                                    <!-- 배너 이미지들 -->--%>
+
+                                        <!-- banner_img를 restaurantImageUrls와 연결 -->
+                                        <c:forEach var="imageUrl" items="${restaurantImageUrls}" varStatus="imageStatus">
+                                            <c:if test="${imageStatus.index == status.index}">
+                                                <div class="banner_img swiper-slide count_${imageStatus.index}">
+                                                    <img src="${imageUrl}" alt="${restaurant.restaurant_name}">
+                                                </div>
+                                            </c:if>
+                                        </c:forEach>
                                 </div>
                             </div>
 
