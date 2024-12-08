@@ -2,6 +2,7 @@ package com.matjongchan.app.dao;
 
 
 import com.matjongchan.app.domain.dto.FavoriteWithRestaurantDto;
+import com.matjongchan.app.domain.dto.ReviewerDto;
 import com.matjongchan.app.domain.entity.*;
 
 import java.util.List;
@@ -47,5 +48,7 @@ public interface MemberDao2 {
 
     List<FavoriteWithRestaurantDto> selectFavorites(String user_id);  // user_id 기준으로 즐겨찾기 조회
     int deleteFavorite(String user_id);  // user_id 기준으로 즐겨찾기 삭제
+
+    ReviewerDto getReviewerProfileImg(String user_id);
 }
 

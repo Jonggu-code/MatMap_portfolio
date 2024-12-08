@@ -105,8 +105,8 @@ public class RestaurantDaoImpl implements RestaurantDao {
     }
 
     @Override
-    public List<RestaurantDto> getRelationRestaurant3(int restaurant_id) {
-        return session.selectList(namespace+"getRelationRestaurant",restaurant_id);
+    public List<RestaurantDto> getRelationRestaurant3(SearchCondition searchCondition) {
+        return session.selectList(namespace+"getRelationRestaurant",searchCondition);
     }
 
     @Override

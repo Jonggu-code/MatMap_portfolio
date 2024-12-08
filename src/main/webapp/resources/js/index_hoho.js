@@ -49,22 +49,22 @@ $(document).ready(function(){
     // 비로그인, 로그인 상태 시 헤더 노출
     // 비로그인, 로그인 상태 시 헤더 노출
     $(document).on('click','.login_com',function(){
-        window.location.href = 'login'
+        window.location.href = 'http://localhost:8080/login'
     })
     $(document).on('click','.register_com',function(){
-        window.location.href = 'join'
+        window.location.href = 'http://localhost:8080/join'
     })
     $(document).on('click','.myPage_com',function(){
-        window.location.href = 'mypage2'
+        window.location.href = 'http://localhost:8080/mypage2'
     })
     $(document).on('click','.myFavorite_com',function(){
-        window.location.href = 'myPageRestaurant'
+        window.location.href = 'http://localhost:8080/myPageRestaurant'
     })
     $(document).on('click','.myReview_com',function(){
-        window.location.href = 'myPageReview'
+        window.location.href = 'http://localhost:8080/myPageReview'
     })
     $(document).on('click','.logout_com',function(){
-        window.location.href = 'logout'
+        window.location.href = 'http://localhost:8080/logout'
     })
 
     $(document).on('click','.login_com',function(){

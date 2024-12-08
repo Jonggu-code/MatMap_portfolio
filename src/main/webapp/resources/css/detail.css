@@ -423,12 +423,6 @@
 .reco_img {
     width: calc(100% / 2);
 }
-.reco_img1 {
-    background: url(../img/예시이미지/june1.jpg) no-repeat center / cover;
-}
-.reco_img2 {
-    background: url(../img/예시이미지/june2.jpg) no-repeat center / cover;
-}
 .move_top {
     width: 100px;
     height: 50px;

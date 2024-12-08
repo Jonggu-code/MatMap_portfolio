@@ -47,8 +47,7 @@ public class ReviewController {
     ///////////////////////////////////////////////
     ///////////////////////////////////////////////
     ///////////////////////////////////////////////
-    File file = new File(".");
-    private final String root_path = file.getAbsolutePath().split("work")[0]+= "\\work\\MatMap_portfolio\\src\\main\\webapp\\resources\\img\\other_img\\";
+    private static final String root_path = "C:\\Users\\power\\Desktop\\study\\profile_img\\";
 
 
 
@@ -90,11 +89,15 @@ public class ReviewController {
 
     @GetMapping("/reviewWrite/{id}") // 리뷰 작성 첫 페이지 메서드 보여주기
     public String reviewWrite(@PathVariable("id") int id, HttpServletRequest request, RestaurantDto restaurantDto, Model m) {
+        HttpSession session = request.getSession();
+
+        if(session.getAttribute("id") == null){
+            return "redirect:/login";
+        }
 
         m.addAttribute("id", id);
         m.addAttribute("restaurantDto", restaurantDto);
 
-        HttpSession session = request.getSession();
 
         RestaurantDto restaurant = restaurantService.getRestaurantById(id);
         m.addAttribute("restaurant", restaurant);
@@ -210,10 +213,8 @@ public class ReviewController {
                 otherImageService.deleteImage(reviewDtoNew.getId());
             }
 
-            log.info("joshua2");
             List<OtherImageDto> imageList = new ArrayList<>();
             for (MultipartFile file : files) {
-                log.info("joshua3");
 
                 // 원본 파일 이름
                 try {
@@ -226,20 +227,15 @@ public class ReviewController {
 
                     // 밀리초 기반 유니크 파일 이름 생성
                     String savedFilename = System.currentTimeMillis() + "_" + originalFilename;
-                    String saveFile = root_path + System.currentTimeMillis() + "_" + originalFilename; // 저장경로 설정
 
                     File save_root = new File(root_path , savedFilename);
                     // 파일 저장
                     file.transferTo(save_root);
 
-                    System.out.println("Root Path: " + root_path);
-                    System.out.println("Save Root: " + save_root.getAbsolutePath());
-
-
                     // OtherImageDto에 정보 추가
                     otherImageDto = new OtherImageDto();
                     otherImageDto.setName(savedFilename);
-                    otherImageDto.setImg_url(saveFile); // 실제 저장된 경로
+                    otherImageDto.setImg_url("/image/" + savedFilename); // 실제 저장된 경로
                     otherImageDto.setFk_review_id(orderId);
                     otherImageDto.setFk_restaurant_id(id);
                     order_no++;

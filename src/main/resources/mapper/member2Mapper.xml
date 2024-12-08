@@ -231,6 +231,19 @@
         INNER JOIN member AS m ON f.fk_member_id = m.id
         WHERE m.user_id = #{user_id}
     </delete>
+<!--    private String gender;-->
+<!--    private Integer age;-->
+<!--    private String profile;-->
+    <select id="getReviewerProfileImg" parameterType="String" resultType="ReviewerDto">
+        SELECT  mi.img_url as profile,
+                m.gender as gender,
+                m.age as age
+        FROM member as m
+        INNER JOIN member_image as mi
+        ON mi.id = m.fk_image_id
+        WHERE m.user_id = #{reviewer}
+    </select>
+
 
 
 </mapper>

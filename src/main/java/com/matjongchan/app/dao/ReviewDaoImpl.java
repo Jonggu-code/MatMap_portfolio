@@ -3,6 +3,7 @@ package com.matjongchan.app.dao;
 import com.matjongchan.app.domain.dto.ReviewDetail;
 import com.matjongchan.app.domain.dto.ReviewDetailSearchCondition;
 import com.matjongchan.app.domain.entity.MemberDto;
+import com.matjongchan.app.domain.entity.MenuDto;
 import com.matjongchan.app.domain.entity.ReviewDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -167,4 +168,8 @@ public int deleteAll() {
         return session.selectOne(namespace+"selectOnceReview", params);
     }
 
+    @Override
+    public List<MenuDto> getMenuList(int review_id) {
+        return session.selectList(namespace+"getMenuList", review_id);
+    }
 }

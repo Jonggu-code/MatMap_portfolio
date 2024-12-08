@@ -16,16 +16,6 @@ document.getElementById('review_leng').addEventListener('click',function(e){
     window.scrollTo({top:t_move, behavior: 'smooth'})
 })
 
-document.getElementsByClassName('rev_create_btn')[0].addEventListener('click',function(){
-    if(login == false){
-        alert("로그인 후 작성해주세요.")
-        window.location.href = "login.html";
-    }
-    else if(login == true){
-        window.location.href = "review_page_1.html"
-    }
-})
-
 // 제이쿼리
 $(document).ready(function(){
     let reco_box_top = $('#menu_container').offset().top
@@ -49,11 +39,11 @@ $(document).ready(function(){
     let banner_img_length = $('.banner_img').length
 
     // 배너에 이미지 넣어주는 반복문
-    for(i=0; i<banner_img_length; i++){
-        $(`.count_${i}`).css({
-            background: `url(./img/예시이미지/${i+1}.jpg) no-repeat center / cover`
-        })
-    }
+    // for(i=0; i<banner_img_length; i++){
+    //     $(`.count_${i}`).css({
+    //         background: `url(./img/예시이미지/${i+1}.jpg) no-repeat center / cover`
+    //     })
+    // }
 
     let img_length = 29; // 식당에 포함된 이미지 총 length
     let curr_img_btn = 1; // 현재 보고있는 이미지 페이지
@@ -61,16 +51,16 @@ $(document).ready(function(){
     let curr_img = 0; // 이미지 불러오기 경로(첫경로)
     let load_img = 9; // 이미지 불러오기 경로(끝경로)
 
-    // 이미지 div 9개 넣어주는 함수
-    function load_img_div(opt1, opt2){
-        for(let i=opt1; i<opt2; i++){
-            let tmp = `
-                <div class="rest_img" style="background: url(./img/예시이미지/${i+1}.jpg) no-repeat center / cover;"></div>
-            `
-            $('.img_con_box').append(tmp)
-        }
-    }
-    load_img_div(curr_img, load_img)
+    // // 이미지 div 9개 넣어주는 함수
+    // function load_img_div(opt1, opt2){
+    //     for(let i=opt1; i<opt2; i++){
+    //         let tmp = `
+    //             <div class="rest_img" style="background: url(./img/예시이미지/${i+1}.jpg) no-repeat center / cover;"></div>
+    //         `
+    //         $('.img_con_box').append(tmp)
+    //     }
+    // }
+    // load_img_div(curr_img, load_img)
 
     // 더보기 버튼 누르면 사진 & div 더 넣어주는 클릭이벤트
     // $('.img_con_more_btn').click(function(){
@@ -89,7 +79,7 @@ $(document).ready(function(){
         //     load_img_div(curr_img, load_img)
         //     $('.img_con_more_btn').remove()
         // }
-    })
+    // })
 
     // 찜하기 버튼 클릭
     $(document).on('click', '.rest_save', function(){
@@ -114,34 +104,4 @@ $(document).ready(function(){
             }
         })
     })
-
-    // 후기칸에서 이미지 더보기 버튼 클릭 이벤트
-
-    let review_length = 14; // 식당에 포함된 리뷰 총 length
-    let curr_rev_btn = 1; // 현재 보고있는 리뷰 페이지 (더보기 버튼 누르면 1씩 증가)
-    // let rev_more_btn_lock = Math.floor(review_length / 5); // 최종 후기 불러올 시 더보기 버튼 lock
-    let curr_rev = 0; // 리뷰 불러오기 경로(시작단)
-    let load_rev = 5; // 리뷰 불러오기 경로(끝단)
-
-    // 후기칸에서 후기 더보기 버튼 클릭 이벤트
-
-    // 이미지 리뷰 5개 넣어주는 함수
-
-    // $('.rev_con_more_btn').click(function(){
-    //     if(curr_rev_btn < rev_more_btn_lock){
-    //         console.log(curr_rev_btn, rev_more_btn_lock)
-    //         curr_rev += 5
-    //         load_rev += 5
-    //         curr_rev_btn += 1
-    //         load_rev_div(curr_rev, load_rev)
-    //     }
-
-        // 리뷰 갯수 한계에 다르면 더보기 버튼 삭제
-    //     else if(curr_rev_btn = rev_more_btn_lock){
-    //         curr_rev += 5
-    //         load_rev = review_length
-    //         load_rev_div(curr_rev, load_rev)
-    //         $('.rev_con_more_btn').remove()
-    //     }
-    // })
-});
+})

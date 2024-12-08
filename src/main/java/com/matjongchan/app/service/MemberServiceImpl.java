@@ -2,6 +2,7 @@ package com.matjongchan.app.service;
 
 import com.matjongchan.app.dao.MemberDao2;
 import com.matjongchan.app.domain.dto.FavoriteWithRestaurantDto;
+import com.matjongchan.app.domain.dto.ReviewerDto;
 import com.matjongchan.app.domain.entity.MemberDto;
 import com.matjongchan.app.domain.entity.MemberImageDto;
 import com.matjongchan.app.domain.entity.MemberReviewsDto;
@@ -139,5 +140,10 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public MemberImageDto selectRecentImageOne(String img_name) {
         return memberDao.selectMemberImageOne(img_name);
+    }
+
+    @Override
+    public ReviewerDto getReviewerProfileImg(String user_id) {
+        return memberDao.getReviewerProfileImg(user_id);
     }
 }

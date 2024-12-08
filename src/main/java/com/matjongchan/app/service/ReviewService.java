@@ -2,6 +2,7 @@ package com.matjongchan.app.service;
 
 import com.matjongchan.app.domain.dto.ReviewDetail;
 import com.matjongchan.app.domain.dto.ReviewDetailSearchCondition;
+import com.matjongchan.app.domain.entity.MenuDto;
 import com.matjongchan.app.domain.entity.ReviewDto;
 
 import java.util.List;
@@ -35,5 +36,7 @@ public interface ReviewService {
     List<Double> getTotalScoreCountList(int fk_restaurant_id);
 
     public ReviewDto selectOnceReview(Map<String, Object> params);
+
+    List<MenuDto> getMenuList(Integer review_id);
 
 }

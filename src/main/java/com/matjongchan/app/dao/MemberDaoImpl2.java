@@ -1,6 +1,7 @@
 package com.matjongchan.app.dao;
 
 import com.matjongchan.app.domain.dto.FavoriteWithRestaurantDto;
+import com.matjongchan.app.domain.dto.ReviewerDto;
 import com.matjongchan.app.domain.entity.*;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -143,5 +144,10 @@ public class MemberDaoImpl2 implements MemberDao2 {
     @Override
     public int deleteFavorite(String user_id) {
         return session.delete(namespace + "deleteFavorite", user_id);
+    }
+
+    @Override
+    public ReviewerDto getReviewerProfileImg(String user_id) {
+        return session.selectOne(namespace + "getReviewerProfileImg", user_id);
     }
 }

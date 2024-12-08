@@ -120,10 +120,10 @@ public interface RestaurantDao {
 
     /**
      * 같은 카테고리를 가진 식당 3개를 조회
-     * @param restaurant_id
+     * @param
      * @return
      */
-    List<RestaurantDto> getRelationRestaurant3 (int restaurant_id);
+    List<RestaurantDto> getRelationRestaurant3 (SearchCondition searchCondition);
 
     /**
      * 랭킹 조회

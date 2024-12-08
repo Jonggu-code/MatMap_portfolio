@@ -278,6 +278,8 @@
                 success:function (sr){
                     $('.main_up').html(loadRestaurant(sr));
                     $('.pagination').html(loadPagination(sr));
+                    xy_location(sr);
+                    create_marker();
                 },
                 error: function (request, status, error){
                     alert("정보 받아오기 실패 2");
@@ -372,7 +374,7 @@
         return tmp_html;
     }
     function loadPagination(sr){
-        let show_prev = sr[0].searchCondition.show_prev;
+        let show_prev = sr[0].searchCondition.show_prev == null ? false : sr[0].searchCondition.show_prev;
         let show_next = sr[0].searchCondition.show_next;
         let begin_page = sr[0].searchCondition.begin_page;
         let end_page = sr[0].searchCondition.end_page;

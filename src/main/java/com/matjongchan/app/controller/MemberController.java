@@ -285,7 +285,8 @@ public String register(MemberDto memberDto, Model m, @RequestParam(value = "prof
         // 4. 리뷰와 매칭되는 레스토랑 정보 조회 및 저장
         Map<Integer, RestaurantDetail> restaurantMap = new HashMap<>();
         for(ReviewDto review: reviews){
-            int restaurantId = review.getfk_restaurant_id();
+
+            int restaurantId = review.getFk_restaurant_id();
             RestaurantDetail restaurantDetail = restaurantService.getRestaurantDetail(restaurantId);
             if(restaurantDetail != null){
                 restaurantMap.put(restaurantId, restaurantDetail);
@@ -461,7 +462,7 @@ public String register(MemberDto memberDto, Model m, @RequestParam(value = "prof
         // 4. 리뷰와 매칭되는 레스토랑 정보 조회 및 저장
         Map<Integer, RestaurantDetail> restaurantMap = new HashMap<>();
         for(ReviewDto review: reviews){
-            int restaurantId = review.getfk_restaurant_id();
+            int restaurantId = review.getFk_restaurant_id();
             RestaurantDetail restaurantDetail = restaurantService.getRestaurantDetail(restaurantId);
             if(restaurantDetail != null){
                 restaurantMap.put(restaurantId, restaurantDetail);

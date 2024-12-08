@@ -1,6 +1,7 @@
 package com.matjongchan.app.domain.entity;
 
 
+import com.matjongchan.app.domain.dto.ReviewerDto;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,48 +27,7 @@ public class ReviewDto {
     private List<String> menuNames;
     private List<String> otherImages;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public String getReviewer() {
-        return reviewer;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public double getTaste_score() {
-        return taste_score;
-    }
-
-    public double getClean_score() {
-        return clean_score;
-    }
-
-    public double getKind_score() {
-        return kind_score;
-    }
-
-    public double getTotal_score() {
-        return total_score;
-    }
-
-    public String getCreate_at() {
-        return create_at;
-    }
-
-    public Integer getfk_restaurant_id() {
-
-        return fk_restaurant_id;
-    }
-
-
+    private ReviewerDto reviewerDto;
 
     public ReviewDto(String reviewer, String title, String content, double taste_score, double clean_score, double kind_score, double total_score, Integer fk_restaurant_id) {
         this.reviewer = reviewer;

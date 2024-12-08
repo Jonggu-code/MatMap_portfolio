@@ -8,10 +8,7 @@ import com.matjongchan.app.domain.entity.OtherImageDto;
 import com.matjongchan.app.domain.entity.RestaurantDto;
 import com.matjongchan.app.domain.entity.ReviewDto;
 import com.matjongchan.app.domain.entity.ReviewMenuDto;
-import com.matjongchan.app.service.OtherImageService;
-import com.matjongchan.app.service.RestaurantService;
-import com.matjongchan.app.service.ReviewMenuService;
-import com.matjongchan.app.service.ReviewService;
+import com.matjongchan.app.service.*;
 import lombok.RequiredArgsConstructor;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +37,8 @@ public class RestaurantController {
     RestaurantDao restaurantDao;
     @Autowired
     OtherImageDao otherImageDao;
+    @Autowired
+    MemberService memberService;
 
     private final RestaurantService restaurantService;
 
@@ -68,16 +67,6 @@ public class RestaurantController {
 
         List<RelationRestaurant> relationRestaurant = restaurantDetail.getRelation_restaurant_list();
         m.addAttribute("relationRestaurant", relationRestaurant);
-        if (relationRestaurant.size() != 0){
-            for (int i = 0; i < relationRestaurant.size(); i++){
-                Integer relId = restaurantDao.getIdByName(relationRestaurant.get(i).getRestaurant_name());
-                double relScore = reviewService.getTotalAvg(relId);
-                int relCount = reviewService.getCountR(relId);
-                m.addAttribute("relCount", relCount);
-                m.addAttribute("relScore", relScore);
-            }
-        }
-
 
         Map<String, Object> param = new HashMap<>();
         param.put("offset", 0);
@@ -86,26 +75,14 @@ public class RestaurantController {
 
         List<ReviewDto> reviews = null;
         reviews = reviewService.getListR(id);
+        for (ReviewDto review : reviews) {
+            ReviewerDto tmp_ = memberService.getReviewerProfileImg(review.getReviewer());
+            review.setReviewerDto(tmp_);
+        }
+
         m.addAttribute("reviews", reviews);
 
-        for (ReviewDto review : reviews) {
-            List<String> menuNames = reviewMenuService.getMenuNames(review.getId());
-            review.setMenuNames(menuNames); // ReviewDto에 메뉴 리스트 추가
 
-            List<String> otherImages = otherImageDao.getReviewImages(review.getId());
-            review.setOtherImages(otherImages);
-
-            Double tasteS = reviewDao.tasteS(review);
-            Double cleanS = reviewDao.cleanS(review);
-            Double kindS = reviewDao.kindS(review);
-            Double totalS = reviewDao.totalS(review);
-
-            m.addAttribute("tasteS", tasteS);
-            m.addAttribute("cleanS", cleanS);
-            m.addAttribute("kindS", kindS);
-            m.addAttribute("totalS", totalS);
-
-        }
 
         m.addAttribute("restaurantDto", restaurantDto);
         m.addAttribute("reviewDto", reviewDto);

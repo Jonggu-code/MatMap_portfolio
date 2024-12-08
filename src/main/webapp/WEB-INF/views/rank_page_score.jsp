@@ -5,6 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,7 +58,12 @@
                 <a href="<c:url value="/rank"/>">월간 맛집</a>
                 <div class="guest_menu" tabindex="-1">
                     <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><g><path d="M21,6H3V5h18V6z M21,11H3v1h18V11z M21,17H3v1h18V17z"></path></g></svg>
-                    <div class="guest_icon"></div>
+                    <c:if test='${!empty sessionScope.img}'>
+                        <div class="guest_icon" style='background: url("<spring:url value='${sessionScope.img}'/>") no-repeat center / cover'></div>
+                    </c:if>
+                    <c:if test='${empty sessionScope.img}'>
+                        <div class="guest_icon" style='background: url("<c:url value='/resources/img/other_img/1.png'/>") no-repeat center / cover'></div>
+                    </c:if>
                     <div class="guest_menu_box">
                         <c:choose>
                             <c:when test="${sessionScope.id == null}">
@@ -87,11 +93,11 @@
 
         <!-- 메인화면단 -->
         <div class="container_main contents_area">
-        <c:forEach var="tmp" items="${rank_list}">
+        <c:forEach var="tmp" items="${rank_list}" varStatus="status">
             <div class="container_box main_box">
                 <!-- 맛집 랭킹단 -->
                 <div class="rank_box">
-                    <p>TOP 1</p>
+                    <p>TOP ${status.index+1}</p>
                     <div class="time_box">
                         <p class="time_icon"></p>
                         <c:choose>

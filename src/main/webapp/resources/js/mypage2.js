@@ -63,29 +63,35 @@ guest.addEventListener('blur', function(){
 
 $(document).ready(function(){
     // 비로그인, 로그인 상태 시 헤더 노출
-    let guest_box = `
-        <p class="login_com">로그인</p>
-        <p class="register">회원가입</p>
-    `
-    let login_box = `
-        <p class="my_page">마이페이지</p>
-        <p class="my_rest">내가 찜한 맛집</p>
-        <p class="my_review">내가 작성한 후기</p>
-        <p class="login_del">로그아웃</p>
-    `
-    $('.guest_menu_box').append(guest_box)
+    // let guest_box = `
+    //     <p class="login_com">로그인</p>
+    //     <p class="register">회원가입</p>
+    // `
+    // let login_box = `
+    //     <p class="my_page">마이페이지</p>
+    //     <p class="my_rest">내가 찜한 맛집</p>
+    //     <p class="my_review">내가 작성한 후기</p>
+    //     <p class="login_del">로그아웃</p>
+    // `
+    // $('.guest_menu_box').append(guest_box)
 
-    $(document).on('click','.register',function(){
-        window.location.href = './register.html'
+    $(document).on('click','.login_com',function(){
+        window.location.href = 'http://localhost:8080/login'
     })
-    $(document).on('click','.my_page',function(){
-        window.location.href = './mypage.html'
+    $(document).on('click','.register_com',function(){
+        window.location.href = 'http://localhost:8080/join'
     })
-    $(document).on('click','.my_rest',function(){
-        window.location.href = './list_page_restaurant.html'
+    $(document).on('click','.myPage_com',function(){
+        window.location.href = 'http://localhost:8080/mypage2'
     })
-    $(document).on('click','.my_review',function(){
-        window.location.href = './list_page_review.html'
+    $(document).on('click','.myFavorite_com',function(){
+        window.location.href = 'http://localhost:8080/myPageRestaurant'
+    })
+    $(document).on('click','.myReview_com',function(){
+        window.location.href = 'http://localhost:8080/myPageReview'
+    })
+    $(document).on('click','.logout_com',function(){
+        window.location.href = 'http://localhost:8080/logout'
     })
 
     $(document).on('click','.login_com',function(){

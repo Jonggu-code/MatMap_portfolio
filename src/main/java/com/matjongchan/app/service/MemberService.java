@@ -1,6 +1,7 @@
 package com.matjongchan.app.service;
 
 import com.matjongchan.app.domain.dto.FavoriteWithRestaurantDto;
+import com.matjongchan.app.domain.dto.ReviewerDto;
 import com.matjongchan.app.domain.entity.MemberDto;
 import com.matjongchan.app.domain.entity.MemberImageDto;
 import com.matjongchan.app.domain.entity.MemberReviewsDto;
@@ -79,6 +80,6 @@ public interface MemberService {
 
     MemberImageDto selectRecentImageOne(String img_name);
 
-
+    ReviewerDto getReviewerProfileImg(String user_id);
 
 }

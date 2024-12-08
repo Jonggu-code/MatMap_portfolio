@@ -39,7 +39,6 @@
         select * from review
         where fk_restaurant_id = #{fk_restaurant_id}
         order by id desc
-
     </select>
 
     <!--    해당 유저의 게시글 불러오기 (최근 등록 순으로)-->
@@ -138,6 +137,17 @@
         order by create_at desc
         limit 0,1
     </select>
+
+    <select id="getMenuList" parameterType="int" resultType="MenuDto">
+        select m.name as name
+        FROM review as re
+        INNER JOIN review_menu as rm
+        ON rm.fk_review_id = re.id
+        INNER JOIN menu as m
+        ON rm.fk_menu_id = m.id
+        WHERE re.id = #{id}
+    </select>
+
 </mapper>
 
 

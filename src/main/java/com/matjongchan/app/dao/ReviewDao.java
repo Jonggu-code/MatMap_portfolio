@@ -2,6 +2,7 @@ package com.matjongchan.app.dao;
 
 import com.matjongchan.app.domain.dto.ReviewDetail;
 import com.matjongchan.app.domain.dto.ReviewDetailSearchCondition;
+import com.matjongchan.app.domain.entity.MenuDto;
 import com.matjongchan.app.domain.entity.ReviewDto;
 
 import java.math.BigDecimal;
@@ -54,6 +55,6 @@ public interface ReviewDao {
     List<ReviewDto> selectFive(Map<String, Object> params);
     ReviewDto selectOnceReview(Map<String, Object> params);
 
-
+    List<MenuDto> getMenuList(int review_id);
 
 }

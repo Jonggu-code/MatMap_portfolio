@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -37,19 +37,17 @@
             </div>
         </div>
 
-
         <!-- 헤더 메인 -->
         <div class="header_main contents_area">
-
             <!-- 로고 -->
             <div class="logo_box">
-                <a class="site_logo" href="./index.html">MatMap</a>
+                <a class="site_logo" href="<c:url value="/"/>">MatMap</a>
             </div>
             <div class="search_box" id="search">
-                <form id="search_keyword" class="KeywordSearch" action="./index.html">
+                <form id="search_keyword" class="KeywordSearch" action="<c:url value='/'/>" method="post">
                     <fieldset class="fld_inside">
                         <legend class="screen_out">검색어 입력폼</legend>
-                        <input type="text" class="search_input" id="search.keyword.query" name="search" autocomplete="off" placeholder="무엇을 먹어야 잘 먹었다고 소문날까?" maxlength="100">
+                        <input type="text" class="search_input" id="search_keyword_query" name="keyword" autocomplete="off" placeholder="무엇을 먹어야 잘 먹었다고 소문날까?" maxlength="100">
                         <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><g><path d="M20.87,20.17l-5.59-5.59C16.35,13.35,17,11.75,17,10c0-3.87-3.13-7-7-7s-7,3.13-7,7s3.13,7,7,7c1.75,0,3.35-0.65,4.58-1.71 l5.59,5.59L20.87,20.17z M10,16c-3.31,0-6-2.69-6-6s2.69-6,6-6s6,2.69,6,6S13.31,16,10,16z"></path></g></svg>
                     </fieldset>
                 </form>
@@ -58,11 +56,30 @@
             <!-- 게스트 아이콘 뜨는 박스 -->
             <div class="guest_box">
                 <a href="./board.html">게시판</a>
-                <a href="rank_page_score.jsp">월간 맛집</a>
+                <a href="<c:url value="/rank"/>">월간 맛집</a>
                 <div class="guest_menu" tabindex="-1">
                     <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><g><path d="M21,6H3V5h18V6z M21,11H3v1h18V11z M21,17H3v1h18V17z"></path></g></svg>
-                    <div class="guest_icon"></div>
-                    <div class="guest_menu_box"></div>
+                    <c:if test='${!empty sessionScope.img}'>
+                        <div class="guest_icon" style='background: url("<spring:url value='${sessionScope.img}'/>") no-repeat center / cover'></div>
+                    </c:if>
+                    <c:if test='${empty sessionScope.img}'>
+                        <div class="guest_icon" style='background: url("<c:url value='/resources/img/other_img/1.png'/>") no-repeat center / cover'></div>
+                    </c:if>
+                    <div class="guest_menu_box">
+                        <c:choose>
+                            <c:when test="${sessionScope.id == null}">
+                                <p class="login_com">로그인</p>
+                                <p class="register_com">회원가입</p>
+                            </c:when>
+                            <c:when test="${sessionScope.id != null}">
+                                <p class="myPage_com">마이페이지</p>
+                                <p class="myFavorite_com">마이 맛집 </p>
+                                <p class="myReview_com">마이 후기</p>
+
+                                <p class="logout_com">로그아웃</p>
+                            </c:when>
+                        </c:choose>
+                    </div>
                 </div>
             </div>
         </div>

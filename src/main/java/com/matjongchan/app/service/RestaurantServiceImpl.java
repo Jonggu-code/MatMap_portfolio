@@ -114,21 +114,22 @@ public class RestaurantServiceImpl implements RestaurantService {
         searchCondition.setCategory_num(number);
 
         List<RestaurantDto> dtoList = restaurantDao.totalSearch(searchCondition);
-        return getSimpleRestaurantList(dtoList);
+        return getSimpleRestaurantList(dtoList, searchCondition);
     }
 
     @Override
     public List<SimpleRestaurant> SRNearSearch(SearchCondition searchCondition) {
         searchCondition.setCategory_num(CategoryChanger.categoryIntoNumber(searchCondition.getCategory()));
         List<RestaurantDto> dtoList = restaurantDao.nearSearch(searchCondition);
-        return getSimpleRestaurantList(dtoList);
+
+        return getSimpleRestaurantList(dtoList, searchCondition);
     }
 
 
     @Override
     public List<SimpleRestaurant> SRRealTotalSearch(SearchCondition searchCondition) {
         List<RestaurantDto> dtoList = restaurantDao.realTotalSearch(searchCondition);
-        return getSimpleRestaurantList(dtoList);
+        return getSimpleRestaurantList(dtoList, searchCondition);
     }
 
 
@@ -143,12 +144,13 @@ public class RestaurantServiceImpl implements RestaurantService {
 
         BusinessHoursDto hoursDto = restaurantDao.getBusinessHours(restaurantId);
         List<MenuDetail> menuDetail = restaurantDao.getMenuDetail(restaurantId);
-        for (MenuDetail detail : menuDetail) {
-            if(!StringUtils.isEmpty(detail.getMenu_image_url())){
-                detail.setMenu_image_url(restaurantDao.getMenuUrl(Integer.parseInt(detail.getMenu_image_url())));
-            }
-        }
-        List<RestaurantDto> restaurant_dto_list = restaurantDao.getRelationRestaurant3(restaurantId);
+        SearchCondition searchCondition = SearchCondition.builder()
+                .category(dto.getFk_category().toString())
+                .offset(1)
+                .page_size(3)
+                .build();
+
+        List<RestaurantDto> restaurant_dto_list = restaurantDao.getRelationRestaurant3(searchCondition);
 
 
         List<RelationRestaurant> relationRestaurantList = new ArrayList<>();
@@ -169,6 +171,8 @@ public class RestaurantServiceImpl implements RestaurantService {
 
             relationRestaurantList.add(relationRestaurant);
         }
+
+
         List<Double> totalScore = reviewService.getTotalScore(restaurantId);
         List<Double> totalScoreCountList = reviewService.getTotalScoreCountList(restaurantId);
 
@@ -245,8 +249,22 @@ public class RestaurantServiceImpl implements RestaurantService {
         return now_open;
     }
 
-    private List<SimpleRestaurant> getSimpleRestaurantList(List<RestaurantDto> dtoList) {
+    private List<SimpleRestaurant> getSimpleRestaurantList(List<RestaurantDto> dtoList, SearchCondition searchCondition) {
         List<SimpleRestaurant> simpleRestaurantList = new ArrayList<>();
+
+        if(searchCondition.getCurr_page() == null){
+            int total_count = restaurantDao.allConsiderSearchGetTotalCount(searchCondition);
+            searchCondition.setTotal_count(total_count);
+            searchCondition.setPage_size(20);
+            searchCondition.setCurr_page(1);
+            SearchCondition.updateCondition(searchCondition);
+        }else{
+            int total_count = restaurantDao.allConsiderSearchGetTotalCount(searchCondition);
+            searchCondition.setTotal_count(total_count);
+            searchCondition.setPage_size(searchCondition.getPage_size());
+            searchCondition.setCurr_page(searchCondition.getCurr_page());
+            SearchCondition.updateCondition(searchCondition);
+        }
 
         for (RestaurantDto dto : dtoList) {
             SimpleRestaurant simpleRestaurant = SimpleRestaurant.builder()
@@ -263,6 +281,7 @@ public class RestaurantServiceImpl implements RestaurantService {
                     .loc_y(dto.getLoc_y())
                     .menu_name_list(getMenu_name_list(dto))
                     .recentSimpleReview(getReviewDto(dto))
+                    .searchCondition(searchCondition)
                     .build();
             simpleRestaurantList.add(simpleRestaurant);
         }

@@ -11,6 +11,7 @@
         <typeAlias alias="MemberImageDto" type="com.matjongchan.app.domain.entity.MemberImageDto"/>
         <typeAlias alias="MemberLoginDto" type="com.matjongchan.app.domain.dto.MemberLoginDto"/>
         <typeAlias alias="SearchCondition" type="com.matjongchan.app.domain.dto.SearchCondition"/>
+        <typeAlias alias="ReviewerDto" type="com.matjongchan.app.domain.dto.ReviewerDto"/>
 
         <!-- 게시판 관련 Dto -->
         <typeAlias alias="ReviewDto" type="com.matjongchan.app.domain.entity.ReviewDto"/>

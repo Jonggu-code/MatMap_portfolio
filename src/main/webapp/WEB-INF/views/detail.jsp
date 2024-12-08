@@ -16,6 +16,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +42,6 @@
     <!-- 헤더 -->
     <header class="header">
 
-
         <!-- 이벤트 -->
         <div class="event">
             <div class="contents_area event_box">
@@ -55,40 +55,53 @@
             </div>
         </div>
 
-
         <!-- 헤더 메인 -->
         <div class="header_main contents_area">
-
-
             <!-- 로고 -->
             <div class="logo_box">
-                <a class="site_logo" href="<c:url value='/'/>">MatMap</a>
+                <a class="site_logo" href="<c:url value="/"/>">MatMap</a>
             </div>
             <div class="search_box" id="search">
-                <form id="search_keyword" class="KeywordSearch" action="./index.html">
+                <form id="search_keyword" class="KeywordSearch" action="<c:url value='/'/>" method="post">
                     <fieldset class="fld_inside">
                         <legend class="screen_out">검색어 입력폼</legend>
-                        <input type="text" class="search_input" id="search.keyword.query" name="search" autocomplete="off" placeholder="무엇을 먹어야 잘 먹었다고 소문날까?" maxlength="100">
+                        <input type="text" class="search_input" id="search_keyword_query" name="keyword" autocomplete="off" placeholder="무엇을 먹어야 잘 먹었다고 소문날까?" maxlength="100">
                         <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><g><path d="M20.87,20.17l-5.59-5.59C16.35,13.35,17,11.75,17,10c0-3.87-3.13-7-7-7s-7,3.13-7,7s3.13,7,7,7c1.75,0,3.35-0.65,4.58-1.71 l5.59,5.59L20.87,20.17z M10,16c-3.31,0-6-2.69-6-6s2.69-6,6-6s6,2.69,6,6S13.31,16,10,16z"></path></g></svg>
                     </fieldset>
                 </form>
             </div>
 
-
             <!-- 게스트 아이콘 뜨는 박스 -->
             <div class="guest_box">
-                <a href="<c:url value='/'/>">게시판</a>
-                <a href="<c:url value='/rank'/>">월간 맛집</a>
+                <a href="./board.html">게시판</a>
+                <a href="<c:url value="/rank"/>">월간 맛집</a>
                 <div class="guest_menu" tabindex="-1">
                     <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><g><path d="M21,6H3V5h18V6z M21,11H3v1h18V11z M21,17H3v1h18V17z"></path></g></svg>
-                    <div class="guest_icon"></div>
-                    <div class="guest_icon"></div>
-                    <div class="guest_menu_box"></div>
+                    <c:if test='${!empty sessionScope.img}'>
+                        <div class="guest_icon" style='background: url("<spring:url value='${sessionScope.img}'/>") no-repeat center / cover'></div>
+                    </c:if>
+                    <c:if test='${empty sessionScope.img}'>
+                        <div class="guest_icon" style='background: url("<c:url value='/resources/img/other_img/1.png'/>") no-repeat center / cover'></div>
+                    </c:if>
+                    <div class="guest_menu_box">
+                        <c:choose>
+                            <c:when test="${sessionScope.id == null}">
+                                <p class="login_com">로그인</p>
+                                <p class="register_com">회원가입</p>
+                            </c:when>
+                            <c:when test="${sessionScope.id != null}">
+                                <p class="myPage_com">마이페이지</p>
+                                <p class="myFavorite_com">마이 맛집 </p>
+                                <p class="myReview_com">마이 후기</p>
+
+                                <p class="logout_com">로그아웃</p>
+                            </c:when>
+                        </c:choose>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
-
 
     <!-- 메인화면 -->
     <main class="container">
@@ -114,9 +127,6 @@
                 </div>
             </div>
         </div>
-
-
-        <%--            //////////////////////////////--%>
 
         <!-- 메인 콘테이너 박스 -->
         <div class="container_main contents_area">
@@ -151,7 +161,9 @@
                     <p id="rest_p_num"><i class="rest_num_icon"></i>${restaurantDetail.restaurant_number}</p>
                     <p id="rest_info"><i class="rest_info_icon"></i>${restaurantDetail.restaurant_reservation.equals("")?"예약정보 없음":restaurantDetail.restaurant_reservation}</p>
                 </div>
-                <p id="rest_intro">${restaurantDetail.restaurant_memo}</p>
+                <c:if test="${!empty restaurantDetail.restaurant_memo}">
+                    <p id="rest_intro">${restaurantDetail.restaurant_memo}</p>
+                </c:if>
             </div>
 
 
@@ -194,7 +206,7 @@
                 <p class="container_title menu_con_title">${restaurantDetail.restaurant_name} 메뉴</p>
                 <c:forEach var="menuList" items="${restaurantDetail.menu_detail_list}">
                     <div class="menu_box">
-                        <div class="menu_img"></div>
+                        <div class="menu_img" style="background : url(<c:url value='${menuList.menu_image_url}'/>) no-repeat center / cover"></div>
                         <div class="menu_title_box">
                             <p class="menu_title">${menuList.menu_name}</p>
                             <p class="menu_price">${menuList.menu_price} 원</p>
@@ -218,7 +230,7 @@
                 <!-- 식당 이미지 박스 (제이쿼리 append 넣을 div) -->
                 <div class="img_con_box">
                     <c:forEach var="restaurantImages" items="${restaurantImages}">
-                        <div class="rest_img" style="display: none; background: url('${restaurantImages}') red no-repeat center / cover;"></div>
+                        <div class="rest_img" style="display: none; background: url(<spring:url value='${restaurantImages}' />) red no-repeat center / cover;"></div>
                     </c:forEach>
                 </div>
                 <div class="img_con_more_btn">
@@ -238,19 +250,20 @@
                 <c:forEach var="relList" items="${relationRestaurant}" begin="0" end="2">
                  <div class="reco_box reco_box1">
                     <div class="reco_title_box">
-                        <div class="reco_title">${relList.getRestaurant_name()}</div>
+                        <div class="reco_title">${relList.restaurant_name}</div>
                         <div class="reco_score">
                             <span class="reco_empty_star reco_star">
                                 <p class="reco_fill_star"></p>
                             </span>
-                            <span class="reco_score">${relScore}</span>
-                            <span>(${relCount})</span>
+                            <span class="reco_score">${restaurant_total_score_count}</span>
+                            <span>(${restaurant_total_review_count})</span>
                         </div>
                     </div>
-                    <div class="reco_addr">${relList.getRestaurant_address()}</div>
+                    <div class="reco_addr">${relList.restaurant_address}</div>
                     <div class="reco_img_box">
-                        <div class="reco_img reco_img1"></div>
-                        <div class="reco_img reco_img2"></div>
+                        <c:forEach var="tmp_img" items="${relList.restaurant_image_url_list}">
+                            <div class="reco_img reco_img1" style="background: url(<c:url value='${tmp_img}'/>) no-repeat center / cover"></div>
+                        </c:forEach>
                     </div>
                 </div>
                 </c:forEach>
@@ -268,18 +281,9 @@
             <div class="container_box" id="review_container">
                 <div class="rev_con_title">
                     <h1 class="container_title">종찬식당 방문자 평가 ${reviewCount==null?"리뷰가 없습니다.":reviewCount}건</h1>
-                    <div href="<c:url value='/reviewWrite/{${id}}'/>" class="rev_create_btn">후기를 작성해서 맛맵을 지원해주세요.</div>
-                    <script>
-                    document.getElementsByClassName('rev_create_btn')[0].addEventListener('click',function(){
-                    if(${sessionScope.id == null}){
-                    alert("로그인 후 작성해주세요.")
-                    window.location.href = "/login?toUrl=reviewWrite/${id}";
-                    }
-                    else{
-                        window.location.href = "/reviewWrite/${id}";
-                    }
-                    })
-                    </script>
+                    <a href="<c:url value='/reviewWrite/${id}'/>">
+                        <div class="rev_create_btn">후기를 작성해서 맛맵을 지원해주세요.</div>
+                    </a>
                 </div>
 
                 <!-- 평점 관련단 -->
@@ -358,14 +362,19 @@
                             <div class="rc_create_at">${review.create_at}</div>
                             <!-- 유저 정보 -->
                             <div class="rc_user_box">
-                                <div class="rc_user_icon"></div>
+                                <div class="rc_user_icon" style='background: url("<spring:url value='${review.reviewerDto.profile}'/>") no-repeat center / cover'></div>
                                 <div class="rc_user_info">
                                     <div id="user_name">${review.reviewer}</div>
                                     <div id="user_info">
-<%--                                        <p>성별</p>--%>
-<%--                                        <p>${}</p>--%>
-<%--                                        <p>나이</p>--%>
-<%--                                        <p>-3000</p>--%>
+                                        <p>성별</p>
+                                        <c:if test="${review.reviewerDto.gender == 'M'}">
+                                            <p>남</p>
+                                        </c:if>
+                                        <c:if test="${review.reviewerDto.gender == 'F'}">
+                                            <p>여</p>
+                                        </c:if>
+                                        <p>나이</p>
+                                        <p>${review.reviewerDto.age}</p>
                                     </div>
                                 </div>
                             </div>
@@ -396,84 +405,15 @@
                                     <div class="review_menu">${menuName}</div>
                                 </c:forEach>
                             </div>
-                            <!-- 유저가 올린 사진 -->
-<%--                            ///////////////////////////////////////////////--%>
-<%--                            ///////////////////////////////////////////////--%>
-<%--                            ///////////////////////////////////////////////--%>
-<%--                            리뷰 이미지 확인해주세요--%>
-<%--                            ///////////////////////////////////////////////--%>
-<%--                            ///////////////////////////////////////////////--%>
-<%--                            ///////////////////////////////////////////////--%>
                             <div class="rc_img_box" style="display: flex; gap: 15px; height: auto">
                                 <c:forEach var="otherImages" items="${review.otherImages}">
-                                <div class="review_img">
-                                    <img src="<c:url value='${otherImages}'/>" alt="리뷰 이미지">
-                                </div>
+                                    <div class="review_img" style='background: url("<spring:url value='${otherImages}'/>") no-repeat center / cover'></div>
                                 </c:forEach>
                             </div>
                         </div>
                     </c:forEach>
-                    </c:when>
-                    </c:choose>
-
-
-<%--                    <div class="rev_con_main_box">--%>
-<%--                        <div class="rc_create_at">11월 13일</div>--%>
-<%--                        <div class="rc_user_box">--%>
-<%--                            <div class="rc_user_icon"></div>--%>
-<%--                            <div class="rc_user_info">--%>
-<%--                                <div id="user_name">무먹잘소</div>--%>
-<%--                                <div id="user_info">--%>
-<%--                                    <p>평균 별점</p>--%>
-<%--                                    <p>4.1</p>--%>
-<%--                                    <p>후기</p>--%>
-<%--                                    <p>132</p>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                        <!-- 유저가 준 평점 -->--%>
-<%--                        <div class="rc_user_score_box">--%>
-<%--                            <div class="con1">--%>
-<%--                                <p>전체</p>--%>
-<%--                                <p>4.8</p>--%>
-<%--                            </div>--%>
-<%--                            <div class="con1">--%>
-<%--                                <p>고객응대</p>--%>
-<%--                                <p>4.8</p>--%>
-<%--                            </div>--%>
-<%--                            <div class="con1">--%>
-<%--                                <p>청결도</p>--%>
-<%--                                <p>4.8</p>--%>
-<%--                            </div>--%>
-<%--                            <div class="con1">--%>
-<%--                                <p>맛</p>--%>
-<%--                                <p>4.8</p>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                        <!-- 유저가 적은 텍스트 -->--%>
-<%--                        <div class="rc_user_txt_box">여긴 진짜… 시청역 직장인들의 숨은 맛집, 나만 알고싶은 맛집이 아닐까 생각한다.--%>
-<%--                            진한 국물에 우동사리같은 면, 밥이 말아져서 나온다. 파도 듬뿍 올려져있다.--%>
-
-<%--                            애성회관 한우곰탕의 킥은 ‘후추’다.--%>
-<%--                            간혹 후추를 뿌리면 본연의 국물 맛이 가려지는 경우가 있는데. 애성회관 곰탕은 배가 된다.--%>
-
-<%--                            24녘 7월 방문 기준--%>
-<%--                            일반 곰탕은 고기가 3덩이, 특곰탕은 고기 8덩이 정도가 나온다. 가격은 2000원 차이난다.--%>
-<%--                            밥이나 사리면의 양은 차이가 없다고 느껴진다.</div>--%>
-<%--                        <!-- 유저가 먹은 메뉴 (후기 작성 페이지에서 선택) -->--%>
-<%--                        <div class="re_menu_box">--%>
-<%--                            <div class="review_menu">특곰탕</div>--%>
-<%--                            <div class="review_menu">한우곰탕</div>--%>
-<%--                        </div>--%>
-<%--                        <!-- 유저가 올린 사진 (후기 작성 페이지에서 선택) -->--%>
-<%--                        <div class="rc_img_box">--%>
-<%--                            <div class="review_img"></div>--%>
-<%--                            <div class="review_img"></div>--%>
-<%--                            <div class="review_img"></div>--%>
-<%--                            <div class="review_img">n개 더보기</div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
+                </c:when>
+                </c:choose>
                 <div class="rev_con_more_btn">
                     <p>리뷰 더 불러오기</p>
                     <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><g><path d="M18,9l-6,6L6,9H18z"></path></g></svg>
@@ -485,8 +425,8 @@
 
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script src="<c:url value='/resources/js/common.js?1' /> "></script>
-<script src="<c:url value='/resources/js/detail.js?3' /> "></script>
+<script src="<c:url value='/resources/js/common.js?4' /> "></script>
+<script src="<c:url value='/resources/js/detail.js?6' /> "></script>
 <script src="./js/swiper.js"></script>
 
 <script>
@@ -525,9 +465,6 @@
                 }
             }
         })
-
-
-
 
         if ($('.rev_con_main_box').length<=5){
             $('.rev_con_main_box').css({display: 'flex'})
