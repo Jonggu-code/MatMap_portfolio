@@ -15,6 +15,10 @@ public class OtherImageDaoImpl implements OtherImageDao {
 
     public int count(){return session.selectOne(namespace+"count");};
 
+    public int countRes(int fk_restaurant_id){
+        return session.selectOne(namespace+"countRes", fk_restaurant_id);
+    };
+
     public int countR(int fk_review_id){
         return session.selectOne(namespace+"countR",fk_review_id);
     };
@@ -26,10 +30,19 @@ public class OtherImageDaoImpl implements OtherImageDao {
         return session.delete(namespace+"deleteAll");
     }
 
+    public List<String> getReviewImages(int fk_review_id){
+        return session.selectList(namespace+"getReviewImages",fk_review_id);
+    };
+
     @Override
     public List<OtherImageDto> getRestaurantImages(int restaurant_id) {
         return session.selectList(namespace+"getRestaurantImages",restaurant_id);
     }
+
+    @Override
+    public List<String> getRestaurantUrl (int fk_restaurant_id){
+        return session.selectList(namespace+"getRestaurantImagesUrl",fk_restaurant_id);
+    };
 
     @Override
     public List<OtherImageDto> getRestaurantImages2(int restaurant_id) {

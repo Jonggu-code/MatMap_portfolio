@@ -13,6 +13,10 @@
         select count(*) from other_image where fk_review_id = #{fk_review_id}
     </select>
 
+    <select id="countRes" parameterType="int" resultType="int">
+        select count(*) from other_image where fk_restaurant_id = #{fk_restaurant_id}
+    </select>
+
 
     <delete id="deleteAll">
         truncate other_image
@@ -36,11 +40,17 @@
         WHERE #{id} = oi.fk_restaurant_id
     </select>
 
-    <!-- 해당 리뷰 전체 이미지 조회  -->
-    <select id="getReviewImages" parameterType="int" resultType="OtherImageDto">
-        SELECT *
+    <select id="getRestaurantImagesUrl" parameterType="int" resultType="String">
+        SELECT img_url
         FROM other_image
         WHERE fk_restaurant_id = #{fk_restaurant_id}
+    </select>
+
+    <!-- 해당 리뷰 전체 이미지 조회  -->
+    <select id="getReviewImages" parameterType="int" resultType="String">
+        SELECT img_url
+        FROM other_image
+        WHERE fk_review_id = #{fk_review_id}
     </select>
 
     <!-- 해당 식당 이미지 2개 조회  -->

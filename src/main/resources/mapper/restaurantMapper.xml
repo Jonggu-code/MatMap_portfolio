@@ -237,7 +237,9 @@
     </select>
 
     <select id="getIdByName" parameterType="String" resultType="int">
-        SELECT id FROM restaurant WHERE name=#{restaurantName};
+        SELECT id FROM restaurant WHERE name=#{restaurantName}
+        ORDER BY id DESC
+        LIMIT 1
     </select>
 
 
