@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -40,8 +41,18 @@ public class ReviewController {
     @Autowired
     ReviewDao reviewDao;
 
+    ///////////////////////////////////////////////
+    ///////////////////////////////////////////////
+    ///////////////////////////////////////////////
+    ///////////////////////////////////////////////
+    // 파일 경로 확인해주세요
+    ///////////////////////////////////////////////
+    ///////////////////////////////////////////////
+    ///////////////////////////////////////////////
     File file = new File(".");
-    private final String root_path = file.getAbsolutePath().split("work")[0]+= "\\work\\MatMap_portfolio\\src\\main\\webapp\\resources\\img\\other_img";
+    private final String root_path = file.getAbsolutePath().split("work")[0]+= "\\work\\MatMap_portfolio\\src\\main\\webapp\\resources\\img\\other_img\\";
+
+
 
 //    @GetMapping("/detail")
 //    public String getReviews(RestaurantDto restaurantDto, ReviewDto reviewDto, Model m, ReviewMenuDto reviewMenuDto, OtherImageDto otherImageDto) {
@@ -99,14 +110,12 @@ public class ReviewController {
         List<String> menus = restaurantService.getMenu_name_list(id);
         m.addAttribute("menus", menus);
 
-
-
         // 로그인 했는지 확인
-//        if(!loginChk(session)) {
-//            // 로그인 안 했다면..
-//            String toURL = "reviewWrite";
-//            return "redirect:/login?toUrl="+toURL;
-//        }
+        if(!loginChk(session)) {
+            // 로그인 안 했다면..
+            String toURL = "reviewWrite/{id}";
+            return "redirect:/login?toUrl="+toURL;
+        }
         return "reviewWrite";
     }
 
@@ -184,6 +193,10 @@ public class ReviewController {
                     File save_root = new File(root_path , savedFilename);
                     // 파일 저장
                     file.transferTo(save_root);
+
+                    System.out.println("Root Path: " + root_path);
+                    System.out.println("Save Root: " + save_root.getAbsolutePath());
+
 
                     // OtherImageDto에 정보 추가
                     otherImageDto = new OtherImageDto();

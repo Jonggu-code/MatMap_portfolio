@@ -95,10 +95,9 @@ public class MemberController {
         response.addCookie(cookie);
 
         //다른 페이지 가려다가 로그인 안돼서 로그인창으로 넘어온 경우, 원래 창으로 돌려보내줌.
-        toUrl = toUrl == "" ? "" : toUrl;
+        toUrl = toUrl.equals("") ? "" : toUrl;
 
-        String msg = URLEncoder.encode("로그인 성공!", "UTF-8");
-        return "redirect:/" + toUrl + "?msg=" + msg;
+        return "redirect:/" + toUrl;
 
     }
 

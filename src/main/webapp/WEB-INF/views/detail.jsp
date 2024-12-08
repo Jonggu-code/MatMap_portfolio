@@ -77,10 +77,11 @@
 
             <!-- 게스트 아이콘 뜨는 박스 -->
             <div class="guest_box">
-                <a href="./board.html">게시판</a>
-                <a href="rank_page_score.jsp">월간 맛집</a>
+                <a href="<c:url value='/'/>">게시판</a>
+                <a href="<c:url value='/rank'/>">월간 맛집</a>
                 <div class="guest_menu" tabindex="-1">
                     <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><g><path d="M21,6H3V5h18V6z M21,11H3v1h18V11z M21,17H3v1h18V17z"></path></g></svg>
+                    <div class="guest_icon"></div>
                     <div class="guest_icon"></div>
                     <div class="guest_menu_box"></div>
                 </div>
@@ -204,11 +205,22 @@
 
 
             <!-- 식당 사진 박스 (후기에 올린 이미지들) -->
+            <%--                            ///////////////////////////////////////////////--%>
+            <%--                            ///////////////////////////////////////////////--%>
+            <%--                            ///////////////////////////////////////////////--%>
+            <%--                            리뷰 이미지 확인해주세요--%>
+            <%--                            ///////////////////////////////////////////////--%>
+            <%--                            ///////////////////////////////////////////////--%>
+            <%--                            ///////////////////////////////////////////////--%>
             <div class="container_box" id="img_container">
-                <h1 class="container_title">${restaurantDetail.restaurant_name} 이미지 89건</h1>
+                <h1 class="container_title">${restaurantDetail.restaurant_name} 이미지 ${otherImagesCount}건</h1>
 
                 <!-- 식당 이미지 박스 (제이쿼리 append 넣을 div) -->
-                <div class="img_con_box"></div>
+                <div class="img_con_box">
+                    <c:forEach var="restaurantImages" items="${restaurantImages}">
+                        <div class="rest_img" style="display: none; background: url('${restaurantImages}') red no-repeat center / cover;"></div>
+                    </c:forEach>
+                </div>
                 <div class="img_con_more_btn">
                     <p>사진 더 불러오기</p>
                     <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><g><path d="M18,9l-6,6L6,9H18z"></path></g></svg>
@@ -218,7 +230,7 @@
             <!-- 현재 식당 태그 관련 추천 맛집 -->
         <c:choose>
             <c:when test="${relationRestaurant.size()!=0}">
-            <div class="container_box" id="reco_container">
+            <div class="container_box" id="reco_container" style="top: 285px">
                 <div class="container_title">
                     <p>${restaurantDetail.restaurant_category}</p>
                     <p>추천 맛집</p>
@@ -261,7 +273,7 @@
                     document.getElementsByClassName('rev_create_btn')[0].addEventListener('click',function(){
                     if(${sessionScope.id == null}){
                     alert("로그인 후 작성해주세요.")
-                    window.location.href = "/login";
+                    window.location.href = "/login?toUrl=reviewWrite/${id}";
                     }
                     else{
                         window.location.href = "/reviewWrite/${id}";
@@ -385,13 +397,20 @@
                                 </c:forEach>
                             </div>
                             <!-- 유저가 올린 사진 -->
-<%--                            <div class="rc_img_box">--%>
-<%--                                <c:forEach var="img" items="${review.images}">--%>
-<%--                                    <div class="review_img">--%>
-<%--                                        <img src="${img}" alt="리뷰 이미지">--%>
-<%--                                    </div>--%>
-<%--                                </c:forEach>--%>
-<%--                            </div>--%>
+<%--                            ///////////////////////////////////////////////--%>
+<%--                            ///////////////////////////////////////////////--%>
+<%--                            ///////////////////////////////////////////////--%>
+<%--                            리뷰 이미지 확인해주세요--%>
+<%--                            ///////////////////////////////////////////////--%>
+<%--                            ///////////////////////////////////////////////--%>
+<%--                            ///////////////////////////////////////////////--%>
+                            <div class="rc_img_box" style="display: flex; gap: 15px; height: auto">
+                                <c:forEach var="otherImages" items="${review.otherImages}">
+                                <div class="review_img">
+                                    <img src="<c:url value='${otherImages}'/>" alt="리뷰 이미지">
+                                </div>
+                                </c:forEach>
+                            </div>
                         </div>
                     </c:forEach>
                     </c:when>
@@ -476,6 +495,40 @@
         let curTmp=1;
         let revTmp = document.getElementsByClassName('rev_con_main_box').length;
 
+
+        let imgCountTmp = 0;
+        let imgCurTmp=1;
+        let imgTmp = document.getElementsByClassName('rest_img').length;
+
+        if ($('.rest_img').length <=9){
+            $('.rest_img').css({display:'block'})
+            $('.img_con_more_btn').css({display:'none'})
+        }
+        else{
+            for(let i=0; i<9; i++) {
+                document.getElementsByClassName('rest_img')[i].style.display = 'flex';
+            }
+            imgCountTmp += 9;
+        }
+        document.querySelector('.img_con_more_btn').addEventListener('click', function() {
+            if (imgCurTmp < Math.floor(imgTmp/9)){
+                for(let i=imgCountTmp; i<imgCountTmp+9; i++) {
+                    document.getElementsByClassName('rest_img')[i].style.display = 'flex';
+                }
+                imgCountTmp += 9;
+                imgCurTmp ++;
+            }
+            else if (imgCurTmp == Math.floor(imgTmp/9)){
+                $('.img_con_more_btn').css({display:'none'})
+                for(let i=imgCountTmp; i<imgCountTmp+9; i++) {
+                    document.getElementsByClassName('rest_img')[i].style.display = 'flex';
+                }
+            }
+        })
+
+
+
+
         if ($('.rev_con_main_box').length<=5){
             $('.rev_con_main_box').css({display: 'flex'})
             $('.rev_con_more_btn').css({display:'none'})
@@ -503,9 +556,6 @@
                     document.getElementsByClassName('rev_con_main_box')[i].style.display = 'flex';
                 }
             }
-
-
-
         })
     })
 </script>
