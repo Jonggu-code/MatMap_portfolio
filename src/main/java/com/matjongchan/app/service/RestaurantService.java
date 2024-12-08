@@ -7,6 +7,9 @@ import java.util.List;
 
 public interface RestaurantService {
 
+    // MemberController에서 사용하도록 추가함.
+    String getImgUrl(RestaurantDto dto);
+
     //식당 상세페이지 조회기능
     RestaurantDetail getRestaurantDetail(int restaurantId);
 
