@@ -342,9 +342,7 @@ public String register(MemberDto memberDto, Model m, @RequestParam(value = "prof
                 if(memberWithImage.getId() != 1 && memberWithImage.getId() != 2){
                     //기존 이미지 삭제.
                     MemberImageDto memberImage = memberService.getMemberImage(member.getFk_image_id());
-//                    log.info(root_path.split("\\\\resources")[0]+memberImage.getImg_url());
-//                    Path deleteFilePath = Paths.get(root_path.split("\\\\resources")[0]+memberImage.getImg_url());
-                    Path deleteFilePath = Paths.get(root_path,memberImage.getImg_url());
+                    Path deleteFilePath = Paths.get(root_path,memberImage.getImg_url().split("image/")[1]);
 
                     if(Files.exists(deleteFilePath)){
                         try{
@@ -376,7 +374,6 @@ public String register(MemberDto memberDto, Model m, @RequestParam(value = "prof
         // DB에 저장
         if (memberService.updateMember(memberDto) == 1) {
             MemberImageDto memberImage = memberService.getMemberImage(member.getFk_image_id());
-            log.info("여기까지왔음 " + memberImage.getImg_url());
             session.setAttribute("img",memberImage.getImg_url());
             return "redirect:/mypage2";
         } else {
