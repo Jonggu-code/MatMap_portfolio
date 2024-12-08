@@ -20,9 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Slf4j
 @Controller
@@ -110,6 +108,16 @@ public class ReviewController {
         return "reviewWrite";
     }
 
+// 리뷰 수정시 사용
+    @GetMapping("/reviewWriteUpdate/{id}") // 리뷰 작성 첫 페이지 메서드 보여주기
+    public String reviewWriteUpdate(@PathVariable("id") int id, HttpServletRequest request, RestaurantDto restaurantDto, Model m) {
+
+        HttpSession session = request.getSession();
+        session.setAttribute("type","update");
+        session.setAttribute("restaurant_id",id);
+        return reviewWrite(id,request,restaurantDto,m);
+
+    }
     @PostMapping("/showReviewWrite2/{id}")
     public String showReviewWrite2(
             @PathVariable("id") int id,
@@ -133,21 +141,45 @@ public class ReviewController {
     @PostMapping("/reviewWrite2/{r_id}") // 리뷰 작성 두 번째 페이지 메서드
     public String reviewWriteSubmit( @PathVariable("r_id") int id, HttpSession session, ReviewDto reviewDto, @RequestParam(value = "files", required = false) List<MultipartFile> files, @RequestParam("selected_menu[]") List<Integer> selectedMenus){
 
+        String type = session.getAttribute("type") == null?"":(String) session.getAttribute("type");
+        System.out.println("zzzzzz      reviewWriteSubmit type="+session.getAttribute("type"));
+
         int orderId = reviewDao.lastOne() + 1;
         int order_no = 1;
         log.info("joshua1");
         OtherImageDto otherImageDto;
+        ReviewDto reviewDtoNew = null;
+
         try {
             log.info(reviewDto.getContent());
             String reviewer = (String)session.getAttribute("id");
             reviewDto.setReviewer(reviewer);
             reviewDto.setFk_restaurant_id(id);
 
-            int rowCount = reviewService.write(reviewDto);
+            int rowCount = -1;
+
+            ////////////// 2024-12-08 곽 - update관련 수정
+            if(type.equals("update")) {
+                Integer restaurant_id = (int) session.getAttribute("restaurant_id");
+                Map map = new HashMap();
+                map.put("fk_restaurant_id",restaurant_id);
+                map.put("reviewer",reviewer);
+                reviewDtoNew = reviewService.selectOnceReview(map);
+                reviewDto.setId(reviewDtoNew.getId());
+                rowCount = reviewService.modify(reviewDto);
+            }
+            else
+            {
+                rowCount = reviewService.write(reviewDto);
+            }
 //            reviewDto.setId(reviewService.getAllCount());
 
             int reviewId = reviewService.getAllCount();
 
+            ////////////// 2024-12-08 곽 - update관련 수정
+            if(type.equals("update")) {
+                reviewMenuService.remove(reviewDtoNew.getId());
+            }
             // 2. 선택한 메뉴 저장
             for (Integer menuId : selectedMenus) {
                 ReviewMenuDto reviewMenuDto = new ReviewMenuDto(reviewId, menuId);
@@ -163,6 +195,12 @@ public class ReviewController {
             return "글쓰기 실패";
         }
         if (files != null && files.size() > 0) {
+
+            ////////////// 2024-12-08 곽 - update관련 수정
+            if(type.equals("update")) {
+                otherImageService.deleteImage(reviewDtoNew.getId());
+            }
+
             log.info("joshua2");
             List<OtherImageDto> imageList = new ArrayList<>();
             for (MultipartFile file : files) {
@@ -189,10 +227,10 @@ public class ReviewController {
                     otherImageDto = new OtherImageDto();
                     otherImageDto.setName(savedFilename);
                     otherImageDto.setImg_url(saveFile); // 실제 저장된 경로
-                    otherImageDto.setOrder_number(order_no);
                     otherImageDto.setFk_review_id(orderId);
                     otherImageDto.setFk_restaurant_id(id);
                     order_no++;
+                    otherImageDto.setOrder_number(order_no);
                     imageList.add(otherImageDto);
                     otherImageService.insertImage(otherImageDto);
                 }catch (IOException e) {
@@ -220,15 +258,25 @@ public class ReviewController {
     }
 
 
-    @PostMapping("/remove") // 게시글 삭제 메서드
-    public String remove(HttpSession session, Integer id, Model m) {
+//    @GetMapping ("/remove/{id}") // 게시글 삭제 메서드
+//    public String remove(@PathVariable("id") int id, HttpSession session, Model m ) {
 
-        // 글 쓴 사람인지 확인할때 사용할 용도 - 현재 로그인 한 사람 아이디
-        String writer = (String) session.getAttribute("id");
+      @GetMapping("/remove/{id}") // 리뷰 작성 첫 페이지 메서드 보여주기
+      public String remove(@PathVariable("id") int id, HttpSession session, RestaurantDto restaurantDto, Model m) {
 
+          System.out.println("zzzzzzzzzzzzzzzzzzzz");
         try {
+            // 글 쓴 사람인지 확인할때 사용할 용도 - 현재 로그인 한 사람 아이디
+            String reviewer = (String)session.getAttribute("id");
+
+            Integer restaurant_id = id;//(int) session.getAttribute("restaurant_id");
+            Map map = new HashMap();
+            map.put("fk_restaurant_id",restaurant_id);
+            map.put("reviewer",reviewer);
+            ReviewDto reviewDtoNew = reviewService.selectOnceReview(map);
+
             // bno번 글 읽어와서 boardDto 변수에 저장
-            int rowCount = reviewService.remove(id, writer);
+            int rowCount = reviewService.remove(reviewDtoNew.getId(), reviewer );
 
             if(rowCount != 1) {
                 throw new Exception("삭제 실패");
@@ -237,7 +285,6 @@ public class ReviewController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            return "삭제 실패";
         }
 
         return "redirect:/";
@@ -254,4 +301,6 @@ public class ReviewController {
         return session.getAttribute("id") != null;
     }
 
+
 }
+

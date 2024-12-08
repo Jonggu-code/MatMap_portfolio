@@ -34,7 +34,7 @@ public interface ReviewDao {
 
     List<ReviewDto> selectR(int fk_restaurant_id);
 
-    List<ReviewDto> selectFive(Map<String, Object> params);
+    //List<ReviewDto> selectFive(Map<String, Object> params);
 
     List<ReviewDto> selectM(String reviewer);
 
@@ -50,6 +50,9 @@ public interface ReviewDao {
     List<BigDecimal> getTotalScore(int fk_restaurant_id);
 
     List<BigDecimal> getTotalScoreCountList(int fk_restaurant_id);
+
+    List<ReviewDto> selectFive(Map<String, Object> params);
+    ReviewDto selectOnceReview(Map<String, Object> params);
 
 
 

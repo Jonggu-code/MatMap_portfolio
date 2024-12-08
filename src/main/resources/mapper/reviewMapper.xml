@@ -127,7 +127,16 @@
         FROM review
         WHERE fk_restaurant_id = #{fk_restaurant_id}
         ORDER BY create_at DESC
-        LIMIT #{limit} OFFSET #{offset}
+<!--        LIMIT #{limit} OFFSET #{offset}-->
+    </select>
+
+    <select id="selectOnceReview" parameterType="map" resultType="ReviewDto">
+        select *
+        from review
+        where fk_restaurant_id = #{fk_restaurant_id}
+        and reviewer = #{reviewer}
+        order by create_at desc
+        limit 0,1
     </select>
 </mapper>
 

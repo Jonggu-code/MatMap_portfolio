@@ -16,4 +16,6 @@ public interface OtherImageService {
     List<OtherImageDto> getRestaurantImg(int restaurant_id);
 
     List<OtherImageDto> getRestaurantImg2(int restaurant_id);
+
+    int deleteImage(int fk_review_id);
 }

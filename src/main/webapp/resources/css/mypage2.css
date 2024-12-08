@@ -188,6 +188,11 @@
     height: 130px;
     background: #585858;
     border-radius: 10px;
+    overflow: hidden;
+}
+.menu_img > img{
+    height: 100%;
+
 }
 .rest_box_R {
     width: calc(60% - 10px);

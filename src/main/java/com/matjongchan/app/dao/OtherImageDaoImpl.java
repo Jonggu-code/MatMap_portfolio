@@ -35,4 +35,9 @@ public class OtherImageDaoImpl implements OtherImageDao {
     public List<OtherImageDto> getRestaurantImages2(int restaurant_id) {
         return session.selectList(namespace+"getRestaurantImages2",restaurant_id);
     }
+
+    @Override
+    public int deleteImage(int fk_review_id){
+        return session.delete(namespace+"deleteImage",fk_review_id);
+    }
 }

@@ -54,7 +54,7 @@
                         <div class="ip1"><input type="text" name="user_id" id="user_id" required placeholder="아이디" class="input_txt" value="${member.user_id}" readonly></div>
 
                         <div class="ip2"><input type="password" name="password" id="password" required placeholder="비밀번호" class="input_txt" value=""></div>
-                        <div class="ip2"><input type="password" id="passwordTrue"  name="password" required placeholder="비밀번호 확인" class="input_txt" value="${ URLDecoder.decode(param.u_pw, "utf-8") }" ></div>
+                        <div class="ip2"><input type="password" id="passwordTrue" required placeholder="비밀번호 확인" class="input_txt" value="${ URLDecoder.decode(param.u_pw, "utf-8") }" ></div>
                         <div id="passwordMessage" style="margin-top: 5px;"></div>
 
 

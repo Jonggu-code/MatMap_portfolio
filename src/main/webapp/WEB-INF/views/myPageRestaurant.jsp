@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="<c:url value = '/resources/css/common.css'/>">
-    <link rel="stylesheet" href="<c:url value = '/resources/css/list_page_restaurant.css'/>">
+    <link rel="stylesheet" href="<c:url value = '/resources/css/list_page_restaurant.css?4'/>">
 </head>
 <body>
 <div id="wrap">
@@ -89,12 +89,12 @@
                             <div class="rank_box">
                                 <!-- 순차적으로 식당 번호를 매기기 위해 status.index 사용 -->
                                 <p>${status.index + 1}.</p>
-                                <div class="time_box">
-                                    <p class="time_icon"></p>
-                                    <p class="open_time">영업중</p>
-                                    <p class="break_time">브레이크 타임</p>
-                                    <p class="close_time">영업종료</p>
-                                </div>
+<%--                                <div class="time_box">--%>
+<%--                                    <p class="time_icon"></p>--%>
+<%--                                    <p class="open_time">영업중</p>--%>
+<%--                                    <p class="break_time">브레이크 타임</p>--%>
+<%--                                    <p class="close_time">영업종료</p>--%>
+<%--                                </div>--%>
                             </div>
 
                             <div class="container_banner swiper rank_swiper0">
@@ -148,9 +148,12 @@
                                     <p class="rest_time"><i class="rest_time_icon"></i>${restaurant.restaurant_reservation != null && !restaurant.restaurant_reservation.isEmpty() ? restaurant.restaurant_reservation : '예약 정보 없음'}</p>
                                 </div>
 
-                                <div class="rest_intro">
-                                    <p>${restaurant.restaurant_memo != null && !restaurant.restaurant_memo.isEmpty() ? restaurant.restaurant_memo : '식당 상세정보 없음'}</p>
-                                </div>
+                                <c:if test="${not empty restaurant.restaurant_memo}">
+                                    <div class="rest_intro">
+                                        <p>${restaurant.restaurant_memo}</p>
+                                    </div>
+                                </c:if>
+
                             </div>
                         </div>
                     </div>

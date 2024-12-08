@@ -97,4 +97,9 @@ public class ReviewServiceImpl implements ReviewService{
                 .stream().map(BigDecimal::doubleValue)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public ReviewDto selectOnceReview(Map<String, Object> params){
+        return reviewDao.selectOnceReview(params);
+    }
 }

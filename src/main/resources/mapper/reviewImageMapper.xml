@@ -18,6 +18,9 @@
         truncate other_image
     </delete>
 
+    <delete id="deleteImage" parameterType="int">
+        delete from other_image where fk_review_id=#{fk_review_id}
+    </delete>
 
     <insert id="insert" parameterType="ReviewDto">
         insert into other_image

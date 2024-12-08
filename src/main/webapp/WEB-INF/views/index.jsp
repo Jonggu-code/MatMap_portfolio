@@ -217,7 +217,8 @@
                     create_marker();
                 },
                 error: function (request, status, error){
-                    alert("정보 받아오기 실패");
+                    console.log("정보 받아오기 실패 1",request,status,error)
+                    alert("정보 받아오기 실패 1");
                 }
             })
         }
@@ -275,7 +276,7 @@
                     $('.pagination').html(loadPagination(sr));
                 },
                 error: function (request, status, error){
-                    alert("정보 받아오기 실패");
+                    alert("정보 받아오기 실패 2");
                 }
 
             })
@@ -447,7 +448,7 @@
                 $('.main').scrollTop();
             },
             error: function (request, status, error){
-                alert("정보 받아오기 실패");
+                alert("정보 받아오기 실패 3");
             }
         })
     }

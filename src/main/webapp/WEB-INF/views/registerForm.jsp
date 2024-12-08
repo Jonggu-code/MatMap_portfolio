@@ -58,7 +58,7 @@
 
             <div class="ip2"><input type="password" id="password"  name="password" required placeholder="비밀번호" class="input_txt" value="${ URLDecoder.decode(param.u_pw, "utf-8") }" ></div>
 
-            <div class="ip2"><input type="password" id="passwordTrue"  name="password" required placeholder="비밀번호 확인" class="input_txt" value="${ URLDecoder.decode(param.u_pw, "utf-8") }" ></div>
+            <div class="ip2"><input type="password" id="passwordTrue"  required placeholder="비밀번호 확인" class="input_txt" value="${ URLDecoder.decode(param.u_pw, "utf-8") }" ></div>
             <div id="passwordMessage" style="margin-top: 5px;"></div>
 
 
