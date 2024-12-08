@@ -20,7 +20,8 @@
     </delete>
 
     <delete id="delete" parameterType="reviewMenuDto">
-        delete from review_menu where id=#{id}
+<!--        delete from review_menu where id=#{id}-->
+        delete from review_menu where fk_review_id=#{fk_review_id}
     </delete>
 
     <insert id="insert" parameterType="ReviewMenuDto">

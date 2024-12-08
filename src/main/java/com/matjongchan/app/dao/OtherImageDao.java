@@ -34,6 +34,6 @@ public interface OtherImageDao {
      */
     List<OtherImageDto> getRestaurantImages2(int restaurant_id);
 
-    
+    int deleteImage(int fk_review_id);
 
 }

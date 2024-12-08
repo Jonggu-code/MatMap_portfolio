@@ -130,6 +130,7 @@
             <div class="btn_box" id="btn_btn_btn">
                 <input type="submit" value="다음화면" id="btn_btn_btn2">
             </div>
+        </div>
     </fieldset>
 </form>
 

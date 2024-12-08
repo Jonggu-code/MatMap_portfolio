@@ -28,4 +28,8 @@ public class OtherImageServiceImpl implements OtherImageService {
     public List<OtherImageDto> getRestaurantImg(int restaurant_id){return otherImageDao.getRestaurantImages(restaurant_id);};
 
     public List<OtherImageDto> getRestaurantImg2(int restaurant_id){return otherImageDao.getRestaurantImages2(restaurant_id);};
+
+    public int deleteImage(int fk_review_id){
+        return otherImageDao.deleteImage(fk_review_id);
+    }
 }

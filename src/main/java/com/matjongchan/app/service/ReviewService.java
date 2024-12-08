@@ -34,4 +34,6 @@ public interface ReviewService {
 
     List<Double> getTotalScoreCountList(int fk_restaurant_id);
 
+    public ReviewDto selectOnceReview(Map<String, Object> params);
+
 }

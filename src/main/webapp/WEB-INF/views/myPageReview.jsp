@@ -147,8 +147,12 @@
                                 <div class="rc_user_txt_box">식당명: ${restaurantDetail.restaurant_name}<br>리뷰제목: ${review.title} <br>리뷰내용:${review.content}
                                 </div>
                             </div>
-                            <div>수정</div>
-                            <a href="<c:url value="/remove"/>">
+
+                            <a href="<c:url value="/reviewWriteUpdate/${review.fk_restaurant_id}"/>">
+                                <div>수정</div>
+                            </a>
+
+                            <a href="<c:url value="/remove/${review.fk_restaurant_id}"/>">
                                 <div>삭제</div>
                             </a>
                         </div>

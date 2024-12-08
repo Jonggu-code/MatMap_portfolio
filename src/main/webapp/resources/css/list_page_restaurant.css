@@ -256,6 +256,11 @@
 .banner_img {
     height: 100%;
     border-radius: 15px;
+    overflow: hidden;
+}
+
+.banner_img > img{
+    height: 100%;
 }
 
 .banner_btn_L, .banner_btn_R {
