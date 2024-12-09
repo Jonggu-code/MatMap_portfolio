@@ -28,7 +28,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="<c:url value='/resources/css/common.css?2' /> ">
-    <link rel="stylesheet" href="<c:url value='/resources/css/detail.css?4' /> ">
+    <link rel="stylesheet" href="<c:url value='/resources/css/detail.css?6' /> ">
 
     <!-- 컬러 차트
         메인 컬러 : #ff9625
@@ -516,6 +516,29 @@
                     document.getElementsByClassName('rev_con_main_box')[i].style.display = 'flex';
                 }
             }
+        })
+        // 찜하기 버튼 클릭
+        $(document).on('click', '.rest_save', function(){
+            $('.rest_save > svg path').toggleClass('rest_save_act')
+
+            const hasClass = $(this).hasClass('rest_favo');
+
+            $(this).toggleClass('rest_favo');
+
+            $.ajax({
+                url: '/favorite/${id}',
+                method: 'GET',
+                data: {
+                    favorite: !hasClass
+                },
+                success: function (response) {
+                    console.log(response.message)
+                },
+                error: function(xhr, status, error) {
+                    console.error ('에러 발생: ', error);
+                    $(this).toggleClass('rest_favo', hasClass)
+                }
+            })
         })
     })
 

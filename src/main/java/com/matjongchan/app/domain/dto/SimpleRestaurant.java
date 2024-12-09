@@ -2,6 +2,7 @@ package com.matjongchan.app.domain.dto;
 
 
 import com.matjongchan.app.domain.entity.BusinessHoursDto;
+import com.matjongchan.app.domain.entity.OtherImageDto;
 import com.matjongchan.app.domain.entity.ReviewDto;
 import lombok.*;
 
@@ -35,9 +36,10 @@ public class SimpleRestaurant {
     private String memo;            //메모도 급추가..
 
     private SearchCondition searchCondition;
+    private List<OtherImageDto> other_image_list;
 
     @Builder
-    public SimpleRestaurant(Integer id, String name, String image_url, String address, Double total_score_count, Integer total_review_count, String today_business_state, BusinessHoursDto business_hours_dto, String reservation, String number, Double loc_x, Double loc_y, List<String> menu_name_list, ReviewDto recentSimpleReview, String category, String memo, SearchCondition searchCondition) {
+    public SimpleRestaurant(Integer id, String name, String image_url, String address, Double total_score_count, Integer total_review_count, String today_business_state, BusinessHoursDto business_hours_dto, String reservation, String number, Double loc_x, Double loc_y, List<String> menu_name_list, ReviewDto recentSimpleReview, String category, String memo, SearchCondition searchCondition, List<OtherImageDto> other_image_list) {
         this.id = id;
         this.name = name;
         this.image_url = image_url;
@@ -55,5 +57,6 @@ public class SimpleRestaurant {
         this.category = category;
         this.memo = memo;
         this.searchCondition = searchCondition;
+        this.other_image_list = other_image_list;
     }
 }

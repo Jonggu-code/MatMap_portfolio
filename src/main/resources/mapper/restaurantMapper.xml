@@ -244,6 +244,15 @@
         LIMIT 1
     </select>
 
+    <insert id="saveFavoriteRestaurant" parameterType="FavoriteDto">
+        INSERT INTO favorite
+        values(null, #{fk_member_id}, #{fk_restaurant_id});
+    </insert>
+
+    <delete id="deleteFavoriteRestaurant" parameterType="FavoriteDto">
+        DELETE FROM favorite
+        WHERE fk_member_id = #{fk_member_id} AND fk_restaurant_id = #{fk_restaurant_id}
+    </delete>
 
 </mapper>
 

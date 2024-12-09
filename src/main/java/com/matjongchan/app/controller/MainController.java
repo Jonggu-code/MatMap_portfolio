@@ -3,8 +3,10 @@ package com.matjongchan.app.controller;
 
 import com.matjongchan.app.domain.dto.SearchCondition;
 import com.matjongchan.app.domain.dto.SimpleRestaurant;
+import com.matjongchan.app.domain.entity.OtherImageDto;
 import com.matjongchan.app.service.MemberService;
 import com.matjongchan.app.service.RestaurantService;
+import com.matjongchan.app.service.RestaurantServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.net.Authenticator;
+import java.util.ArrayList;
 import java.util.List;
 
 

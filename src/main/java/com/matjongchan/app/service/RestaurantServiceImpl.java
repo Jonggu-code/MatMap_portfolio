@@ -241,9 +241,9 @@ public class RestaurantServiceImpl implements RestaurantService {
             business_close_time += Integer.parseInt(split[0]) * 60 + Integer.parseInt(split[1]);
 
             if(business_open_time < now_time && business_close_time > now_time){
-                now_open = "영업중";
-            }else{
                 now_open = "영업종료";
+            }else{
+                now_open = "영업중";
             }
         }
         return now_open;
@@ -293,6 +293,12 @@ public class RestaurantServiceImpl implements RestaurantService {
         List<OtherImageDto> images = otherImageDao.getRestaurantImages(dto.getId());
         return images.isEmpty() ? null : images.get(0).getImg_url();
     }
+
+    public List<OtherImageDto> getImgUrlList(Integer id){
+        List<OtherImageDto> images = otherImageDao.getRestaurantImages(id);
+        return images.isEmpty() ? List.of() : images;
+    }
+
     public List<String> getMenu_name_list(RestaurantDto dto) {
         return restaurantDao.getMenuDetail(
                         dto.getId())
@@ -330,6 +336,7 @@ public class RestaurantServiceImpl implements RestaurantService {
                     .name(dto.getName())
                     .category(CategoryChanger.numberIntoCategory(dto.getFk_category()))
                     .address(dto.getC_address() +" "+ dto.getD_address())
+                    .other_image_list(getImgUrlList(dto.getId()))
                     .number(dto.getNumber())
                     .reservation(dto.getReservation())
                     .total_score_count(dto.getTotal_score_count())
@@ -390,5 +397,15 @@ public class RestaurantServiceImpl implements RestaurantService {
             simpleRestaurantList.add(simpleRestaurant);
         }
         return simpleRestaurantList;
+    }
+
+    @Override
+    public int saveFavoriteRestaurant(FavoriteDto favoriteDto) {
+        return restaurantDao.saveFavoriteRestaurant(favoriteDto);
+    }
+
+    @Override
+    public int deleteFavoriteRestaurant(FavoriteDto favoriteDto) {
+        return restaurantDao.deleteFavoriteRestaurant(favoriteDto);
     }
 }

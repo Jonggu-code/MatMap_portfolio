@@ -47,7 +47,7 @@ public class ReviewController {
     ///////////////////////////////////////////////
     ///////////////////////////////////////////////
     ///////////////////////////////////////////////
-    private static final String root_path = "C:\\Users\\power\\Desktop\\study\\profile_img\\";
+    private static final String root_path = "C:\\Users\\user1\\Desktop\\work\\profile_img\\";
 
 
 

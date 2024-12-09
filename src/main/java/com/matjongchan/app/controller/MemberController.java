@@ -53,7 +53,7 @@ public class MemberController {
     RestaurantService restaurantService;
 
 //    private final String root_path = "C:\\Users\\power\\Desktop\\study\\MatMap_portfolio\\src\\main\\webapp\\resources\\img\\profile_img";
-    private final String root_path = "C:\\Users\\power\\Desktop\\study\\profile_img\\";
+    private final String root_path = "C:\\Users\\user1\\Desktop\\work\\profile_img\\";
     private boolean isValid(String id) {
         MemberDto member = memberService.getMember(id);
 

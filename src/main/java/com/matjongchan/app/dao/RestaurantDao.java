@@ -3,6 +3,7 @@ package com.matjongchan.app.dao;
 import com.matjongchan.app.domain.dto.MenuDetail;
 import com.matjongchan.app.domain.dto.TotalCount;
 import com.matjongchan.app.domain.entity.BusinessHoursDto;
+import com.matjongchan.app.domain.entity.FavoriteDto;
 import com.matjongchan.app.domain.entity.MenuDto;
 import com.matjongchan.app.domain.entity.RestaurantDto;
 import com.matjongchan.app.domain.dto.SearchCondition;
@@ -137,5 +138,9 @@ public interface RestaurantDao {
     Integer getIdByName(String restaurantName);
 
     int allConsiderSearchGetTotalCount (SearchCondition searchCondition);
+
+    int saveFavoriteRestaurant (FavoriteDto favoriteDto);
+
+    int deleteFavoriteRestaurant (FavoriteDto favoriteDto);
 
 }

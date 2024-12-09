@@ -3,6 +3,7 @@ package com.matjongchan.app.dao;
 import com.matjongchan.app.domain.dto.MenuDetail;
 import com.matjongchan.app.domain.dto.TotalCount;
 import com.matjongchan.app.domain.entity.BusinessHoursDto;
+import com.matjongchan.app.domain.entity.FavoriteDto;
 import com.matjongchan.app.domain.entity.MenuDto;
 import com.matjongchan.app.domain.entity.RestaurantDto;
 import com.matjongchan.app.domain.dto.SearchCondition;
@@ -128,6 +129,16 @@ public class RestaurantDaoImpl implements RestaurantDao {
     public Integer getIdByName(String restaurantName){
         return session.selectOne(namespace + "getIdByName",restaurantName);
     };
+
+    @Override
+    public int saveFavoriteRestaurant(FavoriteDto favoriteDto) {
+        return session.insert(namespace + "saveFavoriteRestaurant", favoriteDto);
+    }
+
+    @Override
+    public int deleteFavoriteRestaurant(FavoriteDto favoriteDto) {
+        return session.delete(namespace + "deleteFavoriteRestaurant", favoriteDto);
+    }
 }
 
 

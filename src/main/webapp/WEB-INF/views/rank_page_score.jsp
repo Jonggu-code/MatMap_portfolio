@@ -15,8 +15,8 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="<c:url value="/resources/css/common.css?2"/>">
-    <link rel="stylesheet" href="<c:url value="/resources/css/rank_page_score.css?2"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/css/common.css?3"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/css/rank_page_score.css?3"/>">
 </head>
 <body>
 <div id="wrap">
@@ -118,18 +118,20 @@
                     <div class="swiper-button-prev0 banner_btn_L"><p>&lt</p></div>
                     <div class="swiper-button-next0 banner_btn_R"><p>&gt</p></div>
                     <div class="main_banner swiper-wrapper">
-                        <div class="banner_img swiper-slide count_0"></div>
-                        <div class="banner_img swiper-slide count_1"></div>
-                        <div class="banner_img swiper-slide count_2"></div>
-                        <div class="banner_img swiper-slide count_3"></div>
-                        <div class="banner_img swiper-slide count_4"></div>
-                        <div class="banner_img swiper-slide count_5"></div>
-                        <div class="banner_img swiper-slide count_6"></div>
-                        <div class="banner_img swiper-slide count_7"></div>
-                        <div class="banner_img swiper-slide count_8"></div>
-                        <div class="banner_img swiper-slide count_9"></div>
-                        <div class="banner_img swiper-slide count_10"></div>
-                        <div class="banner_img swiper-slide count_11"></div>
+                        <c:forEach var="img" begin="0" end="10">
+                            <div class="banner_img swiper-slide count_0" style="background: url(<c:url value='${tmp.other_image_list[img].img_url}'/>) no-repeat center / cover"></div>
+                        </c:forEach>
+<%--                        <div class="banner_img swiper-slide count_1"></div>--%>
+<%--                        <div class="banner_img swiper-slide count_2"></div>--%>
+<%--                        <div class="banner_img swiper-slide count_3"></div>--%>
+<%--                        <div class="banner_img swiper-slide count_4"></div>--%>
+<%--                        <div class="banner_img swiper-slide count_5"></div>--%>
+<%--                        <div class="banner_img swiper-slide count_6"></div>--%>
+<%--                        <div class="banner_img swiper-slide count_7"></div>--%>
+<%--                        <div class="banner_img swiper-slide count_8"></div>--%>
+<%--                        <div class="banner_img swiper-slide count_9"></div>--%>
+<%--                        <div class="banner_img swiper-slide count_10"></div>--%>
+<%--                        <div class="banner_img swiper-slide count_11"></div>--%>
                     </div>
                 </div>
                 <!-- 메인 박스의 메인 -->
@@ -217,14 +219,14 @@ $(document).ready(function () {
         }
     })
 
-    let banner_img_length = $('.banner_img').length
+    <%--let banner_img_length = $('.banner_img').length--%>
 
-    // 배너에 이미지 넣어주는 반복문
-    for(i=0; i<banner_img_length; i++){
-        $(`.count_${'${i}'}`).css({
-            background: `url(<c:url value="/resources/img/dummy_img/${'${i+1}'}.jpg"/>) no-repeat center / cover`
-        })
-    }
+    <%--// 배너에 이미지 넣어주는 반복문--%>
+    <%--for(i=0; i<banner_img_length; i++){--%>
+    <%--    $(`.count_${'${i}'}`).css({--%>
+    <%--        background: `url(<c:url value="/resources/img/dummy_img/${'${i+1}'}.jpg"/>) no-repeat center / cover`--%>
+    <%--    })--%>
+    <%--}--%>
 
 
 

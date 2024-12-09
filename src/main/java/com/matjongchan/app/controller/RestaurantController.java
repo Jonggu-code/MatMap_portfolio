@@ -4,10 +4,7 @@ import com.matjongchan.app.dao.OtherImageDao;
 import com.matjongchan.app.dao.RestaurantDao;
 import com.matjongchan.app.dao.ReviewDao;
 import com.matjongchan.app.domain.dto.*;
-import com.matjongchan.app.domain.entity.OtherImageDto;
-import com.matjongchan.app.domain.entity.RestaurantDto;
-import com.matjongchan.app.domain.entity.ReviewDto;
-import com.matjongchan.app.domain.entity.ReviewMenuDto;
+import com.matjongchan.app.domain.entity.*;
 import com.matjongchan.app.service.*;
 import lombok.RequiredArgsConstructor;
 import org.checkerframework.checker.units.qual.A;
@@ -18,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -116,5 +114,18 @@ public class RestaurantController {
         return new ResponseEntity<>(reviewDetails, HttpStatus.OK);
 
     }
+
+    @GetMapping("/favorite/{id}")
+    public String restaurantList(HttpSession httpSession, @PathVariable("id") Integer r_id ){
+        String user_id = httpSession.getAttribute("id").toString();
+        if(user_id == null){
+            return "redirect:/login";
+        }
+        MemberDto member = memberService.getMember(user_id);
+        FavoriteDto favoriteDto = new FavoriteDto(null, member.getId(), r_id);
+        restaurantService.saveFavoriteRestaurant(favoriteDto);
+        return "redirect:/restaurant/"+r_id;
+    }
+
 
 }

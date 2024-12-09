@@ -57,27 +57,27 @@ $(document).ready(function(){
         }
     })
 
-    // 찜하기 버튼 클릭
-    $(document).on('click', '.rest_save', function(){
-        $('.rest_save > svg path').toggleClass('rest_save_act')
-
-        const hasClass = $(this).hasClass('rest_favo');
-
-        $(this).toggleClass('rest_favo');
-
-        $.ajax({
-            url: '/favorite',
-            method: 'POST',
-            data: {
-                favorite: !hasClass
-            },
-            success: function(response) {
-                console.log(response.message)
-            },
-            error: function(xhr, status, error) {
-                console.error ('에러 발생: ', error);
-                $(this).toggleClass('rest_favo', hasClass)
-            }
-        })
-    })
+    // // 찜하기 버튼 클릭
+    // $(document).on('click', '.rest_save', function(){
+    //     $('.rest_save > svg path').toggleClass('rest_save_act')
+    //
+    //     const hasClass = $(this).hasClass('rest_favo');
+    //
+    //     $(this).toggleClass('rest_favo');
+    //
+    //     $.ajax({
+    //         url: '/favorite',
+    //         method: 'POST',
+    //         data: {
+    //             favorite: !hasClass,
+    //         },
+    //         success: function(response) {
+    //             console.log(response.message)
+    //         },
+    //         error: function(xhr, status, error) {
+    //             console.error ('에러 발생: ', error);
+    //             $(this).toggleClass('rest_favo', hasClass)
+    //         }
+    //     })
+    // })
 })

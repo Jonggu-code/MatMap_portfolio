@@ -1,6 +1,8 @@
 package com.matjongchan.app.service;
 
 import com.matjongchan.app.domain.dto.*;
+import com.matjongchan.app.domain.entity.FavoriteDto;
+import com.matjongchan.app.domain.entity.OtherImageDto;
 import com.matjongchan.app.domain.entity.RestaurantDto;
 
 import java.util.List;
@@ -141,5 +143,11 @@ public interface RestaurantService {
     List<SimpleRestaurant> getRankDescRestaurant(SearchCondition searchCondition);
 
     List<SimpleRestaurant> getAllConsiderRestaurant(SearchCondition searchCondition);
+
+    public List<OtherImageDto> getImgUrlList(Integer id);
+
+    int saveFavoriteRestaurant (FavoriteDto favoriteDto);
+
+    int deleteFavoriteRestaurant (FavoriteDto favoriteDto);
 
 }
