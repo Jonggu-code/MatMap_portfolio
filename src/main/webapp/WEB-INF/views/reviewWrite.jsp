@@ -66,7 +66,7 @@
                     <div class="review_star empty_star_main">
                         <p class="fill_star star_main"></p>
                     </div>
-                    <input type="text" value="0.0" class="score_user_main" readonly name="total_score">
+                    <input type="text" value="5.0" class="score_user_main" readonly name="total_score">
                     <span>/</span>
                     <span class="score_base">5.0</span>
                 </div>
@@ -82,7 +82,7 @@
                         <div class="review_star empty_star_kind">
                             <p class="fill_star star_kind"></p>
                         </div>
-                        <input type="text" value="0.0" class="score_user_kind" readonly name="kind_score">
+                        <input type="text" value="5.0" class="score_user_kind" readonly name="kind_score">
                         <span>/</span>
                         <span class="score_base">5.0</span>
                     </div>
@@ -95,7 +95,7 @@
                         <div class="review_star empty_star_clean">
                             <p class="fill_star star_clean"></p>
                         </div>
-                        <input type="text" value="0.0" class="score_user_clean" readonly name="clean_score">
+                        <input type="text" value="5.0" class="score_user_clean" readonly name="clean_score">
                         <span>/</span>
                         <span class="score_base">5.0</span>
                     </div>
@@ -108,7 +108,7 @@
                         <div class="review_star empty_star_taste">
                             <p class="fill_star star_taste"></p>
                         </div>
-                        <input type="text" value="0.0" class="score_user_taste" readonly name="taste_score">
+                        <input type="text" value="5.0" class="score_user_taste" readonly name="taste_score">
                         <span>/</span>
                         <span class="score_base">5.0</span>
                     </div>
@@ -136,7 +136,7 @@
 
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script src="<c:url value='/resources/js/review_common.js' /> "></script>
+<script src="<c:url value='/resources/js/review_common.js?3' /> "></script>
 <script src="./js/swiper.js"></script>
 
 </body>

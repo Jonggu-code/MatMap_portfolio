@@ -44,13 +44,13 @@ public class TotalRating {
         TotalRating totalRating = new TotalRating();
 
         for (Double v : totalScoreCountList) {
-            if(v > 4.0){
+            if(v > 4.5){
                 totalRating.plusFifth();
-            }else if(v > 3.0){
+            }else if(v > 3.5){
                 totalRating.plusFourth();
-            }else if(v > 2.0){
+            }else if(v > 2.5){
                 totalRating.plusThird();
-            } else if (v > 1.0) {
+            } else if (v > 1.5) {
                 totalRating.plusSecond();
             }else{
                 totalRating.plusFirst();

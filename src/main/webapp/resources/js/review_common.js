@@ -15,6 +15,7 @@ $(document).ready(function(){
     }
 
 // 별점 넣는 기능
+    $('.fill_star').css({width:'100%'})
 
     $('.empty_star_main').click(function(){
         click_pos(star_bar)

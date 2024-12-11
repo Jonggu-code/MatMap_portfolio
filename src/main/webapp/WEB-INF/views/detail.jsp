@@ -28,7 +28,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="<c:url value='/resources/css/common.css?2' /> ">
-    <link rel="stylesheet" href="<c:url value='/resources/css/detail.css?6' /> ">
+    <link rel="stylesheet" href="<c:url value='/resources/css/detail.css?7' /> ">
 
     <!-- 컬러 차트
         메인 컬러 : #ff9625
@@ -205,6 +205,41 @@
                     <p>일  ${restaurantDetail.business_hours_dto.sun.equals("")?"휴무":restaurantDetail.business_hours_dto.sun}</p>
                     <p>브레이크 타임:  ${restaurantDetail.business_hours_dto.break_time.equals("")?"X":restaurantDetail.business_hours_dto.break_time}</p>
                 </div>
+
+                <c:choose>
+                    <c:when test="${relationRestaurant.size()!=0}">
+                        <div class="container_box" id="reco_container">
+                            <div class="container_title">
+                                <p>${restaurantDetail.restaurant_category}</p>
+                                <p>추천 맛집</p>
+                            </div>
+                            <c:forEach var="relList" items="${relationRestaurant}" begin="0" end="2">
+                                <div class="reco_box reco_box1">
+                                    <div class="reco_title_box">
+                                        <div class="reco_title">${relList.restaurant_name}</div>
+                                        <div class="reco_score">
+                            <span class="reco_empty_star reco_star">
+                                <p class="reco_fill_star"></p>
+                            </span>
+                                            <span class="reco_score">${relList.restaurant_total_score_count}</span>
+                                            <span>(${relList.restaurant_total_review_count})</span>
+                                        </div>
+                                    </div>
+                                    <div class="reco_addr">${relList.restaurant_address}</div>
+                                    <div class="reco_img_box">
+                                        <c:forEach var="tmp_img" items="${relList.restaurant_image_url_list}">
+                                            <div class="reco_img reco_img1" style="background: url(<c:url value='${tmp_img}'/>) no-repeat center / cover"></div>
+                                        </c:forEach>
+                                    </div>
+                                </div>
+                            </c:forEach>
+                            <div class="move_top">
+                                <p>TOP</p>
+                                <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><g><path d="M18,9l-6,6L6,9H18z"></path></g></svg>
+                            </div>
+                        </div>
+                    </c:when>
+                </c:choose>
             </div>
 
             <div class="container_box" id="menu_container">
@@ -243,44 +278,6 @@
                     <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><g><path d="M18,9l-6,6L6,9H18z"></path></g></svg>
                 </div>
             </div>
-
-            <!-- 현재 식당 태그 관련 추천 맛집 -->
-        <c:choose>
-            <c:when test="${relationRestaurant.size()!=0}">
-            <div class="container_box" id="reco_container" style="top: 285px">
-                <div class="container_title">
-                    <p>${restaurantDetail.restaurant_category}</p>
-                    <p>추천 맛집</p>
-                </div>
-                <c:forEach var="relList" items="${relationRestaurant}" begin="0" end="2">
-                 <div class="reco_box reco_box1">
-                    <div class="reco_title_box">
-                        <div class="reco_title">${relList.restaurant_name}</div>
-                        <div class="reco_score">
-                            <span class="reco_empty_star reco_star">
-                                <p class="reco_fill_star"></p>
-                            </span>
-                            <span class="reco_score">${relList.restaurant_total_score_count}</span>
-                            <span>(${relList.restaurant_total_review_count})</span>
-                        </div>
-                    </div>
-                    <div class="reco_addr">${relList.restaurant_address}</div>
-                    <div class="reco_img_box">
-                        <c:forEach var="tmp_img" items="${relList.restaurant_image_url_list}">
-                            <div class="reco_img reco_img1" style="background: url(<c:url value='${tmp_img}'/>) no-repeat center / cover"></div>
-                        </c:forEach>
-                    </div>
-                </div>
-                </c:forEach>
-                <div class="move_top">
-                    <p>TOP</p>
-                    <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><g><path d="M18,9l-6,6L6,9H18z"></path></g></svg>
-                </div>
-            </div>
-            </c:when>
-        </c:choose>
-
-
 
             <!-- 식당 후기 박스  -->
             <div class="container_box" id="review_container">

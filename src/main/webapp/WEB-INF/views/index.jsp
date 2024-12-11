@@ -292,15 +292,30 @@
 
     function loadRestaurant(sr){
         let tmp_html= "";
-        sr.forEach(function (tmp){
-
-            let tmp_address = tmp.address || "식당 정보 없음";
-            let tmp_time = tmp.number || "영업 정보 없음" ;
-            let tmp_info = tmp.reservation || "매장 정보 없음";
-            let tmp_review = tmp.recentSimpleReview || null;
-            let tmp_total_score = tmp.total_score_count || 0.0;
-            let tmp_total_review = tmp.total_review_count || 0;
+        if(sr.length < 1){
             tmp_html+=`
+                <!-- 검색결과가 안나올때 표시되는 화면 -->
+                <div class="no_search_box">
+                    <img class="no_search_img" src="<c:url value="/resources/img/dummy_img/no_search.png"/>" alt="">
+                    <p class="no_search_main">검색결과가 없어요.</p>
+                    <p class="no_search_sub">
+                        검색어가 정확한지 다시 한번 확인해 주세요.<br>
+                        식당 이름이 정확하지 않아도 검색이 가능해요.
+                    </p>
+                </div>
+            `
+        }
+        else{
+            sr.forEach(function (tmp){
+
+                let tmp_address = tmp.address || "식당 정보 없음";
+                let tmp_time = tmp.number || "영업 정보 없음" ;
+                let tmp_info = tmp.reservation || "매장 정보 없음";
+                let tmp_review = tmp.recentSimpleReview || null;
+                let tmp_total_score = tmp.total_score_count || 0.0;
+                let tmp_total_review = tmp.total_review_count || 0;
+
+                tmp_html+=`
                 <div class="main_item">
                     <div class="main_item_box">
                         <div class="main_item_Lbox" style="background: url('<c:url value="${'${tmp.image_url}'}"/>') no-repeat center / cover">
@@ -342,12 +357,12 @@
                     </div>
                     <!-- 식당 메뉴 들어오는 단 -->
                     <ul class="main_item_bot">`
-            tmp.menu_name_list.forEach(function (menu){
-                tmp_html+=`<li>#${"${menu}"}</li>`
-            })
-            tmp_html+=`</ul>`;
-            if(tmp_review !== null){
-                tmp_html+=`
+                tmp.menu_name_list.forEach(function (menu){
+                    tmp_html+=`<li>#${"${menu}"}</li>`
+                })
+                tmp_html+=`</ul>`;
+                if(tmp_review !== null){
+                    tmp_html+=`
                     <!-- 리뷰 텍스트 들어오는 단 -->
                     <c:choose>
                         <c:when test="${'${tmp.recentSimpleReview.id}' != null}">
@@ -367,13 +382,16 @@
                         </c:when>
                     </c:choose>
                     `
-            }
-            tmp_html+= `</div>`;
-        });
-
+                }
+                tmp_html+= `</div>`;
+            });
+        }
         return tmp_html;
     }
     function loadPagination(sr){
+        if(sr.length < 1){
+            return "";
+        }
         let show_prev = sr[0].searchCondition.show_prev == null ? false : sr[0].searchCondition.show_prev;
         let show_next = sr[0].searchCondition.show_next;
         let begin_page = sr[0].searchCondition.begin_page;
@@ -460,5 +478,3 @@
     }
 
 </script>
-
-
