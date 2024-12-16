@@ -225,7 +225,7 @@ input {
     z-index: 999;
 }
 .map_box_L {
-    width: 40%;
+    width: max-content;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -366,7 +366,7 @@ input {
 }
 
 .map_box_R {
-    width: 40%;
+    width: max-content;
     
     display: flex;
     justify-content: flex-end;
@@ -573,7 +573,7 @@ input {
     background-position: -33px -26px;
 }
 .rest_num_icon {
-    background-position: -51px -25px;
+    background-position: -88px -24px;
 }
 .rest_info_icon {
     background-position: -141px -25px;
@@ -719,6 +719,7 @@ input {
     align-items: center;
     justify-content: center;
 }
+
 .pagination {
     padding-bottom: 25px;
     display: flex;
@@ -726,7 +727,8 @@ input {
     gap: 10px;
 }
 .page_box {
-    width: 200px;
+    width: auto;
+    max-width: 200px;
     float: left;
     overflow: hidden;
     white-space: nowrap;
@@ -771,13 +773,13 @@ input {
     cursor: pointer;
 }
 
-/*수정, 삭제 추가사항*/
+/* 검색결과 없을시 */
 
 .no_search_box {
     width: 100%;
     height: 100%;
     text-align: center;
-
+    
     display: flex;
     flex-wrap: wrap;
     justify-content: center;

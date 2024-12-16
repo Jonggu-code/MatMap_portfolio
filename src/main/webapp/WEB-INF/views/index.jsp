@@ -15,7 +15,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index.css?d=2"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index.css?4"/>
 
     <!-- 컬러 차트
         메인 컬러 : #ff9625 

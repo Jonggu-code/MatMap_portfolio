@@ -1,5 +1,6 @@
 package com.matjongchan.app.dao;
 
+import com.matjongchan.app.domain.dto.S;
 import com.matjongchan.app.domain.entity.OtherImageDto;
 
 import java.util.List;
@@ -29,10 +30,9 @@ public interface OtherImageDao {
 
     /**
      * 이미지 2개 조회
-     * @param restaurant_id
      * @return
      */
-    List<OtherImageDto> getRestaurantImages2(int restaurant_id);
+    List<OtherImageDto> getRestaurantImages2(S s);
 
     int deleteImage(int fk_review_id);
 

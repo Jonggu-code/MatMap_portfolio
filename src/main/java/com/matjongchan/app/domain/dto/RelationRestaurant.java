@@ -12,7 +12,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-    // 연관 가게로 뜨는 식당들에 사용할 객체
 public class RelationRestaurant {
 
     private String restaurant_name; //식당이름

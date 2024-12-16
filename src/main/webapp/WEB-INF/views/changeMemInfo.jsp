@@ -10,8 +10,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="<c:url value='/resources/css/register.css'/>">
+    <title>회원 수정</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="<c:url value='/resources/css/register.css?6'/>">
 
 </head>
 
@@ -65,8 +66,10 @@
                     </div>
 
                     <div class="form_list">
-                        <input type="text" name="name" required placeholder="이름" id="name" class="input_txt1" value="${member.name}" readonly>
-                        <input type="number" name="age" required placeholder="나이" class="input_txt1" value="${member.age}" readonly>
+                        <div class="form_input_box">
+                            <input type="text" name="name" required placeholder="이름" id="name" class="input_txt1" value="${member.name}" readonly>
+                            <input type="number" name="age" required placeholder="나이" class="input_txt1" value="${member.age}" readonly>
+                        </div>
                         <div class="form_gender">
                             <ul class="gender_list">
                                 <li class="radio_item">
@@ -91,9 +94,10 @@
                         <textarea name="introduce" id="introduce" class="intro_txt" rows="3" cols="10" maxlength="50" style="resize: none;">${member.introduce}</textarea>
                     </label>
                 </div>
-                <button type="submit" class="btn_sum btn_sum1">수정</button>
-                <button type="button" class="btn_sum btn_sum2" onclick="history.back()">취소</button>
-
+                <div class="reg_btn_box">
+                    <button type="submit" class="btn_sum btn_sum1">수정</button>
+                    <button type="button" class="btn_sum btn_sum2" onclick="history.back()">취소</button>
+                </div>
             </div>
         </form>
     </div>

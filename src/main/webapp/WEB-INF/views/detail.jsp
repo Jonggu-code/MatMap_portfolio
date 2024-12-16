@@ -27,8 +27,8 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="<c:url value='/resources/css/common.css?2' /> ">
-    <link rel="stylesheet" href="<c:url value='/resources/css/detail.css?7' /> ">
+    <link rel="stylesheet" href="<c:url value='/resources/css/common.css?4' /> ">
+    <link rel="stylesheet" href="<c:url value='/resources/css/detail.css?10' /> ">
 
     <!-- 컬러 차트
         메인 컬러 : #ff9625

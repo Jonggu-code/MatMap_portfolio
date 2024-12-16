@@ -15,13 +15,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>리뷰 작성 페이지-2</title>
+  <title>리뷰 작성하기</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="<c:url value='https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css'/>" />
 
-  <link rel="stylesheet" href="<c:url value='/resources/css/review_page_2.css' /> ">
-  <link rel="stylesheet" href="<c:url value='/resources/css/review_common.css' /> ">
+  <link rel="stylesheet" href="<c:url value='/resources/css/review_page_2.css?7' /> ">
+  <link rel="stylesheet" href="<c:url value='/resources/css/review_common.css?6' /> ">
 
 
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -67,7 +67,7 @@
       </div>
 
       <!-- 리뷰 사진 넣는 단 -->
-      <div class="common_box img_box">
+      <div class="common_box" id="img_box">
         <p>다녀오신 식당에서 촬영한 사진을 추가해주세요 !</p>
         <div class="add_img_btn">
           <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><g><path d="M12.7,12l6.6,6.6l-0.7,0.7L12,12.7l-6.6,6.6l-0.7-0.7l6.6-6.6L4.6,5.4l0.7-0.7l6.6,6.6l6.6-6.6l0.7,0.7L12.7,12z"></path></g></svg>

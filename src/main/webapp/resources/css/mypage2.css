@@ -48,15 +48,10 @@
     box-shadow: 0px 0px 5px 2px #cfcfcf;
     margin-bottom: 20px;
 
-    /*background: url(/img/user_default_male.png) no-repeat center / cover;*/
+    background: url(../img/user_default_male.png) no-repeat center / cover;
     background-size: 145px;
 }
-.profile_img{
-    width: 100%;
-    height: 100%;
-    display: inline-block;
 
-}
 .mp_user_box_L > p {
     width: 100%;
     text-align: center;
@@ -186,13 +181,12 @@
 .menu_img {
     width: 130px;
     height: 130px;
+    overflow: hidden;
     background: #585858;
     border-radius: 10px;
-    overflow: hidden;
 }
-.menu_img > img{
-    height: 100%;
-
+.menu_img > img {
+    width: 100%;
 }
 .rest_box_R {
     width: calc(60% - 10px);
@@ -292,7 +286,7 @@
 
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space;
 }
 .review_box_title {
     width: 100%;
@@ -316,8 +310,8 @@
     align-items: center;
 }
 .review_txt {
-    min-width: 100%;
     height: 54px;
+    width: 100%;
     padding: 10px;
     box-sizing: border-box;
     background: #ebebeb;
@@ -330,6 +324,7 @@
 
     overflow: hidden;
     text-overflow: ellipsis;
+    word-break: keep-all;
 }
 
 /* 빈칸일 경우 */
@@ -369,4 +364,58 @@
 }
 :root {
     --swiper-theme-color: #ff9625;
+}
+
+@media screen and (min-width: 0px) and (max-width: 1250px) {
+    .container_main {
+        flex-wrap: wrap;
+        gap: 0;
+    }
+    .mypage_box_L {
+        width: 100%;
+        display: flex;
+        gap: 40px;
+    }
+    .mypage_box_R {
+        width: 100%
+    }
+    .mp_user_box, .mp_info_box {
+        width: calc(50% - 20px);
+    }
+    .profile_box {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 0px) and (max-width: 850px) {
+    .container_main {
+        flex-wrap: wrap;
+        gap: 0;
+    }
+    .mypage_box_L {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0;
+    }
+    .mypage_box_R {
+        width: 100%
+    }
+    .mp_user_box, .mp_info_box {
+        width: 100%;
+    }
+    .profile_box {
+        width: 100%;
+    }
+    .rest_box_L {
+        width: 130px;
+        height: auto;
+    }
+    .rest_box_R {
+        width: calc(100% - 130px);
+        height: auto;
+        margin-left: 10px;
+
+        position: relative;
+    }
 }

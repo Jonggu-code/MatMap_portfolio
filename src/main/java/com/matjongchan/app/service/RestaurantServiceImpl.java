@@ -152,11 +152,12 @@ public class RestaurantServiceImpl implements RestaurantService {
 
         List<RestaurantDto> restaurant_dto_list = restaurantDao.getRelationRestaurant3(searchCondition);
 
-
+        int i = 0;
         List<RelationRestaurant> relationRestaurantList = new ArrayList<>();
         for (RestaurantDto restaurantDto : restaurant_dto_list) {
-
-            List<String> img_url_list = otherImageDao.getRestaurantImages2(restaurantId)
+            S s = S.builder().page_size(2).id(restaurantId).offset(i).build();
+            i+=2;
+            List<String> img_url_list = otherImageDao.getRestaurantImages2(s)
                     .stream()
                     .map(OtherImageDto::getImg_url)
                     .collect(Collectors.toList());

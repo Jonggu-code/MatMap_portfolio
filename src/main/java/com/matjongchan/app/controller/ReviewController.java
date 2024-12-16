@@ -39,52 +39,7 @@ public class ReviewController {
     @Autowired
     ReviewDao reviewDao;
 
-    ///////////////////////////////////////////////
-    ///////////////////////////////////////////////
-    ///////////////////////////////////////////////
-    ///////////////////////////////////////////////
-    // 파일 경로 확인해주세요
-    ///////////////////////////////////////////////
-    ///////////////////////////////////////////////
-    ///////////////////////////////////////////////
     private static final String root_path = "C:\\Users\\user1\\Desktop\\work\\profile_img\\";
-
-
-
-//    @GetMapping("/detail")
-//    public String getReviews(RestaurantDto restaurantDto, ReviewDto reviewDto, Model m, ReviewMenuDto reviewMenuDto, OtherImageDto otherImageDto) {
-//        int fk_restaurant_id =1;
-//        List<ReviewDto> reviews = reviewService.getListR(fk_restaurant_id);
-//        m.addAttribute("reviews", reviews);
-//
-//        for (ReviewDto review : reviews) {
-//            List<String> menuNames = reviewMenuService.getMenuNames(review.getId());
-//            review.setMenuNames(menuNames); // ReviewDto에 메뉴 리스트 추가
-//        }
-//
-//        for (ReviewDto review : reviews) {
-////            List<OtherImageDto> otherImages = otherImageService.
-//        }
-//
-//        m.addAttribute("restaurantDto", restaurantDto);
-//        m.addAttribute("reviewDto", reviewDto);
-//
-//        int review_count = reviewService.getCountR(fk_restaurant_id);
-//        m.addAttribute("reviewCount", review_count);
-//
-//        Double taste_score = reviewService.getTasteAvg(fk_restaurant_id);
-//        Double clean_score = reviewService.getCleanAvg(fk_restaurant_id);
-//        Double kind_score = reviewService.getKindAvg(fk_restaurant_id);
-//        Double total_score = reviewService.getTotalAvg(fk_restaurant_id);
-//        m.addAttribute("taste_score", taste_score);
-//        m.addAttribute("clean_score", clean_score);
-//        m.addAttribute("kind_score", kind_score);
-//        m.addAttribute("total_score", total_score);
-//
-//        m.addAttribute("reviewMenuDto", reviewMenuDto);
-//        m.addAttribute("otherImageDto", otherImageDto);
-//        return "detail";
-//    }
 
 
     @GetMapping("/reviewWrite/{id}") // 리뷰 작성 첫 페이지 메서드 보여주기
@@ -184,7 +139,6 @@ public class ReviewController {
             {
                 rowCount = reviewService.write(reviewDto);
             }
-//            reviewDto.setId(reviewService.getAllCount());
 
             int reviewId = reviewService.getAllCount();
 
@@ -266,14 +220,9 @@ public class ReviewController {
         return "redirect:/";
     }
 
-
-//    @GetMapping ("/remove/{id}") // 게시글 삭제 메서드
-//    public String remove(@PathVariable("id") int id, HttpSession session, Model m ) {
-
       @GetMapping("/remove/{id}") // 리뷰 작성 첫 페이지 메서드 보여주기
       public String remove(@PathVariable("id") int id, HttpSession session, RestaurantDto restaurantDto, Model m) {
 
-          System.out.println("zzzzzzzzzzzzzzzzzzzz");
         try {
             // 글 쓴 사람인지 확인할때 사용할 용도 - 현재 로그인 한 사람 아이디
             String reviewer = (String)session.getAttribute("id");
@@ -296,7 +245,7 @@ public class ReviewController {
             e.printStackTrace();
         }
 
-        return "redirect:/";
+        return "redirect:/myPageReview";
     }
 
     @ResponseBody
@@ -309,7 +258,6 @@ public class ReviewController {
     private boolean loginChk(HttpSession session) {
         return session.getAttribute("id") != null;
     }
-
 
 }
 

@@ -14,8 +14,8 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="<c:url value = '/resources/css/common.css'/>">
-    <link rel="stylesheet" href="<c:url value = '/resources/css/list_page_restaurant.css?4'/>">
+    <link rel="stylesheet" href="<c:url value = '/resources/css/common.css?5'/>">
+    <link rel="stylesheet" href="<c:url value = '/resources/css/list_page_restaurant.css?5'/>">
 </head>
 <body>
 <div id="wrap">
@@ -123,12 +123,10 @@
 <%--                                    <!-- 배너 이미지들 -->--%>
 
                                         <!-- banner_img를 restaurantImageUrls와 연결 -->
-                                        <c:forEach var="imageUrl" items="${restaurantImageUrls}" varStatus="imageStatus">
-                                            <c:if test="${imageStatus.index == status.index}">
-                                                <div class="banner_img swiper-slide count_${imageStatus.index}">
-                                                    <img src="${imageUrl}" alt="${restaurant.restaurant_name}">
-                                                </div>
-                                            </c:if>
+                                        <c:forEach var="imageUrl" items="${restaurant.restaurant_image_url_list}" varStatus="imageStatus">
+                                            <div class="banner_img swiper-slide count_${imageStatus.index}"
+                                                style="background: url('<c:url value='${imageUrl}'/>') no-repeat center/cover">
+                                            </div>
                                         </c:forEach>
                                 </div>
                             </div>
@@ -179,9 +177,9 @@
             <c:otherwise>
 <%--                <p>찜한 식당이 없습니다.</p>--%>
                 <div class="empty_box">
-                    <img class="empty_icon" src="./img/empty_img.png" alt="">
+                    <img class="empty_icon" src="<c:url value="/resources/img/empty_img.png"/>" alt="">
                     <p class="empty_favo_rest">
-                       '내가 찜한 맛집이 없습니다.'
+                       내가 찜한 맛집이 없습니다.
                     </p>
                 </div>
 

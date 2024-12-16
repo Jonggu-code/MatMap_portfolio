@@ -80,8 +80,6 @@ public class RestaurantController {
 
         m.addAttribute("reviews", reviews);
 
-
-
         m.addAttribute("restaurantDto", restaurantDto);
         m.addAttribute("reviewDto", reviewDto);
 

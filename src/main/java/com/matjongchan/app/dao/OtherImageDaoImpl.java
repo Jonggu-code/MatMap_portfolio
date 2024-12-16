@@ -1,5 +1,6 @@
 package com.matjongchan.app.dao;
 
+import com.matjongchan.app.domain.dto.S;
 import com.matjongchan.app.domain.entity.OtherImageDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +46,8 @@ public class OtherImageDaoImpl implements OtherImageDao {
     };
 
     @Override
-    public List<OtherImageDto> getRestaurantImages2(int restaurant_id) {
-        return session.selectList(namespace+"getRestaurantImages2",restaurant_id);
+    public List<OtherImageDto> getRestaurantImages2(S s) {
+        return session.selectList(namespace+"getRestaurantImages2",s);
     }
 
     @Override

@@ -17,7 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="<c:url value = '/resources/css/common.css'/>">
-    <link rel="stylesheet" href="<c:url value = '/resources/css/mypage2.css?3'/>">
+    <link rel="stylesheet" href="<c:url value = '/resources/css/mypage2.css?7'/>">
 
 </head>
 <body>
@@ -210,10 +210,8 @@
                                     </div>
                                     <div class="rest_box_R">
                                         <div class="rest_title_box">
-                                            <a class="item_name" href="./detail.html">${favorite.restaurant_name}</a>
-                                            <p class="rest_tag">
-<%--                                                    한식--%>
-                                            </p>
+                                            <a class="item_name" href="<c:url value='detail/${favorite.id}'/>">${favorite.restaurant_name}</a>
+                                            <p class="rest_tag"></p>
                                         </div>
                                         <div class="item_star">
                                             <!-- 식당에 관련된 후기 갯수 -->

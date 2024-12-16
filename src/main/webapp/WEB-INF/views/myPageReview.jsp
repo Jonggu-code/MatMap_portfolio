@@ -14,8 +14,8 @@
     <title>맛맵 - 내가 작성한 후기</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="<c:url value = '/resources/css/common.css'/>">
-    <link rel="stylesheet" href="<c:url value = '/resources/css/list_page_review.css'/>">
+    <link rel="stylesheet" href="<c:url value = '/resources/css/common.css?3'/>">
+    <link rel="stylesheet" href="<c:url value = '/resources/css/list_page_review.css?3'/>">
 
 </head>
 <body>
@@ -107,9 +107,9 @@
 <%--                    <p>작성한 리뷰가 없습니다.</p>--%>
 <%--                </div>--%>
                 <div class="empty_box">
-                    <img class="empty_icon" src="./img/empty_img.png" alt="">
+                    <img class="empty_icon" src="<c:url value="/resources/img/empty_img.png"/>" alt="">
                     <p class="empty_favo_rest">
-                        '내가 작성한 후기가 없습니다.'
+                        내가 작성한 후기가 없습니다.
                     </p>
                 </div>
 
@@ -126,7 +126,12 @@
 
                                 <!-- 유저 정보 -->
                                 <div class="rc_user_box">
-                                    <div class="rc_user_icon"></div>
+                                    <c:if test='${!empty sessionScope.img}'>
+                                        <div class="rc_user_icon" style='background: url("<spring:url value='${sessionScope.img}'/>") no-repeat center / cover'></div>
+                                    </c:if>
+                                    <c:if test='${empty sessionScope.img}'>
+                                        <div class="rc_user_icon" style='background: url("<c:url value='/resources/img/other_img/1.png'/>") no-repeat center / cover'></div>
+                                    </c:if>
                                     <div class="rc_user_info">
                                         <div id="user_name">${review.reviewer}</div>
                                         <div id="user_info">
@@ -165,13 +170,15 @@
                                 </div>
                             </div>
 
-                            <a href="<c:url value="/reviewWriteUpdate/${review.fk_restaurant_id}"/>">
-                                <div>수정</div>
-                            </a>
-
-                            <a href="<c:url value="/remove/${review.fk_restaurant_id}"/>">
-                                <div>삭제</div>
-                            </a>
+                            <div class="review_edit_delete">
+                                <a class="review_edit" href="<c:url value="/reviewWriteUpdate/${review.fk_restaurant_id}"/>">
+                                    <div>수정</div>
+                                </a>
+                                <p>/</p>
+                                <a class="review_delete" href="<c:url value="/remove/${review.fk_restaurant_id}"/>">
+                                    <div>삭제</div>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </c:forEach>
@@ -182,6 +189,7 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="<c:url value='/resources/js/common.js'/>"></script>
+<script src="<c:url value='/resources/js/common.js?3'/>"></script>
+
 </body>
 </html>

@@ -108,10 +108,10 @@
     justify-content: flex-end;
 }
 #review_score, .rev_review_score {
-    font-size: 22px;
+    font-size: 22px; 
     font-weight: 700;
     margin-left: 14px;
-
+    
     color: #ff9625;
     position: relative;
     top: -4px;
@@ -180,7 +180,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
+    
     position: relative;
     top: -5px;
     left: -5px;
@@ -268,7 +268,7 @@
 
 /* ////////////////        사진 관리단         ////////////// */
 
-#menu_container {
+#menu_container { 
     width: calc(70% - 20px);
 
     display: flex;
@@ -281,7 +281,7 @@
 }
 .menu_box {
     width: calc(50% - 5px);
-    height: 120px;
+    height: auto;
     border: 1px solid #dcdcdc;
     border-radius: 15px;
 
@@ -330,6 +330,7 @@
     height: 250px;
     border-radius: 15px;
     position: relative;
+    cursor: pointer;
 }
 .img_con_more_btn {
     width: 100%;
@@ -424,41 +425,11 @@
 .reco_img {
     width: calc(100% / 2);
 }
-.move_top {
-    width: 100px;
-    height: 50px;
-    border-radius: 10px;
-    background: #fff;
-    box-shadow: 0 0 2px 2px #ababab;
-
-    font-size: 20px;
-    cursor: pointer;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 3px;
-
-
-    position: absolute;
-    top: 102%;
-    left: 0;
-
-    transition: all 0.5s;
+.reco_img1 {
+    background: url(../img/예시이미지/june1.jpg) no-repeat center / cover;
 }
-.move_top > svg {
-    width: 30px;
-    height: 30px;
-    transform: rotateZ(180deg);
-
-    position: relative;
-    top: 1px;
-}
-.move_top:hover {
-    color: #ff9625;
-}
-.move_top:hover > svg {
-    fill: #ff9625;
+.reco_img2 {
+    background: url(../img/예시이미지/june2.jpg) no-repeat center / cover;
 }
 
 /* ////////////////        리뷰 관리단         ////////////// */
@@ -477,7 +448,7 @@
     border: 1px solid #ff9625;
     border-radius: 3px;
     cursor: pointer;
-
+    
     text-align: center;
     font-size: 14px;
     color: #ff9625;
@@ -573,7 +544,7 @@
     box-sizing: border-box;
     position: relative;
 
-    display: none;
+    display: flex;
     flex-wrap: wrap;
 }
 .rev_con_more_btn {
@@ -644,7 +615,7 @@
     box-sizing: border-box;
     border-radius: 5px;
     background: #f4f4f4;
-    white-space: pre;
+    white-space: pre-wrap;
 }
 .rc_img_box {
     width: 100%;
@@ -704,7 +675,7 @@
     background: url(../img/review_star_fill.png) no-repeat center / cover;
 }
 .con1 {
-    display: flex;
+    display: flex; 
     gap: 5px;
 }
 .con1 > p:nth-child(2) {
@@ -721,5 +692,156 @@
     background: #ebebeb;
     text-align: center;
 
-    /* display: none; */
+    display: none;
+}
+
+@media screen and (min-width: 0px) and (max-width: 1250px) {
+    #rest_cate {
+        margin-right: 15px;
+    }
+    .container_title, .container_title > p {
+        font-size: 22px;
+    }
+    .main_banner {
+        height: 250px;
+    }
+    .time_box {
+        display: none;
+    }
+    #time_title {
+        font-size: 20px;
+    }
+    .day_box {
+        font-size: 15px;
+    }
+
+    #rest_title_box {
+        width: 250px;
+        flex-wrap: wrap;
+        gap: 0;
+    }
+    #rest_title {
+        width: 250px;
+        font-size: 24px;
+    }
+    #sub_box {
+        height: max-content;
+    }
+
+    #reco_container {
+        width: 240px;
+        height: auto;
+    }   
+    .reco_title {
+        font-size: 16px;
+        font-weight: 700;
+    }
+    .reco_img_box {
+        height: 80px;
+    }
+    .menu_img {
+        height: 90px;
+    }
+    .menu_title {
+        font-size: 16px;
+    }
+    .menu_price {
+        font-size: 14px;
+    }
+    .rest_img {
+        height: 160px;
+    }
+
+    .rev_con_title {
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .rev_con_title > .container_title {
+        width: 100%;
+    }
+    .rev_con_title > a  {
+        width: 100%;
+    }
+    .rev_create_btn {
+        width: 100%;
+    }
+    .rev_con_score_box {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .rev_con_score {
+        width: 100%;
+        gap: 100px;
+        justify-content: center;
+    }
+    .rev_con_score_list {
+        display: none;
+    }
+    .review_img {
+        width: 150px;
+        height: 150px;
+    }
+    .rc_img_box {
+        height: 165px;
+    }
+
+}
+
+@media screen and (min-width: 0px) and (max-width: 850px) {
+    .main_banner {
+        height: 200px;
+    }
+    #main_box { 
+        width: 100%;
+    }
+    #rest_title {
+        width: 220px;
+        font-size: 24px;
+    }
+    #rest_intro {
+        padding: 15px 20px;
+    }
+
+    #sub_box {
+        width: 100%;
+        height: max-content;
+    }
+
+    .container_title {
+        display: none;
+    }
+    #reco_container {
+        display: none;
+    }
+
+    .time_box {
+        display: flex;
+    }
+    #time_title {
+        font-size: 20px;
+    }
+    .day_box {
+        font-size: 16px;
+    }
+
+    #menu_container { 
+        width: 100%;
+    }
+    .menu_img {
+        height: 70px;
+    }
+    #img_container { width: 100%; }
+    .rest_img {
+        height: 130px;
+    }
+    #review_container { width: 100%; }
+
+    .rc_user_score_box {
+        justify-content: center;
+        margin-left: 0;
+    }
+    .rc_user_txt_box {
+        font-size: 15px;
+    }
 }

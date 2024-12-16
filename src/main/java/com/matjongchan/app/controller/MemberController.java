@@ -9,11 +9,8 @@ package com.matjongchan.app.controller;
 
 import com.matjongchan.app.domain.dto.FavoriteWithRestaurantDto;
 import com.matjongchan.app.domain.dto.RestaurantDetail;
-import com.matjongchan.app.domain.entity.MemberDto;
+import com.matjongchan.app.domain.entity.*;
 import com.matjongchan.app.domain.dto.MemberLoginDto;
-import com.matjongchan.app.domain.entity.MemberImageDto;
-import com.matjongchan.app.domain.entity.RestaurantDto;
-import com.matjongchan.app.domain.entity.ReviewDto;
 import com.matjongchan.app.service.MemberService;
 import com.matjongchan.app.service.RestaurantService;
 import lombok.extern.slf4j.Slf4j;
@@ -43,10 +40,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
 public class MemberController {
+
     @Autowired
     MemberService memberService;
     @Autowired
@@ -231,20 +230,20 @@ public String register(MemberDto memberDto, Model m, @RequestParam(value = "prof
 
         // 4. fk_restaurant_id를 이용해서 restaurant 테이블의 id 구하기
         List<RestaurantDetail> restaurantDetails = new ArrayList<>();
-        List<String> restaurantImageUrls = new ArrayList<>(); // 이미지 URL 리스트
+//        List<String> restaurantImageUrls = new ArrayList<>(); // 이미지 URL 리스트
 
         for (Integer restaurantId : restaurantIds) {
             // 5. 구한 restaurant 테이블의 id로 RestaurantDetail getRestaurantDetail(int restaurantId) 서비스 접근
             RestaurantDetail restaurantDetail = restaurantService.getRestaurantDetail(restaurantId);
             if (restaurantDetail != null) {
-                restaurantDetails.add(restaurantDetail); // 상세 정보 리스트에 추가
 
                 // RestaurantDto를 생성하여 이미지 URL 구하기
                 RestaurantDto restaurantDto = restaurantService.getRestaurantById(restaurantId);
                 if (restaurantDto != null) {
-                    String imgUrl = restaurantService.getImgUrl(restaurantDto);
-                    restaurantImageUrls.add(imgUrl); // 이미지 URL 추가
+                    List<OtherImageDto> imgUrlList = restaurantService.getImgUrlList(restaurantDto.getId());
+                    restaurantDetail.setRestaurant_image_url_list(imgUrlList.stream().map(OtherImageDto::getImg_url).collect(Collectors.toList()));
                 }
+                restaurantDetails.add(restaurantDetail); // 상세 정보 리스트에 추가
 
             }
         }
@@ -252,7 +251,6 @@ public String register(MemberDto memberDto, Model m, @RequestParam(value = "prof
 
         // 6. 모델에 보내기
         model.addAttribute("restaurantDetails", restaurantDetails);
-        model.addAttribute("restaurantImageUrls", restaurantImageUrls); // 이미지 URL 데이터
 
         return "myPageRestaurant";
     }

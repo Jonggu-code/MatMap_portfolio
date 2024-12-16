@@ -170,5 +170,28 @@ $(document).ready(function(){
         }, 100);
     }
     set_bar_width()
+
+    $(".review_edit").on("click", function (event) {
+        event.preventDefault(); // 기본 동작 방지
+        if (confirm("내가 작성한 리뷰를 수정하시겠습니까?")) {
+            window.location.href = $(this).attr("href"); // '예'를 선택하면 리뷰 작성 페이지로 이동
+        }
+    });
+
+    $(".review_delete").on("click", function (event) {
+        event.preventDefault(); // 기본 동작 방지
+        if (confirm("내가 작성한 리뷰를 삭제하시겠습니까?")) {
+            window.location.href = $(this).attr("href");
+            // '예'를 선택하면 리뷰 삭제
+        }
+    });
+
+    $(".rest_delete").on("click", function (event) {
+        event.preventDefault(); // 기본 동작 방지
+        if (confirm("내가 찜한 맛집 리스트에서 삭제하시겠습니까?")) {
+            window.location.href = $(this).attr("href");
+            // '예'를 선택하면 찜한 식당에서 삭제
+        }
+    });
 });
 

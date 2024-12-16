@@ -21,13 +21,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>리뷰 작성 페이지-1</title>
+    <title>리뷰 작성하기</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<c:url value='https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css'/>" />
 
-    <link rel="stylesheet" href="<c:url value='/resources/css/review_page_1.css' /> ">
-    <link rel="stylesheet" href="<c:url value='/resources/css/review_common.css' /> ">
+    <link rel="stylesheet" href="<c:url value='/resources/css/review_page_1.css?1' /> ">
+    <link rel="stylesheet" href="<c:url value='/resources/css/review_common.css?1' /> ">
 
 </head>
 <body>

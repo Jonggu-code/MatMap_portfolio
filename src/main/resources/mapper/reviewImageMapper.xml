@@ -54,18 +54,19 @@
     </select>
 
     <!-- 해당 식당 이미지 2개 조회  -->
-    <select id="getRestaurantImages2" parameterType="int" resultType="OtherImageDto">
+    <select id="getRestaurantImages2" parameterType="S" resultType="OtherImageDto">
         SELECT *
-        FROM menu as m
-        INNER JOIN other_image as oi
-        ON oi.id = m.fk_image_id
-        WHERE #{id} = m.fk_restaurant_id
-        ORDER BY m.id DESC
-        LIMIT 1,2
+        FROM other_image
+        WHERE fk_restaurant_id = #{id}
+        LIMIT #{offset},#{page_size}
     </select>
 
+<!--
+        SELECT *
+        FROM other_image
+        WHERE fk_restaurant_id = #{id}
+        LIMIT 1,2
 
-
-
+-->
 
 </mapper>
