@@ -21,7 +21,7 @@ KH-정보교육원 맛종찬팀 프로젝트
 -  MyBatis 3.5.11
 -  JSP-api 2.1 , jstl 1.2
 -  Junit 4.12
--  JQuery
+-  Javascript / JQuery
 -  lombok 1.18.36
 -  IntelliJ , VSCode
 -  Notion
