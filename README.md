@@ -113,17 +113,81 @@
       <img align="top" style="width: 33%;" src="https://github.com/Jonggu-code/MatMap_portfolio/blob/main/img/음식점_세부페이지_반응형_2.jpg" alt="index_media_2"/>
     </div>
     <ul>
-      <li> 카카오맵 API 활용 - 마커 생성 / 인포윈도우 커스텀 </li>
-      <li> 지도 표시지역 / 맛집 정렬 순서 / 전체 박스 클릭으로 각 검색 목적에 맞게 식당 검색 가능 </li>
-      <li> 버튼 클릭하여 현재 보고있는 구역 내의 음식점 재검색 </li>
+      <li> 상단에 이벤트 배너 / 로고 클릭시 메인화면 이동 / 키워드 검색시 키워드 유지하며 메인화면 이동 </li>
+      <li> 메인 배너 swiper 활용하여 구성 </li>
+      <li> 하트 클릭시 음식점 찜하기 / 게스트시 로그인 요청 </li>
       <li> 게스트 / 유저 간 게스트박스 메뉴 상이 </li>
+      <li> 영업시간에 따라 영업중 / 브레이크타임 / 영업종료 표기 </li>
+      <li> 현재 보고있는 식당의 태그와 관련된 맛집 추천하는 박스 -> 스크롤 따라다님 </li>
+      <li> 후기 작성 버튼 클릭시 후기 작성 페이지로 이동 </li>
+      <li> 사진 더 불러오기 (9장씩) / 리뷰 더보기 버튼 (5개씩) </li>
+      <li> 상단 이동 버튼 </li
     </ul>
   </details>
-  
 
+  ***
 
+  <details> 
+    <summary>맛집 랭킹 페이지</summary>
+    <div>
+      <img style="width: 24%;" src="https://github.com/Jonggu-code/MatMap_portfolio/blob/main/img/맛집%20랭킹%20페이지.png" alt="ranking_page"/>
+    </div>
+    <ul>
+      <li> 식당 이름 클릭시 해당 식당 세부페이지로 이동 </li>
+      <li> 전체 식당 중 후기 많은 순 -> 별점 높은 순 으로 조회 </li>
+      <li> 상위 10개의 식당 가져와서 페이지에 보여줌</li>
+    </ul>
+  </details>
 
-# 랭킹페이지
-# 리뷰작성
-# 내가 찜한 식당 페이지
-# 내가 리뷰 작성한 식당 페이지
+  ***
+
+  <details> 
+    <summary>내가 찜한 식당 페이지</summary>
+    <div>
+      <img align="top" style="width: 100%;" src="https://github.com/Jonggu-code/MatMap_portfolio/blob/main/img/찜한%20맛집%20페이지(정보없음).png" alt="favorite_rest_page"/>
+      <img align="top" style="width: 33%;" src="https://github.com/Jonggu-code/MatMap_portfolio/blob/main/img/내가%20찜한%20식당.png" alt="favorite_rest_page"/>
+      <img align="top" style="width: 33%;" src="https://github.com/Jonggu-code/MatMap_portfolio/blob/main/img/찜한%20맛집%20반응형1.png" alt="favorite_rest_page"/>
+      <img align="top" style="width: 33%;" src="https://github.com/Jonggu-code/MatMap_portfolio/blob/main/img/찜한%20맛집%20반응형2.png" alt="favorite_rest_page"/>
+    </div>
+    <ul>
+      <li> 찜한 식당 없을 시, default 화면 출력 </li>
+      <li> 식당 이름 클릭시 해당 식당 세부페이지로 이동 </li>
+      <li> 내가 찜한 식당 최근순으로 정렬해서 리스트업 </li>
+      <li> 삭제 버튼 클릭시 찜한 식당에서 삭제 </li>
+    </ul>
+  </details>
+
+  ***
+
+  <details> 
+    <summary>내가 작성한 리뷰 페이지</summary>
+    <div>
+      <img align="top" style="width: 100%;" src="https://github.com/Jonggu-code/MatMap_portfolio/blob/main/img/작성%20리뷰%20페이지(정보없음).png" alt="favorite_rest_page"/>
+      <img align="top" style="width: 33%;" src="https://github.com/Jonggu-code/MatMap_portfolio/blob/main/img/작성%20리뷰%20페이지.png" alt="favorite_rest_page"/>
+      <img align="top" style="width: 33%;" src="https://github.com/Jonggu-code/MatMap_portfolio/blob/main/img/후기%20페이지%20반응형%201.png" alt="favorite_rest_page"/>
+      <img align="top" style="width: 33%;" src="https://github.com/Jonggu-code/MatMap_portfolio/blob/main/img/후기%20페이지%20반응형%202.png" alt="favorite_rest_page"/>
+    </div>
+    <ul>
+      <li> 작성한 리뷰 없을 시, default 화면 출력 </li>
+      <li> 내가 작성한 리뷰 최근순으로 정렬해서 리스트업 </li>
+      <li> 수정 버튼 클릭시 리뷰 작성 페이지로 이동 -> 리뷰 재작성 </li>
+      <li> 삭제 버튼 클릭시 작성 리뷰에서 삭제 </li>
+    </ul>
+  </details>
+
+  ***
+
+  <details> 
+    <summary>리뷰 작성 페이지</summary>
+    <div>
+      <img align="top" style="width: 33%;" src="https://github.com/Jonggu-code/MatMap_portfolio/blob/main/img/리뷰작성1.png" alt="review_create_page1"/>
+      <img align="top" style="width: 33%;" src="https://github.com/Jonggu-code/MatMap_portfolio/blob/main/img/리뷰작성2.png" alt="review_create_page2"/>
+      <img align="top" style="width: 33%;" src="https://github.com/Jonggu-code/MatMap_portfolio/blob/main/img/리뷰작성2_1.png" alt="review_create_page3"/>
+    </div>
+    <ul>
+      <li> 별점 기본 5점 세팅, 별을 클릭해서 점수 설정 가능 </li>
+      <li> 해당 식당과 관련된 메뉴를 선택 (1개 이상) </li>
+      <li> 해당 식당 관련 이미지 첨부 기능 (파일 형식 jpg 관련 파일로 제한 / 크기 10MB 제한 / 최대 10장 제한) </li>
+      <li> 이전화면 클릭시 이전화면으로 넘어감 (정보 유지) </li>
+    </ul>
+  </details>
