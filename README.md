@@ -41,6 +41,7 @@
     <ul> ○ 로그인 검사
       <li> session을 통한 로그인 유지 , 로그아웃시 session 삭제를 통한 로그아웃 구현</li>
       <li> DB에 저장된 아이디/비밀번호와 비교 후 일치하지 않으면 '일치하는 정보가 없습니다' 메세지 띄움 </li>
+      <li> 정상적으로 로그인 완료시 index 페이지로 이동</li>
     </ul>
   </details>
   
@@ -49,11 +50,13 @@
   <details> 
     <summary>회원가입</summary>
     <img src="https://github.com/Jonggu-code/MatMap_portfolio/blob/main/img/회원가입.png" alt="register_page" />
-    <ul>
-      <li> 아이디 중복 체크 및 비밀번호 확인 </li>
+    <ul> ○ 유효성 검사
+      <li> 아이디 중복 체크 및 특수문자를 제외한 한글(ㄱ~ㅎ), 알파벳(a~Z), 숫자(0~9) 형식으로 구성가능 </li>
       <li> 프로필 이미지 등록가능 </li>
-      <li> 아이디, 비밀번호 유효성 체크 기능 </li>
+      <li> 이메일 형식 패턴 검사 (ooo@gmail.com)</li>
+      <li> 비밀번호는 비밀번호 확인을 통하여 사용자의 실수를 막음</li>
       <li> 자기소개를 제외한 정보에 null이나 undefined 있을경우 경고 메세지 </li>
+      <li> 사용중인 아이디 입력하여 회원가입시 "사용중인 아이디입니다" 메세지 표기 </li>
     </ul>
   </details>
 
