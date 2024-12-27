@@ -33,13 +33,13 @@
     <summary>로그인</summary>
     <img align="top" style="width: 48%;" src="https://github.com/Jonggu-code/MatMap_portfolio/blob/main/img/로그인.png" alt="login_page" />
     <img style="width: 48%;" src="https://github.com/Jonggu-code/MatMap_portfolio/blob/main/img/로그인%20페이지%20(정보없음).png" alt="login_page_not" />
-    <ul> 로그인을 하지 않은 경우
+    <ul> - 로그인을 하지 않은 경우
       <li> 로그인을 하지못한경우 마이페이지 및 리뷰 작성 페이지 접근 x</li>
       <li> 쿠키 활용해 '아이디 기억하기' 기능 </li>
       <li> 로그인이 필요한 경로로 접속한 경우 로그인 페이지로 이동</li>
       <li></li>
     </ul>
-    <ul> 로그인 검사
+    <ul> - 로그인 검사
       <li> session을 통한 로그인 유지 , 로그아웃시 session 삭제를 통한 로그아웃 구현</li>
       <li> DB에 저장된 아이디/비밀번호와 비교 후 일치하지 않으면 '일치하는 정보가 없습니다' 메세지 띄움 </li>
     </ul>
