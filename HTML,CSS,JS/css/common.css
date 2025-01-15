@@ -1,0 +1,452 @@
+/* ///////////////////////////////////////////////////////// */
+/* ////////         메인 제외한 페이지 기본세팅         ////// */
+/* ///////////////////////////////////////////////////////// */
+
+/* html 포함 기본 링크 / 스크립트
+
+///// 링크 //////
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<link rel="stylesheet" href="./css/common.css">
+
+///// 스크립트 /////
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="./js/common.js"></script>
+<script src="./js/swiper.js"></script>
+*/
+* {
+    font-family: "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+}
+body {
+    margin: 0;
+}
+.photo_view {
+    overflow: hidden;
+}
+.photo_viewer {
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+
+    position: fixed;
+
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 999999;
+}
+.photo_viewer > img {
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+}
+.photo_active {
+    display: flex;
+}
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+h1,h2,h3,h4,h5,h6,p {
+    font-size: inherit;
+    padding: 0;
+    margin: 0;
+}
+i {
+    font-style: inherit;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+fieldset {
+    padding: 0;
+    margin: 0;
+}
+input {
+    padding: 0;
+    margin: 0;
+}
+#wrap{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.contents_area {
+    width: 1200px;
+    min-width: 1000px;
+    height: auto;
+    margin: 0 auto;
+    box-sizing: border-box;
+    position: relative;
+}
+body::-webkit-scrollbar {
+    display: none;
+}
+.shadow_box {
+    box-shadow: 0px 3px 20px 2px #dfdfdf;
+}
+
+/* ///////////////////////////////////////////////////////// */
+/* ////////////////         header             ////////////// */
+/* ///////////////////////////////////////////////////////// */
+
+/* 메인 제외한 페이지 공통 header 관련 css 속성 */
+.container {
+    background: #e3e3e3;
+}
+.header {
+    width: 100%;
+    height: 115px;
+    background: #fff;
+    box-shadow: 0 2px 5px 0 #bdbdbd;
+    
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+}
+.event {
+    width: 100%;
+    height: 35px;
+    background-color: #d1b393;
+}
+.event_box {
+    height: 35px;
+    position: relative;
+    overflow: hidden;
+}
+.event_box > p {
+    line-height: 35px;
+    font-size: 14px;
+    font-weight: 700;
+
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.event_trans {
+    transition: all 0.5s;
+}
+.event p:first-child {
+    top: 0;
+}
+.event svg {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+
+    cursor: pointer;
+}
+.header_main {
+    height: 80px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* ////////////////        logo 단           ////////////// */
+
+.logo_box {
+    width: 20%;
+    height: 100%;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.site_logo {
+    display: block;
+    width: 180px;
+    height: 50px;
+    text-indent: -9999px;
+
+    background: url(../img/logo_400x100.png) no-repeat -10px / cover;
+}
+
+/* ////////////////        search_box 단          ////////////// */
+
+.search_box {
+    width: 40%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+}
+.KeywordSearch {
+    width: 100%;
+    height: 45px;
+    background-color: #ececec;
+    border-radius: 30px;
+    overflow: hidden;
+
+    position: relative;
+    z-index: 999;
+}
+.fld_inside {
+    width: 100%;
+    height: 100%;
+    border: none;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+.search_input {
+    width: calc(100% - 70px);
+    height: 100%;
+    border: none;
+    outline: none;
+    padding: 0 5px;
+    box-sizing: border-box;
+    background-color: #ececec;
+
+    font-size: 14px;
+}
+.fld_inside > svg {
+    width: 25px;
+    height: 25px;
+    margin-left: 20px;
+    cursor: pointer;
+}
+.fld_inside > svg path {
+    stroke: #ff9625;
+    stroke-width: 1.5;
+}
+.screen_out {
+    overflow: hidden;
+    position: absolute;
+    width: 0;
+    height: 0;
+    line-height: 0;
+    text-indent: -9999px;
+}
+
+/* ////////////////        guest_box 단          ////////////// */
+
+.guest_box {
+    width: 29%;
+    height: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.guest_box > a {
+    font-size: 15px;
+    font-weight: 700;
+    padding: 10px;
+    color: #d97f1f
+}
+.guest_box > p:hover {
+    color: #854e12;
+    cursor: pointer;
+}
+.guest_icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background-color: #eb0eeb;
+    margin-left: 12px;
+}
+.guest_menu {
+    width: 88px;
+    height: 48px;
+    border: 1px solid #ffd7ad;
+    border-radius: 25px;
+    padding: 8px;
+    box-sizing: border-box;
+    cursor: pointer;
+
+    position: relative;
+
+    transition: box-shadow 0.1s;
+    
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.guest_menu:hover {
+    box-shadow: 0px 2px 4px 0px #bdbdbd;
+}
+.guest_menu_active {
+    box-shadow: 0px 2px 4px 0px #bdbdbd;
+}
+.guest_menu > svg {
+    width: 20px;
+    height: 20px;
+}
+.guest_menu > svg path {
+    stroke-width: 1.2;
+    stroke: #ff9625;
+}
+.guest_menu_box {
+    width: 170px;
+    height: auto;
+    background: #fff;
+    box-shadow: 0 0 4px 0px #bdbdbd;
+    border-radius: 10px;
+    overflow: hidden;
+    color: #6e6e6e;
+    display: none;
+
+    position: absolute;
+    top: 120%;
+    right: 0;
+}
+.guest_menu_box_active {
+    display: block;
+}
+.guest_menu_box > p {
+    text-align: center;
+    padding: 20px 0;
+}
+.guest_menu_box > p:hover {
+    background: #eaeaea;
+}
+
+/* 본문 container 부분 확인 */
+
+.container {
+    padding-top: 115px;
+    padding-bottom: 50px;
+    width: 100%;
+    height: auto;
+}
+
+.move_top {
+    width: 100px;
+    height: 50px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 0 2px 2px #ababab;
+
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+
+    transition: all 0.3s;
+}
+.move_top > svg {
+    width: 30px;
+    height: 30px;
+    transform: rotateZ(180deg);
+
+    position: relative;
+    top: 1px;
+}
+.move_top:hover {
+    color: #ff9625;
+}
+.move_top:hover > svg {
+    fill: #ff9625;
+}
+
+.open_time, .break_time, .close_time {
+    font-size: 20px;
+    display: none;
+    margin-left: 5px;
+
+    position: relative;
+    top: -5px;
+}
+.open_time { color: #ff9625; display: block;}
+.break_time { color: #8a8a8a; display: block;}
+.close_time { color: #ff0000; display: block;}
+
+.review_edit_delete {
+    width: 100%;
+    margin-top: 10px;
+    padding-right: 5px;
+    box-sizing: border-box;
+    
+    font-size: 16px;
+    font-weight: 600;
+    color: #6e6e6e;
+
+    display: flex;
+    justify-content: flex-end;
+}
+.review_edit_delete > a:hover {
+    color: #ff9625;
+}
+.review_edit_delete > p {
+    margin: 0 5px;
+}
+
+
+@media screen and (min-width: 850px) and (max-width: 1250px) {
+
+    .contents_area {
+        width: 800px;
+        min-width: 600px;
+    }
+    .logo_box {
+        width: 200px;
+    }
+    .guest_box {
+        width: 100px;
+        justify-content: flex-end;
+    }
+    .guest_box > a {
+        display: none;
+    }
+
+}
+
+
+@media screen and (min-width: 0px) and (max-width: 850px) {
+
+    .event_box {
+        width: 100% !important;
+    }
+    .contents_area {
+        width: 450px;
+        min-width: 300px;
+    }
+    .logo_box {
+        width: 200px;
+    }
+    .guest_box {
+        width: 100px;
+        justify-content: flex-end;
+    }
+    .guest_box > a {
+        display: none;
+    }
+    .search_box {
+        display: none;
+    }
+    .move_top {
+        width: 50px;
+        height: 50px;
+        right: 10px;
+        bottom: 10px;
+
+        flex-direction: column;
+    }
+    .move_top > p {
+        display: none;
+    }
+
+}

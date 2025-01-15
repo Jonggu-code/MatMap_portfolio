@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .main_item {
+            border: 1px solid;
+            width: 360px;
+            height: auto;
+            margin-bottom: 30px;
+            
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .main_item_box {
+            width: 100%;
+            height: auto;
+            display: flex;
+        }
+        .main_item_Lbox {
+            width: 120px;
+            height: 120px;
+            background: #814b11;
+            border-radius: 10px;
+        }
+        .main_item_Lbox > a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            text-indent: -9999px;
+        }
+        .main_item_Rbox {
+            width: 65%;
+            height: auto;
+            margin-left: 10px;
+            margin-top: 5px;
+
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .main_item_Rbox > p {
+            width: 100%;
+            height: auto;
+            font-weight: 500;
+            color: #585858;
+            margin-bottom: 5px;
+
+            display: flex;
+            align-items: flex-start;
+            gap: 5px;
+        }
+        .item_title {
+            width: 100%;
+            height: auto;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        .rest_item > span {
+            width: 90%;
+        }
+        .rest_addr_icon, .rest_num_icon, .rest_info_icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: url(./img/ico_detail_240813.png) no-repeat;
+            background-size: 240px;
+        }
+        .rest_addr_icon {
+            background-position: -33px -26px;
+        }
+        .rest_num_icon {
+            background-position: -51px -25px;
+        }
+        .rest_info_icon {
+            background-position: -141px -25px;
+        }
+        .item_name {
+            width: 140px;
+            margin-left: 2px;
+            margin-bottom: 4px;
+            font-size: 18px;
+            font-weight: 900;
+            color: #180d01;
+        }
+        .item_name:hover {
+            color: #ff9625;
+        }
+        .item_star {
+            font-weight: 700;
+            color: #ff9625;
+
+            position: relative;
+            top: -2px;
+
+            display: flex;
+        }
+        .item_star > p {
+            margin-top: 1px;
+        }
+        .item_star > p:nth-child(3) {
+            margin-left: 5px;
+            margin-top: 4px;
+            font-size: 13px;
+            color: #585858;
+        }
+        .item_star > svg {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+
+            position: relative;
+            top: 3.5px;
+        }
+        .item_star path {
+            fill: #ff9625;
+        }
+        .item_addr, .item_info, .item_time {
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main_item">
+        <div class="main_item_box">
+            <div class="main_item_Lbox">
+                <a class="img" href="./detail.html">1</a>
+            </div>
+            <div class="main_item_Rbox">
+                <div class="item_title">
+
+                    <!-- 식당 이름 -->
+                    <a class="item_name" href="./detail.html">종찬식당</a>
+                    <div class="item_star">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2Z"></path></svg>
+
+                        <!-- 식당 전체 평점의 평균 -->
+                        <p>4.9</p>
+
+                        <!-- 식당에 관련된 후기 갯수 -->
+                        <p>(21)</p>
+                    </div>
+                </div>
+
+                <!-- 식당 주소정보 들어오는 단 -->
+                <p class="item_addr">
+                    <i class="rest_addr_icon"></i>
+                    서울시 강남구 역삼동 테헤란로
+                </p>
+
+                <!-- 식당 영업시간정보 들어오는 단 / 빈칸이면 "영업 정보 없음"-->
+                <p class="item_time">
+                    <i class="rest_num_icon"></i>
+                    화요일 09:00 ~ 22:00
+                </p>
+
+                <!-- 식당 정보 들어오는 단 / 빈칸이면 "매장 정보 없음"-->
+                <p class="item_info">
+                    <i class="rest_info_icon"></i>
+                    예약 가능, 포장 가능, 배달 불가
+                </p>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

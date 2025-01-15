@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/write_page.css">
+    <script>
+        function validateForm() {
+            var textarea = document.forms["writeForm"]["detail"].value;
+            if (textarea == "") {
+                alert("내용을 입력해주세요.");
+                return false;
+            } else {
+                alert("작성완료!");
+                return true; // 내용이 있으면 폼 제출
+            }
+        }
+    </script>
+</head>
+<body>
+    <form name="writeForm" action="board.html" method="post" onsubmit="return validateForm()">
+        <table>
+            <tr><td><h2>글쓰기</h2></td></tr>
+            <tr><td class="header">제목</td></tr>
+            <tr><td><input type="text" placeholder="제목을 입력하세요" name="title"></td></tr>
+            <tr><td class="header">내용</td></tr>
+            <tr><td><textarea placeholder="내용을 입력하세요" name="detail"></textarea></td></tr>
+            <tr><td><input type="submit" value="등록"></td></tr>
+        </table>
+    </form>
+</body>
+</html>
